@@ -16,7 +16,7 @@ Weekly authoring complete: yes.
 | B reconcile | **PASS** | ADR 006, outcome C, actual case-only rename commit | Follow settled baseline |
 | C0 format | **PASS** | Full lint zero; selftest passes; broken temp fixture fails | Re-run before every commit |
 | C navigation | **PASS** | Master files and primers linked | Commit weekly pairs |
-| D weeks | **NOT RUN** | Pairs through Week 10 committed | Weeks 11–12 next |
+| D weeks | **NOT RUN** | Pairs through Week 12 committed | Final dry-run validation next |
 | E dry-run | **NOT RUN** | Source comparison and final checks pending | Review beginner recovery paths |
 | F report | **NOT RUN** | Final report pending | Summarize honest limits |
 

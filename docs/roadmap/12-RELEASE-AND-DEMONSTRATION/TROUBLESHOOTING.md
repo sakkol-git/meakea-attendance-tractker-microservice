@@ -1,0 +1,52 @@
+# Week 12 troubleshooting
+
+> **Navigation:** [Previous: Week 11](../11-HARDENING-AND-PILOT/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Release dashboard](../YOU-ARE-HERE.md)
+
+## Runtime never becomes ready
+
+- Symptom: Compose app unhealthy or request refuses connection.
+- Likely cause: Docker stopped, wrong JDK, migration error or database not ready.
+- Diagnose: `docker compose -f infra/selfhost/compose.yaml ps`; inspect target first, because scripts are proposed until their build step.
+- Healthy result: Healthy app and PostgreSQL with no public DB binding.
+- Fix: Check disk then Docker/JDK; inspect last safe log lines; correct one config on branch, never delete volume.
+- Verify: Re-run readiness and current happy scenario.
+
+## Schema or key assertion fails
+
+- Symptom: Migration/constraint/idempotency test returns an unexpected failure.
+- Likely cause: Applied migration edited, missing tenant/key predicate or stale fixture.
+- Diagnose: `mvn -f services/hrflow-app/pom.xml test`; inspect target first, because scripts are proposed until their build step.
+- Healthy result: Zero failures with real PostgreSQL fixtures.
+- Fix: Reproduce smallest row pair; add a new migration or correct scoped query; preserve applied history.
+- Verify: Run integrity and duplicate/concurrency scenarios.
+
+## Client and contract disagree
+
+- Symptom: Flutter/React parses wrong field or sees unexpected HTTP code.
+- Likely cause: Stale mock/example, wrong base URL or changed token state.
+- Diagnose: `flutter test`; inspect target first, because scripts are proposed until their build step.
+- Healthy result: Mock and live schema agree and token failure is explicit.
+- Fix: Compare sole OpenAPI fixture to raw safe response; fix contract and both clients together.
+- Verify: Run validation/unauthorized plus happy tests.
+
+## Host or backup gate blocked
+
+- Symptom: No confirmed real host/external disk, old dump, failed scratch restore.
+- Likely cause: Production setup not ready, host sleeping, cron missed, disk unmounted or incompatible dump.
+- Diagnose: `bash ops/restore-scratch.sh`; inspect target first, because scripts are proposed until their build step.
+- Healthy result: Scratch restore passes with recent verified external copy.
+- Fix: Stop external exposure; check mount/age/major versions and recover in scratch only. Assign owner and cut stretch.
+- Verify: Friday backup/restore and private deployed smoke must pass.
+
+## Current mini-win fails
+
+- Symptom: Both clients agree on IDs/versions and errors; no mock-only success is counted.
+- Likely cause: Implementation does not satisfy this week invariant or prerequisite.
+- Diagnose: `bash scripts/acceptance/w12.sh diagnose`; inspect target first, because scripts are proposed until their build step.
+- Healthy result: One minimal failing scenario with safe evidence or a documented healthy diagnostic.
+- Fix: Use 45/90 minute protocol; preserve WIP, recover from last green branch, fix smallest test first.
+- Verify: Re-run current feature matrix and regression before tag.
+
+## Stop rule
+
+[Stuck protocol](../STUCK-PROTOCOL.md) applies after 45 minutes. Never run destructive cleanup, disable tenant checks, or skip restore to manufacture a green gate.
