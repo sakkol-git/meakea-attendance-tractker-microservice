@@ -1,23 +1,33 @@
 # Roadmap engineering progress
 
-> **Note:** This tracks documentation work, not completion of HRFlow.
+> **Note:** This tracks documentation, not completed HRFlow features.
 
 ## Resume state
 
-Current phase: A audit completed; B decisions and C0 toolchain in progress. Application source remains unchanged. Branch is `docs/roadmap-playbook`. Repository began without commits; pre-existing staged source/configuration must remain staged and unmodified.
+Branch: `docs/roadmap-playbook`. Phases A, B, C0 and C are complete; twelve weekly drafts exist and are being committed two weeks at a time. Next action is phase D pair commits, then final beginner validation. Source fingerprints and staged source blobs are preserved.
+
+Weekly authoring complete: yes.
 
 ## Phase ledger
 
 | Phase | Result | Evidence | Next action |
 | --- | --- | --- | --- |
-| A audit | **PASS** | Preparation documents; safe command results | Bootstrap format checks before first commit |
-| B reconcile | **NOT RUN** | Decision register being authored | Record outcome C and rename in its own commit |
-| C0 format | **NOT RUN** | Linter being authored | Normalize legacy documentation and selftest |
-| C navigation | **NOT RUN** | Master files pending | Build entry points |
-| D weeks | **NOT RUN** | Twelve weekly folders pending | Write and commit pairs |
-| E dry-run | **NOT RUN** | Checks pending | Validate all steps and capacity |
-| F report | **NOT RUN** | Final report pending | Report verified limits |
+| A audit | **PASS** | Preparation inventory and actual command results | Retain blockers |
+| B reconcile | **PASS** | ADR 006, outcome C, actual case-only rename commit | Follow settled baseline |
+| C0 format | **PASS** | Full lint zero; selftest passes; broken temp fixture fails | Re-run before every commit |
+| C navigation | **PASS** | Master files and primers linked | Commit weekly pairs |
+| D weeks | **NOT RUN** | Drafts complete, pair commits pending | Weeks 01–02 first |
+| E dry-run | **NOT RUN** | Source comparison and final checks pending | Review beginner recovery paths |
+| F report | **NOT RUN** | Final report pending | Summarize honest limits |
 
-## Execution adjustment
+## Audit limitations
 
-The required strict linter cannot pass against the old long documents, level-four headings, mixed filenames, and anchor links. Audit outputs are written first; initial phase commits wait until C0 normalization passes. No application repair is performed as part of documentation engineering.
+Maven validation passes; offline Maven test stops before compilation on missing cached Avro/Jackson artifacts. Java 21 is absent, Docker daemon is stopped, disk has about 5 GiB free. Nuxt build and five Python prototype tests pass; they are not React or HR workflow acceptance. Production setup is not ready, per user.
+
+## Capacity correction
+
+User replied 24. Interpreted as 24 hours each per week, 16.8 planned each, 14.28 in lighter Weeks 4/8. Total 393.12 planned contributor-hours. Start date remains unknown. Initial provisional 20-hour assumption is superseded.
+
+## Format and Git sequence
+
+Strict all-docs formatting required splitting prior long documents into historical references before the first audit checkpoint could pass lint. The repository began without commits, so a documentation-only temporary index preserved pre-existing staged source. On case-insensitive macOS a separate verified case-only rename commit was needed; no history was rewritten.
