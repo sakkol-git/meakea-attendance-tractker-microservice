@@ -38,5 +38,5 @@ Implement conflict-free same-day check-in first. Block silent overlap finalizati
 
 ## References
 
-- [Detailed specification](../Architecture.MD).
+- [Detailed specification](../Architecture.md).
 - [Execution plan](../PLAN.md).

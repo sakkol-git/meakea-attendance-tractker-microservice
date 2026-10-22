@@ -38,5 +38,5 @@ Complete local startup, CI/images, and staged smoke first. Record final target a
 
 ## References
 
-- [Detailed specification](../Architecture.MD).
+- [Detailed specification](../Architecture.md).
 - [Execution plan](../PLAN.md).

@@ -3,7 +3,7 @@
 ## Current build guide
 
 - [Start here](roadmap/START-HERE.md).
-- [Current architecture](Architecture.MD).
+- [Current architecture](Architecture.md).
 - [Current plan](PLAN.md).
 - [API and persistence mapping](REST-API-DATABASE-DESIGN.md).
 - [Decisions](adr/README.md).

@@ -8,7 +8,7 @@ from urllib.parse import unquote
 
 ALLOWED={'java','sql','yaml','bash','json','ts','dart','xml','properties','text','mermaid'}
 # Explicit user-requested canonical name; README is the folder entry-point contract.
-EXCEPT={'README.md','Architecture.md','Architecture.MD'}
+EXCEPT={'README.md','Architecture.md'}
 REQUIRED={'README.md','BUILD-GUIDE.md','VERIFY-AND-GATE.md','TROUBLESHOOTING.md'}
 LABELS=['**Why:**','**Read first','**Before you start:**','**Do:**','**Expect:**',
         '**Check:**','**If it fails:**','**Status:**']
@@ -84,7 +84,7 @@ def check(p):
         for m in re.finditer(r'\[[^\]]+\]\(([^)]+)\)',line):
             dest=m[1]
             if dest.startswith('https://'): continue
-            if '://' in dest or '#' in dest or ' ' in dest or not dest.lower().endswith('.md'):
+            if '://' in dest or '#' in dest or ' ' in dest or not dest.endswith('.md'):
                 err(p,i,'link','relative explicit .md only; no anchors, folders or source links');continue
             if not (p.parent/unquote(dest)).is_file(): err(p,i,'link',f'missing target {dest}')
     if fence: err(p,len(lines),'fence','unclosed fence')

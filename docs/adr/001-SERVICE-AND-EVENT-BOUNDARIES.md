@@ -38,5 +38,5 @@ Implement identity/attendance/event foundation before expanding other workflows.
 
 ## References
 
-- [Detailed specification](../Architecture.MD).
+- [Detailed specification](../Architecture.md).
 - [Execution plan](../PLAN.md).

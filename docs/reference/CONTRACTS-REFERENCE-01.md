@@ -6,7 +6,7 @@
 - All business endpoints and tables below are **planned**, not implemented controllers or migrations.
 - New contract details and explicitly marked extensions are **proposed** pending design review.
 - The only implemented HTTP API is the standalone confidence prototype, described separately.
-- Related: [architecture](../Architecture.MD), [delivery plan](../PLAN.md), [decision records](../Architecture.MD).
+- Related: [architecture](../Architecture.md), [delivery plan](../PLAN.md), [decision records](../Architecture.md).
 - Existing endpoint/entity coverage has been retained; malformed tables and ambiguous semantics are replaced here.
 
 ## 1. Shared contract conventions

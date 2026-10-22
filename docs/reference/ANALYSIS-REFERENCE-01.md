@@ -4,7 +4,7 @@
 
 Reviewed: 22 October 2026. Scope: current working tree, including staged, modified, and untracked source files. This is a code and documentation assessment, not a production runtime audit. Existing application code was not changed.
 
-> **Note:** Historical reconnaissance snapshot: the documentation suite was subsequently expanded. Empty-document and React-plan observations below describe the earlier review state, not the revised specification. See [current architecture](../Architecture.MD).
+> **Note:** Historical reconnaissance snapshot: the documentation suite was subsequently expanded. Empty-document and React-plan observations below describe the earlier review state, not the revised specification. See [current architecture](../Architecture.md).
 
 ## 1. Overall assessment
 

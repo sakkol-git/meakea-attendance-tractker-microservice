@@ -31,6 +31,6 @@ Development gets fewer operational boundaries, while data/package discipline req
 
 ## References
 
-- [Architecture](../Architecture.MD).
+- [Architecture](../Architecture.md).
 - [Decisions](../roadmap/DECISION-REGISTER.md).
 - [Capacity](../roadmap/00-PREPARATION/PROJECT-BASELINE.md).

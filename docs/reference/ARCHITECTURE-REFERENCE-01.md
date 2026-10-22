@@ -67,7 +67,7 @@ Current behavior is established by source/configuration, then migrations/tests. 
 | D15 | Reporting balance endpoint lacks source event | Propose `leave.balance.v1`; no cross-schema query fallback |
 | D16 | Notification called command-free but has preferences/device/read commands | It owns notification-specific commands, not HR workflow decisions |
 
-The original empty `Achitecture.MD` was corrected to `Architecture.MD` to match the requested canonical deliverable. The API/database draft already had meaningful coverage at this revision; it was preserved and normalized.
+The original empty `Achitecture.MD` was corrected to `Architecture.md` to match the requested canonical deliverable. The API/database draft already had meaningful coverage at this revision; it was preserved and normalized.
 
 ## 2. System overview and domain
 

@@ -38,5 +38,5 @@ Correct Avro generation path and Registry connectivity if retained. Do not mutat
 
 ## References
 
-- [Detailed specification](../Architecture.MD).
+- [Detailed specification](../Architecture.md).
 - [Execution plan](../PLAN.md).

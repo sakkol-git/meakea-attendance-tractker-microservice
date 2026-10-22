@@ -65,4 +65,4 @@ Application checks were not rerun merely for a documentation change. No source/i
 
 Reviewed shared route prefixes/owners/ports, identity_org naming, role/resource checks, proposed event envelope/topic keys, leave compensation semantics, local transaction/offset boundaries, tenant-scoped FK/uniqueness, and requirement-to-milestone references. Corrected session event `sessionId` mapping, cutoff-kind uniqueness, preference-set ETag ownership, non-null delivery targets, and leave-day parent employee consistency during review. ADRs distinguish the pre-existing accepted boundary baseline from proposed policy/security/deployment changes. O01–O08 remain visible decision gates; future machine contracts must validate full request/response/event schema conformance. No load/security/end-to-end/projection-rebuild/production-restore claim is made by this documentation validation.
 
-See [architecture](../Architecture.MD), [contracts](../REST-API-DATABASE-DESIGN.md), and [plan](../PLAN.md).
+See [architecture](../Architecture.md), [contracts](../REST-API-DATABASE-DESIGN.md), and [plan](../PLAN.md).

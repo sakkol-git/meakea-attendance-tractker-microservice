@@ -20,4 +20,4 @@ Every implemented path gets request/response/schema examples in OpenAPI, two-ten
 
 ## Detailed preserved contracts
 
-The [reference index](reference/README.md) links all earlier endpoint, DDL and event sections. Their domain constraints remain useful design inputs; seven-service topology, Kafka-only transport and cloud-specific deployment are superseded by [current architecture](Architecture.MD) and [migration plan](roadmap/00-PREPARATION/MIGRATION-PLAN.md).
+The [reference index](reference/README.md) links all earlier endpoint, DDL and event sections. Their domain constraints remain useful design inputs; seven-service topology, Kafka-only transport and cloud-specific deployment are superseded by [current architecture](Architecture.md) and [migration plan](roadmap/00-PREPARATION/MIGRATION-PLAN.md).
