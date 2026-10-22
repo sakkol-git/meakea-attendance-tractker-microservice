@@ -7,7 +7,7 @@ No weekly gate is currently executed. Evidence includes commit, actual tag, comm
 | Week | Demo on Friday | Exact evidence required | Gate |
 | --- | --- | --- | --- |
 | 01 | A protected workspace; One database-backed service | `w01-s15-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
-| 02 | Credentials and tenant context; Isolation before exposure | `w02-s15-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
+| 02 | Credentials and tenant context; Isolation before exposure | `w02-s17-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 03 | Employees and hierarchy; Schedules and calendar | `w03-s15-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 04 | A safe check-in interval; Checkout and classification | `w04-s15-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 05 | Publication intent is atomic; Replay-safe scheduled worker | `w05-s15-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |

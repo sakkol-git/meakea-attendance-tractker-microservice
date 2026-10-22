@@ -9,8 +9,8 @@
 | Monday | Stone 1, three small steps | First two linked primers only | 3.4 h |
 | Tuesday | Stone 2, three small steps | Next two if needed | 3.4 h |
 | Wednesday | Stone 3, three small steps | At most two | 3.4 h |
-| Thursday | Stone 4, review and recovery only | None | 1.53 h |
-| Friday | Stone 5, gate and redeploy | None | 2.55 h |
+| Thursday | Stone 4, review and recovery only | None | 2.125 h |
+| Friday | Stone 5, gate and redeploy | None | 1.955 h |
 | Weekend | Two rest days | None | 0 h |
 
 Totals stay within 14.28 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
@@ -32,7 +32,7 @@ Totals stay within 14.28 h per contributor; unused time is buffer, not permissio
 **Do:**
 
 1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add attendance evidence/session/day-guard migrations; unique client observation and one-open-effective-session constraint; immutable raw evidence.
+1. Add attendance evidence/session/day-guard, command-idempotency and minimal JSON outbox migrations; unique client observation and one-open-effective-session constraint; immutable raw evidence.
 1. Run the following check only after its target exists; record actual output without secrets.
 
 ```bash

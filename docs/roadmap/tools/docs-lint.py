@@ -61,6 +61,10 @@ def check(p):
         if re.search(r'<\/?[A-Za-z][^>]*>',plain): err(p,i,'html','raw HTML/placeholders forbidden')
         if any(x in plain for x in ['[[','{{','==']): err(p,i,'markup','unsupported highlight/wiki/template markup')
         if re.search(r'\[\^[^\]]+\]',plain): err(p,i,'footnote','no footnotes')
+        status_plain=re.sub(r'\*\*[^*]+\*\*','',plain)
+        if re.search(r'\b(?:CONDITIONAL PASS|NOT RUN|PASS|FAIL)\b',status_plain):
+            err(p,i,'status','gate status words must be bold')
+        if line.endswith('\\'): err(p,i,'line-break','no forced prose line break')
         if '$' in plain: err(p,i,'prose','wrap dollar signs/math markers in backticks')
         if re.search(r'(?<!\w)#[A-Za-z]',plain) and not h: err(p,i,'prose','wrap hash words in backticks')
         if line.startswith('>') and line and not re.match(r'^> \*\*(Note|Warning|Decision|Evidence|Pitfall|Navigation):\*\*',line):
@@ -104,10 +108,15 @@ def check(p):
             body=m[2]; line=text[:m.start()].count('\n')+1
             for label in LABELS:
                 if label not in body: err(p,line,'step',f'{m[1]} missing {label}')
-            if not re.search(r'\(\d+[–-]\d+ min\)',m[0].splitlines()[0]): err(p,line,'step','duration range required')
+            duration=re.search(r'\((\d+)[–-](\d+) min\)',m[0].splitlines()[0])
+            if not duration: err(p,line,'step','duration range required')
+            elif not 30 <= int(duration[1]) <= int(duration[2]) <= 90:
+                err(p,line,'duration','step range must stay between 30 and 90 minutes')
             if '**Run**' not in body and '**Not run**' not in body: err(p,line,'step','explicit execution status')
             if 'Committed with message' not in body: err(p,line,'step','step must end with commit task')
         for stone in re.split(r'^## Stone ',text,flags=re.M)[1:]:
+            count=len(re.findall(r'^### W\d{2}-S\d{2}',stone,re.M))
+            if not 2 <= count <= 6: err(p,1,'stone','each stone needs two to six steps')
             if not re.search(r'- \[ \] Tagged `w\d{2}-s\d{2}-green`',stone):
                 err(p,1,'stone','each stone ends with green tag task')
     if p.name=='PATTERN-LESSON.md':

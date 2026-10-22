@@ -38,6 +38,11 @@
 - [Week 11: Security recovery and measured load](11-HARDENING-AND-PILOT/README.md).
 - [Week 12: Freeze acceptance and demonstration](12-RELEASE-AND-DEMONSTRATION/README.md).
 
+## Validation and tree
+
+- [Actual validation](ACTUAL-VALIDATION.md).
+- [Exact folder tree](FOLDER-TREE.md).
+
 ## Support
 
 - [Preparation](00-PREPARATION/README.md).

@@ -4,7 +4,7 @@
 
 ## Inspect first and build the test runner
 
-The commands below target proposed `scripts/acceptance/w02.sh`, created in W02-S10 before execution. Each branch must execute a real JUnit/API or client assertion and propagate nonzero failure; an echo-only script is forbidden. Feature tests are added with their implementation steps, not postponed until Thursday. No runner or test is claimed to exist today.
+The commands below target proposed `scripts/acceptance/w02.sh`, created in W02-S12 before execution. Each branch must execute a real JUnit/API or client assertion and propagate nonzero failure; an echo-only script is forbidden. Feature tests are added with their implementation steps, not postponed until Thursday. No runner or test is claimed to exist today.
 
 Use two synthetic tenants, own/unrelated employees, direct-report manager and HR fixtures. Read auth tokens privately from test helpers; never put secrets in guide commands. For unavailable week-1 auth routes, unauthorized/cross-tenant cases assert diagnostic is private and DB tenant constraint fixtures; week 2 replaces those with authenticated API tests.
 

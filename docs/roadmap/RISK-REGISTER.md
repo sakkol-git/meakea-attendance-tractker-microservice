@@ -89,7 +89,7 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 - Likelihood: High; impact: High; severity: High.
 - Early warning: Echo-only runner or mocked database.
 - Prevention: Real PostgreSQL Testcontainers and assertions.
-- Contingency: Gate stays FAIL until reproducible proof.
+- Contingency: Gate stays **FAIL** until reproducible proof.
 - Owner: A+B; milestone: Every gate.
 
 ## Limited hardware
@@ -105,7 +105,7 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 - Likelihood: High; impact: Med; severity: Med.
 - Early warning: Remote timeout/router unavailable.
 - Prevention: Outbound tunnel, inspect ISP privately.
-- Contingency: Private host demo with external gate FAIL.
+- Contingency: Private host demo with external gate **FAIL**.
 - Owner: A; milestone: W2.
 
 ## Power loss

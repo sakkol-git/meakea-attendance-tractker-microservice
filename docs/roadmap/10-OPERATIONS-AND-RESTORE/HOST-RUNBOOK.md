@@ -19,7 +19,8 @@ Copy this baseline into proposed `ops/backup.sh` and adapt only the explicitly c
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-cd /Users/apple/Documents/hrflow
+: "${HRFLOW_ROOT:?set the verified repository root}"
+cd "$HRFLOW_ROOT"
 : "${BACKUP_ROOT:?set the confirmed external backup root}"
 : "${BACKUP_MOUNT:?set the confirmed external mount path}"
 mount | grep -F " on ${BACKUP_MOUNT} (" >/dev/null

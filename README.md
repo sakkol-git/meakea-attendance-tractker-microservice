@@ -15,7 +15,7 @@ The repository currently contains seven Spring Boot service scaffolds, shared-li
 ## Toolchain and startup status
 
 Java target is 21; build uses Maven. The root currently declares Spring Boot parent 4.1.1, while individual services declare 4.0.8; gateway declares Spring Cloud 2025.1.3. Align inheritance/toolchain before treating the reactor as a verified application build.
-Web uses Nuxt/Vue; React remains a previous plan pending the explicit frontend decision. Flutter source is not present here.
+Current web source uses Nuxt/Vue; the finish-line guide explicitly selects React as the implementation target. Flutter source is not present here.
 
 Local dependencies are defined in `infra/docker/docker-compose.yaml`. The documented PostgreSQL initialization mount and Schema Registry listener defects must be corrected before a fresh local startup is considered reproducible. Compose does not launch applications.
 

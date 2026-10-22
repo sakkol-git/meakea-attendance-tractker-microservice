@@ -9,15 +9,15 @@
 | Monday | Stone 1, three small steps | First two linked primers only | 4 h |
 | Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
 | Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 1.8 h |
-| Friday | Stone 5, gate and redeploy | None | 3 h |
+| Thursday | Stone 4, review and recovery only | None | 2.5 h |
+| Friday | Stone 5, gate and redeploy | None | 2.3 h |
 | Weekend | Two rest days | None | 0 h |
 
 Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
 
 ## Stone 4 — Buffer evidence and failure recovery
 
-**You will have:** Known failing reproduction passes or gate is honestly FAIL; no unsafe workaround.
+**You will have:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
 
 ### W11-S10 — Inspect the smallest uncertain behavior (45–60 min)
 
@@ -32,7 +32,7 @@ Totals stay within 16.8 h per contributor; unused time is buffer, not permission
 **Do:**
 
 1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect prior nine steps and write proposed scripts/acceptance/w11.sh as a real scenario runner, not echo PASS. Its diagnose branch checks target JDK, Docker, migrations, readiness and fixture IDs without secrets. No new feature scope on Thursday.
+1. Inspect prior feature steps and write proposed scripts/acceptance/w11.sh as a real scenario runner, not echo **PASS**. Its diagnose branch checks target JDK, Docker, migrations, readiness and fixture IDs without secrets. No new feature scope on Thursday.
 1. Run the following check only after its target exists; record actual output without secrets.
 
 ```bash
@@ -101,7 +101,7 @@ flutter test
 mvn -f services/hrflow-app/pom.xml test
 ```
 
-**Expect:** Known failing reproduction passes or gate is honestly FAIL; no unsafe workaround.
+**Expect:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
 
 **Check:**
 
@@ -136,7 +136,7 @@ Shutdown ritual for this day:
 **Do:**
 
 1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create or inspect proposed ops/deploy.sh before invocation: validate Compose/config, record previous image digest, apply only additive tested migrations, update containers, run authenticated smoke, retain last working manifest. On the confirmed real production host redeploy the exact tested artifact; if host is not ready record FAIL, do not substitute a dev demo. Never enable public route before security/backup gate.
+1. Create or inspect proposed ops/deploy.sh before invocation: validate Compose/config, record previous image digest, apply only additive tested migrations, update containers, run authenticated smoke, retain last working manifest. On the confirmed real production host redeploy the exact tested artifact; if host is not ready record **FAIL**, do not substitute a dev demo. Never enable public route before security/backup gate.
 1. Run the following check only after its target exists; record actual output without secrets.
 
 ```bash
@@ -198,7 +198,7 @@ bash ops/restore-scratch.sh
 **Do:**
 
 1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. A and B review VERIFY-AND-GATE evidence, require all critical items, and write PASS/CONDITIONAL PASS/FAIL with owner/deadline. Update global checklist/dashboard and next first action. Preserve failed critical item as next week first stone; do not borrow weekends.
+1. A and B review VERIFY-AND-GATE evidence, require all critical items, and write **PASS**/**CONDITIONAL PASS**/**FAIL** with owner/deadline. Update global checklist/dashboard and next first action. Preserve failed critical item as next week first stone; do not borrow weekends.
 1. Run the following check only after its target exists; record actual output without secrets.
 
 ```bash

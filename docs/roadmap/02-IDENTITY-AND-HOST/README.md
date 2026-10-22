@@ -20,11 +20,11 @@ Build identity and private host deployment as a visible mini-win. The audit foun
 
 | Stone | Visible win | Steps | Upper step time |
 | --- | --- | --- | --- |
-| 1 | Credentials and tenant context | W02-S01 to S03 | 180 min, shared steps counted per owner |
-| 2 | Isolation before exposure | W02-S04 to S06 | 180 min, shared steps counted per owner |
-| 3 | The skeleton reaches the real host | W02-S07 to S09 | 180 min, shared steps counted per owner |
-| 4 | Buffer evidence and failure recovery | W02-S10 to S12 | 180 min, shared steps counted per owner |
-| 5 | Friday gate deploy and recovery | W02-S13 to S15 | 180 min, shared steps counted per owner |
+| 1 | Credentials and tenant context | W02-S01 to S05 | 300 min, shared steps counted per owner |
+| 2 | Isolation before exposure | W02-S06 to S08 | 180 min, shared steps counted per owner |
+| 3 | The skeleton reaches the real host | W02-S09 to S11 | 180 min, shared steps counted per owner |
+| 4 | Buffer evidence and failure recovery | W02-S12 to S14 | 180 min, shared steps counted per owner |
+| 5 | Friday gate deploy and recovery | W02-S15 to S17 | 180 min, shared steps counted per owner |
 
 ## Minimum Viable Gate
 

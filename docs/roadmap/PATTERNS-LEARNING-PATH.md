@@ -2,7 +2,7 @@
 
 ## Admission before quota
 
-Eight candidates are reviewed, but only three have conditional lesson slots. No pattern is described as adopted in current application code. Source is unbuilt, so real pain cannot honestly be pre-certified. The target of seven to nine never overrides the admission test or critical gate schedule. DI and Repository are foundational explanations, not counted abstractions.
+Nine named candidates are reviewed, but only three have conditional lesson slots. No pattern is described as adopted in current application code. Source is unbuilt, so real pain cannot honestly be pre-certified. The target of seven to nine never overrides the admission test or critical gate schedule. DI and Repository are foundational explanations, not counted abstractions.
 
 | Candidate | When | Outcome | Reason |
 | --- | --- | --- | --- |

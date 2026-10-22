@@ -11,7 +11,7 @@ Seven services contain only startup scaffolds, source is Nuxt, current host has 
 ## Decision
 
 - **Decision:** Outcome C, one Boot app with domain packages and owner schemas; local transactional outbox/receipts for notification/reporting; React and early mocked Flutter.
-- **Reason:** Counted step ledger is 195.5 core contributor-hours plus reading/buffer within provisional 393.12 planned hours at interpreted 24 h each. More deployables add unproven operational work.
+- **Reason:** Counted step ledger is 197.5 core contributor-hours plus reading/buffer within provisional 393.12 planned hours at interpreted 24 h each. More deployables add unproven operational work.
 - **Rejected alternatives:** Seven microservices, separate worker runtime, Kubernetes/Terraform/cloud infrastructure, Kafka runtime without two truly independent async components.
 - **Implementation impact:** Migration is incremental on code branches, old source preserved; routes and tenant/domain correctness remain. OpenAPI is one wire source; package APIs/projections enforce ownership.
 - **Cost and operational impact:** One host/DB remains a shared failure domain. Tunnel is free publishing plus domain cost, not free hardware/power/ISP or high availability. External backup media is required.

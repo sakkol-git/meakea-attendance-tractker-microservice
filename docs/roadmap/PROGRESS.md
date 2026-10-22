@@ -1,33 +1,47 @@
 # Roadmap engineering progress
 
-> **Note:** This tracks documentation, not completed HRFlow features.
+> **Note:** Guide complete as documentation; HRFlow implementation is not complete.
 
 ## Resume state
 
-Branch: `docs/roadmap-playbook`. Phases A, B, C0 and C are complete; twelve weekly drafts exist and are being committed two weeks at a time. Next action is phase D pair commits, then final beginner validation. Source fingerprints and staged source blobs are preserved.
+Branch: `docs/roadmap-playbook`. All twelve weekly manuals and master/support documents are written and committed in phase/pair checkpoints. There are 60 stones and 182 steps; 0 implementation steps are Run and 182 are Not run. Open START-HERE.md, then W01-S01. No green application tags were fabricated.
 
 Weekly authoring complete: yes.
 
 ## Phase ledger
 
-| Phase | Result | Evidence | Next action |
+| Phase | Result | Evidence | Remaining work |
 | --- | --- | --- | --- |
-| A audit | **PASS** | Preparation inventory and actual command results | Retain blockers |
-| B reconcile | **PASS** | ADR 006, outcome C, actual case-only rename commit | Follow settled baseline |
-| C0 format | **PASS** | Full lint zero; selftest passes; broken temp fixture fails | Re-run before every commit |
-| C navigation | **PASS** | Master files and primers linked | Commit weekly pairs |
-| D weeks | **NOT RUN** | Pairs through Week 12 committed | Final dry-run validation next |
-| E dry-run | **NOT RUN** | Source comparison and final checks pending | Review beginner recovery paths |
-| F report | **NOT RUN** | Final report pending | Summarize honest limits |
+| A audit | **PASS** | Actual source/config/build/host inspection | Application blockers remain |
+| B reconcile | **PASS** | ADR 006, outcome C, separate case-only Git rename | Execute migration later |
+| C0 format | **PASS** | 154 Markdown files lint zero; selftest pass; broken fixture rejected | Manual viewers below |
+| C navigation | **PASS** | Master files, primers and daily dashboard | User chooses kickoff date |
+| D weeks | **PASS** | Six two-week commits; all gates/tests/recovery paths authored | Execute build-along later |
+| E dry-run | **CONDITIONAL PASS** | Auth split, capacity/prerequisite review, code/diagram checks | Three-viewer manual acceptance not run |
+| F report | **PASS** | Actual validation and folder tree ready for final handoff | No app completion claim |
 
-## Audit limitations
+## Verified outputs
 
-Maven validation passes; offline Maven test stops before compilation on missing cached Avro/Jackson artifacts. Java 21 is absent, Docker daemon is stopped, disk has about 5 GiB free. Nuxt build and five Python prototype tests pass; they are not React or HR workflow acceptance. Production setup is not ready, per user.
+[Actual validation](ACTUAL-VALIDATION.md) records commands/results, manual UI denials, example checks and source integrity. [Exact tree](FOLDER-TREE.md) lists files. [Baseline](00-PREPARATION/PROJECT-BASELINE.md) contains capacity math.
 
-## Capacity correction
+Full linter output is `PASS: 154 Markdown files; zero errors`. Before every documentation commit the linter was executed successfully. A deliberately broken temporary file produced five format errors and nonzero exit; it was never committed.
 
-User replied 24. Interpreted as 24 hours each per week, 16.8 planned each, 14.28 in lighter Weeks 4/8. Total 393.12 planned contributor-hours. Start date remains unknown. Initial provisional 20-hour assumption is superseded.
+## Important corrections from dry-run
 
-## Format and Git sequence
+Oversized Week-2 auth work was split into separate password, JWT and refresh steps; final count is 182. Thursday/Friday caps now fit assigned joint work. Minimal attendance outbox intent precedes worker implementation. A local scratch-restore script is created before its first Friday use. All names for unbuilt code/scripts are marked proposed with Inspect first instructions.
 
-Strict all-docs formatting required splitting prior long documents into historical references before the first audit checkpoint could pass lint. The repository began without commits, so a documentation-only temporary index preserved pre-existing staged source. On case-insensitive macOS a separate verified case-only rename commit was needed; no history was rewritten.
+## Inputs and blockers
+
+User replied 24, interpreted as 24 hours each: 16.8 planned and 14.28 in Weeks 4/8. Combined capacity is 393.12, core step estimate 197.5, reading 48 and planned recovery/review buffer 147.62. These are estimates, not junior velocity proof. Start date remains unknown. Production setup is not ready, per user.
+
+Disk has about 5 GiB free; target JDK 21 absent; Docker daemon stopped; host/domain/external backup not confirmed. Safe public exposure and real restore gates remain unexecuted. Offline Maven tests stop on uncached Avro/Jackson dependencies; Nuxt build/five Python prototype tests pass but do not prove HR workflows.
+
+## Manual rendering and continuation
+
+IntelliJ and Obsidian app inventory exists, but Computer Use denied access to each app. Notion ZIP import was not run. FORMAT-SELFTEST.md has the three-minute user acceptance procedure; mark viewer compatibility only after actual checks. Mermaid parser and text fallbacks are available; no all-viewer claim is made.
+
+No authored guide files remain unfinished. If continuing documentation, start with manual rendering evidence and the actual kickoff date/host inventory; if building, start at W01-S01 and keep the security/backup gates. Do not treat remaining application steps as already executed.
+
+## Git and source integrity
+
+Repository began without commits and with staged/untracked source. Documentation-only temporary indexes preserved original staged source blobs. All 44 tracked source/config fingerprints match the pre-task snapshot; commits contain only docs or README. Legacy content was preserved in historical reference parts before normalization. The requested Architecture.md rename was performed with git mv and recorded in its own verified case-only commit; history was not rewritten.

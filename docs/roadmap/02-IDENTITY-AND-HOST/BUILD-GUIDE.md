@@ -6,11 +6,11 @@
 
 | Day | Work | New concepts | Time cap per person |
 | --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
+| Monday | Stone 1, five small steps | JWT and refresh only | 5 h |
 | Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 1.8 h |
-| Friday | Stone 5, gate and redeploy | None | 3 h |
+| Wednesday | Stone 3, three small steps | At most two | 3 h |
+| Thursday | Stone 4, review and recovery only | None | 2.5 h |
+| Friday | Stone 5, gate and redeploy | None | 2.3 h |
 | Weekend | Two rest days | None | 0 h |
 
 Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
@@ -50,7 +50,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S02 — Authenticate and rotate tokens (45–60 min)
+### W02-S02 — Hash credentials behind a tested login service (45–60 min)
 
 **Why:** A makes one observable improvement before changing anything else.
 
@@ -63,14 +63,14 @@ mvn -f services/hrflow-app/pom.xml test
 **Do:**
 
 1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement existing contract auth/login, refresh/logout; use Spring Security encoders, RS256 signing and hashed refresh families with locking; no plaintext secrets in committed config.
+1. Inspect identity user fixture and create a password-verification service using Spring Security encoder. Test correct, wrong and unknown credentials with one generic error. Do not expose an incomplete login endpoint yet; JWT issuance is next.
 1. Run the following check only after its target exists; record actual output without secrets.
 
 ```bash
 mvn -f services/hrflow-app/pom.xml test
 ```
 
-**Expect:** Login yields short JWT; rotated refresh cannot be reused; token-family race test passes.
+**Expect:** Password verification tests pass; stored values are hashes and logs contain no passwords.
 
 **Check:**
 
@@ -81,7 +81,69 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S03 — B stores credentials safely (45–60 min)
+### W02-S03 — Issue and validate access JWT (45–60 min)
+
+**Why:** A completes one authentication boundary without hiding it inside a larger setup task.
+
+**Read first (10 min):** [JWT and refresh primer](../primers/JWT-REFRESH.md)
+
+**Before you start:**
+
+- [ ] W02-S02 is committed with its credential tests green.
+
+**Do:**
+
+1. Inspect first: find the verified user fixture, encoder, signing configuration and current auth DTOs.
+1. Implement contract login token issuance with test-only RS256 key fixture; validate signature/issuer/audience/expiry. Load real signing key only through private host secret config, never source.
+1. Run the auth tests against the isolated synthetic database; no production secrets are used.
+
+```bash
+mvn -f services/hrflow-app/pom.xml test
+```
+
+**Expect:** Valid login returns bounded-life JWT; altered signature, wrong audience and expiry each return 401.
+
+**Check:**
+
+- [ ] Expected result and required tests pass with zero failures.
+- [ ] Committed with message `feat(auth): issue and validate access jwt`.
+
+**If it fails:** [Week diagnostics](TROUBLESHOOTING.md) and [stuck protocol](../STUCK-PROTOCOL.md). Keep the route private and stop at the timebox.
+
+**Status:** **Not run**; authored from source inspection, not executed implementation.
+
+### W02-S04 — Rotate refresh and revoke logout family (45–60 min)
+
+**Why:** A completes one authentication boundary without hiding it inside a larger setup task.
+
+**Read first (10 min):** [JWT and refresh primer](../primers/JWT-REFRESH.md)
+
+**Before you start:**
+
+- [ ] W02-S03 is committed with its credential tests green.
+
+**Do:**
+
+1. Inspect first: find the verified user fixture, encoder, signing configuration and current auth DTOs.
+1. Implement refresh hash/family lock and one-time replacement; old-secret reuse revokes family. Logout revokes safely. Add parallel refresh and reuse tests; never persist returned secrets in idempotency response records.
+1. Run the auth tests against the isolated synthetic database; no production secrets are used.
+
+```bash
+mvn -f services/hrflow-app/pom.xml test
+```
+
+**Expect:** One replacement wins, reused old secret is rejected, and logout prevents renewal without pretending current access is instantly revoked.
+
+**Check:**
+
+- [ ] Expected result and required tests pass with zero failures.
+- [ ] Committed with message `feat(auth): rotate refresh and revoke logout family`.
+
+**If it fails:** [Week diagnostics](TROUBLESHOOTING.md) and [stuck protocol](../STUCK-PROTOCOL.md). Keep the route private and stop at the timebox.
+
+**Status:** **Not run**; authored from source inspection, not executed implementation.
+
+### W02-S05 — B stores credentials safely (45–60 min)
 
 **Why:** B makes one observable improvement before changing anything else.
 
@@ -89,7 +151,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Before you start:**
 
-- [ ] W02-S02 committed with its check passing.
+- [ ] W02-S04 committed with its check passing.
 
 **Do:**
 
@@ -107,7 +169,7 @@ flutter test
 
 - [ ] Output matches Expect and required tests pass with zero failures.
 - [ ] Committed with message `feat(week-02): b stores credentials safely`.
-- [ ] Tagged `w02-s03-green` only after tests pass and app starts.
+- [ ] Tagged `w02-s05-green` only after tests pass and app starts.
 
 **If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
 
@@ -123,7 +185,7 @@ Shutdown ritual for this day:
 
 **You will have:** Both clients reject stale credentials and show safe errors.
 
-### W02-S04 — Enforce token-derived tenant (45–60 min)
+### W02-S06 — Enforce token-derived tenant (45–60 min)
 
 **Why:** A makes one observable improvement before changing anything else.
 
@@ -131,7 +193,7 @@ Shutdown ritual for this day:
 
 **Before you start:**
 
-- [ ] W02-S03 committed with its check passing; tag `w02-s03-green` exists.
+- [ ] W02-S05 committed with its check passing; tag `w02-s05-green` exists.
 
 **Do:**
 
@@ -154,7 +216,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S05 — Test role and resource authorization (45–60 min)
+### W02-S07 — Test role and resource authorization (45–60 min)
 
 **Why:** A makes one observable improvement before changing anything else.
 
@@ -162,7 +224,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Before you start:**
 
-- [ ] W02-S04 committed with its check passing.
+- [ ] W02-S06 committed with its check passing.
 
 **Do:**
 
@@ -185,7 +247,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S06 — B builds React-compatible auth fixtures (45–60 min)
+### W02-S08 — B builds React-compatible auth fixtures (45–60 min)
 
 **Why:** B makes one observable improvement before changing anything else.
 
@@ -193,7 +255,7 @@ mvn -f services/hrflow-app/pom.xml test
 
 **Before you start:**
 
-- [ ] W02-S05 committed with its check passing.
+- [ ] W02-S07 committed with its check passing.
 
 **Do:**
 
@@ -211,7 +273,7 @@ flutter test
 
 - [ ] Output matches Expect and required tests pass with zero failures.
 - [ ] Committed with message `feat(week-02): b builds react-compatible auth fixtures`.
-- [ ] Tagged `w02-s06-green` only after tests pass and app starts.
+- [ ] Tagged `w02-s08-green` only after tests pass and app starts.
 
 **If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
 
@@ -227,7 +289,7 @@ Shutdown ritual for this day:
 
 **You will have:** Scratch restore and login/profile smoke pass; source volume remains untouched.
 
-### W02-S07 — Prove hardware and host identity (45–60 min)
+### W02-S09 — Prove hardware and host identity (45–60 min)
 
 **Why:** A makes one observable improvement before changing anything else.
 
@@ -235,7 +297,7 @@ Shutdown ritual for this day:
 
 **Before you start:**
 
-- [ ] W02-S06 committed with its check passing; tag `w02-s06-green` exists.
+- [ ] W02-S08 committed with its check passing; tag `w02-s08-green` exists.
 
 **Do:**
 
@@ -247,7 +309,7 @@ Shutdown ritual for this day:
 df -h .
 ```
 
-**Expect:** Host inventory is confirmed or DEP gate remains FAIL with named blocker.
+**Expect:** Host inventory is confirmed or DEP gate remains **FAIL** with named blocker.
 
 **Check:**
 
@@ -258,7 +320,7 @@ df -h .
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S08 — Deploy privately and add first backup (45–60 min)
+### W02-S10 — Deploy privately and add first backup (45–60 min)
 
 **Why:** A makes one observable improvement before changing anything else.
 
@@ -266,7 +328,7 @@ df -h .
 
 **Before you start:**
 
-- [ ] W02-S07 committed with its check passing.
+- [ ] W02-S09 committed with its check passing.
 
 **Do:**
 
@@ -289,7 +351,7 @@ docker compose -f infra/selfhost/compose.yaml up -d
 
 **Status:** **Not run**; authored from source inspection, not executed implementation.
 
-### W02-S09 — Restore the first dump in scratch (45–60 min)
+### W02-S11 — Restore the first dump in scratch (45–60 min)
 
 **Why:** B makes one observable improvement before changing anything else.
 
@@ -297,7 +359,7 @@ docker compose -f infra/selfhost/compose.yaml up -d
 
 **Before you start:**
 
-- [ ] W02-S08 committed with its check passing.
+- [ ] W02-S10 committed with its check passing.
 
 **Do:**
 
@@ -315,7 +377,7 @@ bash ops/restore-scratch.sh
 
 - [ ] Output matches Expect and required tests pass with zero failures.
 - [ ] Committed with message `feat(week-02): restore the first dump in scratch`.
-- [ ] Tagged `w02-s09-green` only after tests pass and app starts.
+- [ ] Tagged `w02-s11-green` only after tests pass and app starts.
 
 **If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
 

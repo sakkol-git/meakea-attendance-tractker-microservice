@@ -48,7 +48,7 @@ Nightly custom pg_dump, 14-day retention, verified external-disk copy and weekly
 
 ## Delivery and capacity
 
-Five stones and 15 small steps per week; Thursday buffer and Friday real-host redeploy/restore. User hours are interpreted as 24 each, with 70 percent planned and 15 percent lighter Weeks 4/8. [Baseline math](roadmap/00-PREPARATION/PROJECT-BASELINE.md) is conditional, not a guarantee.
+Five stones per week, normally 15 steps and 17 in Week 2; Thursday buffer and Friday real-host redeploy/restore. User hours are interpreted as 24 each, with 70 percent planned and 15 percent lighter Weeks 4/8. [Baseline math](roadmap/00-PREPARATION/PROJECT-BASELINE.md) is conditional, not a guarantee.
 
 ## Canonical references
 

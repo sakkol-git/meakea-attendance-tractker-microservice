@@ -9,8 +9,8 @@
 | Monday | Stone 1, three small steps | First two linked primers only | 4 h |
 | Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
 | Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 1.8 h |
-| Friday | Stone 5, gate and redeploy | None | 3 h |
+| Thursday | Stone 4, review and recovery only | None | 2.5 h |
+| Friday | Stone 5, gate and redeploy | None | 2.3 h |
 | Weekend | Two rest days | None | 0 h |
 
 Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
