@@ -1,6 +1,10 @@
-# Historical reference index
+# Architecture parts and historical reference index
 
-## Preserved designs
+## Authority boundary
+
+The four INCOMING-ARCHITECTURE-V2 parts below are the latest approved design linked by [Architecture](../Architecture.md), subject to ADR 008 and its cloud deferral. All other reference families on this page are historical and cannot override current contracts or weekly instructions. Use the [source-of-truth map](../SOURCE-OF-TRUTH.md) for topic ownership and the [catalog](../DOCUMENTATION-CATALOG.md) for all files.
+
+## Preserved historical designs
 
 - [ANALYSIS-REFERENCE-01](ANALYSIS-REFERENCE-01.md).
 - [ARCHITECTURE-REFERENCE-01](ARCHITECTURE-REFERENCE-01.md).

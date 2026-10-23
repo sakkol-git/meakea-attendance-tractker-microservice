@@ -12,9 +12,9 @@ The system provides end-to-end workforce lifecycle automation: company organizat
 
 Traditional HR software presents serious trade-offs for resource-constrained organizations. Commercial SaaS solutions impose recurring per-user fees, store sensitive personal employee data on third-party cloud infrastructure, and require high-bandwidth continuous internet connectivity. Conversely, manual spreadsheets and legacy custom scripts create data duplication, untracked attendance disputes, race conditions in leave balances, and zero auditability.
 
-HRFlow resolves these problems through three architectural guarantees:
+HRFlow resolves these problems through three architectural goals requiring implementation evidence:
 
-- Absolute tenant isolation: Multi-tenant data residency enforced by verified JWT claims, mandatory tenant foreign keys, composite unique constraints, and strict database schema separation.
+- Tenant isolation target: Verified gateway identity, scoped tenant queries, constraints and adopted PostgreSQL RLS; isolation requires negative tests and is not proved by domain schema separation.
 - Resilient self-hosting: Packaged as a lightweight Docker Compose deployment suitable for existing on-premises hardware, requiring zero paid cloud databases or Kubernetes clusters.
 - Atomic domain consistency: Concurrency-safe transactions, deterministic pessimistic row locking for leave balances, append-only attendance evidence, and an in-database Transactional Outbox.
 
@@ -32,14 +32,14 @@ HRFlow serves four primary human actors and one background automated system:
 
 ## Minimum Viable Product scope
 
-The initial production release delivers a complete, cohesive walking skeleton across six essential functional domains:
+The initial production release delivers a complete, cohesive walking skeleton across functional and operational areas:
 
 - Identity and organization: Multi-tenant tenant onboarding, user authentication via short-lived JWTs and rotating refresh tokens, departments, and positions.
 - Attendance core: Tamper-resistant check-in and check-out, shift scheduling, auto-checkout grace periods, dispute corrections, and audit history.
 - Leave workflow: Entitlement balance tracking, concurrent reservation locking, manager approvals, medical certificate attachments, and cancellation compensations.
 - Material and general requests: Multi-step approval workflows, advisory inventory checks, and private attachment downloads with short-lived tokens.
-- Outbox and notifications: Database-backed Transactional Outbox, at-least-once local event dispatch, consumer idempotency receipts, and in-app user notifications.
-- Audit and CSV reporting: Tamper-evident audit logging of all mutations, attendance roll-ups, leave utilization matrices, and streaming CSV exports.
+- Outbox and notifications: Database-backed Transactional Outbox, at-least-once Kafka/Avro event delivery, consumer idempotency receipts, and in-app user notifications.
+- Audit and CSV reporting: Append-only owner audit records for mutations, attendance roll-ups, leave utilization matrices, and streaming CSV exports.
 - Client interfaces: Nuxt/Vue web client with TypeScript and a lightweight Flutter mobile client for daily employee attendance and request tracking.
 - Operational infrastructure: Single-host Docker Compose deployment, PostgreSQL 16 domain schemas, Caddy reverse proxy, Cloudflare Tunnel ingress, and verified nightly backup scripts.
 
@@ -50,8 +50,8 @@ To avoid conflicting requirements, documentation follows the hierarchy establish
 - [Architecture](Architecture.md): Authoritative definition of the final service runtime, owner boundaries, database schema boundaries, and security model.
 - [API and persistence mapping](REST-API-DATABASE-DESIGN.md): Authoritative contract rules, REST route patterns, idempotency keys, outbox schema, and status code standards.
 - [Decision register](roadmap/DECISION-REGISTER.md): Authoritative record of architectural choices, scope boundaries, and accepted operational trade-offs.
-- [Architecture decision records](adr/README.md): ADR 001 through 006 providing formal context, options considered, and superseding rationale.
-- [Reference index](reference/README.md): Historical reference material detailing earlier seven-service microservice and Kafka contracts, retained for historical background.
+- [Architecture decision records](adr/README.md): ADR 001 through 008 providing formal context, options considered, and superseding rationale.
+- [Reference index](reference/README.md): Separates historical reference families from the four approved architecture parts linked by Architecture.
 
 ## Getting started as a new developer
 
@@ -76,11 +76,11 @@ The engineering journey is organized into twelve sequential weekly phases, takin
 | 04 | [Attendance core](roadmap/04-ATTENDANCE-CORE/README.md) | Append-only evidence, shift windows, auto-checkout, corrections | Attendance invariant tests **NOT RUN** |
 | 05 | [Outbox and notifications](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) | Transactional outbox, inbox deduplication receipts, in-app notifications | At-least-once outbox test **NOT RUN** |
 | 06 | [Leave workflow](roadmap/06-LEAVE-WORKFLOW/README.md) | Entitlement balances, pessimistic reservation locks, manager approvals | Concurrency overspend test **NOT RUN** |
-| 07 | [Requests and approvals](roadmap/07-REQUESTS-AND-APPROVALS/README.md) | Material requests, private signed attachments, specification pattern | Attachment auth security **NOT RUN** |
+| 07 | [Requests and approvals](roadmap/07-REQUESTS-AND-APPROVALS/README.md) | Material requests, private signed attachments and approval guards | Attachment auth security **NOT RUN** |
 | 08 | [Web and mobile integration](roadmap/08-WEB-AND-MOBILE-INTEGRATION/README.md) | Nuxt frontend forms, live Flutter integration, offline command queue | End-to-end user journeys **NOT RUN** |
-| 09 | [Reporting and audit](roadmap/09-REPORTING-AUDIT-OBSERVABILITY/README.md) | Tamper-evident audit logs, CSV exports, Prometheus metrics, Uptime Kuma | Streaming export and health **NOT RUN** |
-| 10 | [Operations and restore](roadmap/10-OPERATIONS-AND-RESTORE/README.md) | Automated pg_dump, off-site disk replication, scratch disaster recovery | Clean-host disaster restore **NOT RUN** |
-| 11 | [Hardening and pilot](roadmap/11-HARDENING-AND-PILOT/README.md) | Security vulnerability scan, rate limiting, measured load testing | 50 concurrent virtual users **NOT RUN** |
+| 09 | [Reporting and audit](roadmap/09-REPORTING-AUDIT-OBSERVABILITY/README.md) | Append-only owner audit records, CSV exports, Prometheus metrics, Uptime Kuma | Streaming export and health **NOT RUN** |
+| 10 | [Operations and restore](roadmap/10-OPERATIONS-AND-RESTORE/README.md) | Automated pg_dump, encrypted external backup copy, scratch disaster recovery | Clean-host disaster restore **NOT RUN** |
+| 11 | [Hardening and pilot](roadmap/11-HARDENING-AND-PILOT/README.md) | Security vulnerability scan, rate limiting, measured load testing | 100 bounded virtual clients **NOT RUN** |
 | 12 | [Release and demonstration](roadmap/12-RELEASE-AND-DEMONSTRATION/README.md) | Code freeze, user acceptance testing, operator training, release handoff | Stakeholder demonstration **NOT RUN** |
 
 ## Build and test execution
@@ -106,11 +106,11 @@ mvn test
 
 ## Deployment, backup, and disaster recovery
 
-HRFlow runs as a single self-contained application stack on a dedicated host machine:
+The twelve-week target is one confirmed host running the service stack. The following operations are planned and require evidence before acceptance:
 
 - Runbook instructions: Detailed operational commands are documented in [Host runbook](roadmap/10-OPERATIONS-AND-RESTORE/HOST-RUNBOOK.md) and [Access setup](roadmap/02-IDENTITY-AND-HOST/ACCESS-SETUP.md).
 - Automated backup: A scheduled nightly cron job executes `pg_dump` with custom compressed format, retaining 14 days of encrypted rolling snapshots.
-- Off-site replication: Backup archives and uploaded private attachments are mirrored to an external physical storage disk disconnected from network exposure.
+- External backup copy: Encrypted archives and private attachments are copied to external storage; a disk attached to the same host is not automatically off-site.
 - Disaster recovery: A weekly scratch restore script recreates the database on an isolated temporary cluster, validating database integrity constraints and data recoverability.
 
 ## Risks, open decisions, and project tracking
@@ -120,9 +120,13 @@ Project health, risks, and progress are continuously tracked across central dash
 - [Risk register](roadmap/RISK-REGISTER.md): Active inventory of technical, operational, and schedule risks with documented mitigations.
 - [Decision register](roadmap/DECISION-REGISTER.md): Record of all accepted architectural decisions and scope cut criteria.
 - [Global checklist](roadmap/GLOBAL-CHECKLIST.md): Complete requirements coverage map connecting functional goals to verified tests.
-- [Roadmap progress](roadmap/PROGRESS.md): Historical ledger of documentation phases, tool validations, and dry-run corrections.
-- [Open questions](SOURCE-OF-TRUTH.md): Central register of outstanding decisions (O01 through O08) requiring stakeholder alignment.
+- [V2 authoring progress](roadmap/PROGRESS-V2.md): Documentation completion and validation limits; the dashboard owns development progress.
+- [Unresolved issues and ownership](SOURCE-OF-TRUTH.md): Routes blockers to the dashboard, risk register, decision register and proposed HR policy; no old O-ID is assumed current.
 
 ## Final execution entry
 
 [Start here](roadmap/START-HERE.md) is the final V2 guide; [current quality coverage](roadmap/QUALITY-COVERAGE.md) and [actual validation](roadmap/V2-VALIDATION-LOG.md) separate planned gates from executed work. ADR 008 supersedes C/React; AWS/Kubernetes execution is deferred.
+
+## Complete documentation lookup
+
+The [source-of-truth map](SOURCE-OF-TRUTH.md) assigns every topic an owner and explains conflict resolution. The [complete catalog](DOCUMENTATION-CATALOG.md) lists every Markdown file by category, including weekly guide parts, primers, evidence and historical records. Add new documents to both when their topic is new.

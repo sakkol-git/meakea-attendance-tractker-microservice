@@ -47,7 +47,7 @@ The final design trusts gateway-injected identity headers. Q04 requires tenant p
 
 AWS cannot be declared free without confirmed account credits and an approved regional cost estimate. Region, budget and credit eligibility remain unknown. A single local host and single broker/database are not high availability; a PDB or rolling-update setting does not change that. No paid resource is created by this documentation pass.
 
-The original 182 steps describe a different topology. Their old hour totals do not certify this design. The [capacity review](roadmap/ARCHITECTURE-REVIEW-V2.md) records the shortfall and [V2 progress](roadmap/PROGRESS-V2.md) identifies which guides remain unsafe to execute unchanged.
+The original 182 steps describe a different topology. Their old hour totals do not certify this design. The [capacity review](roadmap/ARCHITECTURE-REVIEW-V2.md) preserves the initial shortfall alongside the final decomposed allocation; [V2 progress](roadmap/PROGRESS-V2.md) records completed guide reconciliation and unexecuted application gates.
 
 ## Implementation evidence
 

@@ -4,7 +4,7 @@ Date: 2026-10-23. Scope: documentation suite, not application release certificat
 
 ## Current validation
 
-The following record is historical. The new complete guide uses [roadmap format checks](../roadmap/tools/README.md) and records actual current commands in the roadmap progress file. Old 112-route/schema export tooling was superseded when long documents were split.
+Use [V2 validation log](../roadmap/V2-VALIDATION-LOG.md) for the final roadmap checkpoint commands and limits, [linter proofs](../roadmap/LINTER-PROOFS.md) for semantic-check verification, and [source of truth](../SOURCE-OF-TRUTH.md) for authority. The sections below retain historical results; they are not current product acceptance. Old 112-route/schema export tooling was superseded when long documents were split.
 
 ## Historical structural checks
 

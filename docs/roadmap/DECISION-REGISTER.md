@@ -9,7 +9,7 @@
 - **Cost and operational impact:** Local Compose on one confirmed computer; no paid service required by the current finish line. Hardware, disk, power/domain/provider accounts are still real dependencies. The approved cloud topology stays documented but unbuilt.
 - **Reconsider when:** User changes the design or measured compatibility/resource/capacity evidence requires a superseding ADR. Never silently change topology to hide a schedule shortfall.
 
-[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. No guarantee of twelve-week feasibility: the revised planning demand currently exceeds available backend hours.
+[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. The initial coarse demand exceeded available backend hours; final decomposed allocations are within the ceiling, as recorded in the review and weekly READMEs. Actual development velocity remains unmeasured; no completion guarantee is implied.
 
 ## Fixed choices
 

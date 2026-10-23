@@ -9,6 +9,7 @@
 - [Start Here](START-HERE.md).
 - [You Are Here](YOU-ARE-HERE.md).
 - [Source of Truth](../SOURCE-OF-TRUTH.md).
+- [Complete document catalog](../DOCUMENTATION-CATALOG.md).
 - [Roadmap](ROADMAP.md).
 - [Milestone Map](MILESTONE-MAP.md).
 - [Global Checklist](GLOBAL-CHECKLIST.md).

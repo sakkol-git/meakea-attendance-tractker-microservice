@@ -13,7 +13,8 @@ The platform is designed for reliable self-hosting on private infrastructure, co
 The engineering documentation suite is organized into authoritative specifications, decision records, implementation roadmaps, and technical primers:
 
 - [Documentation landing guide](docs/README.md): Ten-minute onboarding guide answering core architectural, operational, and project questions.
-- [Source of truth map](docs/SOURCE-OF-TRUTH.md): Canonical document ownership, conflict resolution rules, and open questions.
+- [Source of truth map](docs/SOURCE-OF-TRUTH.md): Topic ownership, authority rules, evidence boundaries and unresolved-issue routing.
+- [Complete document catalog](docs/DOCUMENTATION-CATALOG.md): Every Markdown document classified by category and use.
 - [System architecture](docs/Architecture.md): Authoritative final service architecture, schema isolation, security, and deployment topology.
 - [Execution plan](docs/PLAN.md): Structured twelve-week roadmap, capacity allocation, milestone gates, and delivery commitments.
 - [API and database design](docs/REST-API-DATABASE-DESIGN.md): REST conventions, PostgreSQL domain schemas, outbox tables, and status codes.
