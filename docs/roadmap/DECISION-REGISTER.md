@@ -1,50 +1,41 @@
 # Decision register
 
-## Architecture outcome C
+## Final system design
 
-- **Decision:** One Spring Boot application in proposed `services/hrflow-app`, packages `com.hrflow.app.identityorg`, `attendance`, `leave`, `request`, `notification`, and `reporting`; one Caddy edge gateway. No Kafka runtime for MVP.
-- **Reason:** Seven services are startup scaffolds. The counted plan fits only provisional capacity with the fewest deployables.
-- **Rejected alternatives:** Seven service deployments and a separately deployed worker add integration/operations work without existing behavior to preserve.
-- **Implementation impact:** Preserve domain package/schema ownership, migrate endpoints without URL changes, keep PostgreSQL transactional outbox and per-handler inbox. Local workers replace Kafka delivery; no Kafka offsets exist on this path.
-- **Cost and operational impact:** One app, PostgreSQL, Caddy, Uptime Kuma, and optional tunnel connector. No cloud database, Kubernetes, Terraform, Registry, or broker bill. Existing computer/power/domain/disk still cost money.
-- **Reconsider when:** Two independently deployed components demonstrably need broker decoupling and a measured capacity budget supports migration.
+- **Decision:** Seven Spring services in their existing roots, reactive API gateway, explicit JDBC, PostgreSQL 16 service schemas, Kafka KRaft, Avro/Schema Registry, Nuxt/Vue/TypeScript, Flutter and Python confidence service.
+- **Reason:** User explicitly accepted the latest Architecture as final; this supersedes ADR 006 monolith/React simplification.
+- **Rejected alternatives:** Monolith, React migration, replacing Kafka with a local dispatcher. Cloud execution was initially requested in twelve weeks and then explicitly deferred as future improvement.
+- **Implementation impact:** Align seven builds, replace scaffold JPA/MVC gateway drift, preserve service-owned schemas and event-built read models. Outbox producer acknowledgment and consumer effect/inbox/offset ordering require real Kafka tests.
+- **Cost and operational impact:** Local Compose on one confirmed computer; no paid service required by the current finish line. Hardware, disk, power/domain/provider accounts are still real dependencies. The approved cloud topology stays documented but unbuilt.
+- **Reconsider when:** User changes the design or measured compatibility/resource/capacity evidence requires a superseding ADR. Never silently change topology to hide a schedule shortfall.
 
-[Capacity math](00-PREPARATION/PROJECT-BASELINE.md) and [migration](00-PREPARATION/MIGRATION-PLAN.md) are normative. The decision is settled for this guide; uncertain hours remain a feasibility assumption.
+[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. No guarantee of twelve-week feasibility: the revised planning demand currently exceeds available backend hours.
 
 ## Fixed choices
 
-| Area | Choice | Implementation point | Gate |
+| Area | Choice | Evidence or implementation target | Gate |
 | --- | --- | --- | --- |
-| Java | Java 21 with existing root Boot 4.1.1 baseline | New app inherits reviewed parent; no framework upgrade | W1 compile |
-| Web | React with TypeScript | Preserve Nuxt history, migrate deliberately | W1 thin view |
-| Mobile | Flutter, repository location verified first | Mock generated from one OpenAPI file | W1 mock, W8 real integration |
-| API | Proposed `contracts/openapi.yaml` sole wire authority | Preserve old domain routes, incremental implemented coverage | W1 validation |
-| Persistence | PostgreSQL 16, schema per domain, Flyway | Never edit an applied migration | W1 and every deploy |
-| Events | JSON outbox and transactional local handlers | Handler effects/inbox in DB transaction; external delivery separate | W5 recovery |
-| Auth | JWT access, rotating hashed refresh families | Token tenant only; local admin provisioning separate | W2 negative tests |
-| Host | Existing computer, Docker Compose | Private deployment in W2, weekly redeploy | W2 and W10 |
-| Access | Cloudflare Tunnel to private Caddy origin | Unknown WAN/CGNAT; no port forwarding | External access blocked until safe |
-| TLS | Automatic public TLS at Cloudflare edge | Caddy private origin not falsely advertised as ACME TLS | W2 verify chain |
-| Backups | Nightly custom pg_dump, 14 days, external copy | Weekly scratch restore; no automatic production overwrite | W2 first restore |
-| Monitoring | Actuator, Docker health/restart/log limits, Uptime Kuma | Private monitoring/admin only | W2 then W9 |
-| Storage | Private host directory with metadata/backups | No S3 requirement; attachments capped and authorized | W7 |
-| Notifications | Durable in-app inbox, local delivery adapter | Push should-have until provider/account/device proof | W5 |
-| Patterns | Three conditional lessons; none adopted without observed pain | Baseline/pain before abstraction, no quota | Learning path |
+| Java/build | Java 21, Maven, root Boot 4.1.1 | pom.xml; service 4.0.8 drift must be aligned after compatibility spike | W1 compile/tests |
+| Web | Existing Nuxt/Vue TypeScript | web/package.json and lockfile | W1 build, W8 integration |
+| Mobile | Flutter, inspect actual root first | No existing Flutter source inferred | W1 mock, W8 real tests |
+| HTTP contract | Proposed contracts/openapi.yaml | One versioned /api/v1 authority, not yet installed | W1 contract CI |
+| Persistence | JDBC and Flyway, schema per owner | Existing physical identity_org retained | W3 constraints/RLS |
+| Events | Kafka/Avro/Registry plus owner outbox and consumer inbox | libs/hrflow-contracts/events actual root | W2 spike, W5 crash/replay |
+| Auth | Gateway JWT, hashed rotating refresh family, method/resource roles | No trusted caller identity headers | W2 security negatives |
+| Host | Local Compose, private until safe | Host not ready; exact resources measured before pull | W2 private host, W10 restore |
+| External access | Cloudflare Tunnel to private edge/gateway origin | Domain/DNS unknown; no automatic public exposure | HTTPS/auth/firewall/backup |
+| Backups | Nightly custom pg_dump, 14 days and external encrypted copy | Include private files, Registry schemas/config and replay position | W2 first, W10/12 clean restore |
+| Observability | Structured logs, Actuator/Micrometer, Prometheus/Grafana and uptime alert | Private endpoints; bounded labels, no personal data | Incremental W2–9 |
+| Cloud | Preserve final AWS/Terraform/Kubernetes design as future | Latest explicit user deferral | No Week-12 cloud claim |
 
-## Scope tiers
+## Scope and quality protection
 
-- Must: auth/tenant and resource checks; org; attendance; leave/approval; material/special requests; in-app notifications; audit; basic CSV; React; Flutter; local outbox reliability; self-host deploy and tested restore.
-- If stable: device push, SSE, geofence/Wi-Fi nudges, rule inference, EN/KH, extra reports, additional pattern refactors.
-- Defer: ML, Kafka runtime, vision/camera, NFC, Redis, Kubernetes, Terraform, tracing stacks, dark mode, payroll, recruitment, continuous GPS, authoritative inventory.
+All existing Must business features stay requirements until explicitly cut: auth/tenant, organization, attendance/corrections, leave/approval, material/special requests, in-app notification, audit, basic CSV, Nuxt and Flutter, event reliability, deployment and restore. The full final design also describes confidence/event integration; its capacity is not hidden as a free add-on.
 
-## Product ambiguity decisions
+Move visual polish, extra reports, optional push/SSE and unadmitted pattern refactors to Stretch first. Do not drop security, tenant/race/replay tests or backup restore to recover time. AWS/Kubernetes execution is deferred by user instruction; no other required service is silently removed. Optional features must not become prerequisites of later Must work.
 
-Calendar and evidence are separate: holiday/leave never deletes work evidence. Manual approved corrections supersede inferred interpretations; overlap requires HR review. NEEDS_REVIEW retains leave debit until explicit HR cancellation or keep-leave resolution. Single same-day shift is MVP; reject unsupported overnight input. These are the guide's safe default policies, requiring HR approval before real data, not fabricated prior agreement.
+## Boundary and policy limits
 
-## External dependencies
+Tenant comes from a verified JWT at the gateway, not body/path/caller headers. Final header trust requires tested sanitization and private ingress; it does not excuse method/resource authorization or scoped SQL/RLS. [ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) quality clauses carry forward except its superseded local-dispatch topology.
 
-Cloudflare Tunnel free publishing requires domain/DNS control and relies on Cloudflare plus the ISP; there is no hosting SLA. Domain registrar price is unknown. Direct Caddy public TLS requires reachable 80/443 and is deferred unless new network evidence justifies an ADR change.
-
-## V2 quality refinement
-
-[ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) selects personal-table RLS plus scoped queries, owner-local intent/handler-local receipts, architecture fitness tests and a single problem-details error shape. Outcome C, React, Flutter, private Caddy/Tunnel, PostgreSQL 16 and local backups stay settled. Existing proposed table names are not verified implementation. Optional Builder/Specification/Adapter refactors move to Stretch when quality capacity needs their time.
+Raw attendance evidence is append-only; approved manual interpretation takes precedence over inference. Leave NEEDS_REVIEW retains debit until explicit HR resolution. HR policy/retention approval remains unknown. One computer is not high availability; restore evidence does not claim compliance certification.

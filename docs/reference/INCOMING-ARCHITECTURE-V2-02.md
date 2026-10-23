@@ -1,26 +1,43 @@
-# Incoming architecture reference 02
+# Approved architecture detail 02
 
-> **Warning:** Incoming uncommitted text preserved in full; seven-service, Nuxt, Kafka and cloud proposals conflict with accepted ADR 006 and are not current implementation requirements.
+> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the canonical Architecture index for supersession, security gaps and deployment constraints.
+
+## 9. Service catalogue
+
+| Service            | Port | Schema            | Owns                                             | Publishes                                                                                                                                  | Consumes                                                                                   |
+| ------------------ | ---- | ----------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| api-gateway        | 8080 | none              | Routing, auth enforcement                        | none                                                                                                                                       | none                                                                                       |
+| identity-org       | 8101 | `identity`        | Tenants, users, employees, org, shifts, holidays | `org.employee.v1`, `org.shift.v1`, `org.holiday.v1`                                                                                        | none                                                                                       |
+| attendance         | 8102 | `attendance`      | Evidence, sessions, corrections, daily status    | `attendance.evidence.v1`, `attendance.session.v1`, `attendance.daily-status.v1`, `time.shift-cutoff.v1`, `attendance.scoring-requested.v1` | `org.*`, `leave.request.v1`, `time.shift-cutoff.v1`, `attendance.confidence.v1`            |
+| leave              | 8103 | `leave`           | Leave types, balances, requests                  | `leave.request.v1`                                                                                                                         | `org.employee.v1`, `org.holiday.v1`                                                        |
+| request            | 8104 | `request`         | Requests, approval steps, material catalogue     | `request.workflow.v1`                                                                                                                      | `org.employee.v1`                                                                          |
+| notification       | 8105 | `notification`    | Templates, preferences, device tokens, inbox     | `notification.sent.v1` (optional)                                                                                                          | `attendance.*`, `leave.request.v1`, `request.workflow.v1`, `org.employee.v1`               |
+| reporting          | 8106 | `reporting`       | Fact tables, exports                             | none                                                                                                                                       | `org.employee.v1`, `attendance.daily-status.v1`, `leave.request.v1`, `request.workflow.v1` |
+| confidence-service | 8107 | none (file model) | Model and thresholds                             | `attendance.confidence.v1`                                                                                                                 | `attendance.scoring-requested.v1`, `attendance.session.v1` (labels)                        |
+
+The detailed table and endpoint lists are in _HRFlow – REST API & Core Database Design_.
+
+
 
 ## 10. Event-driven backbone
 
 ### 10.1 Topic catalogue
 
-| Topic | Key | Partitions (dev / prod suggestion) | Retention | Purpose |
-|---|---|---|---|---|
-| `org.employee.v1` | `tenantId:employeeId` | 3 / 6 | compacted + 30 d | Employee master data |
-| `org.shift.v1` | `tenantId:shiftId` | 3 / 3 | compacted | Shift definitions and assignments |
-| `org.holiday.v1` | `tenantId:date` | 1 / 3 | compacted | Holidays |
-| `attendance.evidence.v1` | `tenantId:employeeId` | 6 / 12 | 14 d | Raw presence signals |
-| `attendance.session.v1` | `tenantId:employeeId` | 6 / 12 | 30 d | Check-in, check-out, inferred, confirmed |
-| `attendance.daily-status.v1` | `tenantId:employeeId` | 6 / 12 | 30 d | Final status per day |
-| `attendance.scoring-requested.v1` | `tenantId:employeeId` | 3 / 6 | 3 d | Feature snapshot for the ML worker |
-| `attendance.confidence.v1` | `tenantId:employeeId` | 3 / 6 | 3 d | Model score and decision |
-| `leave.request.v1` | `tenantId:employeeId` | 3 / 6 | 30 d | Leave lifecycle |
-| `request.workflow.v1` | `tenantId:requestId` | 3 / 6 | 30 d | Request lifecycle |
-| `time.shift-cutoff.v1` | `tenantId:employeeId` | 3 / 6 | 3 d | "The shift window has closed" trigger |
-| `<topic>.retry` | same | same | 3 d | Delayed retry |
-| `<topic>.dlq` | same | 1 / 1 | 14 d | Poison messages |
+| Topic                             | Key                   | Partitions (dev / prod suggestion) | Retention        | Purpose                                  |
+| --------------------------------- | --------------------- | ---------------------------------- | ---------------- | ---------------------------------------- |
+| `org.employee.v1`                 | `tenantId:employeeId` | 3 / 6                              | compacted + 30 d | Employee master data                     |
+| `org.shift.v1`                    | `tenantId:shiftId`    | 3 / 3                              | compacted        | Shift definitions and assignments        |
+| `org.holiday.v1`                  | `tenantId:date`       | 1 / 3                              | compacted        | Holidays                                 |
+| `attendance.evidence.v1`          | `tenantId:employeeId` | 6 / 12                             | 14 d             | Raw presence signals                     |
+| `attendance.session.v1`           | `tenantId:employeeId` | 6 / 12                             | 30 d             | Check-in, check-out, inferred, confirmed |
+| `attendance.daily-status.v1`      | `tenantId:employeeId` | 6 / 12                             | 30 d             | Final status per day                     |
+| `attendance.scoring-requested.v1` | `tenantId:employeeId` | 3 / 6                              | 3 d              | Feature snapshot for the ML worker       |
+| `attendance.confidence.v1`        | `tenantId:employeeId` | 3 / 6                              | 3 d              | Model score and decision                 |
+| `leave.request.v1`                | `tenantId:employeeId` | 3 / 6                              | 30 d             | Leave lifecycle                          |
+| `request.workflow.v1`             | `tenantId:requestId`  | 3 / 6                              | 30 d             | Request lifecycle                        |
+| `time.shift-cutoff.v1`            | `tenantId:employeeId` | 3 / 6                              | 3 d              | "The shift window has closed" trigger    |
+| `<topic>.retry`                   | same                  | same                               | 3 d              | Delayed retry                            |
+| `<topic>.dlq`                     | same                  | 1 / 1                              | 14 d             | Poison messages                          |
 
 Compacted topics let a new or rebuilt service replay the latest state of every key (a **bootstrap** of its read model).
 
@@ -36,41 +53,41 @@ Trade-off: a very hot employee cannot be parallelised; this is acceptable becaus
 
 Every event carries the same header fields followed by a payload:
 
-| Field | Type | Meaning |
-|---|---|---|
-| `eventId` | uuid | Unique per event; the idempotency key |
-| `type` | string | `AttendanceCheckedIn.v1` (name + major version) |
-| `tenantId` | string | Tenant |
-| `aggregateId` | string | Entity the event is about |
-| `occurredAt` | timestamp-millis | When it happened (business time) |
-| `correlationId` | string | Carried from the originating HTTP request for tracing |
-| `causationId` | string, nullable | The event that caused this one |
-| payload fields | typed | Specific to the event |
+| Field           | Type             | Meaning                                               |
+| --------------- | ---------------- | ----------------------------------------------------- |
+| `eventId`       | uuid             | Unique per event; the idempotency key                 |
+| `type`          | string           | `AttendanceCheckedIn.v1` (name + major version)       |
+| `tenantId`      | string           | Tenant                                                |
+| `aggregateId`   | string           | Entity the event is about                             |
+| `occurredAt`    | timestamp-millis | When it happened (business time)                      |
+| `correlationId` | string           | Carried from the originating HTTP request for tracing |
+| `causationId`   | string, nullable | The event that caused this one                        |
+| payload fields  | typed            | Specific to the event                                 |
 
 In Avro, each event is its own record containing these header fields; consumers do not parse a generic envelope.
 
 ### 10.4 Avro and Schema Registry
 
-| Topic | Decision |
-|---|---|
-| Subject naming | `TopicNameStrategy`: subject `<topic>-value` |
-| Compatibility | `BACKWARD` by default (new schema can read old data), set globally and per subject |
-| Registration | CI registers schemas; services run with `auto.register.schemas=false` in non-dev environments |
-| Wire format | Magic byte + 4-byte schema id + Avro binary |
-| Generated classes | `avro-maven-plugin` in `hrflow-contracts`, `stringType=String` |
-| Logical types | `uuid`, `timestamp-millis`, `date` |
-| Python | `confluent-kafka` with the Avro serializer reading the same `.avsc` |
+| Topic             | Decision                                                                                      |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| Subject naming    | `TopicNameStrategy`: subject `<topic>-value`                                                  |
+| Compatibility     | `BACKWARD` by default (new schema can read old data), set globally and per subject            |
+| Registration      | CI registers schemas; services run with `auto.register.schemas=false` in non-dev environments |
+| Wire format       | Magic byte + 4-byte schema id + Avro binary                                                   |
+| Generated classes | `avro-maven-plugin` in `hrflow-contracts`, `stringType=String`                                |
+| Logical types     | `uuid`, `timestamp-millis`, `date`                                                            |
+| Python            | `confluent-kafka` with the Avro serializer reading the same `.avsc`                           |
 
 ### 10.5 Schema evolution rules
 
-| Change | Allowed? | How |
-|---|---|---|
-| Add an optional field | Yes | Give it a default (`null` union or value) |
-| Remove a field | Yes under BACKWARD, only if it had a default | Prefer deprecating first |
-| Rename a field | Avoid | Use `aliases` or add new + deprecate old |
-| Change a type | No | New major version of the event |
-| Add an enum symbol | Dangerous | Old readers break unless the enum has a `default` symbol; always declare one |
-| Breaking change | Major version | Publish to `...v2` topic, run both during migration, retire `v1` |
+| Change                | Allowed?                                     | How                                                                          |
+| --------------------- | -------------------------------------------- | ---------------------------------------------------------------------------- |
+| Add an optional field | Yes                                          | Give it a default (`null` union or value)                                    |
+| Remove a field        | Yes under BACKWARD, only if it had a default | Prefer deprecating first                                                     |
+| Rename a field        | Avoid                                        | Use `aliases` or add new + deprecate old                                     |
+| Change a type         | No                                           | New major version of the event                                               |
+| Add an enum symbol    | Dangerous                                    | Old readers break unless the enum has a `default` symbol; always declare one |
+| Breaking change       | Major version                                | Publish to `...v2` topic, run both during migration, retire `v1`             |
 
 CI step: `mvn -pl libs/hrflow-contracts verify` plus a compatibility check against the registry before merging any schema change.
 
@@ -89,15 +106,15 @@ HTTP request ──► [ business table write  +  outbox insert ]  (one DB trans
 ```
 
 
-| Aspect | Decision |
-|---|---|
-| Table | `outbox(id uuid, topic, event_key, payload bytea, created_at, published_at)` — `bytea` holds the Avro wire-format bytes |
-| Serialisation moment | At insert time (inside the business transaction) using `KafkaAvroSerializer` |
-| Ordering | Relay orders by `created_at`; per-key order holds because one row per event is sent in order within a batch |
-| Multiple instances | `SKIP LOCKED` lets several relays run safely; strict per-key ordering across instances needs care (see 24.4) |
-| Delivery guarantee | At-least-once (duplicates possible if the relay crashes after send before marking) |
-| Cleanup | Nightly delete of rows published more than one day ago |
-| Poll vs CDC | Polling chosen for simplicity; Debezium is a later optimisation |
+| Aspect               | Decision                                                                                                                |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Table                | `outbox(id uuid, topic, event_key, payload bytea, created_at, published_at)` — `bytea` holds the Avro wire-format bytes |
+| Serialisation moment | At insert time (inside the business transaction) using `KafkaAvroSerializer`                                            |
+| Ordering             | Relay orders by `created_at`; per-key order holds because one row per event is sent in order within a batch             |
+| Multiple instances   | `SKIP LOCKED` lets several relays run safely; strict per-key ordering across instances needs care (see 24.4)            |
+| Delivery guarantee   | At-least-once (duplicates possible if the relay crashes after send before marking)                                      |
+| Cleanup              | Nightly delete of rows published more than one day ago                                                                  |
+| Poll vs CDC          | Polling chosen for simplicity; Debezium is a later optimisation                                                         |
 
 ### 10.7 Inbox (idempotent consumer)
 
@@ -116,13 +133,13 @@ The inbox insert and the business change share one transaction, so a crash betwe
 
 ### 10.8 Retry and dead-letter strategy
 
-| Failure | Handling |
-|---|---|
-| Transient (DB timeout, deadlock) | In-process retry 3 times with exponential backoff |
-| Still failing | Publish to `<topic>.retry` with a delay header; a retry consumer re-processes after the delay |
-| Deserialisation or validation error (poison) | Straight to `<topic>.dlq` with the error and original bytes |
-| DLQ | Alert; an admin endpoint or script can replay messages after a fix |
-| Consumer lag | Alert when lag stays above a threshold for 5 minutes |
+| Failure                                      | Handling                                                                                      |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Transient (DB timeout, deadlock)             | In-process retry 3 times with exponential backoff                                             |
+| Still failing                                | Publish to `<topic>.retry` with a delay header; a retry consumer re-processes after the delay |
+| Deserialisation or validation error (poison) | Straight to `<topic>.dlq` with the error and original bytes                                   |
+| DLQ                                          | Alert; an admin endpoint or script can replay messages after a fix                            |
+| Consumer lag                                 | Alert when lag stays above a threshold for 5 minutes                                          |
 
 ### 10.9 Read-model bootstrap
 
@@ -161,12 +178,12 @@ Lane A is the product. Lane B exists so that a forgotten tap does not become a f
 
 ### 11.2 Aggregates and their invariants
 
-| Aggregate | Invariants |
-|---|---|
-| `AttendanceSession` | `check_out_at` is null or after `check_in_at`; `source` is immutable; a session is never deleted |
-| `Evidence` | Immutable, append-only; belongs to one employee and one device |
-| `DailyStatus` | Exactly one row per `(tenant, employee, work_date)`; derived, never edited directly |
-| `AttendanceCorrection` | Append-only record of a requested change; approval appends a `MANUAL` session |
+| Aggregate              | Invariants                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `AttendanceSession`    | `check_out_at` is null or after `check_in_at`; `source` is immutable; a session is never deleted |
+| `Evidence`             | Immutable, append-only; belongs to one employee and one device                                   |
+| `DailyStatus`          | Exactly one row per `(tenant, employee, work_date)`; derived, never edited directly              |
+| `AttendanceCorrection` | Append-only record of a requested change; approval appends a `MANUAL` session                    |
 
 ### 11.3 Session state machine
 
@@ -260,13 +277,13 @@ The user receives their answer after one local commit. Nothing downstream can ma
 
 ### 11.7.1 Validation done at check-in
 
-| Check | Result if it fails |
-|---|---|
-| Employee is `ACTIVE` | 422 `EMPLOYEE_NOT_ACTIVE` |
-| Device matches the bound device (or first use binds it) | 422 `DEVICE_MISMATCH` (still recorded as evidence, flagged) |
-| `mock_location_flag` true | Session saved but flagged `REVIEW`; manager notified |
-| Already checked in with an open session | 409 `ALREADY_CHECKED_IN` |
-| Day is a holiday or approved leave | Allowed; recorded, but precedence keeps the holiday/leave status |
+| Check                                                   | Result if it fails                                               |
+| ------------------------------------------------------- | ---------------------------------------------------------------- |
+| Employee is `ACTIVE`                                    | 422 `EMPLOYEE_NOT_ACTIVE`                                        |
+| Device matches the bound device (or first use binds it) | 422 `DEVICE_MISMATCH` (still recorded as evidence, flagged)      |
+| `mock_location_flag` true                               | Session saved but flagged `REVIEW`; manager notified             |
+| Already checked in with an open session                 | 409 `ALREADY_CHECKED_IN`                                         |
+| Day is a holiday or approved leave                      | Allowed; recorded, but precedence keeps the holiday/leave status |
 
 Business rule: **never block a genuine employee from tapping**; flag and review instead.
 
@@ -307,12 +324,12 @@ If the confidence service is down, attendance falls back to the **rules score** 
 
 ### 11.11 Idempotency and concurrency
 
-| Concern | Approach |
-|---|---|
-| Duplicate check-in tap (double click, retry) | `Idempotency-Key` plus a unique index on `(tenant_id, employee_id, check_in_at)` |
-| Two devices at once | Partition key serialises event handling; DB unique constraint guards the HTTP path |
+| Concern                                            | Approach                                                                                                                                    |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duplicate check-in tap (double click, retry)       | `Idempotency-Key` plus a unique index on `(tenant_id, employee_id, check_in_at)`                                                            |
+| Two devices at once                                | Partition key serialises event handling; DB unique constraint guards the HTTP path                                                          |
 | Late event arriving after the status was finalised | Status is recomputed (idempotent function of inputs); `version` on `daily_status` prevents older recomputations from overwriting newer ones |
-| Clock skew on the phone | Server uses its own receive time for `check_in_at`; phone time is kept as `client_at` evidence |
+| Clock skew on the phone                            | Server uses its own receive time for `check_in_at`; phone time is kept as `client_at` evidence                                              |
 
 
 
@@ -336,14 +353,14 @@ If the confidence service is down, attendance falls back to the **rules score** 
 
 `available = entitled + carried_over − used − pending`
 
-| Action | Balance effect | Ledger row |
-|---|---|---|
-| Submit | `pending += days` | `-days`, reason `SUBMIT` |
-| Approve | `pending -= days`, `used += days` | reason `APPROVE` |
-| Reject / cancel pending | `pending -= days` | `+days`, reason `RELEASE` |
-| Cancel approved (future) | `used -= days` | `+days`, reason `CANCEL` |
-| Year-end | carry-over up to the policy maximum | reason `ROLLOVER` |
-| HR adjustment | entitled changes | reason `ADJUST` with note |
+| Action                   | Balance effect                      | Ledger row                |
+| ------------------------ | ----------------------------------- | ------------------------- |
+| Submit                   | `pending += days`                   | `-days`, reason `SUBMIT`  |
+| Approve                  | `pending -= days`, `used += days`   | reason `APPROVE`          |
+| Reject / cancel pending  | `pending -= days`                   | `+days`, reason `RELEASE` |
+| Cancel approved (future) | `used -= days`                      | `+days`, reason `CANCEL`  |
+| Year-end                 | carry-over up to the policy maximum | reason `ROLLOVER`         |
+| HR adjustment            | entitled changes                    | reason `ADJUST` with note |
 
 The **ledger is the audit trail**; the balance row is a cache that can be rebuilt from it.
 
@@ -361,39 +378,10 @@ Two simultaneous submissions could both pass a balance check. The service update
 
 ### 12.5 Events and effects
 
-| Event | Effect elsewhere |
-|---|---|
-| `LeaveSubmitted` | notification → manager |
+| Event                                   | Effect elsewhere                                                                                                 |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `LeaveSubmitted`                        | notification → manager                                                                                           |
 | `LeaveApproved` (with the per-day list) | attendance writes `leave_ref` rows; recomputes statuses; notification → employee; reporting updates `leave_fact` |
-| `LeaveRejected` / `LeaveCancelled` | attendance removes `leave_ref` rows (soft), recomputes statuses |
+| `LeaveRejected` / `LeaveCancelled`      | attendance removes `leave_ref` rows (soft), recomputes statuses                                                  |
 
 "Special leave" is a leave type (`SPECIAL`) with its own policy, not a separate service.
-
-
-
-## 13. Request workflow domain
-
-### 13.1 Model
-
-A `request` has a type and a configurable **approval chain** (for example `["MANAGER", "HR_ADMIN"]`). Each chain element becomes an `approval_step` row when the request is submitted.
-
-### 13.2 State machine
-
-```text
-DRAFT ──submit──► PENDING ──all steps approved──► APPROVED ──fulfil (materials)──► FULFILLED
-  │                  │ any step rejected
-  │ cancel           ▼
-  ▼               REJECTED
-CANCELLED ◄──cancel before final decision── PENDING
-```
-
-
-### 13.3 Step resolution
-
-- `MANAGER` resolves to the requester's `manager_id` from `employee_ref`.
-- `HR_ADMIN` resolves to any user holding the role in the tenant (inbox visible to all HR admins; first decision wins).
-- If the requester has no manager, the step is skipped (`SKIPPED`) and recorded.
-
-### 13.4 Why a separate service from leave
-
-Leave has balance accounting and a calendar effect on attendance; general requests have a form-driven payload (`data jsonb`) and no balance. Merging them would force one model to carry both; separate services keep each simple and let the leave policy evolve independently.

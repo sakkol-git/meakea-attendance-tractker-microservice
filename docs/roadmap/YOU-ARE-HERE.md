@@ -12,7 +12,7 @@ Current week: 01. Current step: W01-S01. Step state: **Not run**. Gate: **NOT RU
 
 Next action: inspect the dirty working tree, save a safe code checkpoint without staging secrets, and verify at least 30 GiB free before container pulls.
 
-Last green application tag: none. Documentation commits are not green application tags. Blockers: low disk, missing Java 21, stopped Docker, unconfirmed hours/host/domain/external backup disk. Energy: unknown; choose rested, steady, tired, or stop before starting.
+Last green application tag: none. Documentation commits are not green application tags. Blockers: low disk, missing Java 21, stopped Docker, host/domain/external backup disk not ready; final service architecture capacity not yet validated. Energy: unknown; choose rested, steady, tired, or stop before starting.
 
 ## Evidence and shutdown
 
@@ -36,3 +36,7 @@ Tomorrow's first action: W01-S01 until its checkpoint and disk checks pass. A fa
 | 10 | Not started | None | **NOT RUN** | Week 9 |
 | 11 | Not started | None | **NOT RUN** | Week 10 |
 | 12 | Not started | None | **NOT RUN** | Week 11 |
+
+## Final-design correction
+
+Latest user instruction accepts the final seven-service Architecture and defers AWS/Kubernetes as future improvement. Open [V2 progress](PROGRESS-V2.md) before following weekly code instructions: unconverted monolith/React steps are not executable guidance. Current position remains W01-S01; no application tag passed and no progress is translated to done.

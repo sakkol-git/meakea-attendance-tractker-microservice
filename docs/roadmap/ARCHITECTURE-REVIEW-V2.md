@@ -1,128 +1,168 @@
 # Architecture review V2
 
-## Evidence and decision
+## Chosen outcome and requirement
 
-Outcome C remains the simplest architecture satisfying all Must features on one computer. Source re-inspection (`rg --files services libs infra .github`, `web/package.json`, `pom.xml`) still finds seven entry-point scaffolds, Nuxt, no business migrations/controllers/auth, and no deployed monolith. No evidence justifies adding deployables. User confirmed no change to position/hours/host readiness: W01-S01, 24 h each, host not ready.
+Accept the latest user-approved seven-service system design, not the earlier modular-monolith simplification. The user first required AWS/Kubernetes within twelve weeks, then said “skip it for now, it will be future improvment” when asked about region/budget. The latest instruction defers cloud execution; the approved production design is preserved. Twelve-week deployment is local Compose, with no cloud spending assumed. [ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) records this supersession.
 
-Incoming uncommitted docs were preserved. `docs/Architecture.md` had 1,400 lines and contradicted ADR 006 with Kafka, Nuxt, AWS/Kubernetes and header-trusting services. The existing linter returned 223 errors, all in that file. The incoming text is archived in bounded reference parts; the accepted canonical structure is retained and clarified. `docs/SOURCE-OF-TRUTH.md` remains the navigation authority, with corrected current decisions.
+The requirement satisfied is service-owned HR domains with Kafka event integration, JDBC, Nuxt and Flutter. It is a final design choice, not proof that the scope fits 24 hours each. User confirmed W01-S01 unstarted, unchanged A/B hours and host not ready. No application changes were made in this pass.
 
-## Capacity recomputation before decomposition
+## Re-inspection evidence
 
-This table counts each step's upper stated duration once for its owner and twice for joint work. It is an estimate from text, not measured junior velocity. Normal capacity is 16.8 h each; Weeks 4/8 are 14.28. Reading/recovery consumed the remaining capacity in V1. Post-decomposition ledger is updated in phase 4 without expanding these limits.
+- services/identity-org/src/main/java/com/hrflow/identityorg/IdentityOrgApplication.java and six peer Application files are startup scaffolds; no business controllers/entities/migrations/security are inferred. `rg --files services libs infra` is the inventory command.
+- pom.xml selects Java 21 and Boot 4.1.1; service poms still use 4.0.8. services/api-gateway/pom.xml currently uses MVC gateway dependencies, conflicting with the approved reactive target. Business poms contain JPA dependencies; the accepted design calls for JDBC.
+- web/package.json and web/package-lock.json select Nuxt/Vue; retaining them avoids the superseded React migration. libs/hrflow-contracts/events/attendance-checked-in.v1.avsc is an actual Avro file; contracts/openapi.yaml is still proposed.
+- infra/docker/postgres-init.sql creates identity_org plus the five other owner schemas. infra/docker/docker-compose.yaml has PostgreSQL/Kafka/Registry scaffolding, but the SQL mount/listener paths require inspection and correction before running. It is not a deployed service topology.
+- ml/confidence-service contains standalone confidence code/tests; Kafka worker integration remains future implementation. Existing Python tests passing do not prove event integration.
+- Safe recorded outputs: `mvn -o validate` passed ten reactor projects; `mvn -o test` failed resolving uncached Avro/Jackson before Java compilation; Nuxt build passed; Python pytest passed five tests with one warning; Docker daemon was unavailable. These results are baseline evidence, not application gates.
 
-| Week | A step h | B step h | A capacity h | B capacity h | Status |
+## Capacity recomputation and schedule verdict
+
+Single source inputs are in [dashboard](YOU-ARE-HERE.md): 24 h each, fraction 0.70, light factor 0.85. Normal planned capacity is 16.8 each, Weeks 4/8 14.28 each. Twelve-week capacity is 196.56 each, 393.12 combined. The old 182-step upper-duration ledger totals A=117 and B=80.5 hours; reading adds 24 each. It described a different architecture and omitted much of the quality bar.
+
+The following is a planning-demand estimate, not scheduled hours or measured junior velocity. Incremental work is explicitly additional to the old core: A=160 h for service/broker/JDBC/Avro integration and local operations; A=48 h for missing quality practices; B=24 h contract/device integration and 12 h quality checks. Each week's delta is recorded so it can be replaced with decomposed estimates. Nothing is compressed to a 30-minute label merely to claim feasibility. The 30 percent reserve stays unallocated.
+
+| Week | Old step h A/B | Extra h A/B | Demand incl reading A/B | 70% limit A/B | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| 01 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 02 | 12 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 03 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 04 | 7.5 | 5.25 | 14.28 | 14.28 | **CONDITIONAL PASS** estimates only |
-| 05 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 06 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 07 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 08 | 7.5 | 5.25 | 14.28 | 14.28 | **CONDITIONAL PASS** estimates only |
-| 09 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 10 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 11 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
-| 12 | 10 | 7 | 16.8 | 16.8 | **CONDITIONAL PASS** estimates only |
+| 01 | 10/7 | 21/3 | 33/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 02 | 12/7 | 24/3 | 38/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 03 | 10/7 | 20/3 | 32/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 04 | 7.5/5.25 | 11/3 | 20.5/10.25 | 14.28/14.28 | **FAIL** A demand exceeds limit |
+| 05 | 10/7 | 26/3 | 38/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 06 | 10/7 | 11/3 | 23/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 07 | 10/7 | 10/3 | 22/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 08 | 7.5/5.25 | 10/3 | 19.5/10.25 | 14.28/14.28 | **FAIL** A demand exceeds limit |
+| 09 | 10/7 | 23/3 | 35/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 10 | 10/7 | 27/3 | 39/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 11 | 10/7 | 15/3 | 27/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
+| 12 | 10/7 | 10/3 | 22/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
 
-## Every ADR reviewed
+Total demand is A=349, B=140.5, combined 489.5 contributor-hours. This exceeds combined planned capacity by 96.38 h and A's capacity by 152.44 h. B's unused budget cannot be treated as backend expertise without training/pairing costs. This estimate does not include AWS/Kubernetes execution, which is now deferred. Full-scope twelve-week feasibility is **FAIL** under these estimates; it must not be advertised as a funded plan.
 
-| ADR | Verdict | Evidence and simplicity | Cost and junior adoption |
+Delta estimate basis: Weeks 1–3 align seven builds, reactive gateway/JDBC, Avro compatibility and tenant/security fixtures; Weeks 4–8 add service-owned projections, Kafka outbox/inbox replay and cross-client/event tests; Week 9 adds reporting/confidence integration and observability; Weeks 10–12 add multi-workload deploy/recovery, replay/security hardening and release rehearsal. These are planning allowances, not invented command timings. Phase 4 atomic ledgers must refine or disprove them with evidence.
+
+Optional polish/push/extra charts/pattern refactors move to Stretch first. Security, tenant tests, event correctness and backup restore stay mandatory. If atomic estimates still exceed capacity after optional cuts, record unallocated Must work and ask for a scope/hours/deadline decision; do not silently change the architecture. Existing week READMEs retain their old budgets until upgraded and cannot certify the full new scope.
+
+## ADR review
+
+| ADR | Verdict | Evidence and simplest permitted option | Cost and beginner adoption |
 | --- | --- | --- | --- |
-| 001 | **Keep** superseded | Entry-point services do not justify restoring Kafka topology | No runtime cost while historical |
-| 002 | **Adjust** | Tenant columns/grants alone insufficient; Q04 asks explicit RLS choice | Adopt tested personal-data RLS within Week-3 time replacing Builder refactor |
-| 003 | **Adjust** | Original text still says broker offsets/Avro; ADR 006 selects local receipts | Keep atomic outbox/inbox, remove runtime Kafka assumptions |
-| 004 | **Keep** proposed policy | Preserve evidence and review conflicts; HR sign-off remains needed | No new component; tests define manual/cancel semantics |
-| 005 | **Keep** superseded | User requires React/self-host, not Nuxt/Kubernetes exploration | No cloud/cluster budget |
-| 006 | **Keep** architecture | Source mostly unbuilt; one runtime preserves domain packages | No extra service; current hours unchanged |
-| 007 | **Adjust** new refinement | RLS, module fitness and problem-details consistency are required quality practices | Free tools, no new runtime; no certification claim |
+| 001 | **Adjust** | Restore service ownership/Kafka per latest Architecture; clarify outbox/inbox | More processes and failure paths; template plus real integration tests required |
+| 002 | **Adjust** | Scoped JDBC, tenant composite keys/indexes plus personal-data RLS | No paid tool; non-owner roles/pool tests consume explicit Week-3 quality time |
+| 003 | **Adjust** | Kafka/Avro restored; owner transaction and effect/receipt before offset | Registry and broker recovery are real work, not local-worker substitutes |
+| 004 | **Keep** proposed | Manual evidence precedence/review preserved; HR sign-off unknown | No component; policy test fixtures before coding |
+| 005 | **Adjust** | Nuxt retained; cloud topology future, Compose now | Existing npm lockfile reused; cloud has no approved spend |
+| 006 | **Replace** | User explicitly accepts latest seven-service design | Superseded by 008; old feasibility result invalid |
+| 007 | **Adjust** | Retain RLS/problem/audit/fitness; replace local dispatch semantics | Free quality tools, extra engineering time recorded above |
+| 008 | **Keep** | Records latest accepted architecture and cloud deferral | No certification or delivery guarantee; host/resources still unknown |
 
-[ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) supersedes only conflicting tenant/event ownership clauses, not outcome C or business scope. Index statuses must match the actual record; Proposed domain policy is not silently labeled Accepted.
+[ADR index](../adr/README.md) is authoritative for supersession; original Proposed policy is not silently promoted. All code/tool versions still require compatibility verification, particularly Boot/Cloud/Avro. No class/table/route is called implemented merely because a design names it.
 
-## Boundaries
+## Service boundaries
 
 ```mermaid
 flowchart LR
-    C["React and Flutter"] --> E["Private Caddy edge"]
-    E --> A["One Spring Boot app"]
-    A --> I["Identity organization"]
-    A --> T["Attendance"]
-    A --> L["Leave and requests"]
-    A --> N["Notification and reporting"]
+    C["Nuxt and Flutter"] --> G["Reactive gateway"]
+    G --> I["Identity organization"]
+    G --> A["Attendance"]
+    G --> L["Leave"]
+    G --> Q["Request"]
+    G --> N["Notification"]
+    G --> R["Reporting"]
+    I --> K["Kafka and Registry"]
+    A --> K
+    L --> K
+    Q --> K
+    K --> N
+    K --> R
+    K --> P["Confidence worker"]
 ```
 
 Text version:
 
-- One JVM holds six domain packages; Caddy handles ingress, not business authorization.
-- Each package exposes a small api surface and keeps repositories/internal implementations private.
+- Gateway routes user HTTP; each business service owns its commands, queries and role/resource checks.
+- Services use events and local read models, not business-service HTTP or another service's Java internals.
 
 ## Data ownership
 
 ```mermaid
 flowchart LR
-    I["identityorg internals"] --> DI["identity_org schema"]
-    A["attendance internals"] --> DA["attendance schema"]
-    L["leave internals"] --> DL["leave schema"]
-    Q["request internals"] --> DQ["request schema"]
-    N["notification internals"] --> DN["notification schema"]
-    R["reporting internals"] --> DR["reporting schema"]
+    I["identityorg"] --> DI["identity_org schema"]
+    A["attendance"] --> DA["attendance schema"]
+    L["leave"] --> DL["leave schema"]
+    Q["request"] --> DQ["request schema"]
+    N["notification"] --> DN["notification schema"]
+    R["reporting"] --> DR["reporting schema"]
 ```
 
 Text version:
 
-- No cross-domain business-table join or FK; foreign employees are local references or public port values.
-- Each writer keeps audit and outbox with its transaction; receipts live with their handler effects.
+- One PostgreSQL instance, schema/runtime role per owner; no cross-schema business query or FK.
+- Foreign employee facts are local projections. Outbox/audit stay with writer; inbox stays with consumer effect.
 
 ## Event flow
 
 ```mermaid
 flowchart LR
-    W["Owner command transaction"] --> O["Owner outbox"]
-    O --> D["Scheduled local dispatcher"]
-    D --> N["Notification effect and receipt"]
-    D --> R["Report effect and receipt"]
-    N --> P["Separate bounded delivery work"]
+    T["Owner DB transaction"] --> O["Business audit and outbox"]
+    O --> P["Publisher with retry"]
+    P --> K["Kafka Avro event"]
+    K --> C["Consumer transaction"]
+    C --> E["Projection or effect plus inbox"]
+    E --> A["Acknowledge offset"]
 ```
 
 Text version:
 
-- Atomic publication intent survives worker failure; no Kafka acknowledgment exists in this runtime.
-- Replay checks handler receipt and aggregate revision; external side effects can remain uncertain after timeout.
+- Mark sent after broker acknowledgment; a crash between acknowledgment and marking can duplicate publication.
+- Commit effect and receipt before offset; inbox and aggregate revision suppress duplicates/stale snapshots. External provider delivery has its own bounded retry state.
 
 ## Failure modes
 
 ```mermaid
 flowchart LR
-    C["Commit fails"] --> X["No success response"]
-    W["Worker stops"] --> O["Intent remains pending"]
-    O --> R["Resume and deduplicate"]
-    H["Host fails"] --> B["External backup"]
-    B --> S["Clean restore with verification"]
+    B["Broker unavailable"] --> O["Outbox pending and alert"]
+    C["Consumer crash"] --> R["Replay and inbox deduplication"]
+    L["Retention gap"] --> S["Owner snapshot bootstrap"]
+    H["Host fails"] --> E["External backup"]
+    E --> V["Clean restore and verification"]
 ```
 
 Text version:
 
-- Retryable commands preserve keys after uncertain commits; workers retain incomplete intents.
-- One host has no high availability; a dump is not a backup success until restore evidence exists.
+- Kafka recovery does not replace database/attachment backup, and replay must detect retention gaps rather than silently skip history.
+- A single host has no high availability; restore is acceptance evidence, not the existence of a dump file.
 
 ## Q10 dependency rules
 
-- Packages follow `com.hrflow.app.DOMAIN.api` and `internal`; names are proposed until inspection creates them.
-- Controllers call own application services; domain code imports no controller, Spring MVC or persistence implementation.
-- Foreign modules may import only public api contracts, never internal services, JPA entities or repositories.
-- Public contract dependencies are acyclic; shared code is only value types/clock/event metadata and never imports domains.
-- A composition-root dispatcher wires ports but never reads another module's business repository. Test classes may use explicit test fixtures only.
-- ArchUnit imports actual compiled packages and fails on a deliberately introduced forbidden dependency; also detect cycles. Empty package imports must fail, not produce a vacuous green test.
+- Use existing roots com.hrflow.identityorg, attendance, leave, request, notification, reporting and gateway; inspect before choosing a class name. Proposed subpackages are api, application, domain and infrastructure, matching the final design's dependency direction rather than a new monolith root.
+- Domain imports no Spring/JDBC/Kafka/web classes. API calls its own application layer. Infrastructure implements domain/application ports; domain never imports infrastructure.
+- No service imports another service's implementation packages or depends on its Maven artifact. Shared contracts/event starter contain no owner business logic or repositories.
+- Service JDBC code names only owner schema. Dynamic SQL identifiers are allowlisted; ArchUnit cannot prove SQL tenant predicates, so repository/RLS tests remain mandatory.
+- Automated architecture tests import nonempty actual packages, assert cycles/dependency rules, and fail on an intentional forbidden import fixture. Empty tests cannot satisfy Q10.
+- Build module dependencies are checked as well as packages, so an empty service or shared library cannot conceal a reverse dependency. API gateway owns no domain persistence.
+
+## Security boundary requiring proof
+
+Keep final gateway header-trust decision. Gateway removes all incoming identity headers before adding fields derived solely from a verified JWT. Business ports are unpublished/private, role/resource checks are method-level, and database tenant context is transaction-local. Prove forged headers, invalid tokens, wrong roles, foreign tenant IDs, direct business-service access and monitoring-only access. A container network alone is not cryptographic identity; a compromised trusted network peer remains a documented limitation. Q04/Q05 are conditional until tests prove the chosen boundary, and any stronger per-service validation change needs a superseding decision.
 
 ## Impact matrix
 
-| Files | Affected old range | Reason | Action |
+| Roadmap files | Old range | Measurable conflict or gap | Required correction |
 | --- | --- | --- | --- |
-| Architecture.md, canonical API, source map, ADR index | W01–W12 | Topology/error/schema contradictions | Retain C; canonical corrections and archival links |
-| Week 1 guides and gates | W01-S04–S15 | Contract/error/CI quality missing | Atomic golden-slice foundation and quality slots |
-| Week 2 guides and gates | W02-S01–S17 | Auth combined tasks and absent throttling | Twenty auth steps plus secure host gate |
-| Week 3 guides and gates | W03-S01–S15 | RLS/fitness undefined | Replace optional Builder refactor with tenant defense |
-| Weeks 4–12 guides and gates | All existing steps | Missing undo/habit and broad coupled changes | Map IDs and preserve goals; local event semantics |
-| Shared standards/checklists/primers/runbooks | All weekly references | Quality enforcement not traceable | Add shared assets and one golden slice |
+| ROADMAP, DECISION-REGISTER, MILESTONE-MAP | All weeks | Monolith/React/no broker | Final services/Nuxt/Kafka; cloud deferred |
+| Preparation baseline/migration and repo audit | W01-S01–S06 | Old architecture cost assumed | Preserve source roots and recompute service work |
+| W01 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W01-S01–S15 | hrflow-app and React migration | Seven-service compatibility spike, Nuxt, broker baseline |
+| W02 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W02-S01–S17 | Auth combined; one-app host | Atomic auth and private multi-service host/restore |
+| W03 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W03-S01–S15 | JPA/module assumptions | JDBC/RLS/golden slice/service fitness |
+| W04 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W04-S01–S15 | In-process dependencies | Attendance owner projections and invariants |
+| W05 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W05-S01–S15 | Local worker semantics | Kafka/Avro publisher/receipt/offset/replay |
+| W06 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W06-S01–S15 | Monolith leave integration | Exact balances plus event conflict handling |
+| W07 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W07-S01–S15 | Requests/files owner boundaries | Request service, actor/tenant tests, private files |
+| W08 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W08-S01–S15 | React and late client join | Nuxt/Flutter compatibility and event convergence |
+| W09 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W09-S01–S15 | Local reporting/no broker metrics | Consumer lag/bootstrap/export/telemetry |
+| W10 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING, HOST-RUNBOOK | W10-S01–S15 | One-app deployment/restore | Multi-service recovery, Kafka offsets and Registry |
+| W11–12 READMEs, BUILD-GUIDEs, gates and diagnostics | W11-S01–W12-S15 | Missing all-Q release evidence | Security/replay/load/restore and honest limitations |
+| Shared standards, tests, commands, golden slice, runbooks | All references | C-specific paths/events/client | Owner roots, Kafka tests, Nuxt; no invented existing code |
+| Global checklist, pattern path, definition of done, start/dashboard | All IDs | New steps/gates untraced | Map every old ID; preserve tags; no prechecked tasks |
 
-No application source is changed. Later phase records list exact affected file paths and ID mappings. Every change is tied to one of the measured defects or Q01–Q14, not a new component menu.
+The exact per-file map after splitting belongs in STEP-ID-MAP.md. This impact matrix deliberately identifies unconverted files; it does not declare their contents consistent before edits.

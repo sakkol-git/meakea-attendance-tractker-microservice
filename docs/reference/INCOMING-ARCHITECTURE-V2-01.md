@@ -1,6 +1,6 @@
-# Incoming architecture reference 01
+# Approved architecture detail 01
 
-> **Warning:** Incoming uncommitted text preserved in full; seven-service, Nuxt, Kafka and cloud proposals conflict with accepted ADR 006 and are not current implementation requirements.
+> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the canonical Architecture index for supersession, security gaps and deployment constraints.
 
 > **Note:** Event-driven, multi-tenant HR platform: attendance, leave, requests, approvals, notifications and reporting.
 > **Note:** Status: **design document**. Nothing here has been load-tested; items marked **[UNVERIFIED]** depend on library versions or cloud behaviour that must be confirmed during the build.
@@ -50,15 +50,15 @@ HRFlow lets a company record who worked when, who is away, and what staff have a
 
 ### 1.2 In scope
 
-| Area | Capability |
-|---|---|
-| Identity and organisation | Tenants, users, roles, employees, departments, positions, work sites, shifts, holidays |
-| Attendance | One-tap check-in/out, geofence and Wi-Fi nudges, evidence log, inferred sessions, corrections, daily status (present, late, absent, leave early, on leave) |
-| Leave | Leave types, balances, requests, approvals, calendar, special leave |
-| Requests | Material and general requests with a configurable approval chain |
-| Notifications | Push, email, in-app inbox, per-user preferences |
-| Reporting | Dashboards, summaries, async exports |
-| ML | Presence-confidence scoring with explainable reasons |
+| Area                      | Capability                                                                                                                                                 |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity and organisation | Tenants, users, roles, employees, departments, positions, work sites, shifts, holidays                                                                     |
+| Attendance                | One-tap check-in/out, geofence and Wi-Fi nudges, evidence log, inferred sessions, corrections, daily status (present, late, absent, leave early, on leave) |
+| Leave                     | Leave types, balances, requests, approvals, calendar, special leave                                                                                        |
+| Requests                  | Material and general requests with a configurable approval chain                                                                                           |
+| Notifications             | Push, email, in-app inbox, per-user preferences                                                                                                            |
+| Reporting                 | Dashboards, summaries, async exports                                                                                                                       |
+| ML                        | Presence-confidence scoring with explainable reasons                                                                                                       |
 
 ### 1.3 Out of scope (first release)
 
@@ -70,14 +70,14 @@ HRFlow lets a company record who worked when, who is away, and what staff have a
 
 ### 1.4 Quality goals (ordered by priority)
 
-| # | Quality attribute | Target | How the architecture serves it |
-|---|---|---|---|
-| 1 | Correctness of attendance records | No lost or duplicated check-ins; every automatic decision explainable | Append-only evidence, outbox, idempotent consumers, reasons stored with each inferred session |
-| 2 | Loose coupling | Any service can be deployed, restarted or fail without breaking others | Events only, no service-to-service HTTP, local read models |
-| 3 | Responsiveness | Check-in API p95 < 300 ms; read models updated < 1 s after an event | Command path touches one service and one database; async fan-out |
-| 4 | Tenant isolation | One company never sees another's data | `tenant_id` on every row, gateway-enforced headers, tenant in event key |
-| 5 | Low cost | Runs on a student budget | Single Postgres instance with schema per service, single-broker Kafka for dev, small ML model |
-| 6 | Operability by two people | Setup reproducible with one command | Docker Compose locally, Terraform for cloud, uniform service template |
+| #   | Quality attribute                 | Target                                                                 | How the architecture serves it                                                                |
+| --- | --------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| 1   | Correctness of attendance records | No lost or duplicated check-ins; every automatic decision explainable  | Append-only evidence, outbox, idempotent consumers, reasons stored with each inferred session |
+| 2   | Loose coupling                    | Any service can be deployed, restarted or fail without breaking others | Events only, no service-to-service HTTP, local read models                                    |
+| 3   | Responsiveness                    | Check-in API p95 < 300 ms; read models updated < 1 s after an event    | Command path touches one service and one database; async fan-out                              |
+| 4   | Tenant isolation                  | One company never sees another's data                                  | `tenant_id` on every row, gateway-enforced headers, tenant in event key                       |
+| 5   | Low cost                          | Runs on a student budget                                               | Single Postgres instance with schema per service, single-broker Kafka for dev, small ML model |
+| 6   | Operability by two people         | Setup reproducible with one command                                    | Docker Compose locally, Terraform for cloud, uniform service template                         |
 
 
 
@@ -114,14 +114,14 @@ HRFlow lets a company record who worked when, who is away, and what staff have a
 ```
 
 
-| Actor | Goal | Main interfaces |
-|---|---|---|
-| Employee | Check in/out, request leave, request materials, see status | Flutter app |
-| Manager | Approve leave and requests, see team attendance | Nuxt web, Flutter |
-| HR admin | Configure org, shifts, holidays, policies; fix attendance; run reports | Nuxt web |
-| Owner | Company settings, audit log | Nuxt web |
-| Platform admin | Create tenants | Internal endpoint |
-| Push/email providers | Deliver notifications | Outbound only |
+| Actor                | Goal                                                                   | Main interfaces   |
+| -------------------- | ---------------------------------------------------------------------- | ----------------- |
+| Employee             | Check in/out, request leave, request materials, see status             | Flutter app       |
+| Manager              | Approve leave and requests, see team attendance                        | Nuxt web, Flutter |
+| HR admin             | Configure org, shifts, holidays, policies; fix attendance; run reports | Nuxt web          |
+| Owner                | Company settings, audit log                                            | Nuxt web          |
+| Platform admin       | Create tenants                                                         | Internal endpoint |
+| Push/email providers | Deliver notifications                                                  | Outbound only     |
 
 External systems are deliberately few: HRFlow is the system of record.
 
@@ -172,49 +172,49 @@ External systems are deliberately few: HRFlow is the system of record.
 
 ### 4.1 Container responsibilities
 
-| Container | Responsibility | Talks to |
-|---|---|---|
-| api-gateway | Single entry point, authentication, routing, rate limiting, CORS, request IDs | Clients, all services (HTTP) |
-| identity-org | Login, JWT signing, tenants, employees, org structure, shifts, holidays | Postgres, Kafka |
-| attendance | Check-ins, evidence, inference orchestration, daily status | Postgres, Kafka |
-| leave | Leave types, balances, requests | Postgres, Kafka, S3 |
-| request | Material and general requests, approval chain | Postgres, Kafka, S3 |
-| notification | Turn events into messages and deliver them | Postgres, Kafka, FCM/SES |
-| reporting | Read-optimised projections and exports | Postgres, Kafka, S3 |
-| confidence-service | ML scoring of presence | Kafka (worker), HTTP (demo/debug only) |
-| Kafka | Durable event log | all services |
-| Schema Registry | Avro schema storage and compatibility checks | Kafka clients |
+| Container          | Responsibility                                                                | Talks to                               |
+| ------------------ | ----------------------------------------------------------------------------- | -------------------------------------- |
+| api-gateway        | Single entry point, authentication, routing, rate limiting, CORS, request IDs | Clients, all services (HTTP)           |
+| identity-org       | Login, JWT signing, tenants, employees, org structure, shifts, holidays       | Postgres, Kafka                        |
+| attendance         | Check-ins, evidence, inference orchestration, daily status                    | Postgres, Kafka                        |
+| leave              | Leave types, balances, requests                                               | Postgres, Kafka, S3                    |
+| request            | Material and general requests, approval chain                                 | Postgres, Kafka, S3                    |
+| notification       | Turn events into messages and deliver them                                    | Postgres, Kafka, FCM/SES               |
+| reporting          | Read-optimised projections and exports                                        | Postgres, Kafka, S3                    |
+| confidence-service | ML scoring of presence                                                        | Kafka (worker), HTTP (demo/debug only) |
+| Kafka              | Durable event log                                                             | all services                           |
+| Schema Registry    | Avro schema storage and compatibility checks                                  | Kafka clients                          |
 
 ### 4.2 The only synchronous paths
 
-| Path | Why synchronous |
-|---|---|
-| Client → gateway → service | A person is waiting for a response |
-| Service → Schema Registry (cached) | Schema lookup at serialise/deserialise time |
-| Service → S3 (presigned URLs) | The client uploads directly; the service only signs |
-| Gateway → identity-org JWKS (cached) | Fetch the public key at startup and on rotation |
+| Path                                 | Why synchronous                                     |
+| ------------------------------------ | --------------------------------------------------- |
+| Client → gateway → service           | A person is waiting for a response                  |
+| Service → Schema Registry (cached)   | Schema lookup at serialise/deserialise time         |
+| Service → S3 (presigned URLs)        | The client uploads directly; the service only signs |
+| Gateway → identity-org JWKS (cached) | Fetch the public key at startup and on rotation     |
 
 
 
 ## 5. Technology stack
 
-| Layer | Choice | Reason | Note |
-|---|---|---|---|
-| Language / runtime | Java 21 | Virtual threads, long-term support | — |
-| Backend framework | Spring Boot 4.1.x | Matches the Initializr default | Jackson 3 packages (`tools.jackson.*`); some starters renamed **[UNVERIFIED against every library]** |
-| Gateway | Spring Cloud Gateway (reactive) | Native JWT and filter support | Config prefix `spring.cloud.gateway.server.webflux.routes` |
-| Messaging | Apache Kafka, KRaft mode | No ZooKeeper; simpler to run | Single broker in dev |
-| Serialisation | Avro + Confluent Schema Registry | Enforced contracts, compact payloads | Confluent serializer 8.1.0 chosen, compatibility with Boot 4 **[UNVERIFIED]** |
-| Database | PostgreSQL | Mature, JSONB, partitioning, `SKIP LOCKED` | One instance, schema per service |
-| Migrations | Flyway | Versioned SQL per service | `flyway-database-postgresql` module needed |
-| Data access | Spring JDBC (`JdbcClient`/`JdbcTemplate`) | Explicit SQL, outbox control | JPA avoided on purpose |
-| Web | Nuxt (Vue 3, TypeScript), npm | Chosen over React | — |
-| Mobile | Flutter | Owned by the second team member | — |
-| ML | Python, scikit-learn, FastAPI | Small, explainable model | Logistic regression vs gradient boosting |
-| Containers | Docker, Kubernetes | Required by the brief | — |
-| Cloud | AWS, Terraform | Required by the brief | — |
-| CI/CD | GitHub Actions | Free for students, integrates with GitHub | — |
-| Observability | Micrometer, Prometheus, Grafana, OpenTelemetry, Loki | Open standards | — |
+| Layer              | Choice                                               | Reason                                     | Note                                                                                                 |
+| ------------------ | ---------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Language / runtime | Java 21                                              | Virtual threads, long-term support         | — |
+| Backend framework  | Spring Boot 4.1.x                                    | Matches the Initializr default             | Jackson 3 packages (`tools.jackson.*`); some starters renamed **[UNVERIFIED against every library]** |
+| Gateway            | Spring Cloud Gateway (reactive)                      | Native JWT and filter support              | Config prefix `spring.cloud.gateway.server.webflux.routes`                                           |
+| Messaging          | Apache Kafka, KRaft mode                             | No ZooKeeper; simpler to run               | Single broker in dev                                                                                 |
+| Serialisation      | Avro + Confluent Schema Registry                     | Enforced contracts, compact payloads       | Confluent serializer 8.1.0 chosen, compatibility with Boot 4 **[UNVERIFIED]**                        |
+| Database           | PostgreSQL                                           | Mature, JSONB, partitioning, `SKIP LOCKED` | One instance, schema per service                                                                     |
+| Migrations         | Flyway                                               | Versioned SQL per service                  | `flyway-database-postgresql` module needed                                                           |
+| Data access        | Spring JDBC (`JdbcClient`/`JdbcTemplate`)            | Explicit SQL, outbox control               | JPA avoided on purpose                                                                               |
+| Web                | Nuxt (Vue 3, TypeScript), npm                        | Chosen over React                          | — |
+| Mobile             | Flutter                                              | Owned by the second team member            | — |
+| ML                 | Python, scikit-learn, FastAPI                        | Small, explainable model                   | Logistic regression vs gradient boosting                                                             |
+| Containers         | Docker, Kubernetes                                   | Required by the brief                      | — |
+| Cloud              | AWS, Terraform                                       | Required by the brief                      | — |
+| CI/CD              | GitHub Actions                                       | Free for students, integrates with GitHub  | — |
+| Observability      | Micrometer, Prometheus, Grafana, OpenTelemetry, Loki | Open standards                             | — |
 
 
 
@@ -271,12 +271,12 @@ com.hrflow.<service>
 ```
 
 
-| Layer | May depend on | Must not depend on |
-|---|---|---|
-| `api` | `application` | `infrastructure` directly |
-| `application` | `domain`, repository interfaces | HTTP types |
-| `domain` | nothing framework-specific | Spring, JDBC, Kafka |
-| `infrastructure` | `domain`, `application` interfaces | `api` |
+| Layer            | May depend on                      | Must not depend on        |
+| ---------------- | ---------------------------------- | ------------------------- |
+| `api`            | `application`                      | `infrastructure` directly |
+| `application`    | `domain`, repository interfaces    | HTTP types                |
+| `domain`         | nothing framework-specific         | Spring, JDBC, Kafka       |
+| `infrastructure` | `domain`, `application` interfaces | `api`                     |
 
 Keeping `domain` framework-free means the attendance precedence rules and leave balance maths can be unit-tested in milliseconds.
 
@@ -290,14 +290,14 @@ One **shared database, shared schema per service, `tenant_id` column on every ta
 
 ### 7.2 Enforcement points
 
-| Point | Mechanism |
-|---|---|
-| Gateway | Strips any client-sent `X-Tenant-Id`, `X-Employee-Id`, `X-Roles`; sets them from validated JWT claims |
-| Controller | Reads tenant from the header into a request-scoped `TenantContext`; never from the body |
-| Repository | Every query includes `tenant_id = :tenantId`; a base class makes it impossible to forget |
-| Database | Optional second line of defence: PostgreSQL row-level security policy using `set_config('app.tenant_id', …)` per transaction **[OPTIONAL]** |
-| Kafka | `tenantId` is part of the message key and of the event envelope; consumers verify it before applying |
-| Logs/metrics | `tenantId` tag on every log line and a bounded-cardinality metric label |
+| Point        | Mechanism                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gateway      | Strips any client-sent `X-Tenant-Id`, `X-Employee-Id`, `X-Roles`; sets them from validated JWT claims                                       |
+| Controller   | Reads tenant from the header into a request-scoped `TenantContext`; never from the body                                                     |
+| Repository   | Every query includes `tenant_id = :tenantId`; a base class makes it impossible to forget                                                    |
+| Database     | Optional second line of defence: PostgreSQL row-level security policy using `set_config('app.tenant_id', …)` per transaction **[OPTIONAL]** |
+| Kafka        | `tenantId` is part of the message key and of the event envelope; consumers verify it before applying                                        |
+| Logs/metrics | `tenantId` tag on every log line and a bounded-cardinality metric label                                                                     |
 
 ### 7.3 Tenant-aware uniqueness
 
@@ -331,32 +331,32 @@ Client ──GET /attendance/today  Authorization: Bearer <JWT>──► gateway
 
 ### 8.2 Key management
 
-| Item | Rule |
-|---|---|
-| Signing | RS256. Private key only in identity-org (secret store); public key published at `/.well-known/jwks.json` |
-| Rotation | Keys carry a `kid`; JWKS lists current and previous key during an overlap window |
-| Gateway | Caches JWKS, refreshes on unknown `kid` with a cooldown |
-| Refresh tokens | Stored as hashes, rotated on every use, revoked on logout and on reuse detection |
+| Item           | Rule                                                                                                     |
+| -------------- | -------------------------------------------------------------------------------------------------------- |
+| Signing        | RS256. Private key only in identity-org (secret store); public key published at `/.well-known/jwks.json` |
+| Rotation       | Keys carry a `kid`; JWKS lists current and previous key during an overlap window                         |
+| Gateway        | Caches JWKS, refreshes on unknown `kid` with a cooldown                                                  |
+| Refresh tokens | Stored as hashes, rotated on every use, revoked on logout and on reuse detection                         |
 
 ### 8.3 JWT claims
 
-| Claim | Meaning |
-|---|---|
-| `sub` | user id |
-| `tid` | tenant id |
-| `eid` | employee id |
-| `roles` | array: `OWNER`, `HR_ADMIN`, `MANAGER`, `EMPLOYEE` |
-| `iss`, `aud`, `exp`, `iat`, `jti`, `kid` | standard |
+| Claim                                    | Meaning                                           |
+| ---------------------------------------- | ------------------------------------------------- |
+| `sub`                                    | user id                                           |
+| `tid`                                    | tenant id                                         |
+| `eid`                                    | employee id                                       |
+| `roles`                                  | array: `OWNER`, `HR_ADMIN`, `MANAGER`, `EMPLOYEE` |
+| `iss`, `aud`, `exp`, `iat`, `jti`, `kid` | standard                                          |
 
 ### 8.4 Authorisation model
 
 Role-based, with three data-scope rules applied in the service layer:
 
-| Scope | Rule |
-|---|---|
-| Self | An employee reads and changes only their own records |
-| Team | A manager reads records of employees whose `manager_id` equals their employee id |
-| Tenant | HR admin and owner act across the tenant |
+| Scope  | Rule                                                                             |
+| ------ | -------------------------------------------------------------------------------- |
+| Self   | An employee reads and changes only their own records                             |
+| Team   | A manager reads records of employees whose `manager_id` equals their employee id |
+| Tenant | HR admin and owner act across the tenant                                         |
 
 Roles are checked at the gateway for coarse routes (for example `/reports/**` requires HR_ADMIN or MANAGER) and again in the service for scope, so a bypassed gateway does not expose data.
 
@@ -369,31 +369,14 @@ Roles are checked at the gateway for coarse routes (for example `/reports/**` re
 
 ### 8.6 Other controls
 
-| Threat | Control |
-|---|---|
-| Credential stuffing | Rate limit on `/auth/login`, lockout with backoff, uniform error message |
-| Spoofed GPS | `mock_location_flag` forces confidence 0; device binding; evidence kept for review |
-| Phone left at office | Movement and interaction features lower the ML score; a tap is never replaced silently |
-| Replay of a check-in | `Idempotency-Key` header; unique constraint on `(tenant_id, employee_id, work_date, check_in_at)` |
-| Injection | Parameterised SQL only; bean validation on all DTOs |
-| Mass assignment | Dedicated request DTOs; no entity binding |
-| Sensitive data at rest | Postgres and S3 encryption enabled in AWS; no secrets in git |
-| Audit | Append-only `audit_log` for admin changes; attendance corrections keep who and why |
-| Dependency risk | Dependabot and a CI dependency scan |
-
-
-
-## 9. Service catalogue
-
-| Service | Port | Schema | Owns | Publishes | Consumes |
-|---|---|---|---|---|---|
-| api-gateway | 8080 | none | Routing, auth enforcement | none | none |
-| identity-org | 8101 | `identity` | Tenants, users, employees, org, shifts, holidays | `org.employee.v1`, `org.shift.v1`, `org.holiday.v1` | none |
-| attendance | 8102 | `attendance` | Evidence, sessions, corrections, daily status | `attendance.evidence.v1`, `attendance.session.v1`, `attendance.daily-status.v1`, `time.shift-cutoff.v1`, `attendance.scoring-requested.v1` | `org.*`, `leave.request.v1`, `time.shift-cutoff.v1`, `attendance.confidence.v1` |
-| leave | 8103 | `leave` | Leave types, balances, requests | `leave.request.v1` | `org.employee.v1`, `org.holiday.v1` |
-| request | 8104 | `request` | Requests, approval steps, material catalogue | `request.workflow.v1` | `org.employee.v1` |
-| notification | 8105 | `notification` | Templates, preferences, device tokens, inbox | `notification.sent.v1` (optional) | `attendance.*`, `leave.request.v1`, `request.workflow.v1`, `org.employee.v1` |
-| reporting | 8106 | `reporting` | Fact tables, exports | none | `org.employee.v1`, `attendance.daily-status.v1`, `leave.request.v1`, `request.workflow.v1` |
-| confidence-service | 8107 | none (file model) | Model and thresholds | `attendance.confidence.v1` | `attendance.scoring-requested.v1`, `attendance.session.v1` (labels) |
-
-The detailed table and endpoint lists are in *HRFlow – REST API & Core Database Design*.
+| Threat                 | Control                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Credential stuffing    | Rate limit on `/auth/login`, lockout with backoff, uniform error message                          |
+| Spoofed GPS            | `mock_location_flag` forces confidence 0; device binding; evidence kept for review                |
+| Phone left at office   | Movement and interaction features lower the ML score; a tap is never replaced silently            |
+| Replay of a check-in   | `Idempotency-Key` header; unique constraint on `(tenant_id, employee_id, work_date, check_in_at)` |
+| Injection              | Parameterised SQL only; bean validation on all DTOs                                               |
+| Mass assignment        | Dedicated request DTOs; no entity binding                                                         |
+| Sensitive data at rest | Postgres and S3 encryption enabled in AWS; no secrets in git                                      |
+| Audit                  | Append-only `audit_log` for admin changes; attendance corrections keep who and why                |
+| Dependency risk        | Dependabot and a CI dependency scan                                                               |

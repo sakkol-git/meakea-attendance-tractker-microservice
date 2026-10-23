@@ -1,72 +1,58 @@
-# HRFlow architecture
+# HRFlow system architecture
 
-## Current decision and implementation status
+## Final decision and document boundary
 
-The 2026-10-23 finish-line request supersedes the seven-service production plan. Outcome C is selected: one Java 21 Spring Boot application, domain packages, PostgreSQL 16 schemas, a local transactional outbox, and Caddy as gateway. React is the required web target; Flutter starts with an OpenAPI-generated mock in Week 1. This is a settled design for the guide, not an implemented app.
+The user explicitly accepted the latest seven-service design on 2026-10-23 and subsequently deferred AWS/Kubernetes as a future improvement. This supersedes the modular-monolith, React and self-host-only choices in ADR 006. [ADR 008](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) records the correction without rewriting historical decisions.
 
-Source evidence remains seven application entry points in `services`, Nuxt in `web/package.json`, and standalone confidence scoring in `ml`. No business migrations/controllers/outbox/auth or production deployment is verified. Code is unchanged by this documentation task.
+The complete latest design is preserved in the parts below, split only to satisfy the existing 500-line format contract. No system design content is discarded. Names, performance figures and code in these parts are proposed targets until verified against source. The design's inline numbered decision list is a topic summary, not the formal ADR file numbering.
 
-## Logical boundaries and physical runtime
+- [Final design part 01](reference/INCOMING-ARCHITECTURE-V2-01.md).
+- [Final design part 02](reference/INCOMING-ARCHITECTURE-V2-02.md).
+- [Final design part 03](reference/INCOMING-ARCHITECTURE-V2-03.md).
+- [Final design part 04](reference/INCOMING-ARCHITECTURE-V2-04.md).
+
+## Chosen architecture
+
+Seven Java services: API gateway, identity-org, attendance, leave, request, notification and reporting. A separate Python confidence worker is included in the final design. Java 21, aligned Spring Boot 4.1.x, reactive Spring Cloud Gateway, explicit Spring JDBC, PostgreSQL schema ownership, Kafka KRaft and Avro/Schema Registry are the target. Nuxt/Vue/TypeScript is retained; Flutter is the mobile client.
+
+Docker Compose is the twelve-week deployment target on one confirmed computer. The latest user reply deferred AWS/Kubernetes as a future improvement; the full final design retains that production topology and Terraform work as future design intent. Do not delete the cloud design or count it as delivered locally. No AWS resource or billable service is authorized by this documentation pass.
 
 ```mermaid
 flowchart LR
-    W["React and Flutter"] --> G["Private Caddy gateway"]
-    G --> A["One Spring Boot app"]
-    A --> D["PostgreSQL domain schemas"]
-    A --> O["Transactional outbox worker"]
-    O --> N["Notification and report packages"]
+    C["Nuxt and Flutter"] --> G["Reactive API gateway"]
+    G --> I["Identity organization"]
+    G --> A["Attendance"]
+    G --> L["Leave"]
+    G --> Q["Request"]
+    G --> N["Notification"]
+    G --> R["Reporting"]
+    I --> K["Kafka and Registry"]
+    A --> K
+    L --> K
+    Q --> K
+    K --> N
+    K --> R
+    K --> M["Confidence worker"]
 ```
 
 Text version:
 
-- Clients call Caddy, which routes to one application.
-- Packages preserve identity-org, attendance, leave, request, notification and reporting ownership.
-- Domain writes commit outbox intent locally; worker handlers commit inbox plus effect before acknowledging local completion.
-- No Kafka or service-to-service HTTP is needed for this deployment. External provider I/O remains separate and retryable.
+- Clients call the gateway. Six business services own their data and communicate asynchronously through Kafka.
+- A command writes business state, audit and owner-local outbox atomically; consumers commit effect plus inbox before offset acknowledgment.
+- Nuxt, Flutter and the confidence worker are distinct clients/workloads; no monolith or React migration is planned.
 
-## Data and security
+## Explicit unresolved constraints
 
-Schemas remain `identity_org`, `attendance`, `leave`, `request`, `notification`, and `reporting`. Packages access only owner repositories; no cross-package SQL joins or foreign keys. Public module APIs or revised projections supply dependencies. Physical co-location does not make arbitrary shared tables acceptable.
+The final design trusts gateway-injected identity headers. Q04 requires tenant provenance from a verified token and Q05 method authorization. Until network isolation and header sanitization are tested with direct-service, forged-header and wrong-tenant cases, security is not accepted. Do not silently replace this final decision with per-service JWT validation: document any proposed change in a new ADR first. The [review](roadmap/ARCHITECTURE-REVIEW-V2.md) records the remaining assurance gap and the RLS decision.
 
-Trusted tenant comes only from verified JWT, not body/path/header selection. Authentication verifies identity; authorization verifies current role/resource scope; tenant isolation verifies company boundary. All are required. Composite tenant constraints, scoped lists/counts/files/exports/jobs and two-tenant tests remain mandatory.
+AWS cannot be declared free without confirmed account credits and an approved regional cost estimate. Region, budget and credit eligibility remain unknown. A single local host and single broker/database are not high availability; a PDB or rolling-update setting does not change that. No paid resource is created by this documentation pass.
 
-Short access JWT plus hashed rotating refresh families remain the auth baseline. First provisioning uses a protected operator procedure. Explicit login tenant slug locates credentials before a token exists; it is not permission to access tenant business data. Platform provisioning uses separate authority. No externally routable API exists before HTTPS, auth, firewall, secrets and a verified backup.
+The original 182 steps describe a different topology. Their old hour totals do not certify this design. The [capacity review](roadmap/ARCHITECTURE-REVIEW-V2.md) records the shortfall and [V2 progress](roadmap/PROGRESS-V2.md) identifies which guides remain unsafe to execute unchanged.
 
-## Domain invariants
+## Implementation evidence
 
-Raw evidence is append-only in normal flow; checkout updates session projection, corrections append a replacement interpretation/action. Work date is shift-local; MVP supports one same-day shift and rejects unsupported overnight input. Manual approved interpretation supersedes inference without deleting holiday/leave meaning. Conflict goes to explicit HR review.
+Source paths include services/api-gateway, services/identity-org, services/attendance, services/leave, services/request, services/notification and services/reporting. Their Application classes are startup scaffolds. web/package.json already selects Nuxt; ml/confidence-service contains standalone scoring/tests. Root pom.xml selects Java 21 and Boot 4.1.1 while service poms still use 4.0.8; gateway presently has MVC rather than reactive dependencies. Existing JPA dependencies must be replaced deliberately with JDBC during implementation. No business endpoint/table/security/Kubernetes/Terraform implementation is inferred from this design.
 
-Leave reserves pending balance under deterministic employee/balance locks. Approval transfers pending to used, cancellation compensates once. NEEDS_REVIEW retains debit until HR keeps or cancels leave. General requests use assigned independent approvers, bounded forms, advisory material stock and private attachments. Audit, notifications and CSV remain Must features.
+infra/docker/postgres-init.sql creates identity_org, not the final design's abbreviated identity schema. Keep identity_org as the physical schema to preserve existing initialization; identity is the conceptual owner. Proposed table names in the contract are not installed migrations.
 
-The outbox is still required. Its local dispatcher tracks each required handler receipt; a crash cannot turn a missing handler effect into completion. Duplicate and older snapshots are handled by tenant/event/handler inbox plus aggregate revision. External sends can duplicate after uncertain timeout, so in-app records and delivery attempts are distinct. There is no Kafka offset/Registry/exactly-once claim under outcome C.
-
-## Deployment and restore
-
-Existing computer, Docker Compose, PostgreSQL, application, Caddy and private Uptime Kuma only. Cloudflare Tunnel is the chosen access path because WAN/router capability is unknown; public TLS is automatic at Cloudflare, Caddy is private origin. No paid cloud infrastructure is required. Domain, external disk, power and ISP cost remain real; free Tunnel is not a hosting SLA.
-
-Nightly custom pg_dump, 14-day retention, verified external-disk copy and weekly scratch restore begin Week 2. Clean-machine restore is repeated Weeks 10 and 12. PostgreSQL dumps do not include attachments/secrets automatically: copy private files and protected recovery key references separately. One machine is not high availability; macOS Docker login/awake requirements are tested, never assumed away.
-
-## Delivery and capacity
-
-Five stones per week, normally 15 steps and 17 in Week 2; Thursday buffer and Friday real-host redeploy/restore. User hours are interpreted as 24 each, with 70 percent planned and 15 percent lighter Weeks 4/8. [Baseline math](roadmap/00-PREPARATION/PROJECT-BASELINE.md) is conditional, not a guarantee.
-
-## Canonical references
-
-- [Finish-line decisions](roadmap/DECISION-REGISTER.md).
-- [Migration plan](roadmap/00-PREPARATION/MIGRATION-PLAN.md).
-- [Current API and database mapping](REST-API-DATABASE-DESIGN.md).
-- [Execution plan](PLAN.md).
-- [Superseding ADR](adr/006-FINISH-LINE-MODULAR-MONOLITH.md).
-- [Historical architecture index](reference/README.md).
-
-Historical reference parts preserve the previous detailed domain/operational material. Their seven-service/Kafka/cloud assumptions are superseded and cannot override this current specification.
-
-## Second-pass engineering clarification
-
-[ADR 007](adr/007-QUALITY-AND-TENANT-DEFENSE.md) refines tenant defense and local event ownership without changing outcome C. [Architecture review](roadmap/ARCHITECTURE-REVIEW-V2.md) records evidence and every ADR verdict. Incoming contradictory text is preserved in the [reference index](reference/README.md).
-
-Use scoped JPA/JDBC owner repositories as the existing dependency baseline permits; no new JDBC-only or reactive-gateway requirement is inferred from scaffold accidents. Personal-data tables gain tested PostgreSQL RLS as defense-in-depth, never instead of scoped queries/resource authorization. The runtime role is neither table owner nor BYPASSRLS; migration/restore and narrow credential bootstrap are separate controlled paths.
-
-A domain transaction writes its own outbox. A scheduled dispatcher invokes notification/reporting handlers through public ports; each effect and receipt commit together. Notification does not own other modules' repositories. ArchUnit tests prevent cycles and cross-module access to internal packages. No network broker is introduced.
-
-Errors use application/problem+json with RFC 9457 members and stable code/traceId extensions. API and schema details remain in the canonical contract document; enterprise practices and checks are in ENGINEERING-STANDARDS.md once phase 3 is written. This is not certification, high availability, or measured production readiness.
+[Contracts](REST-API-DATABASE-DESIGN.md), [decision register](roadmap/DECISION-REGISTER.md), [source-of-truth map](SOURCE-OF-TRUTH.md), and [ADR index](adr/README.md) resolve terminology and historical conflicts.

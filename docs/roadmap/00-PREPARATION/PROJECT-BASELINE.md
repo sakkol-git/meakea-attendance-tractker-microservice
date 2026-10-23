@@ -14,7 +14,7 @@ Ordinary weeks have 15 steps; Week 2 has 17 after the beginner dry-run split pas
 
 A: 117 core plus 24 reading plus 55.56 buffer equals 196.56. B: 80.5 core plus 24 reading plus 92.06 buffer equals 196.56. B uses buffer for real-device/contract acceptance and pairing, not unreviewed backend architecture. These estimates are provisional; a junior step that cannot fit is split or carried forward, not called done.
 
-## Architecture comparison
+## Historical architecture comparison
 
 | Outcome | Core estimate basis | Combined estimate | Verdict |
 | --- | --- | --- | --- |
@@ -22,8 +22,12 @@ A: 117 core plus 24 reading plus 55.56 buffer equals 196.56. B: 80.5 core plus 2
 | B two deployables | C core plus separate worker deployment, credentials and integration | 197.5 plus 70 overhead plus 48 learning plus 147.62 buffer | **FAIL** no demonstrated benefit |
 | C modular monolith | Counted 182-step ledger, package boundaries, local outbox worker | 197.5 core plus 48 learning plus 147.62 buffer | **CONDITIONAL PASS** at interpreted 24 h each |
 
-Overhead estimates are planning estimates, not measured velocity. C is selected because source is mostly unbuilt and it has the fewest runtime failure modes. If actual contributor hours are below 24 or week 1 velocity exceeds estimates, do not certify this full scope as feasible: replan explicit cuts while preserving security, correctness, and restore gates.
+Overhead estimates are planning estimates, not measured velocity. This was the earlier C selection; it is superseded by ADR 008 and the latest accepted service design. If actual contributor hours are below 24 or week 1 velocity exceeds estimates, do not certify this full scope as feasible: replan explicit cuts while preserving security, correctness, and restore gates.
 
 ## Current safe checkpoint
 
 There is no green application tag. Dashboard starts at W01-S01, status **Not run**. Documentation commits are not evidence that any weekly gate passed. User-staged source is preserved outside documentation commits.
+
+## V2 supersession and capacity blocker
+
+The table above is historical evidence of why the original guide used a monolith. It is not the current decision or a feasibility claim. The user explicitly retained the latest service design and deferred AWS/Kubernetes execution. [Current review](../ARCHITECTURE-REVIEW-V2.md) recalculates seven-service/JDBC/Kafka/quality demand and records a capacity shortfall. Only the single dashboard input is authoritative for hours. Do not execute hrflow-app or React migration instructions from an unconverted week.
