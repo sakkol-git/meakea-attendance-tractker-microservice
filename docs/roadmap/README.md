@@ -8,6 +8,7 @@
 
 - [Start Here](START-HERE.md).
 - [You Are Here](YOU-ARE-HERE.md).
+- [Source of Truth](../SOURCE-OF-TRUTH.md).
 - [Roadmap](ROADMAP.md).
 - [Milestone Map](MILESTONE-MAP.md).
 - [Global Checklist](GLOBAL-CHECKLIST.md).
@@ -48,3 +49,14 @@
 - [Preparation](00-PREPARATION/README.md).
 - [Primers](primers/README.md).
 - [Format tool](tools/README.md).
+
+## Senior quality reference
+
+- [Engineering Standards](ENGINEERING-STANDARDS.md).
+- [Code Review Checklist](CODE-REVIEW-CHECKLIST.md).
+- [Test Strategy](TEST-STRATEGY.md).
+- [Security Baseline](SECURITY-BASELINE.md).
+- [Api Guidelines](API-GUIDELINES.md).
+- [Daily Commands](DAILY-COMMANDS.md).
+- [Golden Slice](GOLDEN-SLICE.md).
+- [Operational runbooks](runbooks/README.md).
