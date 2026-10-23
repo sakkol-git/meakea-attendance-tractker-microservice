@@ -42,7 +42,7 @@ In HRFlow's self-hosted service environment:
 
 - Low-overhead monitoring: Uptime Kuma and Actuator provide immediate alerting without requiring heavy, resource-intensive monitoring stacks (like Prometheus, Grafana, and Elasticsearch).
 - Multi-tenant diagnostic filtering: When an HR administrator reports a failure, operators can filter logs by `tenant_id` to isolate relevant errors without viewing other tenants' logs.
-- Audit trail integrity: Tamper-evident operational logging satisfies legal compliance for employee record modifications and leave approvals.
+- Audit trail integrity: Append-only operational audit records support accountability for employee changes and leave decisions; logging does not establish legal compliance or certification.
 
 ## Minimal example
 

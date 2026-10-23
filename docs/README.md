@@ -70,18 +70,18 @@ The engineering journey is organized into twelve sequential weekly phases, takin
 | Week | Phase | Primary deliverable | Gate criteria |
 | --- | --- | --- | --- |
 | 00 | [Preparation](roadmap/00-PREPARATION/README.md) | Baseline audit, hardware assessment, and migration strategy | Disk and toolchain gates verified |
-| 01 | [Foundation](roadmap/01-FOUNDATION/README.md) | Walking skeleton, single-service boot, Docker Compose, and mock Flutter | Private web-to-app-to-DB ping **PASS** |
-| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | Multi-tenant auth, JWT refresh rotation, private host deployment | Two-tenant auth and deploy **PASS** |
-| 03 | [Organization and admin](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | Org units, positions, employee profiles, and builder pattern lesson | Employee hierarchy tests **PASS** |
-| 04 | [Attendance core](roadmap/04-ATTENDANCE-CORE/README.md) | Append-only evidence, shift windows, auto-checkout, corrections | Attendance invariant tests **PASS** |
-| 05 | [Outbox and notifications](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) | Transactional outbox, inbox deduplication receipts, in-app notifications | At-least-once outbox test **PASS** |
-| 06 | [Leave workflow](roadmap/06-LEAVE-WORKFLOW/README.md) | Entitlement balances, pessimistic reservation locks, manager approvals | Concurrency overspend test **PASS** |
-| 07 | [Requests and approvals](roadmap/07-REQUESTS-AND-APPROVALS/README.md) | Material requests, private signed attachments, specification pattern | Attachment auth security **PASS** |
-| 08 | [Web and mobile integration](roadmap/08-WEB-AND-MOBILE-INTEGRATION/README.md) | Nuxt frontend forms, live Flutter integration, offline command queue | End-to-end user journeys **PASS** |
-| 09 | [Reporting and audit](roadmap/09-REPORTING-AUDIT-OBSERVABILITY/README.md) | Tamper-evident audit logs, CSV exports, Prometheus metrics, Uptime Kuma | Streaming export and health **PASS** |
-| 10 | [Operations and restore](roadmap/10-OPERATIONS-AND-RESTORE/README.md) | Automated pg_dump, off-site disk replication, scratch disaster recovery | Clean-host disaster restore **PASS** |
-| 11 | [Hardening and pilot](roadmap/11-HARDENING-AND-PILOT/README.md) | Security vulnerability scan, rate limiting, measured load testing | 50 concurrent virtual users **PASS** |
-| 12 | [Release and demonstration](roadmap/12-RELEASE-AND-DEMONSTRATION/README.md) | Code freeze, user acceptance testing, operator training, release handoff | Stakeholder demonstration **PASS** |
+| 01 | [Foundation](roadmap/01-FOUNDATION/README.md) | Walking skeleton, single-service boot, Docker Compose, and mock Flutter | Private web-to-app-to-DB ping **NOT RUN** |
+| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | Multi-tenant auth, JWT refresh rotation, private host deployment | Two-tenant auth and deploy **NOT RUN** |
+| 03 | [Organization and admin](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | Org units, positions, employee profiles, and builder pattern lesson | Employee hierarchy tests **NOT RUN** |
+| 04 | [Attendance core](roadmap/04-ATTENDANCE-CORE/README.md) | Append-only evidence, shift windows, auto-checkout, corrections | Attendance invariant tests **NOT RUN** |
+| 05 | [Outbox and notifications](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) | Transactional outbox, inbox deduplication receipts, in-app notifications | At-least-once outbox test **NOT RUN** |
+| 06 | [Leave workflow](roadmap/06-LEAVE-WORKFLOW/README.md) | Entitlement balances, pessimistic reservation locks, manager approvals | Concurrency overspend test **NOT RUN** |
+| 07 | [Requests and approvals](roadmap/07-REQUESTS-AND-APPROVALS/README.md) | Material requests, private signed attachments, specification pattern | Attachment auth security **NOT RUN** |
+| 08 | [Web and mobile integration](roadmap/08-WEB-AND-MOBILE-INTEGRATION/README.md) | Nuxt frontend forms, live Flutter integration, offline command queue | End-to-end user journeys **NOT RUN** |
+| 09 | [Reporting and audit](roadmap/09-REPORTING-AUDIT-OBSERVABILITY/README.md) | Tamper-evident audit logs, CSV exports, Prometheus metrics, Uptime Kuma | Streaming export and health **NOT RUN** |
+| 10 | [Operations and restore](roadmap/10-OPERATIONS-AND-RESTORE/README.md) | Automated pg_dump, off-site disk replication, scratch disaster recovery | Clean-host disaster restore **NOT RUN** |
+| 11 | [Hardening and pilot](roadmap/11-HARDENING-AND-PILOT/README.md) | Security vulnerability scan, rate limiting, measured load testing | 50 concurrent virtual users **NOT RUN** |
+| 12 | [Release and demonstration](roadmap/12-RELEASE-AND-DEMONSTRATION/README.md) | Code freeze, user acceptance testing, operator training, release handoff | Stakeholder demonstration **NOT RUN** |
 
 ## Build and test execution
 
