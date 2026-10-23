@@ -1,5 +1,11 @@
 # You are here
 
+## Capacity inputs
+
+**Capacity inputs:** A=24; B=24; fraction=0.70; light=0.85.
+
+User confirmed no change on this second pass. These inputs are authoritative; weekly planned totals include reading, self-review and recovery. Start date/host readiness remain unconfirmed.
+
 ## Current position
 
 Current week: 01. Current step: W01-S01. Step state: **Not run**. Gate: **NOT RUN**.

@@ -29,7 +29,7 @@
 | Monitoring | Actuator, Docker health/restart/log limits, Uptime Kuma | Private monitoring/admin only | W2 then W9 |
 | Storage | Private host directory with metadata/backups | No S3 requirement; attachments capped and authorized | W7 |
 | Notifications | Durable in-app inbox, local delivery adapter | Push should-have until provider/account/device proof | W5 |
-| Patterns | Two admitted lessons, six conditional candidates | Baseline/pain before abstraction, no quota | Learning path |
+| Patterns | Three conditional lessons; none adopted without observed pain | Baseline/pain before abstraction, no quota | Learning path |
 
 ## Scope tiers
 
@@ -44,3 +44,7 @@ Calendar and evidence are separate: holiday/leave never deletes work evidence. M
 ## External dependencies
 
 Cloudflare Tunnel free publishing requires domain/DNS control and relies on Cloudflare plus the ISP; there is no hosting SLA. Domain registrar price is unknown. Direct Caddy public TLS requires reachable 80/443 and is deferred unless new network evidence justifies an ADR change.
+
+## V2 quality refinement
+
+[ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) selects personal-table RLS plus scoped queries, owner-local intent/handler-local receipts, architecture fitness tests and a single problem-details error shape. Outcome C, React, Flutter, private Caddy/Tunnel, PostgreSQL 16 and local backups stay settled. Existing proposed table names are not verified implementation. Optional Builder/Specification/Adapter refactors move to Stretch when quality capacity needs their time.

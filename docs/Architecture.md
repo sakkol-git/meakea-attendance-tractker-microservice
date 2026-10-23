@@ -60,3 +60,13 @@ Five stones per week, normally 15 steps and 17 in Week 2; Thursday buffer and Fr
 - [Historical architecture index](reference/README.md).
 
 Historical reference parts preserve the previous detailed domain/operational material. Their seven-service/Kafka/cloud assumptions are superseded and cannot override this current specification.
+
+## Second-pass engineering clarification
+
+[ADR 007](adr/007-QUALITY-AND-TENANT-DEFENSE.md) refines tenant defense and local event ownership without changing outcome C. [Architecture review](roadmap/ARCHITECTURE-REVIEW-V2.md) records evidence and every ADR verdict. Incoming contradictory text is preserved in the [reference index](reference/README.md).
+
+Use scoped JPA/JDBC owner repositories as the existing dependency baseline permits; no new JDBC-only or reactive-gateway requirement is inferred from scaffold accidents. Personal-data tables gain tested PostgreSQL RLS as defense-in-depth, never instead of scoped queries/resource authorization. The runtime role is neither table owner nor BYPASSRLS; migration/restore and narrow credential bootstrap are separate controlled paths.
+
+A domain transaction writes its own outbox. A scheduled dispatcher invokes notification/reporting handlers through public ports; each effect and receipt commit together. Notification does not own other modules' repositories. ArchUnit tests prevent cycles and cross-module access to internal packages. No network broker is introduced.
+
+Errors use application/problem+json with RFC 9457 members and stable code/traceId extensions. API and schema details remain in the canonical contract document; enterprise practices and checks are in ENGINEERING-STANDARDS.md once phase 3 is written. This is not certification, high availability, or measured production readiness.
