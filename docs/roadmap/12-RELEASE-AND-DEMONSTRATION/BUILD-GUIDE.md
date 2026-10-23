@@ -1,332 +1,232 @@
 # Week 12 build guide
 
-> **Navigation:** [Previous: Week 11](../11-HARDENING-AND-PILOT/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Release dashboard](../YOU-ARE-HERE.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Working rules
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+All paths for new code/tests/scripts below are proposed targets, not discovered classes. Inspect current equivalents first and record exact selected migration, controller/DTO/repository and fixture names in the commit body before editing. Existing Application roots and service poms are source evidence. If an action needs an API adapter or migration, use its inspected actual path instead of blindly creating the proposed Service/Repository pair; at most three files change. A larger change becomes a 45-minute finding and the smallest next atomic step, never a hidden multi-hour task.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+Read first is inside the stated duration, once per unfamiliar concept; later repetitions reuse the primer. A/B already need basic Java/SQL/Git or Flutter skills: check them in Week 1. Limit first-time learning to two concepts per day. If the skill check reveals more learning, carry the named step forward and flag the schedule; do not borrow Thursday, Friday or weekends for new concepts. A reviews B's Java fixture/operations work in the scheduled pairing allowance, not unpaid extra time.
 
-## Stone 1 — Freeze a reproducible release
+A red step writes one behavior assertion against the existing golden fixture. Compile/setup failures are not its intended red. A green step changes the smallest real adapter; the next negative step covers the stated denied/failure case. Repeat the [golden slice](../GOLDEN-SLICE.md): shared contract/problem/tenant/CI/observability are reused; the scope and expected case below are the delta. Reuse existing tests rather than build a parallel framework.
 
-**You will have:** Both clients agree on IDs/versions and errors; no mock-only success is counted.
+Every step ends with a focused commit. Stage only its exact reviewed paths. Put command/exit/report path and a safe output line in the commit body; aggregate into the weekly evidence file during buffer/Friday, avoiding a fourth source file in each commit. Red commits are work-branch checkpoints, never deployable tags. Every stone ends in the ten-minute review and tests/startup before its tag. For a read-only finding before app creation, startup is the current baseline scaffold or an explicit failed prerequisite; never falsely claim a business app starts.
 
-### W12-S01 — Record exact release inputs (45–60 min)
+## Stone 1 — First feature red and green
 
-**Why:** A makes one observable improvement before changing anything else.
+**You will have:** Every Must and Q check has an actual report; absent assertion cannot pass.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+### W12-S01 — Record exact release inputs — state the failing behavior (30–30 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] Week 11 critical gate is green or its carried failure replaces this action.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Freeze approved commit/image digests/config/OpenAPI/migration versions; no dependency upgrade or feature addition; write known limitations.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/reporting/src/test/java/com/hrflow/reporting/RecordExactReleaseInputsTest.java`, `scripts/acceptance/w12.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Freeze approved commit/image digests/config/OpenAPI/migration versions; no dependency upgrade or feature addition; write known limitations. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/selfhost-smoke.sh
+mvn -pl services/reporting -am test
 ```
 
-**Expect:** Anyone can identify exact release and recovery manifest without secrets.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Unpinned image or missing migration/config identifier blocks release manifest.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): record exact release inputs`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w12): w12-s01` for implementation or `docs(w12): w12-s01` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W12-S02 — Run full acceptance from clean fixtures (45–60 min)
+### W12-S02 — Record exact release inputs — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W12-S01 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create explicit all runner for critical matrix; execute auth/org/attendance/leave/request/inbox/audit/CSV with isolated fixtures and failure cases.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/reporting/src/main/java/com/hrflow/reporting/application/RecordExactReleaseInputsService.java`, `services/reporting/src/main/java/com/hrflow/reporting/infrastructure/RecordExactReleaseInputsRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Freeze approved commit/image digests/config/OpenAPI/migration versions; no dependency upgrade or feature addition; write known limitations. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash scripts/acceptance/w12.sh all
+mvn -pl services/reporting -am test
 ```
 
-**Expect:** No critical failure is hidden by a conditional pass.
+**Expect:** Unpinned image or missing migration/config identifier blocks release manifest.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): run full acceptance from clean fixtures`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w12): w12-s02` for implementation or `docs(w12): w12-s02` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W12-S03 — B runs final phone and web story (45–60 min)
+### W12-S03 — Record exact release inputs — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W12-S02 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Repeat employee-to-manager story against exact release candidate on real devices and React; preserve failures with precise steps.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/reporting/src/test/java/com/hrflow/reporting/RecordExactReleaseInputsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Unpinned image or missing migration/config identifier blocks release manifest. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+mvn -pl services/reporting -am test
 ```
 
-**Expect:** Both clients agree on IDs/versions and errors; no mock-only success is counted.
+**Expect:** Unpinned image or missing migration/config identifier blocks release manifest.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): b runs final phone and web story`.
-- [ ] Tagged `w12-s03-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w12): w12-s03` for implementation or `docs(w12): w12-s03` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W12-S04 — Run full acceptance from clean fixtures — state the failing behavior (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-## Stone 2 — Re-run restoration and rollback
-
-**You will have:** Device confirms recovered business meaning, not merely database container health.
-
-### W12-S04 — Restore release backup cleanly again (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W12-S03 committed with its check passing; tag `w12-s03-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use most recent nightly external copy on clean scratch target, restore DB/private files, verify checksums/counts and suppress live notifications.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/reporting/src/test/java/com/hrflow/reporting/RunFullAcceptanceFromCleanFixturesTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create explicit all runner for critical matrix; execute auth/org/attendance/leave/request/inbox/audit/CSV with isolated fixtures and failure cases. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/restore-clean.sh
+mvn -pl services/reporting -am test
 ```
 
-**Expect:** Second independent clean restore passes; backup age and media identity recorded.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Every Must and Q check has an actual report; absent assertion cannot pass.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): restore release backup cleanly again`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w12): w12-s04` for implementation or `docs(w12): w12-s04` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W12-S05 — Rehearse final failed-deploy recovery (45–60 min)
+### W12-S05 — Run full acceptance from clean fixtures — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W12-S04 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use exact release previous manifest; prove expand-compatible migrations and old image rollback; no editing applied Flyway files.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/reporting/src/main/java/com/hrflow/reporting/application/RunFullAcceptanceFromCleanFixturesService.java`, `services/reporting/src/main/java/com/hrflow/reporting/infrastructure/RunFullAcceptanceFromCleanFixturesRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Create explicit all runner for critical matrix; execute auth/org/attendance/leave/request/inbox/audit/CSV with isolated fixtures and failure cases. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/rollback-check.sh
+mvn -pl services/reporting -am test
 ```
 
-**Expect:** Safe previous release recovers with new data intact.
+**Expect:** Every Must and Q check has an actual report; absent assertion cannot pass.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): rehearse final failed-deploy recovery`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w12): w12-s05` for implementation or `docs(w12): w12-s05` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w12-s05-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W12-S06 — B verifies restored release user flow (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
-
-**Before you start:**
-
-- [ ] W12-S05 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Log into restored isolated instance, check attendance history/leave balance/material request and authorized CSV.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Device confirms recovered business meaning, not merely database container health.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): b verifies restored release user flow`.
-- [ ] Tagged `w12-s06-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
-
-## Stone 3 — Tell the truth in the demonstration
-
-**You will have:** Recording/demo narrative matches actual tests; product is not called complete merely because guide exists.
-
-### W12-S07 — Write timed demonstration script (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
-
-**Before you start:**
-
-- [ ] W12-S06 committed with its check passing; tag `w12-s06-green` exists.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Record 10-minute sequence: tenant security, check-in retry, stopped worker, leave conflict/cancel, material approval, correction, CSV, restore evidence.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash scripts/acceptance/w12.sh happy
-```
-
-**Expect:** Each demo action has a verified fixture and expected visible result.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): write timed demonstration script`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W12-S08 — Record limits and support handover (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
-
-**Before you start:**
-
-- [ ] W12-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Document single-host downtime, power/internet/Cloudflare dependency, Desktop login requirement, backup responsibilities, critical open issues and operator.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash ops/selfhost-smoke.sh
-```
-
-**Expect:** Release notes distinguish deployed features, deferred scope and blocked launch.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): record limits and support handover`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W12-S09 — B records and rehearses demo (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
-
-**Before you start:**
-
-- [ ] W12-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use synthetic names, no secrets or private addresses on recording; rehearse fallback screenshots/evidence if live network fails.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Recording/demo narrative matches actual tests; product is not called complete merely because guide exists.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-12): b records and rehearses demo`.
-- [ ] Tagged `w12-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next part](BUILD-GUIDE-PART-2.md).

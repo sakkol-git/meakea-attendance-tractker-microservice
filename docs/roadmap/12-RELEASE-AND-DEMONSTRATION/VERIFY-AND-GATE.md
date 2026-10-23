@@ -1,55 +1,64 @@
 # Week 12 verification and gate
 
-> **Navigation:** [Previous: Week 11](../11-HARDENING-AND-PILOT/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Release dashboard](../YOU-ARE-HERE.md)
+> **Navigation:** [Overview](README.md) · [Build](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md)
 
-## Inspect first and build the test runner
+## Evidence rule
 
-The commands below target proposed `scripts/acceptance/w12.sh`, created in W12-S10 before execution. Each branch must execute a real JUnit/API or client assertion and propagate nonzero failure; an echo-only script is forbidden. Feature tests are added with their implementation steps, not postponed until Thursday. No runner or test is claimed to exist today.
+All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W12-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Use two synthetic tenants, own/unrelated employees, direct-report manager and HR fixtures. Read auth tokens privately from test helpers; never put secrets in guide commands. For unavailable week-1 auth routes, unauthorized/cross-tenant cases assert diagnostic is private and DB tenant constraint fixtures; week 2 replaces those with authenticated API tests.
+Step range: W12-S01 to W12-S34. Required new stone tags: `w12-s05-green`, `w12-s10-green`, `w12-s15-green`, `w12-s20-green`, `w12-s24-green`, `w12-s28-green`, `w12-s31-green`, `w12-s34-green`. Existing historical tags are not moved.
 
-## Per-feature matrix
+## Feature and failure assertions
 
-Repeat every case for each of this week first three stone outputs. Skip only if truly inapplicable and record why; critical path cases cannot be waved through.
+| Focus | Observable check | Evidence |
+| --- | --- | --- |
+| W12-S03 | Unpinned image or missing migration/config identifier blocks release manifest. | Exact focused test and full owner regression report |
+| W12-S06 | Every Must and Q check has an actual report; absent assertion cannot pass. | Exact focused test and full owner regression report |
+| W12-S09 | Any client happy/negative mismatch blocks release, not hidden in demo script. | Exact focused test and full owner regression report |
+| All implemented routes | Shared anonymous/invalid-token/wrong-role/foreign-tenant/list/count/file/export/job cases; explicit reason only for genuinely inapplicable cases | Route registry agrees with sole OpenAPI |
+| Recovery | Duplicate/lost-response/concurrency/rollback and latest backup restore leave no forbidden duplicate or lost state | Actual DB/Kafka/client reports, not mocked success |
 
-| Case | Exact command after creation | Success looks like | Failure means |
-| --- | --- | --- | --- |
-| happy | `bash scripts/acceptance/w12.sh happy` | The three feature mini-wins above match their exact expected resource/state. | Owner route, state or setup is wrong. |
-| validation | `bash scripts/acceptance/w12.sh validation` | Malformed dates/empty required fields produce documented 400/422, no row. | DTO validation or domain rule missing. |
-| unauthorized | `bash scripts/acceptance/w12.sh unauthorized` | Missing/invalid token is 401; wrong role/hidden object 403/404. | Authentication or resource authorization defect. |
-| cross-tenant | `bash scripts/acceptance/w12.sh cross-tenant` | Tenant B identifiers expose no tenant A rows/counts/files. | Critical isolation defect; block gate. |
-| duplicate | `bash scripts/acceptance/w12.sh duplicate` | Same key returns same ID; changed body 409; one business effect. | Idempotency boundary is wrong. |
-| concurrency | `bash scripts/acceptance/w12.sh concurrency` | Concurrent same-employee/approval/balance commands preserve DB invariant. | Lock/unique/version rule is missing. |
-| recovery | `bash scripts/acceptance/w12.sh recovery` | Interrupted operation resumes or reconciles; no lost durable intent. | False success or incomplete recovery design. |
-| integrity | `bash scripts/acceptance/w12.sh integrity` | Tenant FK/unique/check constraints reject corrupt rows. | Database cannot defend invariant. |
-| regression | `bash scripts/acceptance/w12.sh regression` | Previously green critical flows still pass. | New change broke baseline; recover before moving on. |
+## Enterprise gate
 
-## Mini-win evidence
-
-- [ ] Stone 1: Both clients agree on IDs/versions and errors; no mock-only success is counted. Save request/test ID and actual safe output.
-- [ ] Stone 2: Device confirms recovered business meaning, not merely database container health. Save request/test ID and actual safe output.
-- [ ] Stone 3: Recording/demo narrative matches actual tests; product is not called complete merely because guide exists. Save request/test ID and actual safe output.
+- [ ] Q01: One /api/v1 OpenAPI validates and its request/response/error fixtures match implemented routes; broken schema copy fails. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q06: No secret in Git/logs; secret scan and environment/key rotation evidence prove bounded old-key retirement. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, critical coverage targets are nonempty and container failures are not skipped. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q12: Every-push build/test/format/static/contract/dependency/image/secret jobs run pinned tools/images; scan/runner failure is not success. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q13: Intended-host deploy/rollback/external backup/scratch restore and applicable failure drills verify rows/files/schema/replay metadata; no high-availability claim. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q14: Formatter/static checks and ten-minute self-review precede every green stone tag; optional patterns pass admission. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
 
 ## Minimum Viable Gate
 
-- [ ] Required matrix cases executed with zero critical failures; regression reports saved.
-- [ ] Migrations start clean, integrity checks pass, app starts and all five actual stone tags exist.
-- [ ] Friday confirmed-host redeploy and authenticated smoke pass; week 1 local-only exception is recorded.
-- [ ] External-copy backup and scratch restore verified; week 1 disposable local dump recorded.
-- [ ] Global checklist evidence and dashboard updated; no critical failure silently omitted.
+- [ ] Every required feature output and its negative/race/replay assertion passed on actual reports; full owner regression has zero errors.
+- [ ] The current private app starts, all eight reviewed stone tags identify checked commits, and no red work was deployed.
+- [ ] Friday intended-host redeploy and authenticated/denied smoke pass; Week 1 explicitly uses a disposable local diagnostic skeleton.
+- [ ] Latest backup/external copy and scratch restore verify known rows/ledgers/files/schema/replay metadata; Week 1 is local disposable mode, Week 2 requires external storage.
+- [ ] Public access remains closed until TLS/auth/tenant/firewall/secrets/external-restore prerequisites pass. Private deployment is not a false public-launch claim.
+- [ ] Dashboard/global checklist/actual time and exact next action are updated; any critical failure remains next week's first action.
 
-## Stretch
+## Gate decision and limitations
 
-- [ ] Optional style/channel/refactor completed only after admission and full gate.
+Result: **NOT RUN**. **PASS** requires all critical evidence. **CONDITIONAL PASS** is restricted to named noncritical Stretch/UX defects with owner/date. Security, tenant, migration, event integrity and restore failures are **FAIL**, block the gate and carry forward. No compliance certification, host/broker failover or guaranteed twelve-week delivery.
 
-## Gate decision
+Optional push/SSE/styling/additional filters/patterns can be dropped without breaking the next week's prerequisites. Cloud deployment is future improvement. If actual duration exceeds plan, cut Stretch first and report the residual scope/date conflict; never consume weekends or omit critical tests.
 
-Result: **NOT RUN**. Record **PASS** only with all required evidence. **CONDITIONAL PASS** names noncritical outstanding item, owner and calendar due date. **FAIL** names critical check, minimal reproduction, recovery branch/tag and next action; that action becomes next week first stone before new scope.
+## Release readiness scorecard
 
-## Retro
+| Quality | Rating | Required evidence | Limitation or action |
+| --- | --- | --- | --- |
+| Q01 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q02 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q03 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q04 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q05 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q06 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q07 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q08 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q09 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q10 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q11 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q12 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q13 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
+| Q14 | **NOT RUN** | [Coverage chain](../QUALITY-COVERAGE.md) plus actual report path | Record **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN** after execution only |
 
-- What was slow: actual step ID, elapsed time, and why.
-- What to cut: named stretch item; never security or restore tests.
-- Energy: rested, steady, tired, or stop; protect weekend.
-- Pattern review: admission answers, simpler alternative, and whether it was worth it.
-- Next week: hours confirmed, carried failure owner, and exact first action.
+Known limitations: single host/broker/DB, power/internet/tunnel dependency, macOS Docker startup if selected, limited synthetic/pilot data, unverified performance until measured, no certification; AWS/Kubernetes and richer channels/inference training remain future work. A low-confidence score cannot override manual evidence. Record measured restore time/data-loss window and open defects without disguising them as passed controls.
