@@ -89,3 +89,7 @@ Weeks 01–02 now contain the final-service atomic sequence, eight stones, expli
 ## Finalization pair 03–04
 
 Weeks 03–04 now contain the final-service atomic sequence, eight stones, explicit fields/status, computed owner budgets, required negative paths and Enterprise/Minimum gates. All implementation remains Not run. First-time reading is included in step durations; allocated review/mentoring is separate and counted. Remaining validation and global/tooling reconciliation are subsequent phases.
+
+## Finalization pair 05–06
+
+Weeks 05–06 now contain the final-service atomic sequence, eight stones, explicit fields/status, computed owner budgets, required negative paths and Enterprise/Minimum gates. All implementation remains Not run. First-time reading is included in step durations; allocated review/mentoring is separate and counted. Remaining validation and global/tooling reconciliation are subsequent phases.

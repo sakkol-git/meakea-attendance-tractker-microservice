@@ -1,332 +1,232 @@
 # Week 06 build guide
 
-> **Navigation:** [Previous: Week 05](../05-OUTBOX-AND-NOTIFICATIONS/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 07](../07-REQUESTS-AND-APPROVALS/README.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Working rules
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+All paths for new code/tests/scripts below are proposed targets, not discovered classes. Inspect current equivalents first and record exact selected migration, controller/DTO/repository and fixture names in the commit body before editing. Existing Application roots and service poms are source evidence. If an action needs an API adapter or migration, use its inspected actual path instead of blindly creating the proposed Service/Repository pair; at most three files change. A larger change becomes a 45-minute finding and the smallest next atomic step, never a hidden multi-hour task.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+Read first is inside the stated duration, once per unfamiliar concept; later repetitions reuse the primer. A/B already need basic Java/SQL/Git or Flutter skills: check them in Week 1. Limit first-time learning to two concepts per day. If the skill check reveals more learning, carry the named step forward and flag the schedule; do not borrow Thursday, Friday or weekends for new concepts. A reviews B's Java fixture/operations work in the scheduled pairing allowance, not unpaid extra time.
 
-## Stone 1 — Entitlement and eligible days
+A red step writes one behavior assertion against the existing golden fixture. Compile/setup failures are not its intended red. A green step changes the smallest real adapter; the next negative step covers the stated denied/failure case. Repeat the [golden slice](../GOLDEN-SLICE.md): shared contract/problem/tenant/CI/observability are reused; the scope and expected case below are the delta. Reuse existing tests rather than build a parallel framework.
 
-**You will have:** Mobile shows server-computed units and cannot submit as another employee.
+Every step ends with a focused commit. Stage only its exact reviewed paths. Put command/exit/report path and a safe output line in the commit body; aggregate into the weekly evidence file during buffer/Friday, avoiding a fourth source file in each commit. Red commits are work-branch checkpoints, never deployable tags. Every stone ends in the ten-minute review and tests/startup before its tag. For a read-only finding before app creation, startup is the current baseline scaffold or an explicit failed prerequisite; never falsely claim a business app starts.
 
-### W06-S01 — Create type policy balance and ledger (45–60 min)
+## Stone 1 — First feature red and green
 
-**Why:** A makes one observable improvement before changing anything else.
+**You will have:** Holiday/non-workday/half-day boundaries use server policy snapshot, never client totals.
 
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
+### W06-S01 — Create type policy balance and ledger — state the failing behavior (30–30 min)
+
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/DATABASE-LOCKS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] Week 05 critical gate is green or its carried failure replaces this action.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. New leave migrations define types/policies/balance/ledger/day expansion; tenant-scoped constraints, positive portions and nonnegative availability.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/leave/src/test/java/com/hrflow/leave/CreateTypePolicyBalanceLedgerTest.java`, `scripts/acceptance/w06.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: New leave migrations define types/policies/balance/ledger/day expansion; tenant-scoped constraints, positive portions and nonnegative availability. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/leave -am test
 ```
 
-**Expect:** Clean migration and ledger-to-balance reconciliation test pass.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Negative portions and cross-tenant balance references are rejected by DB constraints.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): create type policy balance and ledger`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w06): w06-s01` for implementation or `docs(w06): w06-s01` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W06-S02 — Calculate eligible leave days (45–60 min)
+### W06-S02 — Create type policy balance and ledger — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/DATABASE-LOCKS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W06-S01 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use local shift/holiday projections and stored policy version; ignore client days; half-day only one date; reject unsupported cases.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/leave/src/main/java/com/hrflow/leave/application/CreateTypePolicyBalanceLedgerService.java`, `services/leave/src/main/java/com/hrflow/leave/infrastructure/CreateTypePolicyBalanceLedgerRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: New leave migrations define types/policies/balance/ledger/day expansion; tenant-scoped constraints, positive portions and nonnegative availability. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/leave -am test
 ```
 
-**Expect:** Weekend/holiday/half-day fixtures produce exact expected units.
+**Expect:** Negative portions and cross-tenant balance references are rejected by DB constraints.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): calculate eligible leave days`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w06): w06-s02` for implementation or `docs(w06): w06-s02` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W06-S03 — B submits from validated mock forms (45–60 min)
+### W06-S03 — Create type policy balance and ledger — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/DATABASE-LOCKS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W06-S02 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Display own balance/type, date range and specific validation errors; attachments remain disabled unless secure path is complete.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/leave/src/test/java/com/hrflow/leave/CreateTypePolicyBalanceLedgerTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Negative portions and cross-tenant balance references are rejected by DB constraints. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+mvn -pl services/leave -am test
 ```
 
-**Expect:** Mobile shows server-computed units and cannot submit as another employee.
+**Expect:** Negative portions and cross-tenant balance references are rejected by DB constraints.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): b submits from validated mock forms`.
-- [ ] Tagged `w06-s03-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w06): w06-s03` for implementation or `docs(w06): w06-s03` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W06-S04 — Calculate eligible leave days — state the failing behavior (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-## Stone 2 — Reservation and approval
-
-**You will have:** Manager sees exact state and conflict message; no automatic double tap approval.
-
-### W06-S04 — Reserve under deterministic locks (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/DATABASE-LOCKS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W06-S03 committed with its check passing; tag `w06-s03-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Lock employee then balance rows in fixed order; insert pending request/days/ledger/reservation/outbox/key together.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/leave/src/test/java/com/hrflow/leave/CalculateEligibleLeaveDaysTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use local shift/holiday projections and stored policy version; ignore client days; half-day only one date; reject unsupported cases. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/leave -am test
 ```
 
-**Expect:** Two concurrent leave requests cannot overdraw or overlap FULL/AM/PM portions.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Holiday/non-workday/half-day boundaries use server policy snapshot, never client totals.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): reserve under deterministic locks`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w06): w06-s04` for implementation or `docs(w06): w06-s04` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W06-S05 — Approve or reject once (45–60 min)
+### W06-S05 — Calculate eligible leave days — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/DATABASE-LOCKS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W06-S04 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement assigned direct-report/HR approval with version and no self approval; move pending to used once; rejection releases reservation.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/leave/src/main/java/com/hrflow/leave/application/CalculateEligibleLeaveDaysService.java`, `services/leave/src/main/java/com/hrflow/leave/infrastructure/CalculateEligibleLeaveDaysRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Use local shift/holiday projections and stored policy version; ignore client days; half-day only one date; reject unsupported cases. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/leave -am test
 ```
 
-**Expect:** Duplicate approval has one ledger effect; stale or unauthorized decision fails.
+**Expect:** Holiday/non-workday/half-day boundaries use server policy snapshot, never client totals.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): approve or reject once`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w06): w06-s05` for implementation or `docs(w06): w06-s05` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w06-s05-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W06-S06 — B handles stale manager actions (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
-
-**Before you start:**
-
-- [ ] W06-S05 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add approval inbox and cancellation forms using If-Match and stable keys; on 412 refetch instead of silently retrying different decisions.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Manager sees exact state and conflict message; no automatic double tap approval.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): b handles stale manager actions`.
-- [ ] Tagged `w06-s06-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
-
-## Stone 3 — Cancellation and attendance conflict
-
-**You will have:** Phone and React show authoritative local leave state and freshness-labeled attendance.
-
-### W06-S07 — Cancel with compensating ledger (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
-
-**Before you start:**
-
-- [ ] W06-S06 committed with its check passing; tag `w06-s06-green` exists.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement own pending/future-approved cancellation; write inverse component deltas once and a newer full snapshot.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-mvn -f services/hrflow-app/pom.xml test
-```
-
-**Expect:** Available balance recovers once; repeated key does not refund twice.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): cancel with compensating ledger`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W06-S08 — Apply leave overlays and review conflicts (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
-
-**Before you start:**
-
-- [ ] W06-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Local event handler stores request/day/revision overlay; manual-work overlap creates review state and leaves debit pending explicit HR resolution.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-mvn -f services/hrflow-app/pom.xml test
-```
-
-**Expect:** Newer cancellation is not reversed by delayed approval/conflict; evidence remains.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): apply leave overlays and review conflicts`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W06-S09 — B verifies full leave flow (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [State Machines primer](../primers/STATE-MACHINES.md)
-
-**Before you start:**
-
-- [ ] W06-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Submit, approve, view day calendar, cancel, and see balance update; record unresolved HR policy as launch blocker.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Phone and React show authoritative local leave state and freshness-labeled attendance.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-06): b verifies full leave flow`.
-- [ ] Tagged `w06-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next part](BUILD-GUIDE-PART-2.md).
