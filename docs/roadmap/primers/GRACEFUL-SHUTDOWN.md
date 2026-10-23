@@ -8,7 +8,7 @@ Why HRFlow needs it: A deploy/reboot must not leave false success or permanently
 
 ## Tiny example
 
-A stopped local dispatcher retains intent and resumes by receipt after restart.
+A stopped publisher retains outbox intent; a restarted consumer replays by inbox receipt. Commit DB effect before acknowledging Kafka offset, and bound drain time.
 
 ## Common mistake
 

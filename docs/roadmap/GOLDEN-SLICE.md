@@ -8,7 +8,7 @@ Choose POST /api/v1/departments, a planned identity-org write in the preserved c
 
 - Week 1: versioned OpenAPI/example, diagnostic DB skeleton, problem shape, red/green test recipe and CI formatting/scanning/coverage baseline.
 - Week 2: real login/JWT/refresh/throttle, trusted tenant/resource role, private confirmed-host deploy and first verified external backup/restore.
-- Week 3: department migration/entity/repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
+- Week 3: department migration/JDBC repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
 
 The diagnostic route is not a completed secure golden slice. Until Week 3 gate passes, later code cannot claim the full recipe is proven.
 
@@ -26,7 +26,7 @@ import jakarta.validation.constraints.Size;
 record DepartmentInput(@NotBlank @Size(max = 100) String name) {}
 ```
 
-This Java 21 DTO example requires the app's validation dependency, created in the scaffold step. Inspect actual DTO location; do not invent an existing DepartmentInput class or bind persistence entities directly.
+This Java 21 DTO example requires the app's validation dependency, verified in services/identity-org/pom.xml during the dependency step. Inspect actual DTO location; do not invent an existing DepartmentInput class or bind persistence entities directly.
 
 ## Persistence and non-owner defense
 
@@ -52,7 +52,7 @@ Set context parameterized with local=true inside the same query transaction; par
 
 ## Transaction and error behavior
 
-Service obtains verified tenant/actor, checks HR authority, validates invariant, inserts row plus audit/command result/intent as required, commits, then returns. No provider call in transaction. A single MVC advice and Security handlers map errors; use Spring ProblemDetail or equivalent typed problem shape, not a stack trace or arbitrary exception message.
+Service obtains verified tenant/actor, checks HR authority, validates invariant, inserts row plus audit/command result/intent as required, commits, then returns. No provider call in transaction. Each service uses the shared problem contract in its MVC advice/Security handlers; the reactive gateway uses its reactive error writer; use Spring ProblemDetail or equivalent typed problem shape, not a stack trace or arbitrary exception message.
 
 ## Minimum test matrix
 
@@ -60,7 +60,7 @@ Service obtains verified tenant/actor, checks HR authority, validates invariant,
 - PostgreSQL: clean/upgrade migration, same tenant duplicate, different tenants same name, FK/role/RLS, failed transaction leaves zero business/audit/intent rows.
 - HTTP: contract/201/Location, validation 400, 401/403/404, scoped list/count, duplicate key and changed-body conflict.
 - Architecture: controller only own service; no foreign internal repository; empty import test fails.
-- Client smoke: React submits, Flutter mock agrees and real client observes committed response after auth integration.
+- Client smoke: Nuxt submits, Flutter mock agrees and real client observes committed response after auth integration.
 - Operations: safe structured log/correlation, bounded counter, CI scans, private real-host smoke and valid external restore evidence.
 
 ## Repeat the golden slice

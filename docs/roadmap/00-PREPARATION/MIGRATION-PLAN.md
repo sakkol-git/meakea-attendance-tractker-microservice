@@ -1,30 +1,26 @@
-# Consolidation and client migration
+# Final service alignment plan
 
-## Inspect first
+## Authority and inspect first
 
-Read `pom.xml`, `services/attendance/pom.xml`, `services/api-gateway/pom.xml`, all application YAML files, and `web/package.json`. Verify again that business controllers/migrations are absent. If new code appears after this audit, inventory tests/routes before moving it.
+[ADR 008](../../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) supersedes consolidation/React instructions. Retain the seven existing service roots and Nuxt web. Inspect pom.xml, service poms, libs poms, all application YAML, infra/docker and web/package.json before selecting names. New business code since this audit must be inventoried before changing it; startup scaffolds are not migrated features.
 
-## Safe migration order
+## Ordered alignment
 
-1. Create a protected code checkpoint on the developer's weekly branch without including secrets or generated dependencies. The documentation branch is not an application checkpoint.
-1. Create proposed `services/hrflow-app` using the current root Java 21/Boot 4.1.1 baseline; keep old service directories untouched until new app behavior and tests pass.
-1. Retain domain names as packages and owner schemas. Initially implement only a database-backed diagnostic through private Caddy; never invent migrated behavior that did not exist.
-1. Keep the root reactor until a deliberate build-profile change parks old scaffolds. Compile/test the new app explicitly; confirm no accidental launch of seven apps or broker stack.
-1. Add Flyway migrations per schema in one ordered migration stream. Restrict repositories to owner packages; cross-domain reads use public module APIs or local projections, not cross-schema joins.
-1. Write outbox in the domain transaction. A local scheduled dispatcher invokes independently idempotent notification/report handlers through application ports. Persist inbox plus effect in one transaction; mark completion only after all required handler receipts exist.
-1. Preserve public `/api/v1` routes while OpenAPI becomes their single wire source. Controllers adapt domain objects to DTOs; do not publish JPA entities.
-1. Preserve current Nuxt tree on a checkpoint, then create React sources in `web` on the build branch. Keep the lockfile only for its matching manifest; do not mix Nuxt dependencies into the React target.
-1. B creates or locates Flutter source in proposed `mobile`; uses generated mock before backend is complete. Flutter dependency versions are selected and locked by B, not invented in docs.
-1. Replace dependency-only Compose usage with proposed `infra/selfhost/compose.yaml`; app/PostgreSQL/Caddy only initially. Add private Kuma and tunnel connector after readiness. Keep old Compose as historical scaffolding, not production startup.
+1. Preserve dirty/staged source on the application work branch without committing secrets. Record Java 21/Docker/disk prerequisites; the documentation branch is not a green app checkpoint.
+1. Spike root Boot 4.1.1, Cloud gateway, Avro and test-library compatibility. Record exact resolved dependency versions and a passing gateway/business context test before aligning seven poms. Do not guess a compatible release train.
+1. Replace JPA dependencies with JDBC in business services incrementally. Retain existing package roots, proposed api/application/domain/infrastructure direction, and actual identity_org schema name. No cross-service Java imports, SQL joins or foreign keys.
+1. Change API gateway MVC scaffold to the approved reactive stack in an isolated change. Test routing/error serialization and token-derived identity header sanitization; business services remain private and enforce method/resource authorization.
+1. Correct actual Compose SQL mount and Kafka/Registry listener addresses; validate syntax, then test real PostgreSQL/Kafka/Registry only after disk and daemon gates. Keep data volumes; never use down -v as troubleshooting.
+1. Use libs/hrflow-contracts/events for Avro contracts. Prove schema compatibility and one synthetic event flow before copying an outbox starter. Owner write/audit/intent commit together; effect/inbox before consumer offset.
+1. Create one proposed contracts/openapi.yaml; retain /api/v1 paths. Nuxt and Flutter use the same fixtures/mock. No React migration, second wire-authority file or unverified Flutter location.
+1. Build the golden slice through Weeks 1–3, with real auth, JDBC, validation, tenant role/RLS, CI, safe logs and restore evidence. Later feature deltas repeat the same recipe.
+1. Write a separate private self-host Compose for all final workloads; existing dependency-only Compose is not production. Measure total memory/disk/JVM/broker overhead before accepting host capacity. Add TLS access only after auth/secrets/firewall/restore gates.
+1. Test clean multi-service restoration including DB/private files/event schemas/replay positions. Record data-loss/recovery measurements, not high-availability claims. AWS/Terraform/Kubernetes remain future improvement per latest instruction.
 
-## Transaction and reliability change
+## Schedule rule
 
-Unlike the old distributed architecture, one JVM and one database can commit module operations locally. Keep domain ownership, audit, idempotency and outbox; do not imply Kafka acknowledgment or global exactly-once behavior. Dispatcher crash before receipt retries. Crash after handler commit finds inbox receipt. Provider sends remain outside DB transactions and can duplicate after timeout; in-app records are deduplicated.
+[Review](../ARCHITECTURE-REVIEW-V2.md) records the service/quality demand shortfall against unchanged 70 percent hours. Atomic decomposition must expose remaining Must work; it may not erase it or quietly relabel all work thirty minutes. Cut optional polish and unadmitted patterns first. If still over budget, report scope/hours/deadline conflict while preserving the final architecture and security/restore requirements.
 
-## Contract and database reconciliation
+## Recovery
 
-Old endpoint coverage and owner schema names remain in reference documents. Replace owner service with owner package; runtime route is one app behind Caddy, port 8080 internally. Keep tenant constraints and no cross-module SQL joins. Proposed old outbox/inbox DDL is adapted to local handler receipts before implementation; legacy Kafka topic definitions are deferred compatibility references, not runtime requirements.
-
-## Return to safety
-
-Never delete or reset old scaffolds to make the build green. Use a new branch from a green tag, inspect diffs, and migrate one package at a time. If a new path fails, keep the old tree and reduce the next change. The new app needs its own tested migrations; copying proposed documentation SQL without tests is not migration completion.
+Use a clean recovery branch from a verified old tag; do not reset dirty work or move tags. No green application tag exists yet. Unconverted weeks contain superseded monolith/local-worker instructions: consult PROGRESS-V2.md before execution. Every changed ID must map forward once its pair is upgraded.

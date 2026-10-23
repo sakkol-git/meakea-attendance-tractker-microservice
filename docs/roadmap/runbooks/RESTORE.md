@@ -19,3 +19,7 @@ First draft for implementation; **NOT RUN**. Referenced ops scripts are proposed
 - [ ] Failure remains visible and the next action names a safe reproduction or recovery checkpoint.
 
 [Host detail](../10-OPERATIONS-AND-RESTORE/HOST-RUNBOOK.md), [daily commands](../DAILY-COMMANDS.md), and [stuck protocol](../STUCK-PROTOCOL.md).
+
+## Kafka recovery addition
+
+Record owner database cut, Registry schemas/configuration and consumer replay position together. Restore business DB/private files to scratch first, then restore event schemas and rebuild projections from a verified replay point or owner snapshot. A retention gap fails the drill until snapshot bootstrap is proved. Never rewind a live production consumer or delete a topic as an automatic restore action.

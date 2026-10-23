@@ -8,9 +8,9 @@ Branch docs/roadmap-v2. Phases 1–3 were authored under C, then reopened for th
 
 | Phase | State | Evidence | Next action |
 | --- | --- | --- | --- |
-| 1 architecture | **PASS** | Review, ADR 007, canonical mapping | Audit all 182 steps |
-| 2 measurement | **PASS** | All 182 steps scored; top fifteen ranked | Close quality gaps through plan |
-| 3 standards | **PASS** | Fourteen rules, golden slice, test/security/API assets and six runbooks | Wire into atomic steps |
+| 1 architecture | **PASS** | Final approved design, ADR 008 and cloud deferral; capacity shortfall explicit | Refine demand through atomic steps |
+| 2 measurement | **PASS** | All 182 old steps scored; top fifteen ranked; final-design plan updated | Recompute actual split estimates |
+| 3 standards | **PASS** | Shared assets reconciled to JDBC/Kafka/Nuxt; runbooks remain drafts | Wire into atomic steps |
 | 4 decomposition | **NOT RUN** | Preserve objectives and map IDs | Rewrite pairs from current Week 1 |
 | 5 cross-cutting | **NOT RUN** | Gates/scorecards required | Trace quality enforcement |
 | 6 tooling | **NOT RUN** | Existing linter retained | Extend, prove negative fixtures |
@@ -29,3 +29,7 @@ Existing linter returned 223 errors in incoming 1,400-line canonical architectur
 Final architecture is seven services, reactive gateway, JDBC, Kafka/Avro, Nuxt, Flutter and confidence service. Cloud production design is preserved; AWS/Kubernetes execution is future improvement per latest user answer. No cloud spending/resource creation is authorized. Capacity inputs are unchanged; seven-service/quality demand exceeds the old backend budget in the current review. That is a planning blocker, not permission to enlarge weekly allocations.
 
 Next: complete architecture-specific shared-asset reconciliation and commit the correction after lint; rewrite Weeks 1–2 first with explicit atomic hours and old-ID mapping. Then pairs 3–4, 5–6, 7–8, 9–10, 11–12, updating every README, guide, gate and troubleshooting. Complete global quality/feature traceability, extend/prove linter checks, run sampled safe validation and write before/after changelog. Until a pair is marked upgraded, its old C/React/local-worker instructions are superseded and must not be executed. No implementation step is marked Run by documentation authoring.
+
+## Correction checkpoint
+
+Architecture correction committed as c787a08. Shared assets now use existing service roots, real Kafka test requirements, Nuxt, private multi-service Compose and broker-aware restore. Format lint passes 192 Markdown files with zero errors. No sampled implementation step has been executed during this correction. Phases 4–7 remain outstanding; QUALITY-COVERAGE still records gaps and no release gate is claimed passed.

@@ -4,7 +4,7 @@
 
 Enterprise standard here means repeatable, testable engineering practices on one computer. It is not certification, regulatory compliance, guaranteed availability, or a guarantee that a junior team finishes in twelve weeks. Each rule below has a beginner minimum and an observable acceptance check; every item is planned until executed evidence exists.
 
-Observed package roots are com.hrflow.attendance, com.hrflow.leave and other service roots in services. The accepted target is proposed com.hrflow.app.DOMAIN with api/internal boundaries. Inspect actual files before selecting class names. Java target 21 and root Boot 4.1.1 come from pom.xml; services still use 4.0.8 and must not be called aligned. Maven wrapper is the build tool. No dependency/tool version is silently upgraded by this document.
+Observed package roots are com.hrflow.attendance, com.hrflow.leave and other service roots in services. Retain those service roots. Proposed api/application/domain/infrastructure subpackages follow the final design; no hrflow-app monolith is created. Inspect actual files before selecting class names. Java target 21 and root Boot 4.1.1 come from pom.xml; services still use 4.0.8 and must not be called aligned. Maven wrapper is the build tool. No dependency/tool version is silently upgraded by this document. JDBC replaces scaffold JPA; reactive gateway replaces scaffold MVC only after a compatibility spike.
 
 One OpenAPI file owns wire shapes, canonical API document owns persistence semantics, and ADR 007 owns tenant defense. Code snippets are proposed examples, not classes discovered in source.
 
@@ -80,7 +80,7 @@ Introduced: Week 03; final enforcing IDs and literal gate tasks appear in [quali
 
 ## Q08 — Reliability
 
-Rule: Retryable commands have durable keys; bounded outbound I/O and graceful shutdown; atomic outbox and local receipts.
+Rule: Retryable commands have durable keys; bounded outbound I/O and graceful shutdown; atomic owner outbox and consumer inbox receipts before Kafka offset acknowledgment.
 
 Beginner minimum: Store command result with owner write/intent; handler effect plus receipt transaction; HTTP timeout/jitter; drain/release leases on shutdown.
 
@@ -92,7 +92,7 @@ Introduced: Week 04; final enforcing IDs and literal gate tasks appear in [quali
 
 Rule: Small domain tests, real PostgreSQL integration tests and a few end-to-end stories cover critical behavior.
 
-Beginner minimum: JUnit 5 with Testcontainers PostgreSQL 16; JaCoCo only for auth/attendance/leave domain and service packages.
+Beginner minimum: JUnit 5 with Testcontainers PostgreSQL 16 and real Kafka for retained event flows; JaCoCo only for auth/attendance/leave domain and service packages.
 
 Acceptance check: Critical packages target at least 80 percent lines and 70 percent branches, zero failing tests; negative/race/recovery cases cannot be replaced by coverage.
 
@@ -158,10 +158,20 @@ CI runs the same commands locally and on push. Scanner update/network failure is
 
 Use stable uppercase error codes with problem details; clients never branch on human detail. JSON camelCase, SQL snake_case, /api/v1 plural kebab-case routes, UTC instants and explicit shift-local dates remain. Never log credentials, personal names, raw evidence or private storage paths. Technical tenant/correlation identifiers stay only in protected logs; metrics avoid per-employee/tenant cardinality.
 
-Tests live under the target app src/test/java with mirrored package names. Domain tests use fixed clocks and no database; integration tests exercise PostgreSQL constraints/locks/RLS, clean/upgrade migrations and outbox. Real Kafka tests are not needed because runtime Kafka is deferred; reintroduction requires a new ADR and broker crash/offset tests. A red test must fail for the intended assertion, not a missing import, absent Docker or absent project.
+Tests live under each existing service src/test/java with mirrored package names. Domain tests use fixed clocks and no database; integration tests exercise PostgreSQL constraints/locks/RLS, clean/upgrade migrations and outbox. Real Kafka tests are mandatory because Kafka remains in the final design: producer acknowledgment/mark-sent crash, effect/inbox/offset crash, duplicate delivery, schema compatibility, bootstrap and retention-gap handling. A red test must fail for the intended assertion, not a missing import, absent Docker or absent project.
 
 ## Pattern admission and self-review
 
 All four answers must be yes: current requirement, plain tested version hurts, two real variations or isolation/composition need, and a junior explains it in two sentences. A clear method or switch wins otherwise. Optional pattern refactors move to Stretch before mandatory quality work.
 
 [Self-review](CODE-REVIEW-CHECKLIST.md), [tests](TEST-STRATEGY.md), [security](SECURITY-BASELINE.md), [API guide](API-GUIDELINES.md), [commands](DAILY-COMMANDS.md), [golden slice](GOLDEN-SLICE.md), and [runbooks](runbooks/README.md) define the reusable recipe.
+
+## Final service boundary and license limits
+
+Gateway strips caller identity headers, verifies JWT, then creates trusted internal identity; services enforce role/resource checks at method level. No direct business port is published. Shared tests cover forged headers and bypass attempts as well as cross-tenant IDs. Until those tests prove the boundary, Q04/Q05 are conditional, never accepted merely because a header is present. Runtime database roles stay non-owner with no BYPASSRLS.
+
+Q10 checks per-service package direction and Maven dependencies, not a fictional com.hrflow.app package. Domain imports no Spring/JDBC/Kafka. No service imports another service artifact or implementation; shared libraries contain contracts and infrastructure without domain repositories. SQL tenant predicates require integration/RLS tests in addition to ArchUnit.
+
+The final design's Prometheus/Grafana, structured logs and trace propagation remain observability targets; optional full log/trace storage must fit measured host resources. Health, correlation, lag/error metrics and alerting are minimum gates. Final cloud topology is future improvement per user instruction. Do not describe deferred cloud or unexecuted monitoring as delivered.
+
+Confluent Registry licensing and Terraform licensing must be checked before redistribution or future cloud work. Existing final architecture names them; this guide does not claim every named product is OSI-licensed merely because a container is downloadable. No new paid product is introduced by the quality practices.
