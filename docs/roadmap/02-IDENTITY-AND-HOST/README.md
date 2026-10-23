@@ -1,72 +1,65 @@
 # Week 02 — Identity and private host deployment
 
-> **Navigation:** [Build](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md) · [V2 progress](../PROGRESS-V2.md)
+> **Navigation:** [Build](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md) · [Roadmap](../ROADMAP.md)
 
-## Capacity and status
+## Capacity and calendar
 
-**Planned hours:** A=15.25; B=7.75.
+Dates: 2026-11-02 through 2026-11-06; weekend rest follows.
 
-**Step hours:** A=14.25; B=6.75. Reading/self-review allowance outside steps: 1 h each. Closing review inside a step is already counted. Normal 70 percent limit is 16.8 h each from the single dashboard input. Remaining limit is recovery reserve, not new scope. Gate **NOT RUN**; these are planning estimates, not measured junior velocity. B owns selected build/CI tasks with A's review included in the shared review slots; inability to do that work is a capacity blocker, not free pairing.
+**Planned hours:** A=14.25; B=11.
 
-## Objective and prerequisite
+The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
 
-Use the final seven-service/JDBC/Kafka/Nuxt architecture. This week narrows its output to the auth ladder, trusted tenant boundary, intended private host and first external backup/restore. Unknown names are inspected first; all new paths are explicitly proposed. No documentation commit is a green app tag.
+## Preserved objective and starting point
+
+Week 02 — Identity and private host deployment remains the weekly objective, now under the accepted service/JDBC/Kafka/Nuxt design. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
 
 ## Day plan
 
-| Day | Ordered work | New learning cap | Rule |
+| Day | Work | Per-person cap | Learning rule |
 | --- | --- | --- | --- |
-| Monday | Stones 1–2 until day cap; carry remainder | At most two linked topics | Stop at 4 h per person |
-| Tuesday | Earliest unfinished stone, then next | At most two linked topics | Stop at 4 h per person |
-| Wednesday | Finish scheduled feature/quality slots | At most two linked topics | Stop at 4 h per person |
-| Thursday | Stone 7 buffer and earlier failures only | None | Stop at 2.5 h per person |
-| Friday | Stone 8 review/deploy/restore/gate only | None | Stop at 2.3 h per person |
-| Weekend | Rest | None | Zero scheduled work |
+| Monday | Earliest prerequisite, then feature stones 1–2 | 4 h | At most two unfamiliar concepts |
+| Tuesday | Continue feature stones 2–4 in order | 4 h | At most two unfamiliar concepts |
+| Wednesday | Finish earliest feature/quality stones through 6 | 4 h | At most two unfamiliar concepts |
+| Thursday | Stone 7 buffer, review/mentoring and existing failures | 2.5 h | No new concept or scope |
+| Friday | Stone 8 checked redeploy, smoke, restore and gate | 2.3 h | No new concept or scope |
+| Weekend | Rest | 0 h | No catch-up allocation |
 
-Day caps total 16.8 h. A stone is an outcome, not permission to exceed a day cap; resume its next uncommitted step next working day. If Stones 1–6 do not fit by Wednesday, Friday gate stays blocked until prerequisites are repaired. New concepts are not crammed into Thursday/Friday to protect a date.
+A stone may span working days; stop at the day cap and save its next exact step. A's scheduled review may also happen beside a B fixture Monday–Wednesday, with the same time removed from Thursday allowance; do not count it twice. If prerequisites/learning overrun, use buffer for repair and report the schedule impact, never cramming new concepts into Thursday/Friday.
 
-## Stepping stones
+## Stone table
 
-| Stone | Observable group | Step range | A/B upper step h |
+| Stone | Visible result group | Steps | A/B step h |
 | --- | --- | --- | --- |
-| 1 | Credentials and trusted token claims | W02-S01 to W02-S06 | 3.5/0 |
-| 2 | Gateway negatives and refresh family | W02-S07 to W02-S12 | 4.25/0 |
-| 3 | Logout roles and tenant boundary | W02-S13 to W02-S16 | 2/0 |
-| 4 | Safe logs contract and clients | W02-S17 to W02-S20 | 1/1.75 |
-| 5 | Confirmed private host procedure | W02-S21 to W02-S24 | 0.5/2 |
-| 6 | Backup restore and access prerequisites | W02-S25 to W02-S28 | 1.5/1 |
-| 7 | Thursday recovery only | W02-S29 to W02-S30 | 0.5/1 |
-| 8 | Friday release and restore | W02-S31 to W02-S32 | 1/1 |
+| 1 | Prerequisites and compatibility | W02-S01 to W02-S06 | 3/0.5 |
+| 2 | First private service baseline | W02-S07 to W02-S11 | 2.75/0.5 |
+| 3 | Contract and client fixtures | W02-S12 to W02-S16 | 2/1 |
+| 4 | Error and integrity boundaries | W02-S17 to W02-S21 | 1.5/1.75 |
+| 5 | Repeatable tools and event proof | W02-S22 to W02-S26 | 1/2.75 |
+| 6 | CI and private operational prerequisites | W02-S27 to W02-S31 | 1.5/1.5 |
+| 7 | Thursday recovery buffer | W02-S32 to W02-S33 | 0.5/1 |
+| 8 | Friday deploy restore and gate | W02-S34 to W02-S35 | 1/1 |
 
 ## Minimum Viable Gate
 
-- [ ] All scheduled critical outcomes have actual tests/findings, not an empty evidence placeholder.
-- [ ] No security/tenant/data-integrity/restore assertion is skipped to recover time.
-- [ ] Friday private redeploy and scratch restore are verified, or the gate remains failed.
-- [ ] The gate document and dashboard link real reports and next exact action; no task is prechecked.
+- [ ] All required feature, tenant, role, validation, race/replay and recovery outcomes in VERIFY-AND-GATE have actual report evidence.
+- [ ] Every stone has reviewed tests/startup and its unused new green tag; red work is not deployed.
+- [ ] Friday intended-host redeploy, authenticated/denied smoke and external-backup scratch restore pass. Week 1 is explicitly disposable/local only.
+- [ ] No critical failure is downgraded for schedule pressure; record exact next repair before the next week.
 
-## Stretch and unallocated required work
+## Stretch and exact cuts
 
-- [ ] UI polish, extra filters, extra reports and unadmitted patterns only after all gates.
-- [ ] AWS/Terraform/Kubernetes execution stays future improvement by latest user instruction.
+- [ ] Visual polish, additional filters/reports and provider push/SSE only after the required gate.
+- [ ] Builder/Adapter/Specification refactors only if the preserved pattern admission test passes; they are not prerequisites.
+- [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
-The full system is not funded by this week's slots. Other service build alignment, later business features, full event durability and full recovery remain required later work. [Architecture review](../ARCHITECTURE-REVIEW-V2.md) records the overall demand shortfall. Spikes prove findings only; blocked prerequisites carry into the next week and may break the deadline. No silent scope cut, optional prerequisite or borrowed weekend.
+At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.
 
-At a cap, stop the current step and record its smallest unresolved result. Do not replace real PostgreSQL/Kafka, skip security tests or omit backup restore. Pattern lessons are optional until the admission test proves benefit.
+## Continue and shutdown
 
-## Files and shared recipe
+- [Build](BUILD-GUIDE.md), [part two](BUILD-GUIDE-PART-2.md), [part three](BUILD-GUIDE-PART-3.md), [part four](BUILD-GUIDE-PART-4.md).
+- [Part five](BUILD-GUIDE-PART-5.md), [part six](BUILD-GUIDE-PART-6.md), [part seven](BUILD-GUIDE-PART-7.md), [part eight](BUILD-GUIDE-PART-8.md).
+- [Verify and gate](VERIFY-AND-GATE.md), [troubleshooting](TROUBLESHOOTING.md), [ID map](../STEP-ID-MAP.md).
+- [Standards](../ENGINEERING-STANDARDS.md), [golden slice](../GOLDEN-SLICE.md), [self-review](../CODE-REVIEW-CHECKLIST.md).
 
-- [Build guide](BUILD-GUIDE.md).
-- [Build part two](BUILD-GUIDE-PART-2.md).
-- [Build part three](BUILD-GUIDE-PART-3.md).
-- [Build part four](BUILD-GUIDE-PART-4.md).
-- [Verify and gate](VERIFY-AND-GATE.md).
-- [Troubleshooting](TROUBLESHOOTING.md).
-- [Golden slice](../GOLDEN-SLICE.md).
-- [Step map](../STEP-ID-MAP.md).
-
-Repeat the golden slice for later feature sets with a short delta checklist. Introduce only the linked concept when needed, save evidence and next action, and close the laptop after Friday gate. Status stays **Not run** until actual execution.
-
-## Draft budget validation still required
-
-The 1-hour reading allowance is provisional and has not been checked against each person’s unique primers or actual learning speed. The daily distribution must also be checked: feature/quality work plus first-time reading must fit Monday–Wednesday, with no new concepts moved into Thursday buffer or Friday deployment. Until those checks and client transport gaps are fixed, this pair is a draft, not a beginner-ready validated plan. Do not interpret a total below 16.8 as proof that every daily/learning constraint passes.
+Five-minute close: reviewed commit, actual evidence, next exact ID/command, blocker/energy and stop. Failed critical work is tomorrow's first action. No weekend rescue work and no guarantee of delivery from estimates alone.

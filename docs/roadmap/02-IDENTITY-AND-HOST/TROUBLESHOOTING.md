@@ -15,14 +15,14 @@
 
 - Symptom: Migration/constraint/idempotency test returns an unexpected failure.
 - Likely cause: Applied migration edited, missing tenant/key predicate or stale fixture.
-- Diagnose: `mvn -f services/hrflow-app/pom.xml test`; inspect target first, because scripts are proposed until their build step.
+- Diagnose: `mvn -f services/identity-org/pom.xml test`; inspect target first, because scripts are proposed until their build step.
 - Healthy result: Zero failures with real PostgreSQL fixtures.
 - Fix: Reproduce smallest row pair; add a new migration or correct scoped query; preserve applied history.
 - Verify: Run integrity and duplicate/concurrency scenarios.
 
 ## Client and contract disagree
 
-- Symptom: Flutter/React parses wrong field or sees unexpected HTTP code.
+- Symptom: Flutter/Nuxt parses wrong field or sees unexpected HTTP code.
 - Likely cause: Stale mock/example, wrong base URL or changed token state.
 - Diagnose: `flutter test`; inspect target first, because scripts are proposed until their build step.
 - Healthy result: Mock and live schema agree and token failure is explicit.
@@ -55,10 +55,22 @@
 
 | Symptom | Inspect first | Safe next action |
 | --- | --- | --- |
-| MVC advice does not catch gateway failure | Reactive dependency and filter error path | Assert the WebFlux error writer directly; do not add JDBC/blocking calls to gateway |
+| MVC advice does not catch gateway failure | Nuxtive dependency and filter error path | Assert the WebFlux error writer directly; do not add JDBC/blocking calls to gateway |
 | Registry cannot connect despite valid Compose YAML | Host/container listeners and Registry bootstrap env | Correct the one actual mismatch, then test connectivity; preserve volumes |
 | Tests green with Docker stopped | Skipped test flags and fallback DB | Remove silent skip/H2 fallback for required integration tests; environment failure stays visible |
 | Empty coverage or architecture result | Actual compiled packages and selectors | Fail on absent implemented critical packages; record not-yet-built packages honestly |
 | Auth test runs out of time | Earliest red assertion and its fixture | Commit isolated red work on work branch, keep tag/deploy blocked, resume exact assertion |
 | Backup script syntax passes but no restored data | External copy, roles, files and replay inventory | Execute isolated restore and verify counts/auth; syntax is not recovery evidence |
 | Cookie transport/CSRF not implemented | Actual browser request/cookie path | Keep web security gate failed; add explicit source/test steps before publishing |
+
+## Final-service V2 diagnostics
+
+| New failure | Inspect first | Safe response |
+| --- | --- | --- |
+| A red test will not compile | Resolved fixture/API versions and proposed class names | Repair setup separately; only semantic assertion failure is intended red |
+| A query leaks or RLS test passes as owner | Runtime role, transaction-local tenant and predicate | Use non-owner role and same transaction; pool/rollback/insert negatives are mandatory |
+| Kafka duplicate/stale fact appears | Owner intent, inbox uniqueness, revision and offset ordering | Commit effect/receipt before offset and suppress stale full snapshot; retain failed event |
+| A script exists but behavior is unproved | Actual script case and exit propagation | Execute its isolated assertion, never treat bash syntax/config validation as deployment/restore |
+| Client refresh loops or cookie is rejected | Origin/CSRF flags, credentials mode and single-flight guard | Fail closed once; keep refresh off web storage and do not retry hostile CSRF |
+| Archive restores but files/projection differ | Backup cut, file checksums, schemas and replay range | Repeat isolated restore and snapshot bootstrap; never overwrite source DB |
+| Learning/time cap exceeded | Actual next smallest step and known/unfamiliar primer count | Stop at cap, use recovery reserve, cut Stretch first and record schedule impact |

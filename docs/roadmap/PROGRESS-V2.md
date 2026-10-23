@@ -81,3 +81,7 @@ Current draft metrics: 215 steps total, average upper duration 50.93 minutes, ma
 ## First file tomorrow and daily routine
 
 Open this file first to continue the documentation upgrade. For application work, remain at W01-S01 until its prerequisites pass. Five-minute routine: read dashboard and blocker for one minute, check branch/status for one minute, choose the single next mapped step for one minute, confirm its prerequisite/Expect/Undo for one minute, record available energy/time and start or stop for the final minute. No failed critical gate disappears overnight.
+
+## Finalization pair 01–02
+
+Weeks 01–02 now contain the final-service atomic sequence, eight stones, explicit fields/status, computed owner budgets, required negative paths and Enterprise/Minimum gates. All implementation remains Not run. First-time reading is included in step durations; allocated review/mentoring is separate and counted. Remaining validation and global/tooling reconciliation are subsequent phases.

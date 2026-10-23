@@ -1,317 +1,264 @@
 # Week 01 build guide part 3
 
-> **Navigation:** [Overview](README.md) · [First guide](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Stone 5 — Build quality checks
+## Stone 3 — Contract and client fixtures
 
-**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
+**You will have:** Rejected input/rolled-back insert changes zero committed rows; all identity tests pass.
 
-### W01-S18 — Pin and check Java formatting (30–30 min)
+### W01-S13 — Drive the mock from the one contract (45–45 min)
 
-**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [One concept](../primers/STATIC-ANALYSIS.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S17 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `pom.xml` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Inspect first: no formatter is inferred. Pin a compatible Spotless plugin/version after a small local trial, configure the existing Java roots, run check, then format only the touched future implementation files. A reviews the root-pom change inside the review allowance.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn spotless:check
-```
-
-**Expect:** Formatting check succeeds on formatted input and fails on an intentionally unformatted temporary copy.
-
-**Common mistake:** Running the formatter locally while leaving its check out of CI.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S18` for evidence-only work, or `feat(w01): w01-s18` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S19 — Fail static analysis on one real defect (30–30 min)
-
-**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/STATIC-ANALYSIS.md); count reading against README allowance, not a hidden extra slot.
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W01-S18 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: locate current equivalents before creating these targets: `pom.xml` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Pin compatible PMD plugin/rules in the existing Maven build. Trial one synthetic unused/unsafe code fixture outside production; record rule ID and nonzero exit, then remove the fixture. Do not suppress all warnings to get green.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn pmd:check
-```
-
-**Expect:** PMD check fails on its recorded bad fixture and succeeds after removal; actual build rules remain enabled.
-
-**Common mistake:** Disabling the rule that found a real defect merely to obtain a green build.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Record the observed failure before making the smallest repair.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S19` for evidence-only work, or `feat(w01): w01-s19` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S20 — Scope coverage to critical packages (45–45 min)
-
-**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/COVERAGE.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S19 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `pom.xml` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Pin compatible JaCoCo and record the actual auth/attendance/leave domain/application package selectors. Set 80 percent lines and 70 percent branches on nonempty implemented critical packages; missing future packages are explicitly not covered, not reported as 100 percent.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn verify
-```
-
-**Expect:** Existing tests produce a report; a deliberate uncovered implemented critical branch fails the configured check.
-
-**Common mistake:** Treating an empty package selector as 100 percent coverage.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S20` for evidence-only work, or `feat(w01): w01-s20` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S21 — Keep PostgreSQL integration tests real (60–60 min)
-
-**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/TESTCONTAINERS.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S20 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/pom.xml` `services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Review the container fixture from W01-S08: pin PostgreSQL 16 image, use mapped connection details, and remove any fallback to H2 or silent skip when Docker is absent. Prove an invalid DB constraint reaches PostgreSQL.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn -f services/identity-org/pom.xml test
-```
-
-**Expect:** Container-backed test passes; stopping Docker produces an environment failure, never a skipped success.
-
-**Common mistake:** Silently skipping required integration tests when Docker is unavailable.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Record the observed failure before making the smallest repair.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S21` for evidence-only work, or `feat(w01): w01-s21` for the isolated implementation change.
-- [ ] Tagged `w01-s21-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
-
-## Stone 6 — Event spike and candidate images
-
-**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
-
-### W01-S22 — Inspect the existing Avro and listener paths (30–30 min)
-
-**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/KAFKA-BASICS.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S21 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Read the actual avsc under libs/hrflow-contracts/events, libs poms and Compose. Record host/container listener addresses and SQL bind-mount source; identify Registry bootstrap mismatch without changing volumes.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-docker compose -f infra/docker/docker-compose.yaml config --quiet
-```
-
-**Expect:** Compose syntax exits zero; findings separately name bad mount/listener values because syntax validation does not prove connectivity.
-
-**Common mistake:** Using the host Kafka listener address from inside a container.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S22` for evidence-only work, or `feat(w01): w01-s22` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S23 — Time-box Avro Registry compatibility (45–45 min)
-
-**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/KAFKA-BASICS.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S22 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. After disk/Docker gates, use a disposable isolated broker/Registry environment to trial the exact serializer/runtime versions from the spike. Record accepted compatible evolution and rejected incompatible schema. Output is a finding, not a production publisher.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn -pl libs/hrflow-contracts -am test
-```
-
-**Expect:** Finding records resolved versions, actual round-trip result or exact blocker; an unavailable image/dependency is not a business pass.
-
-**Common mistake:** Calling successful schema registration proof of backward compatibility.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S23` for evidence-only work, or `feat(w01): w01-s23` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S24 — Record the first event round-trip result (45–45 min)
-
-**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/KAFKA-BASICS.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S23 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Use only synthetic tenant/employee data and the inspected event schema in the isolated spike. Record produce/consume and a duplicate replay observation with a bounded wait. Explain why this is not yet outbox/inbox exactly-once processing.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
-
-```bash
-mvn -pl libs/hrflow-contracts -am verify
-```
-
-**Expect:** Actual producer/consumer evidence is recorded or the spike is blocked; no durable business delivery is claimed.
-
-**Common mistake:** Calling one event round trip proof of durable exactly-once business processing.
-
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
-
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
-
-**Check:**
-
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S24` for evidence-only work, or `feat(w01): w01-s24` for the isolated implementation change.
-
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
-
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
-
-### W01-S25 — Build pinned private candidate images (60–60 min)
-
-**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
-
-**Read first (10 min):** [One concept](../primers/DOCKER-COMPOSE.md); count reading against README allowance, not a hidden extra slot.
-
-**Before you start:**
-
-- [ ] W01-S24 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
-
-**Do:**
-
-1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/Dockerfile` `services/api-gateway/Dockerfile` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
-1. Inspect actual jar names from Maven outputs. Add the two proposed Dockerfiles with pinned reviewed Java 21 runtime image digests, non-root users and no secrets; build each with the matching existing service context. Record digests, total size and memory gate. This does not prove the full seven-service host fits.
-1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+1. Inspect first: review current equivalents for `contracts/openapi.yaml`, `mobile/test/department_contract_test.dart`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect the actual mobile root and pinned mock/validator from W01-S09. Start its local mock from the sole OpenAPI file, then make the Flutter fixture test assert the documented department response. Do not create a second independent mock schema. Start the already locked mock with docs/validation/node_modules/.bin/prism mock contracts/openapi.yaml on loopback; stop it after fixtures.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 git diff --stat
 ```
 
-**Expect:** Both local candidate images build from reviewed jars, run as non-root and have recorded digests; absent/pull-failed images block the CI image-scan gate.
+**Expect:** Only the contract fixture and client test change; mock returns documented 201 fields and the client assertion passes.
 
-**Common mistake:** Using a floating base-image tag or putting build secrets in an image layer.
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
 
-**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
 
-**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
 
 **Check:**
 
-- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
-- [ ] Committed with message `docs(w01): record W01-S25` for evidence-only work, or `feat(w01): w01-s25` for the isolated implementation change.
-- [ ] Tagged `w01-s25-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s13` for implementation or `docs(w01): w01-s13` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authoring and source inspection are not execution of this step.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
+### W01-S14 — Show one contract failure in both clients (30–30 min)
+
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/PROBLEM-DETAILS.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `web/app/app.vue`, `mobile/test/department_contract_test.dart`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with delta: invalid department fixture returns the documented problem code; both clients display safe detail and preserve input. Verify no technical stack or token is rendered.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+npm --prefix web run build
+```
+
+**Expect:** Nuxt build and selected Flutter test pass; invalid fixture displays VALIDATION_FAILED with no stack trace.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s14` for implementation or `docs(w01): w01-s14` for findings/evidence, with exact reviewed paths only.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
+### W01-S15 — Add the shared problem contract to identity (45–45 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/PROBLEM-DETAILS.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/api/ApiProblemHandler.java`, `services/identity-org/src/test/java/com/hrflow/identityorg/api/ApiProblemHandlerTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: locate any error advice. If absent use these proposed paths. Write a failing validation/error assertion, then return the golden problem shape with a stable code/traceId and application/problem+json. Keep unknown exceptions sanitized.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -f services/identity-org/pom.xml test
+```
+
+**Expect:** Validation and unexpected-error tests assert content type and standard members, with no exception/stack in the response.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s15` for implementation or `docs(w01): w01-s15` for findings/evidence, with exact reviewed paths only.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
+### W01-S16 — Match the reactive gateway error shape (30–30 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/REACTIVE-GATEWAY.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/api-gateway/src/main/java/com/hrflow/gateway/ApiProblemWriter.java`, `services/api-gateway/src/test/java/com/hrflow/gateway/ApiProblemWriterTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect the actual reactive error hooks selected by W01-S07; write the equivalent problem body for a denied/unroutable request. Reuse wire fixtures; do not copy MVC advice into WebFlux.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -f services/api-gateway/pom.xml test
+```
+
+**Expect:** Reactive error test matches the same problem fields and never serializes a stack trace.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s16` for implementation or `docs(w01): w01-s16` for findings/evidence, with exact reviewed paths only.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
+### W01-S17 — Register the negative contract examples (30–30 min)
+
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/CONTRACT-TESTS.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `contracts/openapi.yaml`, `docs/validation/W01-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Add the exact tested validation and sanitized-500 examples to the sole contract. Run its pinned validator and compare client fixtures; record the command/output instead of claiming an unused schema is checked.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+git diff -- contracts/openapi.yaml
+```
+
+**Expect:** Examples include stable codes and no secrets; validator and fixture assertions pass.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s17` for implementation or `docs(w01): w01-s17` for findings/evidence, with exact reviewed paths only.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
+### W01-S18 — Prove failures cannot create diagnostic data (45–45 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/TEST-FIRST.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Extend the existing disposable PostgreSQL test with invalid insert and rollback assertions. A failed transaction must leave its original row count unchanged. Run the assertion red before the minimum fix if a defect is found.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -f services/identity-org/pom.xml test
+```
+
+**Expect:** Rejected input/rolled-back insert changes zero committed rows; all identity tests pass.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s18` for implementation or `docs(w01): w01-s18` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w01-s18-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Next build part](BUILD-GUIDE-PART-4.md).
+[Next part](BUILD-GUIDE-PART-4.md).
