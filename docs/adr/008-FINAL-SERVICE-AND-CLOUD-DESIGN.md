@@ -38,3 +38,9 @@ The old capacity assessment does not transfer. [Architecture review](../roadmap/
 ## Relay ordering refinement from the approved design
 
 Retain one active outbox relay per owner service, chosen with PostgreSQL advisory lock on a dedicated relay connection; standby instances do not publish. Bounded SKIP LOCKED batches do not by themselves preserve per-key ordering across multiple publishers. Connection/lock loss stops publication until leadership is re-established. Inbox/revision checks still handle duplicate or stale delivery; this does not create host/broker failover.
+
+## Tenant context for background discovery
+
+Requests get tenant only from the verified token boundary. Background processing must not query personal outbox/job payloads with missing RLS context or give a runtime role BYPASSRLS just to find work. Each owner maintains a proposed non-personal tenant registry containing only trusted organization-event UUID/lifecycle/revision metadata. A separate private job role can enumerate that fixed metadata; business HTTP repositories cannot use this infrastructure-only discovery grant.
+
+The worker then enters one tenant transaction at a time, sets transaction-local context from the stored trusted metadata and uses tenant-scoped predicates for its personal outbox/job/effect queries. Discovery exposes no employee, payload or business row and is the explicit infrastructure metadata exception to ordinary repository scoping; every business query remains scoped. Tests prove absent-context payload denial, worker pool tenant switches, rollback cleanup and no HTTP access to discovery. The existing organization bootstrap/RLS-role steps own this small metadata/grant change; no new service or public tenant selector is introduced.

@@ -41,3 +41,7 @@ The complete incoming Markdown input is durably archived in docs/validation/INCO
 No documentation phase remains intentionally pending. Open [START-HERE](START-HERE.md), [YOU-ARE-HERE](YOU-ARE-HERE.md), then [W01-S01](01-FOUNDATION/BUILD-GUIDE.md). It records dirty work, reviews ignore/secrets and preserves the actual source baseline on the implementation branch before code/CI changes. Do not mark it Run from this authoring pass.
 
 [STEP-ID-MAP](STEP-ID-MAP.md), [DRAFT-ID-MAP](DRAFT-ID-MAP.md) and [finalization map](FINALIZATION-ID-MAP.md) preserve older positions/tags. [CHANGELOG-V2](CHANGELOG-V2.md) contains final metrics and per-week hours; [QUALITY-COVERAGE](QUALITY-COVERAGE.md) contains every senior-quality gate. Five-minute routine: read blocker, check branch/status, choose one next mapped ID, read prerequisite/Expect/Undo, record energy/time and start or stop. End by saving the next exact command and protecting rest days.
+
+## Saved-tree verification
+
+A fresh git archive of committed checkpoint e2ca576, including docs and root README, passed the extended linter: 277 Markdown files, zero errors and zero warnings. This verifies tracked-file completeness independently of untracked working-tree files. The final tenant-worker metadata clarification and this receipt are also linted before their finishing commit; runtime/native-viewer limits above remain unchanged.

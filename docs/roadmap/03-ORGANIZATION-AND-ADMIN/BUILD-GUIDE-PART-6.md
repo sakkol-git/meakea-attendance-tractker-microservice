@@ -193,7 +193,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/application/RlsRoleService.java`, `services/identity-org/src/main/java/com/hrflow/identityorg/infrastructure/RlsRoleRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Add real PostgreSQL assertions using non-owner runtime role: missing context, WITH CHECK denial, pool A/B reuse and rollback. Keep migration role separate.
+1. Repeat the golden slice; required quality delta: Add real PostgreSQL assertions using non-owner runtime role: missing context, WITH CHECK denial, pool A/B reuse and rollback. Keep migration role separate. For jobs use the ADR-008 trusted UUID-only owner registry/private discovery role, then scoped per-tenant payload transactions; never grant runtime BYPASSRLS or expose discovery through HTTP.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

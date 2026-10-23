@@ -93,3 +93,7 @@ All stable MVP IDs and all 448 new IDs are in GLOBAL-CHECKLIST; all fourteen Q-i
 All 94 source/config fingerprints match the pre-pass snapshot; all eight original non-document staged blobs remain unchanged. Docs commits use an isolated index, excluding staged application source. Generated build/test artifacts are not application source edits. No reset, history rewrite, actual deployment, volume deletion or message to another person was performed.
 
 The full extended linter and its isolated proof harness are recorded in LINTER-PROOFS; current real docs have zero errors/warnings. All seven Mermaid diagrams parse. IntelliJ/Obsidian/Notion visual/import smoke is **NOT RUN**; portable CommonMark/GFM plus required Text versions are preserved, but no native viewer result is invented. Real PostgreSQL/Kafka/auth/CSRF/security/CI/deployment/restore/load tests remain developer execution work; their absence blocks product gates, not hidden authoring claims. HR policy/consent, actual host, backup disk and public reachability remain unconfirmed.
+
+## Saved-tree verification
+
+A fresh git archive of committed checkpoint e2ca576, including docs and root README, passed the extended linter: 277 Markdown files, zero errors and zero warnings. This verifies tracked-file completeness independently of untracked working-tree files. The final tenant-worker metadata clarification and this receipt are also linted before their finishing commit; runtime/native-viewer limits above remain unchanged.
