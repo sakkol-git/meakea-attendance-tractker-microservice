@@ -4,11 +4,11 @@
 
 What: Tests inspect compiled dependencies and reject forbidden package edges.
 
-Why HRFlow needs it: One app still needs enforceable domain ownership rather than comments.
+Why HRFlow needs it: Seven services still need enforceable layer and artifact ownership rather than comments.
 
 ## Tiny example
 
-A leave class importing attendance.internal repository makes ArchUnit fail.
+A leave domain class importing Spring JDBC infrastructure makes ArchUnit fail; a Maven dependency on attendance implementation is also forbidden.
 
 ## Common mistake
 

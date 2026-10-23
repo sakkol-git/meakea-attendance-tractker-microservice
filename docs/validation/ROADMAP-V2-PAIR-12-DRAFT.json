@@ -1,0 +1,656 @@
+{
+  "1": [
+    [
+      "A",
+      30,
+      "Inventory the dirty workspace",
+      "GIT",
+      "docs/validation/W01-EVIDENCE.md",
+      "Inspect first: record staged/untracked paths and current branch; save a reviewed checkpoint plan without adding source or secrets. Record the evidence file as a documentation-only commit.",
+      "git status --short",
+      "Existing source paths remain staged/untracked exactly as before; checkpoint plan names the work to preserve."
+    ],
+    [
+      "A",
+      30,
+      "Measure the disk gate",
+      "DOCKER-COMPOSE",
+      "docs/validation/W01-EVIDENCE.md",
+      "Record available disk and the agreed cleanup owner. Do not delete files automatically. Stop image pulls until at least 30 GiB is free.",
+      "df -h .",
+      "Available column proves at least 30 GiB, or the gate records BLOCKED and no image is pulled."
+    ],
+    [
+      "A",
+      30,
+      "Verify the Java 21 toolchain",
+      "DEPENDENCY-INJECTION",
+      "docs/validation/W01-EVIDENCE.md",
+      "Inspect installed JDKs with /usr/libexec/java_home -V; select an installed Java 21 in this shell/IDE or record the installation blocker. Do not change the project Java target to 17.",
+      "java -version",
+      "Version line contains major 21; a different major leaves this prerequisite blocked."
+    ],
+    [
+      "A",
+      30,
+      "Verify Docker without starting workloads",
+      "DOCKER-COMPOSE",
+      "docs/validation/W01-EVIDENCE.md",
+      "After the disk gate, start the installed Docker Desktop normally; record daemon version and memory allocation. Do not start PostgreSQL/Kafka yet.",
+      "docker info",
+      "Server section responds without a daemon-socket error; no business/database port is published."
+    ],
+    [
+      "A",
+      45,
+      "Record the build compatibility spike",
+      "DEPENDENCY-INJECTION",
+      "docs/validation/W01-EVIDENCE.md",
+      "Inspect pom.xml and all seven service poms plus shared libraries. Time-box resolution/compile of current reactor under Java 21; record Boot/Cloud/Avro versions, compatibility evidence and one smallest correction to make next. Output is a finding, not seven unreviewed pom edits.",
+      "mvn -o validate",
+      "Reactor lists ten projects and BUILD SUCCESS for validation; compilation is separately recorded and never inferred from validate."
+    ],
+    [
+      "A",
+      60,
+      "Align the identity JDBC scaffold",
+      "SPRING-JDBC",
+      "services/identity-org/pom.xml; services/identity-org/src/test/java/com/hrflow/identityorg/IdentityOrgApplicationTest.java",
+      "Inspect first: use the spike findings to align this one service to the reviewed root baseline; replace JPA with JDBC and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner."
+    ],
+    [
+      "A",
+      45,
+      "Prove the reactive gateway starts",
+      "REACTIVE-GATEWAY",
+      "services/api-gateway/pom.xml; services/api-gateway/src/test/java/com/hrflow/gateway/ApiGatewayApplicationTest.java",
+      "Inspect first: switch this scaffold from MVC to the compatible reactive gateway dependency established by the spike. Add one context test; deny business routes until later verified routing/auth. No repository/database dependency belongs in this service.",
+      "mvn -f services/api-gateway/pom.xml test",
+      "Gateway context test passes on the reactive stack; no business route is open anonymously."
+    ],
+    [
+      "A",
+      60,
+      "Test one diagnostic migration in PostgreSQL",
+      "FLYWAY",
+      "services/identity-org/src/main/resources/db/migration/V1__diagnostic.sql; services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java",
+      "Inspect first: if a migration already exists, select the next unused version instead of V1. In a disposable real PostgreSQL container create a non-personal diagnostic row, query it through JdbcClient and assert duplicate constraint failure. Keep it out of public business endpoints.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Real PostgreSQL test passes clean migration, one stored diagnostic row and rejected duplicate; H2 is not used."
+    ],
+    [
+      "A",
+      45,
+      "Write the first versioned OpenAPI slice",
+      "OPENAPI",
+      "contracts/openapi.yaml; docs/validation/W01-EVIDENCE.md",
+      "Inspect first: confirm no wire-authority file exists. Create the proposed sole spec for /api/v1/departments with the golden-slice request and 201/400/401/403/problem examples; mark it planned, not deployed. Record a pinned validator command from its official documentation and run it.",
+      "rg --files contracts",
+      "Exactly one OpenAPI source is listed; its validator succeeds and a deliberate invalid local copy fails."
+    ],
+    [
+      "B",
+      30,
+      "Retain and build the Nuxt client",
+      "OPENAPI",
+      "web/app/app.vue; docs/validation/W01-EVIDENCE.md",
+      "Inspect web/package.json, package-lock.json and current welcome source. Replace only the welcome view with a minimal contract-fixture panel, retaining Nuxt/Vue and the matching lockfile. Do not rewrite web to React.",
+      "npm --prefix web run build",
+      "Nuxt build completes without error and the panel identifies its data as a fixture."
+    ],
+    [
+      "B",
+      45,
+      "Locate or create the Flutter shell",
+      "OPENAPI",
+      "mobile/pubspec.yaml; mobile/lib/main.dart; mobile/test/widget_test.dart",
+      "Inspect first: locate an existing Flutter project before choosing mobile. If absent create a Flutter shell at proposed mobile, record flutter --version and lockfile, and keep one widget test. No backend call yet. Run flutter test from the confirmed mobile root.",
+      "flutter --version",
+      "Confirmed Flutter version/root recorded; one shell widget test passes and the emulator shows the shell."
+    ],
+    [
+      "B",
+      45,
+      "Drive the mock from the one contract",
+      "OPENAPI",
+      "contracts/openapi.yaml; mobile/test/department_contract_test.dart",
+      "Inspect the actual mobile root and pinned mock/validator from W01-S09. Start its local mock from the sole OpenAPI file, then make the Flutter fixture test assert the documented department response. Do not create a second independent mock schema.",
+      "git diff --stat",
+      "Only the contract fixture and client test change; mock returns documented 201 fields and the client assertion passes."
+    ],
+    [
+      "B",
+      30,
+      "Show one contract failure in both clients",
+      "PROBLEM-DETAILS",
+      "web/app/app.vue; mobile/test/department_contract_test.dart",
+      "Repeat the golden slice with delta: invalid department fixture returns the documented problem code; both clients display safe detail and preserve input. Verify no technical stack or token is rendered.",
+      "npm --prefix web run build",
+      "Nuxt build and selected Flutter test pass; invalid fixture displays VALIDATION_FAILED with no stack trace."
+    ],
+    [
+      "A",
+      45,
+      "Add the shared problem contract to identity",
+      "PROBLEM-DETAILS",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/api/ApiProblemHandler.java; services/identity-org/src/test/java/com/hrflow/identityorg/api/ApiProblemHandlerTest.java",
+      "Inspect first: locate any error advice. If absent use these proposed paths. Write a failing validation/error assertion, then return the golden problem shape with a stable code/traceId and application/problem+json. Keep unknown exceptions sanitized.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Validation and unexpected-error tests assert content type and standard members, with no exception/stack in the response."
+    ],
+    [
+      "A",
+      30,
+      "Match the reactive gateway error shape",
+      "REACTIVE-GATEWAY",
+      "services/api-gateway/src/main/java/com/hrflow/gateway/ApiProblemWriter.java; services/api-gateway/src/test/java/com/hrflow/gateway/ApiProblemWriterTest.java",
+      "Inspect the actual reactive error hooks selected by W01-S07; write the equivalent problem body for a denied/unroutable request. Reuse wire fixtures; do not copy MVC advice into WebFlux.",
+      "mvn -f services/api-gateway/pom.xml test",
+      "Reactive error test matches the same problem fields and never serializes a stack trace."
+    ],
+    [
+      "B",
+      30,
+      "Register the negative contract examples",
+      "CONTRACT-TESTS",
+      "contracts/openapi.yaml; docs/validation/W01-EVIDENCE.md",
+      "Add the exact tested validation and sanitized-500 examples to the sole contract. Run its pinned validator and compare client fixtures; record the command/output instead of claiming an unused schema is checked.",
+      "git diff -- contracts/openapi.yaml",
+      "Examples include stable codes and no secrets; validator and fixture assertions pass."
+    ],
+    [
+      "A",
+      45,
+      "Prove failures cannot create diagnostic data",
+      "TEST-FIRST",
+      "services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java",
+      "Extend the existing disposable PostgreSQL test with invalid insert and rollback assertions. A failed transaction must leave its original row count unchanged. Run the assertion red before the minimum fix if a defect is found.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Rejected input/rolled-back insert changes zero committed rows; all identity tests pass."
+    ],
+    [
+      "B",
+      30,
+      "Pin and check Java formatting",
+      "STATIC-ANALYSIS",
+      "pom.xml; docs/validation/W01-EVIDENCE.md",
+      "Inspect first: no formatter is inferred. Pin a compatible Spotless plugin/version after a small local trial, configure the existing Java roots, run check, then format only the touched future implementation files. A reviews the root-pom change inside the review allowance.",
+      "mvn spotless:check",
+      "Formatting check succeeds on formatted input and fails on an intentionally unformatted temporary copy."
+    ],
+    [
+      "B",
+      30,
+      "Fail static analysis on one real defect",
+      "STATIC-ANALYSIS",
+      "pom.xml; docs/validation/W01-EVIDENCE.md",
+      "Pin compatible PMD plugin/rules in the existing Maven build. Trial one synthetic unused/unsafe code fixture outside production; record rule ID and nonzero exit, then remove the fixture. Do not suppress all warnings to get green.",
+      "mvn pmd:check",
+      "PMD check fails on its recorded bad fixture and succeeds after removal; actual build rules remain enabled."
+    ],
+    [
+      "B",
+      45,
+      "Scope coverage to critical packages",
+      "COVERAGE",
+      "pom.xml; docs/validation/W01-EVIDENCE.md",
+      "Pin compatible JaCoCo and record the actual auth/attendance/leave domain/application package selectors. Set 80 percent lines and 70 percent branches on nonempty implemented critical packages; missing future packages are explicitly not covered, not reported as 100 percent.",
+      "mvn verify",
+      "Existing tests produce a report; a deliberate uncovered implemented critical branch fails the configured check."
+    ],
+    [
+      "A",
+      60,
+      "Keep PostgreSQL integration tests real",
+      "TESTCONTAINERS",
+      "services/identity-org/pom.xml; services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java",
+      "Review the container fixture from W01-S08: pin PostgreSQL 16 image, use mapped connection details, and remove any fallback to H2 or silent skip when Docker is absent. Prove an invalid DB constraint reaches PostgreSQL.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Container-backed test passes; stopping Docker produces an environment failure, never a skipped success."
+    ],
+    [
+      "A",
+      30,
+      "Inspect the existing Avro and listener paths",
+      "KAFKA-BASICS",
+      "docs/validation/W01-EVIDENCE.md",
+      "Read the actual avsc under libs/hrflow-contracts/events, libs poms and Compose. Record host/container listener addresses and SQL bind-mount source; identify Registry bootstrap mismatch without changing volumes.",
+      "docker compose -f infra/docker/docker-compose.yaml config --quiet",
+      "Compose syntax exits zero; findings separately name bad mount/listener values because syntax validation does not prove connectivity."
+    ],
+    [
+      "A",
+      45,
+      "Time-box Avro Registry compatibility",
+      "KAFKA-BASICS",
+      "docs/validation/W01-EVIDENCE.md",
+      "After disk/Docker gates, use a disposable isolated broker/Registry environment to trial the exact serializer/runtime versions from the spike. Record accepted compatible evolution and rejected incompatible schema. Output is a finding, not a production publisher.",
+      "mvn -pl libs/hrflow-contracts -am test",
+      "Finding records resolved versions, actual round-trip result or exact blocker; an unavailable image/dependency is not a business pass."
+    ],
+    [
+      "A",
+      45,
+      "Record the first event round-trip result",
+      "KAFKA-BASICS",
+      "docs/validation/W01-EVIDENCE.md",
+      "Use only synthetic tenant/employee data and the inspected event schema in the isolated spike. Record produce/consume and a duplicate replay observation with a bounded wait. Explain why this is not yet outbox/inbox exactly-once processing.",
+      "mvn -pl libs/hrflow-contracts -am verify",
+      "Actual producer/consumer evidence is recorded or the spike is blocked; no durable business delivery is claimed."
+    ],
+    [
+      "B",
+      60,
+      "Build pinned private candidate images",
+      "DOCKER-COMPOSE",
+      "services/identity-org/Dockerfile; services/api-gateway/Dockerfile; docs/validation/W01-EVIDENCE.md",
+      "Inspect actual jar names from Maven outputs. Add the two proposed Dockerfiles with pinned reviewed Java 21 runtime image digests, non-root users and no secrets; build each with the matching existing service context. Record digests, total size and memory gate. This does not prove the full seven-service host fits.",
+      "git diff --stat",
+      "Both local candidate images build from reviewed jars, run as non-root and have recorded digests; absent/pull-failed images block the CI image-scan gate."
+    ],
+    [
+      "B",
+      30,
+      "Make CI execute the same checks",
+      "CI-SCANS",
+      ".github/workflows/verify.yml; docs/validation/W01-EVIDENCE.md",
+      "Inspect first: create the proposed workflow only if no equivalent exists. Use Java 21, pinned action revisions and existing Maven/Nuxt commands plus contract/docs checks. Push to the authorized implementation work branch only; no deployment credentials.",
+      "python3 docs/roadmap/tools/docs-lint.py docs",
+      "Workflow names actual commands; a deliberately failing test blocks CI. Local YAML existence alone is not a CI pass."
+    ],
+    [
+      "B",
+      30,
+      "Add a secret-scan failure fixture",
+      "CI-SCANS",
+      ".github/workflows/verify.yml; docs/validation/W01-EVIDENCE.md",
+      "Pin Gitleaks in the existing workflow and verify it detects its documented synthetic test-secret fixture in a temporary test repository. Do not add a real secret, disable scanning or print credentials.",
+      "git diff -- .github/workflows/verify.yml",
+      "Every push has secret scanning; the safe synthetic fixture fails and the real docs/code scan has recorded results."
+    ],
+    [
+      "B",
+      45,
+      "Scan dependencies and the built image",
+      "CI-SCANS",
+      ".github/workflows/verify.yml; docs/validation/W01-EVIDENCE.md",
+      "Pin Trivy filesystem/dependency and image scans. Add the reviewed build step for the first identity image if its Dockerfile is already created; otherwise record the missing-image blocker and do not mark Q12 complete. Pin base image version/digest from registry evidence.",
+      "git diff --stat",
+      "Workflow cannot report an absent image or failed scan database download as success; unresolved findings are explicit release blockers."
+    ],
+    [
+      "A",
+      45,
+      "Spike one forbidden service dependency",
+      "ARCHITECTURE-TESTS",
+      "docs/validation/W01-EVIDENCE.md",
+      "Inspect actual package/module dependencies. Time-box an ArchUnit proof against the nonempty identity test classes; a synthetic infrastructure import from domain must fail. Record proposed rules and exact test command for Week 3, not an empty-package green test.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Finding shows a forbidden edge fails and the clean equivalent passes, or records the exact spike blocker."
+    ],
+    [
+      "AB",
+      30,
+      "Use Thursday only to repair one blocker",
+      "CODE-REVIEW",
+      "docs/validation/W01-EVIDENCE.md",
+      "Choose the earliest failed prerequisite, reproduce it with its original exact command and record one next action. No new feature, tool or concept today. If repair exceeds the slot, carry it forward and keep the gate failed.",
+      "git status --short",
+      "Named earlier failure has a reproduction/result and owner; no missing quality check is silently deleted."
+    ],
+    [
+      "B",
+      30,
+      "Review the client recovery fixture",
+      "CONTRACT-TESTS",
+      "mobile/test/department_contract_test.dart; docs/validation/W01-EVIDENCE.md",
+      "Re-run existing invalid/timeout fixture from the confirmed mobile root; assert retry preserves entered data and never loops. Record observed UI state with synthetic data. No new screen.",
+      "npm --prefix web run build",
+      "Existing client build and selected Flutter negative fixture pass; retry is bounded and safe."
+    ],
+    [
+      "AB",
+      30,
+      "Self-review the first private release",
+      "CODE-REVIEW",
+      "docs/validation/W01-EVIDENCE.md",
+      "Run the 10-minute shared checklist. Record every current image/config/migration/test ID and blocker. Stage explicit reviewed implementation paths only; never git add dot in a dirty workspace. Do not tag red work.",
+      "git diff --check",
+      "No whitespace errors; review and test reports identify a reproducible candidate or a failed gate."
+    ],
+    [
+      "AB",
+      30,
+      "Redeploy locally and record the gate",
+      "BACKUPS-RESTORES",
+      "docs/validation/W01-EVIDENCE.md; docs/roadmap/YOU-ARE-HERE.md",
+      "Redeploy only the reviewed private skeleton on the same confirmed local target; verify readiness/denied business routes and scratch dump restore of the disposable diagnostic DB. If scripts/images/host are not ready record the blocker instead. Decide gate, next exact action and stop for two rest days.",
+      "python3 docs/roadmap/tools/docs-lint.py docs",
+      "Private readiness, denied unauthenticated business access and scratch restore have actual evidence, or gate remains FAIL; no production-readiness claim."
+    ]
+  ],
+  "2": [
+    [
+      "A",
+      30,
+      "Inspect identity and security before coding",
+      "JWT-REFRESH",
+      "docs/validation/W02-EVIDENCE.md",
+      "Inspect existing Security configuration, user/refresh migrations, gateway filters and tests; record actual names or the proposed targets for this week. No endpoint/table is presumed present.",
+      "rg --files services/identity-org services/api-gateway",
+      "Inventory distinguishes existing scaffold from new auth targets and names the next failing test."
+    ],
+    [
+      "A",
+      30,
+      "Write the valid-login red test",
+      "TEST-FIRST",
+      "services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginTest.java",
+      "Inspect first: create proposed LoginTest if absent. Add a fixed synthetic active user fixture and assert valid login returns access-token response contract; do not implement login yet. Failed compilation is not a valid red result.",
+      "mvn -f services/identity-org/pom.xml test",
+      "The login behavior assertion fails for missing response; red commit is not green-tagged or deployed."
+    ],
+    [
+      "A",
+      30,
+      "Hash passwords behind one tested function",
+      "JWT-REFRESH",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/PasswordService.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/PasswordServiceTest.java",
+      "Use the existing Spring Security password encoder after inspecting its version; test matches/wrong password and unique salt. Never log/store plaintext or compare hashes as raw string equality.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Password tests pass, stored value differs from plaintext, wrong password fails; outstanding login red stays on work branch."
+    ],
+    [
+      "A",
+      45,
+      "Add the minimal credential lookup and login",
+      "SPRING-JDBC",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java; services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginController.java; services/identity-org/src/main/resources/db/migration/V2__users.sql",
+      "Inspect migrations first: choose next unused version if V2 is taken. Add tenant-scoped normalized credential lookup and use the password function. Token creation is an injected port filled next; do not return fake production tokens or an entity. Pre-auth lookup is a narrow audited exception, not arbitrary tenant business access.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Credential path works in the test fixture; absent token port leaves full login acceptance red until W02-S05."
+    ],
+    [
+      "A",
+      45,
+      "Sign and validate the access-token claims",
+      "JWT-REFRESH",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/AccessTokens.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/AccessTokensTest.java; services/identity-org/src/main/resources/application.yaml",
+      "Load signing private key from environment/secret mount; sign short-lived asymmetric JWT, validate issuer/audience/signature/expiry in tests with test keys. Never put a production key in YAML. Wire the login port and run its original red assertion green.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Valid login returns a verified short-lived access token; expired/wrong-audience/wrong-key tests fail safely."
+    ],
+    [
+      "A",
+      30,
+      "Derive tenant and identity only from the user",
+      "MULTI-TENANCY",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/AccessTokens.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/AccessTokensTest.java",
+      "Add tenant/employee/role claims from the authenticated persisted user. Test that body/path/client-header tenant/roles cannot override the record. Finish the first stone only when its complete login tests are green.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Token tenant equals the fixture user tenant; spoofed tenant/roles do not change claims."
+    ],
+    [
+      "A",
+      45,
+      "Reject missing tokens and forged headers",
+      "REACTIVE-GATEWAY",
+      "services/api-gateway/src/main/java/com/hrflow/gateway/IdentityFilter.java; services/api-gateway/src/test/java/com/hrflow/gateway/IdentityFilterTest.java",
+      "Inspect reactive hooks; strip incoming identity headers, validate bearer public-key JWT, add trusted principal fields only after verification. Test protected route without/invalid token and forged X-Tenant-Id. Keep service ports unpublished.",
+      "mvn -f services/api-gateway/pom.xml test",
+      "Anonymous/invalid token is 401 with problem shape; forged caller tenant header never reaches a business handler."
+    ],
+    [
+      "A",
+      30,
+      "Make unknown users and wrong passwords indistinguishable",
+      "JWT-REFRESH",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginTest.java",
+      "Add both negative cases with identical status/code/body shape; use dummy password verification for missing credentials and avoid exposing account state. Do not promise constant network timing; test both paths invoke an equivalent hash check.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Both cases return the same safe 401 shape and no account-existence detail."
+    ],
+    [
+      "A",
+      30,
+      "Throttle repeated login attempts",
+      "JWT-REFRESH",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginLimiter.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginLimiterTest.java",
+      "Add bounded per-source/account attempt limits with expiry and a fixed-clock test. Use only trusted proxy address configuration, not arbitrary forwarded headers. Return 429/Retry-After; single-process limits are an honest local-deployment limit.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Threshold attempt receives 429, expiry permits retry, map has a bounded eviction policy and no plaintext login data is logged."
+    ],
+    [
+      "A",
+      30,
+      "Add the hashed refresh-family migration",
+      "FLYWAY",
+      "services/identity-org/src/main/resources/db/migration/V3__refresh_families.sql; services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshSchemaTest.java",
+      "Inspect next unused migration version first. Persist only refresh-token hash, tenant/user/family IDs, expiry/revoked/consumed metadata and constraints/indexes. Verify clean and upgrade migrations against real PostgreSQL. No raw refresh token is stored.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Fresh/upgrade migration tests pass and DB rejects an invalid foreign tenant/user reference within the owner schema."
+    ],
+    [
+      "A",
+      60,
+      "Rotate refresh tokens transactionally",
+      "DATABASE-LOCKS",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/RefreshService.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshTest.java; services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java",
+      "Issue the initial random refresh token at successful login; hash it in DB. Lock the presented token/family, mark consumed and insert successor in one transaction. Add red/green tests that one rotation succeeds and consumed predecessor cannot mint two successors.",
+      "mvn -f services/identity-org/pom.xml test",
+      "A valid rotation returns new tokens; transaction rollback does not consume the old token; concurrent rotation cannot issue two active successors."
+    ],
+    [
+      "A",
+      60,
+      "Revoke the family on refresh reuse",
+      "DATABASE-LOCKS",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/RefreshService.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshTest.java",
+      "Present a consumed predecessor after a successful rotation. Revoke the whole family atomically and test that its current successor is rejected. Preserve only safe security audit metadata. No reuse is treated as a successful idempotent refresh.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Replay rejects predecessor and successor after family revocation; no second usable token escapes the race test."
+    ],
+    [
+      "A",
+      30,
+      "Revoke refresh credentials on logout",
+      "JWT-REFRESH",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/LogoutController.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/LogoutTest.java",
+      "Add logout family revocation using verified identity and tenant scope. Test repeated logout is harmless, another tenant family cannot be revoked, and access tokens expire within the documented short lifetime.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Logout returns documented 204 without body; refresh is denied afterward and foreign family is unaffected."
+    ],
+    [
+      "A",
+      30,
+      "Enforce method and resource roles",
+      "MULTI-TENANCY",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/MethodSecurity.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/AuthorizationTest.java",
+      "Inspect actual service methods; enable method checks and build the service principal only from the verified gateway boundary. Assert employee cannot perform HR operation and unrelated-manager resource is hidden. Do not merely hide a UI button.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Visible forbidden action returns 403; hidden foreign resource returns 404; permitted HR path succeeds."
+    ],
+    [
+      "A",
+      30,
+      "Register every auth route in the tenant suite",
+      "MULTI-TENANCY",
+      "services/identity-org/src/test/java/com/hrflow/identityorg/auth/TenantBoundaryTest.java; contracts/openapi.yaml",
+      "Repeat the golden slice with delta: auth bootstrap exception and tenant-scoped profile/logout/refresh. Match implemented route registry to OpenAPI; test tenant B IDs, foreign-family revocation, forged headers and direct service ingress. Do not call private Docker network cryptographic identity.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Every implemented protected auth route has a negative tenant/provenance assertion; missing registry entry fails the test."
+    ],
+    [
+      "A",
+      30,
+      "Unify authentication failure problems",
+      "PROBLEM-DETAILS",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/AuthProblemHandlers.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/AuthProblemTest.java",
+      "Wire authentication/authorization handlers to the shared problem contract. Assert 401, 403, 429 and malformed login errors; exclude stack traces, raw credentials and enumeration messages. Compare reactive gateway errors too.",
+      "mvn -f services/identity-org/pom.xml test",
+      "All negative auth responses use application/problem+json and stable codes; no raw token/password/stack is present."
+    ],
+    [
+      "A",
+      30,
+      "Log security outcomes without credentials",
+      "OBSERVABILITY",
+      "services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java; services/identity-org/src/test/java/com/hrflow/identityorg/auth/SecurityLogTest.java",
+      "Add structured outcome/correlation/technical tenant fields and bounded failure/refresh-reuse counters. Test with sentinel password/token strings and assert neither appears in captured logs; tenant UUID follows approved retention/access policy.",
+      "mvn -f services/identity-org/pom.xml test",
+      "Outcome/trace fields exist; sentinel secrets and personal identifiers are absent; metric labels do not contain user/tenant IDs."
+    ],
+    [
+      "B",
+      30,
+      "Publish auth examples from the one contract",
+      "CONTRACT-TESTS",
+      "contracts/openapi.yaml; docs/validation/W02-EVIDENCE.md",
+      "Update login/refresh/logout/profile examples and bearer/security rules using implemented tests. For Nuxt choose HttpOnly Secure SameSite refresh cookie with CSRF defense; access token stays in memory. Mobile uses platform secure storage, never normal preferences. Record request collection import from this contract, not a second schema.",
+      "git diff -- contracts/openapi.yaml",
+      "Contract validates; safe examples contain placeholders only; web CSRF and mobile storage acceptance cases are listed."
+    ],
+    [
+      "AB",
+      30,
+      "Review the complete auth test ladder",
+      "CODE-REVIEW",
+      "docs/validation/W02-EVIDENCE.md",
+      "Run the shared self-review and all auth/gateway tests including wrong password, throttling, expiry, reuse, roles, tenant/provenance and logs. If cookie/CSRF transport is not implemented, record a critical blocker; do not tag a working backend as completed web security.",
+      "mvn -pl services/identity-org,services/api-gateway -am test",
+      "All named auth cases have actual test reports; any absent required case keeps the stone/gate failed."
+    ],
+    [
+      "B",
+      45,
+      "Test the mobile credential lifecycle",
+      "JWT-REFRESH",
+      "mobile/lib/auth/session.dart; mobile/test/auth_session_test.dart; docs/validation/W02-EVIDENCE.md",
+      "Inspect actual mobile root first. Add the minimal platform secure-storage adapter and one fixture proving single-flight refresh, stale-session logout once and no token in ordinary preferences/logs. Use the locked compatible secure-storage package after inspecting current platform configuration; record any native entitlement blocker. Nuxt cookie/CSRF implementation remains explicitly required, not satisfied by these mobile tests.",
+      "flutter test",
+      "Selected mobile auth tests pass from confirmed root; refresh failure prompts one login without an infinite loop or token persistence leak."
+    ],
+    [
+      "B",
+      30,
+      "Record the intended production computer",
+      "DOCKER-COMPOSE",
+      "docs/validation/W02-EVIDENCE.md",
+      "Record OS/architecture, available RAM/disk, continuous uptime/power policy, operator access, backup destination and public/private ingress intent. Missing hardware is a blocker, not permission to substitute the development Mac without agreement.",
+      "df -h .",
+      "Named host/resource evidence exists or deployment remains BLOCKED; no cloud machine is substituted."
+    ],
+    [
+      "B",
+      30,
+      "Validate the private service manifest",
+      "DOCKER-COMPOSE",
+      "infra/selfhost/compose.yaml; docs/validation/W02-EVIDENCE.md",
+      "Inspect existing dependency Compose and the final workload inventory. Create/review proposed selfhost manifest without secrets or published business/DB/broker ports; pin image versions/digests from actual builds and add bounded logs/health/restart. Record missing workload images explicitly.",
+      "docker compose -f infra/selfhost/compose.yaml config --quiet",
+      "Manifest syntax succeeds, service port inventory is private, and missing image/runtime proofs remain visible."
+    ],
+    [
+      "AB",
+      30,
+      "Review secret separation and rotation",
+      "CI-SCANS",
+      "docs/validation/W02-EVIDENCE.md; infra/selfhost/compose.yaml",
+      "Separate runtime/migration roles and ignored host environment from Git. Document key identifiers/rotation procedure without values; trial test-key rollover and verify new signature accepted/old key expires as bounded policy. Check the secret scan remains enabled.",
+      "git diff --check",
+      "Reviewed config contains secret references only; rotation test and scan reports identify accepted/rejected test keys."
+    ],
+    [
+      "B",
+      30,
+      "Draft the repeatable deploy procedure",
+      "DOCKER-COMPOSE",
+      "ops/deploy.sh; docs/validation/W02-EVIDENCE.md",
+      "Inspect existing scripts; if absent draft only the proposed checked deploy script: validate config, require backup, record prior image/config IDs, deploy private candidate, wait bounded readiness, return nonzero on failure. No automatic volume deletion or database downgrade.",
+      "bash -n ops/deploy.sh",
+      "Shell syntax exits zero; shell review shows fail-fast behavior and explicit target/rollback prerequisites. This does not prove deployment."
+    ],
+    [
+      "A",
+      45,
+      "Write the backup with an external-copy check",
+      "BACKUPS-RESTORES",
+      "ops/backup.sh; docs/validation/W02-EVIDENCE.md",
+      "Inspect verified host DB/file/schema inventory. Write proposed backup script using custom pg_dump, protected private-file/config/schema inventory and encrypted external copy with checksum. Add 14-day retention only after successful new copy. Never embed credentials or delete the only backup.",
+      "bash -n ops/backup.sh",
+      "Script syntax succeeds; actual backup succeeds only when dump, files, schema/replay metadata and external checksum verification all finish."
+    ],
+    [
+      "A",
+      45,
+      "Restore to a uniquely named scratch database",
+      "BACKUPS-RESTORES",
+      "ops/restore-scratch.sh; docs/validation/W02-EVIDENCE.md",
+      "Write/run the proposed scratch restore only after host and backup prerequisites. Refuse production DB/volume names. Restore roles/schema/data/files to an isolated target; compare synthetic tenant counts, login/profile and schema/config inventory. Git rollback does not reverse DB data.",
+      "bash -n ops/restore-scratch.sh",
+      "Syntax passes; actual drill records pg_restore success, verified rows/auth smoke and original DB unchanged. Otherwise restore gate stays failed."
+    ],
+    [
+      "B",
+      30,
+      "Observe private readiness and backup failure",
+      "OBSERVABILITY",
+      "docs/validation/W02-EVIDENCE.md; infra/selfhost/compose.yaml",
+      "Record health/readiness route and synthetic uptime check from private monitoring only. Trial a missing external backup destination in scratch config and verify nonzero backup/alert. Do not fill real disk or unplug production storage.",
+      "docker compose -f infra/selfhost/compose.yaml config --quiet",
+      "Readiness is private; synthetic missing-destination failure is visible and cannot produce a successful backup record."
+    ],
+    [
+      "B",
+      30,
+      "Verify the public-access prerequisites stay closed",
+      "REVERSE-PROXY-HTTPS",
+      "docs/validation/W02-EVIDENCE.md",
+      "Inspect actual listener bindings and ingress plan. Confirm domain/TLS/auth/firewall/secrets/restore proofs before enabling any tunnel. Missing domain/host means private-only and failed external-access prerequisite; it is not an invitation to port-forward a DB.",
+      "docker compose -f infra/selfhost/compose.yaml ps",
+      "Only reviewed edge binding is allowed; business/DB/broker ports are not public, and unready external access remains disabled."
+    ],
+    [
+      "AB",
+      30,
+      "Spend Thursday on the earliest failed gate",
+      "CODE-REVIEW",
+      "docs/validation/W02-EVIDENCE.md",
+      "Use the buffer on one recorded auth/host/restore failure. Re-run its original command and record the minimal repair or next owner/action. No extra feature, new tool or silent reduction of the security matrix.",
+      "git status --short",
+      "Earliest failure is resolved with evidence or remains the first carried action."
+    ],
+    [
+      "B",
+      30,
+      "Replay the stale-session client failure",
+      "JWT-REFRESH",
+      "docs/validation/W02-EVIDENCE.md",
+      "Repeat existing client negative fixtures: expired access, reused refresh and network interruption. Verify one login prompt, preserved unsent form data and no unbounded retry; do not add a screen today.",
+      "npm --prefix web run build",
+      "Existing client tests/build pass or name an exact failed assertion; no stale credential is accepted."
+    ],
+    [
+      "AB",
+      30,
+      "Redeploy the reviewed host candidate",
+      "DOCKER-COMPOSE",
+      "docs/validation/W02-EVIDENCE.md",
+      "Run the reviewed deploy only when host/image/secrets/backup gates pass. Verify private readiness, login/profile and denied anonymous/foreign tenant requests; execute existing rollback check in scratch if rollout fails. Do not deploy red work.",
+      "bash ops/deploy.sh",
+      "Candidate reaches bounded readiness and auth smoke passes on intended host; failed rollout returns nonzero with prior release preserved."
+    ],
+    [
+      "AB",
+      30,
+      "Repeat restore and decide the weekly gate",
+      "BACKUPS-RESTORES",
+      "docs/validation/W02-EVIDENCE.md; docs/roadmap/YOU-ARE-HERE.md",
+      "Run the reviewed scratch restore again from the release backup, record reports and all required Q-items, map next position, commit the gate evidence and tag only if green. Stop for weekend rest; failed security/restore remains the first next action.",
+      "bash ops/restore-scratch.sh",
+      "Restore/auth/tenant reports and actual release IDs justify PASS, or gate stays FAIL with owner/next action; nothing is prechecked."
+    ]
+  ]
+}

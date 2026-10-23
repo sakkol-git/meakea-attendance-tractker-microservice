@@ -50,3 +50,15 @@
 ## Stop rule
 
 [Stuck protocol](../STUCK-PROTOCOL.md) applies after 45 minutes. Never run destructive cleanup, disable tenant checks, or skip restore to manufacture a green gate.
+
+## V2 additions for the final service architecture
+
+| Symptom | Inspect first | Safe next action |
+| --- | --- | --- |
+| MVC advice does not catch gateway failure | Reactive dependency and filter error path | Assert the WebFlux error writer directly; do not add JDBC/blocking calls to gateway |
+| Registry cannot connect despite valid Compose YAML | Host/container listeners and Registry bootstrap env | Correct the one actual mismatch, then test connectivity; preserve volumes |
+| Tests green with Docker stopped | Skipped test flags and fallback DB | Remove silent skip/H2 fallback for required integration tests; environment failure stays visible |
+| Empty coverage or architecture result | Actual compiled packages and selectors | Fail on absent implemented critical packages; record not-yet-built packages honestly |
+| Auth test runs out of time | Earliest red assertion and its fixture | Commit isolated red work on work branch, keep tag/deploy blocked, resume exact assertion |
+| Backup script syntax passes but no restored data | External copy, roles, files and replay inventory | Execute isolated restore and verify counts/auth; syntax is not recovery evidence |
+| Cookie transport/CSRF not implemented | Actual browser request/cookie path | Keep web security gate failed; add explicit source/test steps before publishing |

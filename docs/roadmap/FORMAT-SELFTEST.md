@@ -88,3 +88,21 @@ Text version:
 - [ ] Notion: ZIP-import the folder and repeat for one minute.
 
 Status: **NOT RUN**. Record application version and any import issue before claiming visual compatibility.
+
+## V2 single-line field rendering
+
+**Expect:** A failed example reports a real assertion, not missing Docker.
+
+**Common mistake:** Treating a dependency-resolution failure as the intended red business test.
+
+**Undo:** `git revert HEAD` for the isolated un-deployed example commit.
+
+**Senior habit:** Read the failure reason before changing production code.
+
+**Check:**
+
+- [ ] Field labels stay bold and single-line in all three viewers.
+
+**If it fails:** Keep the original failure visible and record the viewer/version.
+
+**Status:** **Not run**; no visual result has been invented.

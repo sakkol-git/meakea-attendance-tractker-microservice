@@ -1,228 +1,354 @@
-# Week 01 build guide part two
+# Week 01 build guide part 2
 
-> **Navigation:** [Previous: Preparation](../00-PREPARATION/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 02](../02-IDENTITY-AND-HOST/README.md)
+> **Navigation:** [Overview](README.md) · [First guide](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md)
 
-## Day plan
+## Stone 3 — One contract and both client fixtures
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+### W01-S09 — Write the first versioned OpenAPI slice (45–45 min)
 
-## Stone 4 — Buffer evidence and failure recovery
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**You will have:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
-
-### W01-S10 — Inspect the smallest uncertain behavior (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/OPENAPI.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S09 committed with its check passing; tag `w01-s09-green` exists.
+- [ ] W01-S08 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect prior feature steps and write proposed scripts/acceptance/w01.sh as a real scenario runner, not echo **PASS**. Its diagnose branch checks target JDK, Docker, migrations, readiness and fixture IDs without secrets. No new feature scope on Thursday.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `contracts/openapi.yaml` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: confirm no wire-authority file exists. Create the proposed sole spec for /api/v1/departments with the golden-slice request and 201/400/401/403/problem examples; mark it planned, not deployed. Record a pinned validator command from its official documentation and run it.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-bash scripts/acceptance/w01.sh diagnose
+rg --files contracts
 ```
 
-**Expect:** One precise failed or healthy check is recorded; script exits nonzero for failed assertions.
+**Expect:** Exactly one OpenAPI source is listed; its validator succeeds and a deliberate invalid local copy fails.
+
+**Common mistake:** Creating a second OpenAPI file for the mobile client.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-01): inspect the smallest uncertain behavior`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S09` for evidence-only work, or `feat(w01): w01-s09` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S11 — B exercises negative and recovery paths (45–60 min)
+### W01-S10 — Retain and build the Nuxt client (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/OPENAPI.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S10 committed with its check passing.
+- [ ] W01-S09 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use the week-specific matrix in VERIFY-AND-GATE; test malformed input, unauthorized and other-tenant attempts, duplicate commands, stale versions and client restart. Save minimal reproduction; do not add a new screen.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `web/app/app.vue` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect web/package.json, package-lock.json and current welcome source. Replace only the welcome view with a minimal contract-fixture panel, retaining Nuxt/Vue and the matching lockfile. Do not rewrite web to React.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-flutter test
+npm --prefix web run build
 ```
 
-**Expect:** Each executed case has command, actual result and safe report; critical failures remain visible.
+**Expect:** Nuxt build completes without error and the panel identifies its data as a fixture.
+
+**Common mistake:** Replacing the existing Nuxt package manifest with React dependencies.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-01): b exercises negative and recovery paths`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S10` for evidence-only work, or `feat(w01): w01-s10` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S12 — Close only the reviewed gap (45–60 min)
+### W01-S11 — Locate or create the Flutter shell (45–45 min)
 
-**Why:** A and B makes one observable improvement before changing anything else.
+**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/OPENAPI.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S11 committed with its check passing.
+- [ ] W01-S10 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use buffer for regression fix and review, not scope. Check migrations/check constraints and unchanged historical data; update OpenAPI examples and dashboard if discrepancy is found. If still blocked, carry exact failing step forward.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `mobile/pubspec.yaml` `mobile/lib/main.dart` `mobile/test/widget_test.dart`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: locate an existing Flutter project before choosing mobile. If absent create a Flutter shell at proposed mobile, record flutter --version and lockfile, and keep one widget test. No backend call yet. Run flutter test from the confirmed mobile root.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+flutter --version
 ```
 
-**Expect:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
+**Expect:** Confirmed Flutter version/root recorded; one shell widget test passes and the emulator shows the shell.
+
+**Common mistake:** Creating another Flutter project without first locating existing mobile work.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-01): close only the reviewed gap`.
-- [ ] Tagged `w01-s12-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S11` for evidence-only work, or `feat(w01): w01-s11` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W01-S12 — Drive the mock from the one contract (45–45 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
 
-## Stone 5 — Friday gate deploy and recovery
-
-**You will have:** Gate decision is justified; final tag exists only if tests pass and app starts; laptop closes for two rest days.
-
-### W01-S13 — Redeploy the checked artifact (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/OPENAPI.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S12 committed with its check passing; tag `w01-s12-green` exists.
+- [ ] W01-S11 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create or inspect proposed ops/deploy.sh before invocation: validate Compose/config, record previous image digest, apply only additive tested migrations, update containers, run authenticated smoke, retain last working manifest. Privately redeploy the local walking skeleton in week 1; host-first requirement begins week 2. Never enable public route before security/backup gate.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `contracts/openapi.yaml` `mobile/test/department_contract_test.dart`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect the actual mobile root and pinned mock/validator from W01-S09. Start its local mock from the sole OpenAPI file, then make the Flutter fixture test assert the documented department response. Do not create a second independent mock schema.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-bash ops/deploy.sh
+git diff --stat
 ```
 
-**Expect:** Release commit and image IDs match; app starts and authenticated health/business smoke succeeds; failed deploy retains recovery path.
+**Expect:** Only the contract fixture and client test change; mock returns documented 201 fields and the client assertion passes.
+
+**Common mistake:** Writing mock JSON independently from the contract schema.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): redeploy the checked artifact`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S12` for evidence-only work, or `feat(w01): w01-s12` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S14 — B verifies deployed workflow and restore (45–60 min)
+### W01-S13 — Show one contract failure in both clients (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/PROBLEM-DETAILS.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S13 committed with its check passing.
+- [ ] W01-S12 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. From an external test network only after exposure gate, or private LAN while blocked, B exercises this week mini-win. Create proposed ops/restore-scratch.sh now for the local diagnostic DB and extend it in Week 2 for external copy. Every Friday run scratch restore of latest external backup, count/checksum known synthetic records; week 1 uses disposable local dump before external host exists.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `web/app/app.vue` `mobile/test/department_contract_test.dart`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Repeat the golden slice with delta: invalid department fixture returns the documented problem code; both clients display safe detail and preserve input. Verify no technical stack or token is rendered.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-bash ops/restore-scratch.sh
+npm --prefix web run build
 ```
 
-**Expect:** Phone/web mini-win and restored synthetic records match; no production volume is overwritten.
+**Expect:** Nuxt build and selected Flutter test pass; invalid fixture displays VALIDATION_FAILED with no stack trace.
+
+**Common mistake:** Displaying raw exception text as the user-facing error.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): b verifies deployed workflow and restore`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S13` for evidence-only work, or `feat(w01): w01-s13` for the isolated implementation change.
+- [ ] Tagged `w01-s13-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S15 — Decide gate and shut down (45–60 min)
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
-**Why:** A and B makes one observable improvement before changing anything else.
+## Stone 4 — One problem shape and DB failure path
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
+
+### W01-S14 — Add the shared problem contract to identity (45–45 min)
+
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/PROBLEM-DETAILS.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S14 committed with its check passing.
+- [ ] W01-S13 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. A and B review VERIFY-AND-GATE evidence, require all critical items, and write **PASS**/**CONDITIONAL PASS**/**FAIL** with owner/deadline. Update global checklist/dashboard and next first action. Preserve failed critical item as next week first stone; do not borrow weekends.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/api/ApiProblemHandler.java` `services/identity-org/src/test/java/com/hrflow/identityorg/api/ApiProblemHandlerTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: locate any error advice. If absent use these proposed paths. Write a failing validation/error assertion, then return the golden problem shape with a stable code/traceId and application/problem+json. Keep unknown exceptions sanitized.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-git status --short
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Gate decision is justified; final tag exists only if tests pass and app starts; laptop closes for two rest days.
+**Expect:** Validation and unexpected-error tests assert content type and standard members, with no exception/stack in the response.
+
+**Common mistake:** Letting an unexpected exception leak its message or stack.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `docs(progress): record W01-S15`.
-- [ ] Tagged `w01-s15-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S14` for evidence-only work, or `feat(w01): w01-s14` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W01-S15 — Match the reactive gateway error shape (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/REACTIVE-GATEWAY.md); count reading against README allowance, not a hidden extra slot.
+
+**Before you start:**
+
+- [ ] W01-S14 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+
+**Do:**
+
+1. Inspect first: locate current equivalents before creating these targets: `services/api-gateway/src/main/java/com/hrflow/gateway/ApiProblemWriter.java` `services/api-gateway/src/test/java/com/hrflow/gateway/ApiProblemWriterTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect the actual reactive error hooks selected by W01-S07; write the equivalent problem body for a denied/unroutable request. Reuse wire fixtures; do not copy MVC advice into WebFlux.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+
+```bash
+mvn -f services/api-gateway/pom.xml test
+```
+
+**Expect:** Reactive error test matches the same problem fields and never serializes a stack trace.
+
+**Common mistake:** Assuming a servlet error handler catches a reactive filter error.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
+
+**Check:**
+
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S15` for evidence-only work, or `feat(w01): w01-s15` for the isolated implementation change.
+
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
+
+### W01-S16 — Register the negative contract examples (30–30 min)
+
+**Why:** B owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/CONTRACT-TESTS.md); count reading against README allowance, not a hidden extra slot.
+
+**Before you start:**
+
+- [ ] W01-S15 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+
+**Do:**
+
+1. Inspect first: locate current equivalents before creating these targets: `contracts/openapi.yaml` `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Add the exact tested validation and sanitized-500 examples to the sole contract. Run its pinned validator and compare client fixtures; record the command/output instead of claiming an unused schema is checked.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+
+```bash
+git diff -- contracts/openapi.yaml
+```
+
+**Expect:** Examples include stable codes and no secrets; validator and fixture assertions pass.
+
+**Common mistake:** Checking only successful examples and omitting malformed/error fixtures.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
+
+**Check:**
+
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S16` for evidence-only work, or `feat(w01): w01-s16` for the isolated implementation change.
+
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
+
+### W01-S17 — Prove failures cannot create diagnostic data (45–45 min)
+
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/TEST-FIRST.md); count reading against README allowance, not a hidden extra slot.
+
+**Before you start:**
+
+- [ ] W01-S16 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+
+**Do:**
+
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Extend the existing disposable PostgreSQL test with invalid insert and rollback assertions. A failed transaction must leave its original row count unchanged. Run the assertion red before the minimum fix if a defect is found.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+
+```bash
+mvn -f services/identity-org/pom.xml test
+```
+
+**Expect:** Rejected input/rolled-back insert changes zero committed rows; all identity tests pass.
+
+**Common mistake:** Asserting an exception without checking that the transaction wrote zero rows.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
+
+**Check:**
+
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S17` for evidence-only work, or `feat(w01): w01-s17` for the isolated implementation change.
+- [ ] Tagged `w01-s17-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
+
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
+
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
 ## Continue
 
-[Verify the gate](VERIFY-AND-GATE.md).
+[Next build part](BUILD-GUIDE-PART-3.md).

@@ -67,3 +67,7 @@ If an implementation step encounters technical difficulties:
 - [Daily Commands](DAILY-COMMANDS.md).
 - [Golden Slice](GOLDEN-SLICE.md).
 - [Operational runbooks](runbooks/README.md).
+
+## V2 partial-upgrade checkpoint
+
+Open [V2 progress](PROGRESS-V2.md) before executing this roadmap. The final seven-service architecture supersedes old C/React instructions; cloud execution is deferred. Weeks 1–2 are atomic drafts with known validation gaps, Weeks 3–12 remain unconverted, and the requested linter extensions are not implemented yet. [Interim changelog](CHANGELOG-V2.md), [ID map](STEP-ID-MAP.md), [validation log](V2-VALIDATION-LOG.md), and [remaining architecture references](V2-REMAINING-REFERENCES.md) make the unfinished work explicit. No application work is marked complete.

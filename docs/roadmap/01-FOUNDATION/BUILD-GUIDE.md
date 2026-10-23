@@ -1,332 +1,325 @@
 # Week 01 build guide
 
-> **Navigation:** [Previous: Preparation](../00-PREPARATION/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 02](../02-IDENTITY-AND-HOST/README.md)
+> **Navigation:** [Week overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Quality standards](../ENGINEERING-STANDARDS.md)
 
-## Day plan
+## How to use this pair
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+This is the V2 final-service design draft. All steps are **Not run** until actual execution evidence exists. Future file/class names below are proposed; inspect before creating them. Never create hrflow-app or replace Nuxt with React. Upper duration includes test/commit; reading allowance is in README. If a slot overruns, stop and record the carry-forward instead of calling the result complete.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+For each step stage only its reviewed explicit paths, then commit with the message in Check. A step with a behavior-red test stays on the implementation branch until green; never tag/deploy red work. Undo assumes the last commit belongs only to this step. A database migration already applied needs a reviewed forward migration, not just Git revert. Use [daily commands](../DAILY-COMMANDS.md) to run a recorded single test.
 
-## Stone 1 — A protected workspace
+Only two new learning topics per day: prerequisite environment; JDBC/gateway; contract/problem; testing; CI/event integration are revisited across this pair, not all introduced in one sitting. Thursday introduces none. A blocked learning prerequisite moves the next topic forward and can invalidate the deadline; do not hide that carry.
 
-**You will have:** Flutter test passes, the minimal mobile shell starts, and repository location is known.
+## Stone 1 — Prerequisite evidence
 
-### W01-S01 — Protect current work and free disk (45–60 min)
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
 
-**Why:** A makes one observable improvement before changing anything else.
+### W01-S01 — Inventory the dirty workspace (30–30 min)
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/GIT.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] Audit read; no green app tag exists yet.
+- [ ] preparation has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Review staged/untracked source without staging secrets; record checkpoint plan and request disk cleanup until at least 30 GiB is free.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: record staged/untracked paths and current branch; save a reviewed checkpoint plan without adding source or secrets. Record the evidence file as a documentation-only commit.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
 git status --short
 ```
 
-**Expect:** Dirty source remains intact and disk gate is either proven or explicitly blocked.
+**Expect:** Existing source paths remain staged/untracked exactly as before; checkpoint plan names the work to preserve.
+
+**Common mistake:** Staging the entire dirty tree includes unrelated work or secrets.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): protect current work and free disk`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S01` for evidence-only work, or `feat(w01): w01-s01` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S02 — Select Java 21 and start Docker safely (45–60 min)
+### W01-S02 — Measure the disk gate (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/DOCKER-COMPOSE.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S01 committed with its check passing.
+- [ ] W01-S01 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect installed JDKs; install/select 21 using your approved toolchain; only then start Docker Desktop after disk gate.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Record available disk and the agreed cleanup owner. Do not delete files automatically. Stop image pulls until at least 30 GiB is free.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+
+```bash
+df -h .
+```
+
+**Expect:** Available column proves at least 30 GiB, or the gate records BLOCKED and no image is pulled.
+
+**Common mistake:** Counting total disk size instead of currently available free space.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
+
+**Check:**
+
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S02` for evidence-only work, or `feat(w01): w01-s02` for the isolated implementation change.
+
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
+
+### W01-S03 — Verify the Java 21 toolchain (30–30 min)
+
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/DEPENDENCY-INJECTION.md); count reading against README allowance, not a hidden extra slot.
+
+**Before you start:**
+
+- [ ] W01-S02 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+
+**Do:**
+
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect installed JDKs with /usr/libexec/java_home -V; select an installed Java 21 in this shell/IDE or record the installation blocker. Do not change the project Java target to 17.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
 java -version
 ```
 
-**Expect:** Java major 21 and Docker daemon respond; no database ports are public.
+**Expect:** Version line contains major 21; a different major leaves this prerequisite blocked.
+
+**Common mistake:** Changing the project target to match Java 17 instead of selecting Java 21.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): select java 21 and start docker safely`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S03` for evidence-only work, or `feat(w01): w01-s03` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S03 — B opens the mobile workspace (45–60 min)
+### W01-S04 — Verify Docker without starting workloads (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (10 min):** [One concept](../primers/DOCKER-COMPOSE.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S02 committed with its check passing.
+- [ ] W01-S03 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Locate existing Flutter source or create proposed mobile on the weekly branch; create one test, launch the minimal mobile shell, and record lockfile/toolchain.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. After the disk gate, start the installed Docker Desktop normally; record daemon version and memory allocation. Do not start PostgreSQL/Kafka yet.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-flutter --version
+docker info
 ```
 
-**Expect:** Flutter test passes, the minimal mobile shell starts, and repository location is known.
+**Expect:** Server section responds without a daemon-socket error; no business/database port is published.
+
+**Common mistake:** Treating a running Docker icon as proof that its daemon responds.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): b opens the mobile workspace`.
-- [ ] Tagged `w01-s03-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S04` for evidence-only work, or `feat(w01): w01-s04` for the isolated implementation change.
+- [ ] Tagged `w01-s04-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+## Stone 2 — Identity and gateway baseline
 
-## Stone 2 — One database-backed service
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
 
-**You will have:** Compose validates and private web-to-Caddy-to-app-to-DB request succeeds.
+### W01-S05 — Record the build compatibility spike (45–45 min)
 
-### W01-S04 — Create the narrow application (45–60 min)
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Dependency Injection primer](../primers/DEPENDENCY-INJECTION.md)
+**Read first (10 min):** [One concept](../primers/DEPENDENCY-INJECTION.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S03 committed with its check passing; tag `w01-s03-green` exists.
+- [ ] W01-S04 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect attendance scaffold; create proposed services/hrflow-app with Boot 4.1.1, Java 21, web/JPA/Flyway/validation/security/test dependencies and package com.hrflow.app.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W01-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect pom.xml and all seven service poms plus shared libraries. Time-box resolution/compile of current reactor under Java 21; record Boot/Cloud/Avro versions, compatibility evidence and one smallest correction to make next. Output is a finding, not seven unreviewed pom edits.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -o validate
 ```
 
-**Expect:** A context test passes under Java 21; old scaffolds remain intact.
+**Expect:** Reactor lists ten projects and BUILD SUCCESS for validation; compilation is separately recorded and never inferred from validate.
+
+**Common mistake:** Calling Maven validate a successful Java compilation or compatibility test.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): create the narrow application`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S05` for evidence-only work, or `feat(w01): w01-s05` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S05 — Persist one diagnostic row (45–60 min)
+### W01-S06 — Align the identity JDBC scaffold (60–60 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Dependency Injection primer](../primers/DEPENDENCY-INJECTION.md)
+**Read first (10 min):** [One concept](../primers/SPRING-JDBC.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S04 committed with its check passing.
+- [ ] W01-S05 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create V1__foundation.sql for a non-personal diagnostic table; add a scoped diagnostic repository/controller in identityorg; expose only private GET /api/v1/diagnostic/database.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/pom.xml` `services/identity-org/src/test/java/com/hrflow/identityorg/IdentityOrgApplicationTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: use the spike findings to align this one service to the reviewed root baseline; replace JPA with JDBC and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Testcontainers PostgreSQL test proves one committed row and HTTP 200; diagnostic is disabled publicly.
+**Expect:** Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner.
+
+**Common mistake:** Removing a JPA import without removing its transitive runtime dependency.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): persist one diagnostic row`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S06` for evidence-only work, or `feat(w01): w01-s06` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S06 — Start a private Caddy gateway (45–60 min)
+### W01-S07 — Prove the reactive gateway starts (45–45 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Dependency Injection primer](../primers/DEPENDENCY-INJECTION.md)
+**Read first (10 min):** [One concept](../primers/REACTIVE-GATEWAY.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S05 committed with its check passing.
+- [ ] W01-S06 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create proposed infra/selfhost/compose.yaml with app, PostgreSQL 16 and Caddy; keep database un-published and edge loopback-only. Add readiness and log limits.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/api-gateway/pom.xml` `services/api-gateway/src/test/java/com/hrflow/gateway/ApiGatewayApplicationTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: switch this scaffold from MVC to the compatible reactive gateway dependency established by the spike. Add one context test; deny business routes until later verified routing/auth. No repository/database dependency belongs in this service.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-docker compose -f infra/selfhost/compose.yaml config --quiet
+mvn -f services/api-gateway/pom.xml test
 ```
 
-**Expect:** Compose validates and private web-to-Caddy-to-app-to-DB request succeeds.
+**Expect:** Gateway context test passes on the reactive stack; no business route is open anonymously.
+
+**Common mistake:** Adding the MVC gateway starter to a reactive gateway project.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): start a private caddy gateway`.
-- [ ] Tagged `w01-s06-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S07` for evidence-only work, or `feat(w01): w01-s07` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W01-S08 — Test one diagnostic migration in PostgreSQL (60–60 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-## Stone 3 — React and contract-driven Flutter
-
-**You will have:** Flutter test passes and device/emulator shows documented mocked state.
-
-### W01-S07 — Write the first OpenAPI slice (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Docker Compose primer](../primers/DOCKER-COMPOSE.md)
+**Read first (10 min):** [One concept](../primers/FLYWAY.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W01-S06 committed with its check passing; tag `w01-s06-green` exists.
+- [ ] W01-S07 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect old endpoint catalog; create sole proposed contracts/openapi.yaml with diagnostic/auth/check-in/today schemas and error examples; validate before starting local mock.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/resources/db/migration/V1__diagnostic.sql` `services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: if a migration already exists, select the next unused version instead of V1. In a disposable real PostgreSQL container create a non-personal diagnostic row, query it through JdbcClient and assert duplicate constraint failure. Keep it out of public business endpoints.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-npx @stoplight/prism-cli mock contracts/openapi.yaml
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Mock returns documented JSON and rejects malformed requests; file is the only wire authority.
+**Expect:** Real PostgreSQL test passes clean migration, one stored diagnostic row and rejected duplicate; H2 is not used.
+
+**Common mistake:** Running a database assertion against H2 or an existing production database.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): write the first openapi slice`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w01): record W01-S08` for evidence-only work, or `feat(w01): w01-s08` for the isolated implementation change.
+- [ ] Tagged `w01-s08-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W01-S08 — Replace the welcome view deliberately (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Docker Compose primer](../primers/DOCKER-COMPOSE.md)
-
-**Before you start:**
-
-- [ ] W01-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Preserve Nuxt on checkpoint; scaffold React/TypeScript in web, define dev/build/test scripts, create API client and diagnostic page routed through Caddy.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-npm --prefix web run build
-```
-
-**Expect:** React build and a component test pass; page displays DB diagnostic from local app.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): replace the welcome view deliberately`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W01-S09 — B calls the generated mock (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Docker Compose primer](../primers/DOCKER-COMPOSE.md)
-
-**Before you start:**
-
-- [ ] W01-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add mobile API client and a mock-backed diagnostic screen; test success, 401 and network error without requiring backend features.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Flutter test passes and device/emulator shows documented mocked state.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-01): b calls the generated mock`.
-- [ ] Tagged `w01-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next build part](BUILD-GUIDE-PART-2.md).

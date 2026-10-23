@@ -1,394 +1,473 @@
 # Week 02 build guide
 
-> **Navigation:** [Previous: Week 01](../01-FOUNDATION/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 03](../03-ORGANIZATION-AND-ADMIN/README.md)
+> **Navigation:** [Week overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Quality standards](../ENGINEERING-STANDARDS.md)
 
-## Day plan
+## How to use this pair
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, five small steps | JWT and refresh only | 5 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 3 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+This is the V2 final-service design draft. All steps are **Not run** until actual execution evidence exists. Future file/class names below are proposed; inspect before creating them. Never create hrflow-app or replace Nuxt with React. Upper duration includes test/commit; reading allowance is in README. If a slot overruns, stop and record the carry-forward instead of calling the result complete.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+For each step stage only its reviewed explicit paths, then commit with the message in Check. A step with a behavior-red test stays on the implementation branch until green; never tag/deploy red work. Undo assumes the last commit belongs only to this step. A database migration already applied needs a reviewed forward migration, not just Git revert. Use [daily commands](../DAILY-COMMANDS.md) to run a recorded single test.
 
-## Stone 1 — Credentials and tenant context
+Only two new learning topics per day: token lifecycle and tenant boundary early, then credential-family concurrency and recovery; all other tools reuse Week 1 learning. Thursday introduces none. A blocked learning prerequisite moves the next topic forward and can invalidate the deadline; do not hide that carry.
 
-**You will have:** Own profile reload works; stale refresh forces login once.
+## Stone 1 — Credentials and trusted token claims
 
-### W02-S01 — Add user and refresh migrations (45–60 min)
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
 
-**Why:** A makes one observable improvement before changing anything else.
+### W02-S01 — Inspect identity and security before coding (30–30 min)
 
-**Read first (10 min):** [Jwt Refresh primer](../primers/JWT-REFRESH.md)
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/JWT-REFRESH.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] Week 01 critical gate is green or its carried failure replaces this action.
+- [ ] Week 1 gate has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect foundation migration; add new identity_org user/role/refresh tables and tenant-scoped constraints, never edit V1. Seed two synthetic tenants through test fixtures only.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `docs/validation/W02-EVIDENCE.md`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect existing Security configuration, user/refresh migrations, gateway filters and tests; record actual names or the proposed targets for this week. No endpoint/table is presumed present.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+rg --files services/identity-org services/api-gateway
 ```
 
-**Expect:** Clean DB migration and cross-tenant uniqueness tests pass.
+**Expect:** Inventory distinguishes existing scaffold from new auth targets and names the next failing test.
+
+**Common mistake:** Assuming the startup scaffold already contains security or user tables.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): add user and refresh migrations`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S01` for evidence-only work, or `feat(w02): w02-s01` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S02 — Hash credentials behind a tested login service (45–60 min)
+### W02-S02 — Write the valid-login red test (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Jwt Refresh primer](../primers/JWT-REFRESH.md)
+**Read first (10 min):** [One concept](../primers/TEST-FIRST.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S01 committed with its check passing.
+- [ ] W02-S01 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect identity user fixture and create a password-verification service using Spring Security encoder. Test correct, wrong and unknown credentials with one generic error. Do not expose an incomplete login endpoint yet; JWT issuance is next.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect first: create proposed LoginTest if absent. Add a fixed synthetic active user fixture and assert valid login returns access-token response contract; do not implement login yet. Failed compilation is not a valid red result.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Password verification tests pass; stored values are hashes and logs contain no passwords.
+**Expect:** The login behavior assertion fails for missing response; red commit is not green-tagged or deployed.
+
+**Common mistake:** Accepting a missing-class compilation failure as the intended red assertion.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): authenticate and rotate tokens`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S02` for evidence-only work, or `feat(w02): w02-s02` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S03 — Issue and validate access JWT (45–60 min)
+### W02-S03 — Hash passwords behind one tested function (30–30 min)
 
-**Why:** A completes one authentication boundary without hiding it inside a larger setup task.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [JWT and refresh primer](../primers/JWT-REFRESH.md)
+**Read first (10 min):** [One concept](../primers/JWT-REFRESH.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S02 is committed with its credential tests green.
+- [ ] W02-S02 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the verified user fixture, encoder, signing configuration and current auth DTOs.
-1. Implement contract login token issuance with test-only RS256 key fixture; validate signature/issuer/audience/expiry. Load real signing key only through private host secret config, never source.
-1. Run the auth tests against the isolated synthetic database; no production secrets are used.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/PasswordService.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/PasswordServiceTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Use the existing Spring Security password encoder after inspecting its version; test matches/wrong password and unique salt. Never log/store plaintext or compare hashes as raw string equality.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Valid login returns bounded-life JWT; altered signature, wrong audience and expiry each return 401.
+**Expect:** Password tests pass, stored value differs from plaintext, wrong password fails; outstanding login red stays on work branch.
+
+**Common mistake:** Storing plaintext passwords or comparing salted hashes as raw strings.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Expected result and required tests pass with zero failures.
-- [ ] Committed with message `feat(auth): issue and validate access jwt`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S03` for evidence-only work, or `feat(w02): w02-s03` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md) and [stuck protocol](../STUCK-PROTOCOL.md). Keep the route private and stop at the timebox.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S04 — Rotate refresh and revoke logout family (45–60 min)
+### W02-S04 — Add the minimal credential lookup and login (45–45 min)
 
-**Why:** A completes one authentication boundary without hiding it inside a larger setup task.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [JWT and refresh primer](../primers/JWT-REFRESH.md)
+**Read first (10 min):** [One concept](../primers/SPRING-JDBC.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S03 is committed with its credential tests green.
+- [ ] W02-S03 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the verified user fixture, encoder, signing configuration and current auth DTOs.
-1. Implement refresh hash/family lock and one-time replacement; old-secret reuse revokes family. Logout revokes safely. Add parallel refresh and reuse tests; never persist returned secrets in idempotency response records.
-1. Run the auth tests against the isolated synthetic database; no production secrets are used.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java` `services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginController.java` `services/identity-org/src/main/resources/db/migration/V2__users.sql`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect migrations first: choose next unused version if V2 is taken. Add tenant-scoped normalized credential lookup and use the password function. Token creation is an injected port filled next; do not return fake production tokens or an entity. Pre-auth lookup is a narrow audited exception, not arbitrary tenant business access.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** One replacement wins, reused old secret is rejected, and logout prevents renewal without pretending current access is instantly revoked.
+**Expect:** Credential path works in the test fixture; absent token port leaves full login acceptance red until W02-S05.
+
+**Common mistake:** Allowing a pre-auth tenant selector to authorize arbitrary business rows.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Expected result and required tests pass with zero failures.
-- [ ] Committed with message `feat(auth): rotate refresh and revoke logout family`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S04` for evidence-only work, or `feat(w02): w02-s04` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md) and [stuck protocol](../STUCK-PROTOCOL.md). Keep the route private and stop at the timebox.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S05 — B stores credentials safely (45–60 min)
+### W02-S05 — Sign and validate the access-token claims (45–45 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Jwt Refresh primer](../primers/JWT-REFRESH.md)
+**Read first (10 min):** [One concept](../primers/JWT-REFRESH.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S04 committed with its check passing.
+- [ ] W02-S04 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use platform secure storage, one serialized refresh path and logout; add tests for expired access/reused refresh and no token logs.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/AccessTokens.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/AccessTokensTest.java` `services/identity-org/src/main/resources/application.yaml`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Load signing private key from environment/secret mount; sign short-lived asymmetric JWT, validate issuer/audience/signature/expiry in tests with test keys. Never put a production key in YAML. Wire the login port and run its original red assertion green.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-flutter test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Own profile reload works; stale refresh forces login once.
+**Expect:** Valid login returns a verified short-lived access token; expired/wrong-audience/wrong-key tests fail safely.
+
+**Common mistake:** Committing a signing key or omitting issuer/audience checks.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): b stores credentials safely`.
-- [ ] Tagged `w02-s05-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S05` for evidence-only work, or `feat(w02): w02-s05` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W02-S06 — Derive tenant and identity only from the user (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-## Stone 2 — Isolation before exposure
-
-**You will have:** Both clients reject stale credentials and show safe errors.
-
-### W02-S06 — Enforce token-derived tenant (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Multi Tenancy primer](../primers/MULTI-TENANCY.md)
+**Read first (10 min):** [One concept](../primers/MULTI-TENANCY.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S05 committed with its check passing; tag `w02-s05-green` exists.
+- [ ] W02-S05 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add verified issuer/audience/signature checks and a scoped tenant context; strip client tenant/roles headers. Require typed request DTOs without tenantId.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/AccessTokens.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/AccessTokensTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Add tenant/employee/role claims from the authenticated persisted user. Test that body/path/client-header tenant/roles cannot override the record. Finish the first stone only when its complete login tests are green.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Forged header/body cannot change query scope; invalid JWT returns 401.
+**Expect:** Token tenant equals the fixture user tenant; spoofed tenant/roles do not change claims.
+
+**Common mistake:** Copying tenant or roles from the login request into signed claims.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): enforce token-derived tenant`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S06` for evidence-only work, or `feat(w02): w02-s06` for the isolated implementation change.
+- [ ] Tagged `w02-s06-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S07 — Test role and resource authorization (45–60 min)
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
-**Why:** A makes one observable improvement before changing anything else.
+## Stone 2 — Gateway negatives and refresh family
 
-**Read first (10 min):** [Multi Tenancy primer](../primers/MULTI-TENANCY.md)
+**You will have:** The following named outputs with actual evidence; unfinished output keeps this stone untagged.
+
+### W02-S07 — Reject missing tokens and forged headers (45–45 min)
+
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/REACTIVE-GATEWAY.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S06 committed with its check passing.
+- [ ] W02-S06 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add AuthTenantTest covering own resource, other tenant UUID, unrelated manager and self approval; use real PostgreSQL constraints.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/api-gateway/src/main/java/com/hrflow/gateway/IdentityFilter.java` `services/api-gateway/src/test/java/com/hrflow/gateway/IdentityFilterTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect reactive hooks; strip incoming identity headers, validate bearer public-key JWT, add trusted principal fields only after verification. Test protected route without/invalid token and forged X-Tenant-Id. Keep service ports unpublished.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -f services/api-gateway/pom.xml test
 ```
 
-**Expect:** Unauthorized reads/mutations fail and target rows are unchanged.
+**Expect:** Anonymous/invalid token is 401 with problem shape; forged caller tenant header never reaches a business handler.
+
+**Common mistake:** Appending trusted identity headers without stripping every caller-supplied copy.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Record the observed failure before making the smallest repair.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): test role and resource authorization`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S07` for evidence-only work, or `feat(w02): w02-s07` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S08 — B builds React-compatible auth fixtures (45–60 min)
+### W02-S08 — Make unknown users and wrong passwords indistinguishable (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Multi Tenancy primer](../primers/MULTI-TENANCY.md)
+**Read first (10 min):** [One concept](../primers/JWT-REFRESH.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S07 committed with its check passing.
+- [ ] W02-S07 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Agree token/error examples with A; exercise mock and live auth from Flutter; A checks React memory-token and protected refresh-cookie handling.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Add both negative cases with identical status/code/body shape; use dummy password verification for missing credentials and avoid exposing account state. Do not promise constant network timing; test both paths invoke an equivalent hash check.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-flutter test
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Both clients reject stale credentials and show safe errors.
+**Expect:** Both cases return the same safe 401 shape and no account-existence detail.
+
+**Common mistake:** Returning different account-existence errors for the two credential failures.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): b builds react-compatible auth fixtures`.
-- [ ] Tagged `w02-s08-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S08` for evidence-only work, or `feat(w02): w02-s08` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W02-S09 — Throttle repeated login attempts (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-## Stone 3 — The skeleton reaches the real host
-
-**You will have:** Scratch restore and login/profile smoke pass; source volume remains untouched.
-
-### W02-S09 — Prove hardware and host identity (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (10 min):** [One concept](../primers/JWT-REFRESH.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S08 committed with its check passing; tag `w02-s08-green` exists.
+- [ ] W02-S08 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect intended host model/RAM/free disk/network/external disk. User says production setup is not ready; do not equate current laptop with production without confirmation.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginLimiter.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/LoginLimiterTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Add bounded per-source/account attempt limits with expiry and a fixed-clock test. Use only trusted proxy address configuration, not arbitrary forwarded headers. Return 429/Retry-After; single-process limits are an honest local-deployment limit.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-df -h .
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Host inventory is confirmed or DEP gate remains **FAIL** with named blocker.
+**Expect:** Threshold attempt receives 429, expiry permits retry, map has a bounded eviction policy and no plaintext login data is logged.
+
+**Common mistake:** Trusting caller-controlled forwarded IP headers or using an unbounded limiter map.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): prove hardware and host identity`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S09` for evidence-only work, or `feat(w02): w02-s09` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S10 — Deploy privately and add first backup (45–60 min)
+### W02-S10 — Add the hashed refresh-family migration (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (10 min):** [One concept](../primers/FLYWAY.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S09 committed with its check passing.
+- [ ] W02-S09 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Read ACCESS-SETUP.md and surface domain/CGNAT/backup blockers; on confirmed host only, build/load same architecture images, use secrets outside Git, start private app; write nightly custom pg_dump and 14-day external-copy cron script with mount check.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/resources/db/migration/V3__refresh_families.sql` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshSchemaTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Inspect next unused migration version first. Persist only refresh-token hash, tenant/user/family IDs, expiry/revoked/consumed metadata and constraints/indexes. Verify clean and upgrade migrations against real PostgreSQL. No raw refresh token is stored.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-docker compose -f infra/selfhost/compose.yaml up -d
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Private authenticated smoke succeeds; backup exists on mounted external disk; no public exposure.
+**Expect:** Fresh/upgrade migration tests pass and DB rejects an invalid foreign tenant/user reference within the owner schema.
+
+**Common mistake:** Storing raw refresh tokens instead of hashes.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): deploy privately and add first backup`.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S10` for evidence-only work, or `feat(w02): w02-s10` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-### W02-S11 — Restore the first dump in scratch (45–60 min)
+### W02-S11 — Rotate refresh tokens transactionally (60–60 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (10 min):** [One concept](../primers/DATABASE-LOCKS.md); count reading against README allowance, not a hidden extra slot.
 
 **Before you start:**
 
-- [ ] W02-S10 committed with its check passing.
+- [ ] W02-S10 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create proposed ops/restore-scratch.sh using a separate scratch container/database and non-production volume; pg_restore --list then restore and compare synthetic row counts.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/RefreshService.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshTest.java` `services/identity-org/src/main/java/com/hrflow/identityorg/auth/LoginService.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Issue the initial random refresh token at successful login; hash it in DB. Lock the presented token/family, mark consumed and insert successor in one transaction. Add red/green tests that one rotation succeeds and consumed predecessor cannot mint two successors.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
 
 ```bash
-bash ops/restore-scratch.sh
+mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Scratch restore and login/profile smoke pass; source volume remains untouched.
+**Expect:** A valid rotation returns new tokens; transaction rollback does not consume the old token; concurrent rotation cannot issue two active successors.
+
+**Common mistake:** Consuming the old token outside the transaction that inserts its successor.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-02): restore the first dump in scratch`.
-- [ ] Tagged `w02-s11-green` only after tests pass and app starts.
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S11` for evidence-only work, or `feat(w02): w02-s11` for the isolated implementation change.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
 
-Shutdown ritual for this day:
+### W02-S12 — Revoke the family on refresh reuse (60–60 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns this one result; it closes the measured architecture or quality gap named by the title.
+
+**Read first (10 min):** [One concept](../primers/DATABASE-LOCKS.md); count reading against README allowance, not a hidden extra slot.
+
+**Before you start:**
+
+- [ ] W02-S11 has its stated result or an explicit carried blocker; no failed security/restore gate is waived.
+
+**Do:**
+
+1. Inspect first: locate current equivalents before creating these targets: `services/identity-org/src/main/java/com/hrflow/identityorg/auth/RefreshService.java` `services/identity-org/src/test/java/com/hrflow/identityorg/auth/RefreshTest.java`. At most these three files change; reading dependencies is not permission to edit them all.
+1. Present a consumed predecessor after a successful rotation. Revoke the whole family atomically and test that its current successor is rejected. Preserve only safe security audit metadata. No reuse is treated as a successful idempotent refresh.
+1. Run the check below only after required target/tool exists; record exact exit/output in the weekly evidence file without credentials. A missing target is an environment/blocker result, not a passed business check.
+
+```bash
+mvn -f services/identity-org/pom.xml test
+```
+
+**Expect:** Replay rejects predecessor and successor after family revocation; no second usable token escapes the race test.
+
+**Common mistake:** Rejecting a reused predecessor while leaving its current successor usable.
+
+**Undo:** After this isolated un-deployed step commit, `git revert HEAD`; if SQL has been applied, stop and use a new forward migration under the [rollback runbook](../runbooks/ROLLBACK.md) instead of pretending Git undoes data.
+
+**Senior habit:** Use one reviewed commit with evidence for one observable outcome.
+
+**Check:**
+
+- [ ] Observable result and required negative assertion have actual evidence, or this step remains blocked.
+- [ ] Committed with message `docs(w02): record W02-S12` for evidence-only work, or `feat(w02): w02-s12` for the isolated implementation change.
+- [ ] Tagged `w02-s12-green` only after this stone tests pass and its current private app starts; run the [10-minute review](../CODE-REVIEW-CHECKLIST.md) first. Do not move an old tag.
+
+**If it fails:** Save the exact failing assertion/exit in the evidence file; use [week diagnostics](TROUBLESHOOTING.md). At the time cap stop, preserve work, and use the [stuck protocol](../STUCK-PROTOCOL.md); no new production code in a spike beyond its finding.
+
+**Status:** **Not run**; authoring and source inspection are not execution of this step.
+
+Shutdown: commit reviewed work, record next exact step/blocker and energy in the dashboard, then stop at the planned day cap.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next build part](BUILD-GUIDE-PART-2.md).

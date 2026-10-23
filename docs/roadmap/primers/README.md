@@ -79,3 +79,8 @@ Design pattern lessons for maintainable domain and test code:
 - [Fail-first behavior tests](TEST-FIRST.md).
 - [Graceful shutdown](GRACEFUL-SHUTDOWN.md).
 - [Exact balance arithmetic](EXACT-BALANCES.md).
+
+## Final service alignment
+
+- [Spring JDBC](SPRING-JDBC.md).
+- [Reactive gateway](REACTIVE-GATEWAY.md).
