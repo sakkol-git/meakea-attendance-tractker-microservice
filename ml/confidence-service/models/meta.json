@@ -1,0 +1,50 @@
+{
+  "version": "20261017-055746-logistic_regression",
+  "algorithm": "logistic_regression",
+  "trained_at": "2026-10-17T05:57:46.804169+00:00",
+  "rows": 4000,
+  "features": [
+    "in_geofence",
+    "gps_accuracy_m",
+    "minutes_in_zone",
+    "wifi_connected",
+    "ble_beacons_seen",
+    "movement_events",
+    "interaction_events",
+    "minutes_after_shift_start",
+    "arrival_deviation_min",
+    "is_usual_device",
+    "mock_location_flag",
+    "present_days_last_14"
+  ],
+  "baseline": {
+    "in_geofence": 1.0,
+    "gps_accuracy_m": 15.7,
+    "minutes_in_zone": 133.0,
+    "wifi_connected": 1.0,
+    "ble_beacons_seen": 2.0,
+    "movement_events": 12.0,
+    "interaction_events": 5.0,
+    "minutes_after_shift_start": 2.0,
+    "arrival_deviation_min": 5.0,
+    "is_usual_device": 1.0,
+    "mock_location_flag": 0.0,
+    "present_days_last_14": 11.0
+  },
+  "thresholds": {
+    "auto": 0.8,
+    "ask": 0.5
+  },
+  "metrics": {
+    "roc_auc": 0.9437,
+    "avg_precision": 0.9717,
+    "brier": 0.0319,
+    "auto_precision": 0.9669,
+    "auto_coverage": 0.785,
+    "ask_share": 0.017,
+    "cv_auc": {
+      "logistic_regression": 0.9335,
+      "gradient_boosting": 0.9345
+    }
+  }
+}

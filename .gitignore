@@ -1,0 +1,17 @@
+target/
+node_modules/
+.nuxt/
+.output/
+.idea/
+.vscode/
+*.iml
+.env
+__pycache__/
+.venv/
+ml/**/runs/
+ml/**/datasets/
+*.pt
+*.onnx
+ml/confidence-service/.venv/
+ml/confidence-service/data/*.csv
+web/

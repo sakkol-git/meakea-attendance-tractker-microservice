@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.1</version> <!-- MUST equal the version in your service poms -->
+        <relativePath/>
+    </parent>
+
+    <groupId>com.hrflow</groupId>
+    <artifactId>hrflow-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>hrflow-parent</name>
+
+    <properties>
+        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <avro.version>1.11.4</avro.version>
+        <confluent.version>8.1.0</confluent.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>libs/hrflow-contracts</module>
+        <module>libs/hrflow-event-starter</module>
+        <module>services/api-gateway</module>
+        <module>services/identity-org</module>
+        <module>services/attendance</module>
+        <module>services/leave</module>
+        <module>services/request</module>
+        <module>services/notification</module>
+        <module>services/reporting</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.hrflow</groupId>
+                <artifactId>hrflow-contracts</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hrflow</groupId>
+                <artifactId>hrflow-event-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>${avro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-avro-serializer</artifactId>
+                <version>${confluent.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

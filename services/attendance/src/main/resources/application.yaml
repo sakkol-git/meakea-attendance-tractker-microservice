@@ -1,0 +1,27 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: attendance
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hrflow
+    username: hrflow
+    password: hrflow
+    hikari:
+      schema: attendance        # each service sees only its own schema
+  flyway:
+    schemas: attendance
+    default-schema: attendance
+    create-schemas: true
+  jpa:
+    properties:
+      hibernate.default_schema: attendance
+    hibernate:
+      ddl-auto: validate        # Flyway owns the schema, never Hibernate
+  kafka:
+    bootstrap-servers: localhost:9092
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

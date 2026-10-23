@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "AttendanceCheckedIn",
+  "namespace": "com.hrflow.contracts.attendance",
+  "fields": [
+    {"name": "eventId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "tenantId", "type": "string"},
+    {"name": "employeeId", "type": "string"},
+    {"name": "occurredAt", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "source", "type": {"type": "enum", "name": "Source", "symbols": ["MANUAL","NUDGE","INFERRED"]}},
+    {"name": "reason", "type": ["null","string"], "default": null}
+  ]
+}
