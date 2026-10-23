@@ -1,332 +1,232 @@
 # Week 04 build guide
 
-> **Navigation:** [Previous: Week 03](../03-ORGANIZATION-AND-ADMIN/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 05](../05-OUTBOX-AND-NOTIFICATIONS/README.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Working rules
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 3.4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 3.4 h |
-| Wednesday | Stone 3, three small steps | At most two | 3.4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.125 h |
-| Friday | Stone 5, gate and redeploy | None | 1.955 h |
-| Weekend | Two rest days | None | 0 h |
+All paths for new code/tests/scripts below are proposed targets, not discovered classes. Inspect current equivalents first and record exact selected migration, controller/DTO/repository and fixture names in the commit body before editing. Existing Application roots and service poms are source evidence. If an action needs an API adapter or migration, use its inspected actual path instead of blindly creating the proposed Service/Repository pair; at most three files change. A larger change becomes a 45-minute finding and the smallest next atomic step, never a hidden multi-hour task.
 
-Totals stay within 14.28 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+Read first is inside the stated duration, once per unfamiliar concept; later repetitions reuse the primer. A/B already need basic Java/SQL/Git or Flutter skills: check them in Week 1. Limit first-time learning to two concepts per day. If the skill check reveals more learning, carry the named step forward and flag the schedule; do not borrow Thursday, Friday or weekends for new concepts. A reviews B's Java fixture/operations work in the scheduled pairing allowance, not unpaid extra time.
 
-## Stone 1 — A safe check-in interval
+A red step writes one behavior assertion against the existing golden fixture. Compile/setup failures are not its intended red. A green step changes the smallest real adapter; the next negative step covers the stated denied/failure case. Repeat the [golden slice](../GOLDEN-SLICE.md): shared contract/problem/tenant/CI/observability are reused; the scope and expected case below are the delta. Reuse existing tests rather than build a parallel framework.
 
-**You will have:** Exactly one session exists after client retry and app restart.
+Every step ends with a focused commit. Stage only its exact reviewed paths. Put command/exit/report path and a safe output line in the commit body; aggregate into the weekly evidence file during buffer/Friday, avoiding a fourth source file in each commit. Red commits are work-branch checkpoints, never deployable tags. Every stone ends in the ten-minute review and tests/startup before its tag. For a read-only finding before app creation, startup is the current baseline scaffold or an explicit failed prerequisite; never falsely claim a business app starts.
 
-### W04-S01 — Create evidence and session integrity (30–45 min)
+## Stone 1 — First feature red and green
 
-**Why:** A makes one observable improvement before changing anything else.
+**You will have:** Same key/body returns same ID; changed body is 409; simultaneous check-ins leave one open session.
 
-**Read first (10 min):** [Idempotency primer](../primers/IDEMPOTENCY.md)
+### W04-S01 — Create evidence and session integrity — state the failing behavior (30–30 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/IDEMPOTENCY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] Week 03 critical gate is green or its carried failure replaces this action.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add attendance evidence/session/day-guard, command-idempotency and minimal JSON outbox migrations; unique client observation and one-open-effective-session constraint; immutable raw evidence.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/CreateEvidenceSessionIntegrityTest.java`, `scripts/acceptance/w04.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Add attendance evidence/session/day-guard, command-idempotency and minimal JSON outbox migrations; unique client observation and one-open-effective-session constraint; immutable raw evidence. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/attendance -am test
 ```
 
-**Expect:** Duplicate open sessions fail at DB boundary; invalid interval check passes.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: A duplicate observation or second open session violates a DB constraint without losing evidence.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): create evidence and session integrity`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w04): w04-s01` for implementation or `docs(w04): w04-s01` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W04-S02 — Persist idempotent check-in (30–45 min)
+### W04-S02 — Create evidence and session integrity — make the narrow behavior pass (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Idempotency primer](../primers/IDEMPOTENCY.md)
+**Read first (up to 10 min, included):** [One concept](../primers/IDEMPOTENCY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W04-S01 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement /attendance/check-in with token employee, canonical body/key hash, employee lock, evidence/session and durable publication intent in one transaction.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/attendance/src/main/java/com/hrflow/attendance/application/CreateEvidenceSessionIntegrityService.java`, `services/attendance/src/main/java/com/hrflow/attendance/infrastructure/CreateEvidenceSessionIntegrityRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Add attendance evidence/session/day-guard, command-idempotency and minimal JSON outbox migrations; unique client observation and one-open-effective-session constraint; immutable raw evidence. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/attendance -am test
 ```
 
-**Expect:** Same key returns same 201/session; changed body 409; other key while open 409.
+**Expect:** A duplicate observation or second open session violates a DB constraint without losing evidence.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): persist idempotent check-in`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w04): w04-s02` for implementation or `docs(w04): w04-s02` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W04-S03 — B retries a lost response (30–45 min)
+### W04-S03 — Create evidence and session integrity — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Idempotency primer](../primers/IDEMPOTENCY.md)
+**Read first (up to 10 min, included):** [One concept](../primers/IDEMPOTENCY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W04-S02 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Persist command key before send; simulate server commit then dropped response and retry unchanged body; React shows canonical returned state.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/CreateEvidenceSessionIntegrityTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: A duplicate observation or second open session violates a DB constraint without losing evidence. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+mvn -pl services/attendance -am test
 ```
 
-**Expect:** Exactly one session exists after client retry and app restart.
+**Expect:** A duplicate observation or second open session violates a DB constraint without losing evidence.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): b retries a lost response`.
-- [ ] Tagged `w04-s03-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w04): w04-s03` for implementation or `docs(w04): w04-s03` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W04-S04 — Persist idempotent check-in — state the failing behavior (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-## Stone 2 — Checkout and classification
-
-**You will have:** No duplicate tap while pending; offline history does not pretend to be current server state.
-
-### W04-S04 — Close an owned session once (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/IDEMPOTENCY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W04-S03 committed with its check passing; tag `w04-s03-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement check-out with owner scope and If-Match; checkout before check-in 422; two concurrent checkouts cannot corrupt interval.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/PersistIdempotentCheckinTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Implement /attendance/check-in with token employee, canonical body/key hash, employee lock, evidence/session and durable publication intent in one transaction. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/attendance -am test
 ```
 
-**Expect:** 200 closes once; stale version fails; raw TAP evidence remains.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Same key/body returns same ID; changed body is 409; simultaneous check-ins leave one open session.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): close an owned session once`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w04): w04-s04` for implementation or `docs(w04): w04-s04` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W04-S05 — Calculate flags with a clear method (30–45 min)
+### W04-S05 — Persist idempotent check-in — make the narrow behavior pass (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/IDEMPOTENCY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W04-S04 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement a plain status function: late after start+grace, early flag, holiday/leave conflict review; no strategy/chain refactor during critical gate.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/attendance/src/main/java/com/hrflow/attendance/application/PersistIdempotentCheckinService.java`, `services/attendance/src/main/java/com/hrflow/attendance/infrastructure/PersistIdempotentCheckinRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Implement /attendance/check-in with token employee, canonical body/key hash, employee lock, evidence/session and durable publication intent in one transaction. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/attendance -am test
 ```
 
-**Expect:** Fixed-clock fixtures prove boundary minute, missing checkout and late+early preservation.
+**Expect:** Same key/body returns same ID; changed body is 409; simultaneous check-ins leave one open session.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): calculate flags with a clear method`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w04): w04-s05` for implementation or `docs(w04): w04-s05` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w04-s05-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W04-S06 — B renders own day and history (30–45 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
-
-**Before you start:**
-
-- [ ] W04-S05 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Implement today/me views and error cases from sole contract; display work-site timezone, pending retry and review-required state.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** No duplicate tap while pending; offline history does not pretend to be current server state.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): b renders own day and history`.
-- [ ] Tagged `w04-s06-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
-
-## Stone 3 — Corrections without lost history
-
-**You will have:** Rejected correction leaves original effective; approved correction is visible without deleting history.
-
-### W04-S07 — Request a correction (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
-
-**Before you start:**
-
-- [ ] W04-S06 committed with its check passing; tag `w04-s06-green` exists.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add correction request plus immutable action migration; self may propose times with reason but cannot alter existing evidence.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-mvn -f services/hrflow-app/pom.xml test
-```
-
-**Expect:** Request is PENDING; original session/evidence values stay unchanged.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): request a correction`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W04-S08 — Approve with independent scope (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
-
-**Before you start:**
-
-- [ ] W04-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Add manager/HR decision lock and If-Match; append replacement manual revision and daily calculation intent; deny requester self approval.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-mvn -f services/hrflow-app/pom.xml test
-```
-
-**Expect:** Approval yields higher effective revision; concurrent approval has one winner.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): approve with independent scope`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W04-S09 — B verifies original and effective records (30–45 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Database Locks primer](../primers/DATABASE-LOCKS.md)
-
-**Before you start:**
-
-- [ ] W04-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Show requested correction and decision status, original versus effective times, and non-editable audited explanation.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** Rejected correction leaves original effective; approved correction is visible without deleting history.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-04): b verifies original and effective records`.
-- [ ] Tagged `w04-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next part](BUILD-GUIDE-PART-2.md).
