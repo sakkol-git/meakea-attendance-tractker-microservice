@@ -15,3 +15,4 @@ ml/**/datasets/
 ml/confidence-service/.venv/
 ml/confidence-service/data/*.csv
 web/
+/mobile/
