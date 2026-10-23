@@ -1,0 +1,18 @@
+[
+  {
+    "file": "business-flow.md",
+    "source": "flowchart LR\n    C[\"DESIGN Nuxt or Flutter\"] --> G[\"DESIGN verified gateway\"]\n    G --> O[\"DESIGN owner command\"]\n    O --> T[\"DESIGN local data and outbox\"]\n    T --> K[\"DESIGN Kafka publication\"]\n    K --> P[\"DESIGN local projections\"]\n    K --> N[\"DESIGN notifications\"]\n    D[\"IMPL private demo HTTP\"] --> M[\"IMPL Python score only\"]"
+  },
+  {
+    "file": "business-flow.md",
+    "source": "flowchart LR\n    C[\"BF-007 tap\"] --> G[\"JWT and scope gate\"]\n    G -->|invalid| D[\"Reject before business write\"]\n    G --> T[\"Owner write plus outbox\"]\n    T -->|DB failure| F[\"Rollback no accepted tap\"]\n    T --> H[\"201 after owner commit\"]\n    T --> R[\"BF-035 relay\"]\n    R -->|broker unavailable| P[\"Pending for recovery\"]\n    R --> K[\"Kafka event\"]\n    K --> I[\"BF-036 receipt gate\"]\n    I -->|duplicate| S[\"Skip effect\"]\n    I --> O[\"Commit local effect\"]\n    O --> N[\"BF-027 notification\"]\n    O --> B[\"BF-029 report fact\"]"
+  },
+  {
+    "file": "business-flow.md",
+    "source": "flowchart LR\n    U[\"BF-014 submit\"] --> L[\"Conditional reservation\"]\n    L -->|insufficient or rollback| F[\"No accepted request\"]\n    L --> P[\"PENDING and ledger\"]\n    P --> A[\"BF-015 approver decision\"]\n    A -->|stale or unauthorized| X[\"No second transition\"]\n    A --> C[\"APPROVED owner commit\"]\n    C --> K[\"leave.request.v1\"]\n    K --> I[\"Consumer receipt gate\"]\n    I -->|duplicate| S[\"Skip same effect\"]\n    I -->|failure| R[\"Retry with owner still approved\"]\n    I --> V[\"Attendance leave_ref\"]\n    V --> D[\"BF-013 new daily revision\"]\n    V --> N[\"Employee notification\"]"
+  },
+  {
+    "file": "business-flow.md",
+    "source": "flowchart LR\n    E[\"BF-010 feature snapshot\"] --> Q[\"Scoring request event\"]\n    Q --> M[\"Designed confidence worker\"]\n    Q -->|timeout| F[\"Designed rules fallback\"]\n    F --> B[\"Decision bands\"]\n    M --> D[\"Result receipt gate\"]\n    D -->|duplicate| S[\"Skip prior result\"]\n    D --> B\n    B -->|auto| I[\"INFERRED pending\"]\n    B -->|ask| P[\"Employee prompt\"]\n    B -->|low or mock| N[\"No session from score\"]\n    I --> H[\"BF-011 human confirm or reject\"]\n    H --> R[\"New daily revision and label\"]"
+  }
+]

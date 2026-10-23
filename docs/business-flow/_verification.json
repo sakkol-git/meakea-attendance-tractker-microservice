@@ -1,0 +1,72 @@
+{
+  "checkpoint": "7141114",
+  "date": "2026-10-23",
+  "source_symbol_citations": 26,
+  "workflow_statuses": {
+    "IMPLEMENTED": 3,
+    "PARTIAL": 1,
+    "DESIGNED-ONLY": 36,
+    "NOT FOUND": 0
+  },
+  "observed_route_objects": 7,
+  "observed_routes_mapped": 7,
+  "java_business_controllers": 0,
+  "scripted_topics_accounted_for": 10,
+  "avro_records_accounted_for": 1,
+  "qa_scenarios": 100,
+  "mermaid_parsed": 4,
+  "random_reread": [
+    "BF-017",
+    "BF-013"
+  ],
+  "invariants": {
+    "holds_scoped": 1,
+    "violated": 0,
+    "not_yet_implemented": 9
+  },
+  "python_test_result": {
+    "passed": 12,
+    "warnings": 1,
+    "external_services": false
+  },
+  "strict_filename_exceptions": [
+    "business-flow.md",
+    "docs/business-flow/_inventory.md"
+  ],
+  "limits": [
+    "No live servers or Docker",
+    "No Java test execution in this task",
+    "No HR acceptance or database/Kafka recovery proof",
+    "No source or existing document edits"
+  ],
+  "source_symbol_pairs": [
+    "docs/roadmap/tools/docs-lint.py#check",
+    "libs/hrflow-contracts/events/attendance-checked-in.v1.avsc#AttendanceCheckedIn",
+    "ml/confidence-service/confidence/api.py#Evidence",
+    "ml/confidence-service/confidence/api.py#app",
+    "ml/confidence-service/confidence/api.py#health",
+    "ml/confidence-service/confidence/api.py#info",
+    "ml/confidence-service/confidence/api.py#model",
+    "ml/confidence-service/confidence/api.py#score",
+    "ml/confidence-service/confidence/features.py#FEATURES",
+    "ml/confidence-service/confidence/model.py#ConfidenceModel.__init__",
+    "ml/confidence-service/confidence/model.py#ConfidenceModel._explain",
+    "ml/confidence-service/confidence/model.py#ConfidenceModel.score",
+    "ml/confidence-service/confidence/rules.py#rules_score",
+    "ml/confidence-service/run.py#server_options",
+    "ml/confidence-service/tests/test_service.py#test_mock_location_always_blocked",
+    "ml/confidence-service/training/make_synthetic.py#make",
+    "ml/confidence-service/training/train.py#candidates",
+    "ml/confidence-service/training/train.py#main",
+    "services/api-gateway/src/main/java/com/hrflow/gateway/config/SecurityConfiguration.java#SecurityConfiguration.securityWebFilterChain",
+    "services/attendance/src/main/java/com/hrflow/attendance/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain",
+    "services/attendance/src/test/java/com/hrflow/attendance/config/SecurityConfigurationTests.java#SecurityConfigurationTests.ProbeController.probe",
+    "services/identity-org/src/main/java/com/hrflow/identityorg/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain",
+    "services/leave/src/main/java/com/hrflow/leave/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain",
+    "services/notification/src/main/java/com/hrflow/notification/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain",
+    "services/reporting/src/main/java/com/hrflow/reporting/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain",
+    "services/request/src/main/java/com/hrflow/request/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain"
+  ],
+  "configured_java_health_surfaces_mapped": 21,
+  "all_modules_investigated": 13
+}
