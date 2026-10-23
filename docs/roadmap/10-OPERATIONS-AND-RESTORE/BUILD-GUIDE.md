@@ -1,332 +1,274 @@
 # Week 10 build guide
 
-> **Navigation:** [Previous: Week 09](../09-REPORTING-AUDIT-OBSERVABILITY/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 11](../11-HARDENING-AND-PILOT/README.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Working rules
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+All paths for new code/tests/scripts below are proposed targets, not discovered classes. Inspect current equivalents first and record exact selected migration, controller/DTO/repository and fixture names in the commit body before editing. Existing Application roots and service poms are source evidence. If an action needs an API adapter or migration, use its inspected actual path instead of blindly creating the proposed Service/Repository pair; at most three files change. A larger change becomes a 45-minute finding and the smallest next atomic step, never a hidden multi-hour task.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+Read first is inside the stated duration, once per unfamiliar concept; later repetitions reuse the primer. A/B already need basic Java/SQL/Git or Flutter skills: check them in Week 1. Limit first-time learning to two concepts per day. If the skill check reveals more learning, carry the named step forward and flag the schedule; do not borrow Thursday, Friday or weekends for new concepts. A reviews B's Java fixture/operations work in the scheduled pairing allowance, not unpaid extra time.
 
-## Stone 1 — Boot and rollback are proven
+A red step writes one behavior assertion against the existing golden fixture. Compile/setup failures are not its intended red. A green step changes the smallest real adapter; the next negative step covers the stated denied/failure case. Repeat the [golden slice](../GOLDEN-SLICE.md): shared contract/problem/tenant/CI/observability are reused; the scope and expected case below are the delta. Reuse existing tests rather than build a parallel framework.
 
-**You will have:** New tokens work, expired keys fail, no secret appears in logs or Git.
+Every step ends with a focused commit. Stage only its exact reviewed paths. Put command/exit/report path and a safe output line in the commit body; aggregate into the weekly evidence file during buffer/Friday, avoiding a fourth source file in each commit. Red commits are work-branch checkpoints, never deployable tags. Every stone ends in the ten-minute review and tests/startup before its tag. For a read-only finding before app creation, startup is the current baseline scaffold or an explicit failed prerequisite; never falsely claim a business app starts.
 
-### W10-S01 — Reboot the confirmed host safely (45–60 min)
+## Stone 1 — First feature red and green
 
-**Why:** A makes one observable improvement before changing anything else.
+**You will have:** Bad candidate rolls back image/config without downgrading an applied migration.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+### W10-S01 — Reboot the confirmed host safely — state the failing behavior (30–30 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] Week 09 critical gate is green or its carried failure replaces this action.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create read-only startup verification script; with synthetic data/verified backup schedule controlled reboot and prove Docker starts after documented login/unlock prerequisites.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/reboot-the-confirmed-host-safely.sh`, `scripts/acceptance/w10.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create read-only startup verification script; with synthetic data/verified backup schedule controlled reboot and prove Docker starts after documented login/unlock prerequisites. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/host-reboot-check.sh
+bash scripts/acceptance/w10.sh recovery
 ```
 
-**Expect:** App/PostgreSQL/Caddy/Kuma recover; unattended limitation is explicit if Desktop needs login.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Docker Desktop login/awake prerequisite is documented; no unattended restart claim without drill.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): reboot the confirmed host safely`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s01` for implementation or `docs(w10): w10-s01` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W10-S02 — Roll back a failed deploy (45–60 min)
+### W10-S02 — Reboot the confirmed host safely — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W10-S01 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create release manifest of image/config/migration IDs; deploy synthetic failing candidate privately, restore last compatible image without downgrading applied migration.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/reboot-the-confirmed-host-safely.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Create read-only startup verification script; with synthetic data/verified backup schedule controlled reboot and prove Docker starts after documented login/unlock prerequisites. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/rollback-check.sh
+bash scripts/acceptance/w10.sh recovery
 ```
 
-**Expect:** Known previous version serves smoke; database data unchanged; no down -v.
+**Expect:** Docker Desktop login/awake prerequisite is documented; no unattended restart claim without drill.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): roll back a failed deploy`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s02` for implementation or `docs(w10): w10-s02` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W10-S03 — Rotate secrets without locking users out (45–60 min)
+### W10-S03 — Reboot the confirmed host safely — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Backups Restores primer](../primers/BACKUPS-RESTORES.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W10-S02 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create verification script and run staging rotation of JWT keys/tunnel/database credentials; overlap old validation keys for access lifetime; recheck least privilege.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/reboot-the-confirmed-host-safely.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Docker Desktop login/awake prerequisite is documented; no unattended restart claim without drill. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/rotation-check.sh
+bash scripts/acceptance/w10.sh negative
 ```
 
-**Expect:** New tokens work, expired keys fail, no secret appears in logs or Git.
+**Expect:** Docker Desktop login/awake prerequisite is documented; no unattended restart claim without drill.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): rotate secrets without locking users out`.
-- [ ] Tagged `w10-s03-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s03` for implementation or `docs(w10): w10-s03` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W10-S04 — Roll back a failed deploy — state the failing behavior (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-## Stone 2 — Backup leaves this machine
-
-**You will have:** Recovery story works and old device tokens are disabled in restore environment.
-
-### W10-S04 — Verify nightly cron retention and mounts (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W10-S03 committed with its check passing; tag `w10-s03-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Nightly pg_dump -Fc to private temp path, pg_restore --list, atomic rename, checksum and external-disk copy; prune only matching owned files older than 14 days after successful verified copy.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/roll-back-a-failed-deploy.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create release manifest of image/config/migration IDs; deploy synthetic failing candidate privately, restore last compatible image without downgrading applied migration. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/backup.sh
+bash scripts/acceptance/w10.sh recovery
 ```
 
-**Expect:** Unmounted disk causes loud failure, never writes into empty mount directory; latest backup age visible.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Bad candidate rolls back image/config without downgrading an applied migration.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): verify nightly cron retention and mounts`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s04` for implementation or `docs(w10): w10-s04` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W10-S05 — Restore on a clean machine (45–60 min)
+### W10-S05 — Roll back a failed deploy — make the narrow behavior pass (45–45 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W10-S04 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create script operating on explicitly named scratch host/container with same PostgreSQL major; copy DB dump plus private files/key references; no production target accepted by default.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/roll-back-a-failed-deploy.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Create release manifest of image/config/migration IDs; deploy synthetic failing candidate privately, restore last compatible image without downgrading applied migration. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/restore-clean.sh
+bash scripts/acceptance/w10.sh recovery
 ```
 
-**Expect:** New clean instance migrates safely and passes auth/row-count/file-checksum smoke.
+**Expect:** Bad candidate rolls back image/config without downgrading an applied migration.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): restore on a clean machine`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s05` for implementation or `docs(w10): w10-s05` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W10-S06 — B verifies recovery from phone (45–60 min)
+### W10-S06 — Roll back a failed deploy — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
+**Read first (up to 10 min, included):** [One concept](../primers/BACKUPS-RESTORES.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W10-S05 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Point test device at restored private candidate; login and verify known synthetic attendance/leave/request/export without sending real notifications.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `ops/roll-back-a-failed-deploy.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Bad candidate rolls back image/config without downgrading an applied migration. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+bash scripts/acceptance/w10.sh negative
 ```
 
-**Expect:** Recovery story works and old device tokens are disabled in restore environment.
+**Expect:** Bad candidate rolls back image/config without downgrading an applied migration.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): b verifies recovery from phone`.
-- [ ] Tagged `w10-s06-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w10): w10-s06` for implementation or `docs(w10): w10-s06` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w10-s06-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
-
-## Stone 3 — Failure modes are observable
-
-**You will have:** Only approved Compose services run; one host is explicitly not high availability.
-
-### W10-S07 — Test disk and log bounds (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
-
-**Before you start:**
-
-- [ ] W10-S06 committed with its check passing; tag `w10-s06-green` exists.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create non-destructive disk/headroom and Docker log policy check; simulate threshold with test override, never fill disk; keep Kuma/admin private.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash ops/disk-check.sh
-```
-
-**Expect:** Alert fires at threshold; logs rotate; no unbounded backup or export growth.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): test disk and log bounds`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W10-S08 — Test internet and database loss (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
-
-**Before you start:**
-
-- [ ] W10-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Controlled private drill stops app connectivity, not arbitrary host networking; restart PostgreSQL service after verified backup, observe failed commands versus uncertain committed keys.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash ops/recovery-check.sh
-```
-
-**Expect:** No false success on DB loss; stable-key retry reconciles; remote access fails honestly when internet down.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): test internet and database loss`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W10-S09 — Record broker and host availability limits (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Reverse Proxy Https primer](../primers/REVERSE-PROXY-HTTPS.md)
-
-**Before you start:**
-
-- [ ] W10-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Verify Kafka/Registry are not production services under outcome C; document no broker-recovery claim. Record how a future Kafka ADR would require real-broker outage/offset tests.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash ops/selfhost-smoke.sh
-```
-
-**Expect:** Only approved Compose services run; one host is explicitly not high availability.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-10): record broker and host availability limits`.
-- [ ] Tagged `w10-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next part](BUILD-GUIDE-PART-2.md).
