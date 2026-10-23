@@ -6,7 +6,7 @@
 
 All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W12-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Step range: W12-S01 to W12-S34. Required new stone tags: `w12-s05-green`, `w12-s10-green`, `w12-s15-green`, `w12-s20-green`, `w12-s24-green`, `w12-s28-green`, `w12-s31-green`, `w12-s34-green`. Existing historical tags are not moved.
+Step range: W12-S01 to W12-S34. Required new stone tags: `w12-s03-green`, `w12-s06-green`, `w12-s12-green`, `w12-s18-green`, `w12-s24-green`, `w12-s28-green`, `w12-s31-green`, `w12-s34-green`. Existing historical tags are not moved.
 
 ## Feature and failure assertions
 

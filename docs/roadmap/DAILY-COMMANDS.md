@@ -37,7 +37,8 @@ The install command prepares local reactor artifacts; skipped tests do not satis
 docker compose -f infra/selfhost/compose.yaml config --quiet
 docker compose -f infra/selfhost/compose.yaml up -d
 docker compose -f infra/selfhost/compose.yaml logs --tail=80 identity-org
-docker compose -f infra/selfhost/compose.yaml exec postgres psql -U hrflow_runtime -d hrflow
+docker compose -f infra/selfhost/compose.yaml exec postgres \
+    psql -U hrflow_identity_runtime -d hrflow
 ```
 
 Service names and DB role here are proposed manifest conventions; confirm generated config and role inventory first. Never dump credentials. Flyway executes through the reviewed migration/startup path with a separate role; no standalone unconfigured Maven Flyway goal is assumed.

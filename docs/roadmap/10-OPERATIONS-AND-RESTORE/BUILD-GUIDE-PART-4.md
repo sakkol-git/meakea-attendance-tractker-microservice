@@ -20,6 +20,7 @@
 
 1. Inspect first: review current equivalents for `ops/restore-clean.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create script operating on explicitly named scratch host/container with same PostgreSQL major; copy DB dump plus private files/key references; no production target accepted by default. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Include the checksum-verified offline release image archive/source bundle and protected config/model inventory in the existing backup/restore manifest, as defined by the runbook interface; do not assume local images survive a lost host.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -33,7 +34,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -42,7 +43,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s19` for implementation or `docs(w10): w10-s19` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w10): w10-s19` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -62,6 +63,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 1. Inspect first: review current equivalents for `ops/restore-clean.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with this delta only: Create script operating on explicitly named scratch host/container with same PostgreSQL major; copy DB dump plus private files/key references; no production target accepted by default. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Include the checksum-verified offline release image archive/source bundle and protected config/model inventory in the existing backup/restore manifest, as defined by the runbook interface; do not assume local images survive a lost host.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -75,7 +77,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,7 +86,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s20` for implementation or `docs(w10): w10-s20` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w10): w10-s20` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -104,6 +106,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 1. Inspect first: review current equivalents for `ops/restore-clean.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: Wrong target is refused; restored rows/files/ledger match source checksums. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Include the checksum-verified offline release image archive/source bundle and protected config/model inventory in the existing backup/restore manifest, as defined by the runbook interface; do not assume local images survive a lost host.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -117,7 +120,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -126,7 +129,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s21` for implementation or `docs(w10): w10-s21` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w10): w10-s21` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -159,7 +162,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -168,7 +171,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s22` for implementation or `docs(w10): w10-s22` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w10): w10-s22` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -201,7 +204,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -210,7 +213,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s23` for implementation or `docs(w10): w10-s23` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w10): w10-s23` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -243,7 +246,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -252,7 +255,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w10): w10-s24` for implementation or `docs(w10): w10-s24` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w10): w10-s24` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w10-s24-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

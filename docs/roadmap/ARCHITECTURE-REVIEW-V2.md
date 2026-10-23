@@ -165,7 +165,7 @@ Keep final gateway header-trust decision. Gateway removes all incoming identity 
 | Shared standards, tests, commands, golden slice, runbooks | All references | C-specific paths/events/client | Owner roots, Kafka tests, Nuxt; no invented existing code |
 | Global checklist, pattern path, definition of done, start/dashboard | All IDs | New steps/gates untraced | Map every old ID; preserve tags; no prechecked tasks |
 
-The exact per-file map after splitting belongs in STEP-ID-MAP.md. This impact matrix deliberately identifies unconverted files; it does not declare their contents consistent before edits.
+The exact per-file map after splitting belongs in STEP-ID-MAP.md. This was the initial affected-file inventory; all current weekly guides are now reconciled. The final validation report records the remaining runtime/hosting limits.
 
 ## Final bottom-up schedule and reconciliation
 
@@ -173,7 +173,7 @@ The previous 489.5-hour figure added coarse service/quality allowances to broad 
 
 | Week | A h | B h | Limit each | Evidence |
 | --- | --- | --- | --- | --- |
-| 01 | 13.75 | 14.25 | 16.8 | [38 steps](01-FOUNDATION/README.md) |
+| 01 | 14 | 14.25 | 16.8 | [38 steps](01-FOUNDATION/README.md) |
 | 02 | 14.25 | 11 | 16.8 | [35 steps](02-IDENTITY-AND-HOST/README.md) |
 | 03 | 14.25 | 14.25 | 16.8 | [41 steps](03-ORGANIZATION-AND-ADMIN/README.md) |
 | 04 | 9.5 | 12.25 | 14.28 | [36 steps](04-ATTENDANCE-CORE/README.md) |
@@ -186,6 +186,6 @@ The previous 489.5-hour figure added coarse service/quality allowances to broad 
 | 11 | 9.25 | 14 | 16.8 | [34 steps](11-HARDENING-AND-PILOT/README.md) |
 | 12 | 9.25 | 14 | 16.8 | [34 steps](12-RELEASE-AND-DEMONSTRATION/README.md) |
 
-Final planned total is 301 h, A=138.5/B=162.5, leaving 92.12 h below the 70-percent planning ceiling. This is an itemized estimate, not evidence that work became faster or the initial risk disappeared. Shared infrastructure is built once then tested per feature; the earlier blanket overhead is not charged a second time. Basic source/test/tool familiarity and narrow MVP screens are explicit assumptions. If Week-1 actuals invalidate the durations, keep critical gates and report a concrete scope/date conflict instead of lowering observed timings.
+Final planned total is 301.25 h, A=138.75/B=162.5.5, leaving 91.87 h below the 70-percent planning ceiling. This is an itemized estimate, not evidence that work became faster or the initial risk disappeared. Shared infrastructure is built once then tested per feature; the earlier blanket overhead is not charged a second time. Basic source/test/tool familiarity and narrow MVP screens are explicit assumptions. If Week-1 actuals invalidate the durations, keep critical gates and report a concrete scope/date conflict instead of lowering observed timings.
 
 [Roadmap](ROADMAP.md) and weekly README totals are derived outputs from the single dashboard capacity input. [Quality coverage](QUALITY-COVERAGE.md) links every Q-item and [ID map](STEP-ID-MAP.md) preserves all old progress. The user accepted the final design; no further architecture approval is needed for this documented local finish line. Runtime evidence remains **NOT RUN**.

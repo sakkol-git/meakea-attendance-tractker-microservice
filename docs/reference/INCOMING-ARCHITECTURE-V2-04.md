@@ -1,6 +1,6 @@
 # Approved architecture detail 04
 
-> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the canonical Architecture index for supersession, security gaps and deployment constraints.
+> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the [canonical Architecture index](../Architecture.md) for supersession, security limits and deployment constraints. Cloud chapters remain the approved future topology; the latest user decision defers their execution beyond this twelve-week local finish line.
 
 ## 22. CI/CD
 
@@ -249,7 +249,9 @@ Keep each decision as a short file in `docs/adr/`.
 
 
 
-## 30. Delivery plan (12 weeks)
+## 30. Prior delivery outline
+
+The current [twelve-week roadmap](../roadmap/ROADMAP.md) supersedes this earlier scheduling outline, especially its cloud-deployment row. Service/domain design remains approved; AWS/Kubernetes execution is future improvement by latest user instruction.
 
 | Weeks | Backend / web / infra                                                                                                 | Mobile                                                     |
 | ----- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |

@@ -19,6 +19,6 @@ The latest approved [Architecture](Architecture.md), including its four linked f
 
 Nuxt is retained, not migrated to React. Existing service roots stay; services/hrflow-app is superseded. Kafka and Registry remain required locally. AWS/Terraform/Kubernetes stay in the final production design, but the user's latest reply defers implementation beyond this finish line. No paid service is assumed free.
 
-The user confirmed unchanged W01-S01/not started, A=24 and B=24 hours weekly, and host not ready. Start date, production computer, external backup, public domain and network reachability remain unknown. Cloud region/credits/budget are deferred with cloud execution. HR policy sign-off and push-provider credentials remain open. Do not infer employee policy approval from architecture approval.
+The user confirmed unchanged W01-S01/not started, A=24 and B=24 hours weekly, and host not ready. Start is 2026-10-26 by the latest next-week instruction. Production computer, external backup, public domain and network reachability remain unknown; the local private-TLS path does not assume a purchased domain. Cloud region/credits/budget are deferred with cloud execution. HR policy sign-off and push-provider credentials remain open. Do not infer employee policy approval from architecture approval.
 
 No feature is done because its document exists. Current build blockers, safe commands and missing source are recorded in the repository audit and V2 architecture review. All weekly guides now follow ADR 008; historical C records remain context only.

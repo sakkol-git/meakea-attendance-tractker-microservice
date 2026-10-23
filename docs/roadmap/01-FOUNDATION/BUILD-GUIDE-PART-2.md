@@ -4,7 +4,49 @@
 
 ## Stone 2 — First private service baseline
 
-**You will have:** Nuxt build completes without error and the panel identifies its data as a fixture.
+**You will have:** Exactly one OpenAPI source is listed; its validator succeeds and a deliberate invalid local copy fails.
+
+### W01-S06 — Align the identity JDBC scaffold (60–60 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/SPRING-JDBC.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/identity-org/pom.xml`, `services/identity-org/src/test/java/com/hrflow/identityorg/IdentityOrgApplicationTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: use the spike findings to align this one service to the reviewed root baseline; replace JPA with JDBC and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step. Correct this service application.yaml to real YAML (or deliberately rename it to application.properties); do not leave properties syntax in a .yaml file. Run with explicit private DB/test configuration.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -f services/identity-org/pom.xml test
+```
+
+**Expect:** Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner.
+
+```text
+Evidence: exact command, exit code, safe result line and report path.
+Missing target/prerequisite: BLOCKED; never a fabricated successful result.
+```
+
+**Common mistake:** Accepting an empty context/class import as a successful service test hides dependency or configuration defects.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w01): w01-s06` after staging only exact reviewed paths and recording command/exit/report evidence.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ### W01-S07 — Prove the reactive gateway starts (45–45 min)
 
@@ -33,7 +75,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Accepting an empty context/class import as a successful service test hides dependency or configuration defects.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -42,7 +84,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s07` for implementation or `docs(w01): w01-s07` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s07` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -75,7 +117,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Editing an applied Flyway file breaks reproducible upgrade history; add the next unused version.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,7 +126,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s08` for implementation or `docs(w01): w01-s08` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s08` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -117,7 +159,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Replacing a pending local command key/body on retry can duplicate a committed effect.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -126,7 +168,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s09` for implementation or `docs(w01): w01-s09` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s09` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -168,92 +210,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s10` for implementation or `docs(w01): w01-s10` for findings/evidence, with exact reviewed paths only.
-
-**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
-
-**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
-
-### W01-S11 — Create the locked Nuxt test runner (30–30 min)
-
-**Why:** B owns one observable result in the preserved weekly objective.
-
-**Read first (up to 10 min, included):** [One concept](../primers/CONTRACT-TESTS.md). Reuse prior learning; no new concept on Thursday/Friday.
-
-**Before you start:**
-
-- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
-
-**Do:**
-
-1. Inspect first: review current equivalents for `web/package.json`, `web/package-lock.json`, `web/vitest.config.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Use the exact Nuxt-compatible Vitest/test-utils versions recorded by the prior tool lock. Add the test script and minimal defineVitestConfig from the official Nuxt test-utils docs, keep build/dev scripts and lockfile intact. Prove test runner discovery with a tiny temporary assertion, then remove the temporary fixture; real fixtures arrive in the following steps.
-1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
-
-```bash
-npm --prefix web run test -- --run
-```
-
-**Expect:** The selected fixture is discovered and executes; a deliberately false assertion exits nonzero. No-test discovery is not a successful feature test.
-
-```text
-Evidence: exact command, exit code, safe result line and report path.
-Missing target/prerequisite: BLOCKED; never a fabricated successful result.
-```
-
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
-
-**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
-
-**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
-
-**Check:**
-
-- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s11` for implementation or `docs(w01): w01-s11` for findings/evidence, with exact reviewed paths only.
-
-**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
-
-**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
-
-### W01-S12 — Retain and build the Nuxt client (30–30 min)
-
-**Why:** B owns one observable result in the preserved weekly objective.
-
-**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
-
-**Before you start:**
-
-- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
-
-**Do:**
-
-1. Inspect first: review current equivalents for `web/app/app.vue`, `docs/validation/W01-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect web/package.json, package-lock.json and current welcome source. Replace only the welcome view with a minimal contract-fixture panel, retaining Nuxt/Vue and the matching lockfile. Do not rewrite web to React.
-1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
-
-```bash
-npm --prefix web run build
-```
-
-**Expect:** Nuxt build completes without error and the panel identifies its data as a fixture.
-
-```text
-Evidence: exact command, exit code, safe result line and report path.
-Missing target/prerequisite: BLOCKED; never a fabricated successful result.
-```
-
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
-
-**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
-
-**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
-
-**Check:**
-
-- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s12` for implementation or `docs(w01): w01-s12` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w01-s12-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w01): w01-s10` after staging only exact reviewed paths and recording command/exit/report evidence.
+- [ ] Tagged `w01-s10-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

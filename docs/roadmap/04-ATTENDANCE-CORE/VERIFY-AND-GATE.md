@@ -6,7 +6,7 @@
 
 All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W04-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Step range: W04-S01 to W04-S36. Required new stone tags: `w04-s05-green`, `w04-s10-green`, `w04-s15-green`, `w04-s20-green`, `w04-s25-green`, `w04-s30-green`, `w04-s33-green`, `w04-s36-green`. Existing historical tags are not moved.
+Step range: W04-S01 to W04-S36. Required new stone tags: `w04-s03-green`, `w04-s06-green`, `w04-s12-green`, `w04-s18-green`, `w04-s24-green`, `w04-s30-green`, `w04-s33-green`, `w04-s36-green`. Existing historical tags are not moved.
 
 ## Feature and failure assertions
 

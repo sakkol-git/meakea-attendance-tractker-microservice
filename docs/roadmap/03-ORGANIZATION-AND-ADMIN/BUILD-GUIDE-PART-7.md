@@ -42,7 +42,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s36` for implementation or `docs(w03): w03-s36` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w03): w03-s36` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -75,7 +75,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Checking only object lookup while leaving list/count/job queries unscoped still leaks another tenant.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,7 +84,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s37` for implementation or `docs(w03): w03-s37` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w03): w03-s37` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -126,7 +126,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s38` for implementation or `docs(w03): w03-s38` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w03): w03-s38` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w03-s38-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

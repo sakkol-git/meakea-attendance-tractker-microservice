@@ -33,12 +33,12 @@ A stone may span working days; stop at the day cap and save its next exact step.
 
 | Stone | Visible result group | Steps | A/B step h |
 | --- | --- | --- | --- |
-| 1 | First feature red and green | W05-S01 to W05-S05 | 2/1 |
-| 2 | Feature scope and negative paths | W05-S06 to W05-S10 | 0/2.75 |
-| 3 | Client and integration deltas | W05-S11 to W05-S15 | 1.5/1.5 |
-| 4 | Remaining domain invariants | W05-S16 to W05-S20 | 0.75/2.25 |
-| 5 | Quality and failure recovery | W05-S21 to W05-S25 | 0.75/2 |
-| 6 | Final feature integration | W05-S26 to W05-S30 | 0.75/2.5 |
+| 1 | First feature red and green | W05-S01 to W05-S03 | 1.25/0.5 |
+| 2 | Feature scope and negative paths | W05-S04 to W05-S06 | 0.75/1 |
+| 3 | Client and integration deltas | W05-S07 to W05-S12 | 0.75/2.75 |
+| 4 | Remaining domain invariants | W05-S13 to W05-S18 | 0.75/2.75 |
+| 5 | Quality and failure recovery | W05-S19 to W05-S24 | 1.5/2 |
+| 6 | Final feature integration | W05-S25 to W05-S30 | 0.75/3 |
 | 7 | Thursday recovery buffer | W05-S31 to W05-S33 | 1/1 |
 | 8 | Friday deploy restore and gate | W05-S34 to W05-S36 | 1.25/1.25 |
 

@@ -1,6 +1,6 @@
 # Approved architecture detail 03
 
-> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the canonical Architecture index for supersession, security gaps and deployment constraints.
+> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the [canonical Architecture index](../Architecture.md) for supersession, security limits and deployment constraints. Cloud chapters remain the approved future topology; the latest user decision defers their execution beyond this twelve-week local finish line.
 
 ## 13. Request workflow domain
 
@@ -311,7 +311,7 @@ The mobile developer works against this document's API and a generated mock serv
 
 ```text
 docker compose (infra/docker/docker-compose.yaml)
-  postgres:5432   kafka:9092 (host) / kafka:19092 (containers)   schema-registry:8081
+  postgres:5432   kafka:9092 (host) / kafka:29092 (containers)   schema-registry:8081
   kafka-ui:8090
 services run from the IDE with: spring.kafka.bootstrap-servers=localhost:9092
 ```

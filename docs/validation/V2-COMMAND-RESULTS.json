@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Asia/Phnom_Penh",
+  "commands": [
+    {
+      "command": "mvn -o validate",
+      "exit_code": 0,
+      "result": "Ten-project reactor BUILD SUCCESS; POM validation only."
+    },
+    {
+      "command": "mvn -o test",
+      "exit_code": 1,
+      "result": "Stops in Avro schema generation: configured root contracts/events does not exist; no backend behavior test ran."
+    },
+    {
+      "command": "docker compose -f infra/docker/docker-compose.yaml config --quiet",
+      "exit_code": 0,
+      "result": "Syntax exits zero; known mount/listener/schema-source corrections still need development."
+    },
+    {
+      "command": "docker info --format '{{.ServerVersion}}'",
+      "exit_code": 1,
+      "result": "Docker daemon socket absent."
+    },
+    {
+      "command": "npm --prefix web run build",
+      "exit_code": 0,
+      "result": "Nuxt 4.6.1 production build completed."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider",
+      "exit_code": 0,
+      "result": "Five confidence tests passed; one Starlette/httpx deprecation warning. Run in ml/confidence-service."
+    },
+    {
+      "command": "npm --prefix web run generate",
+      "exit_code": 0,
+      "result": "Four routes prerendered; web/.output/public/index.html exists."
+    },
+    {
+      "command": "node docs/validation/check-mermaid.mjs /tmp/hrflow-doc-validation /tmp/hrflow-v2-final-diagrams.json",
+      "exit_code": 0,
+      "result": "Seven of seven Mermaid diagrams parsed; no native-viewer rendering claim."
+    },
+    {
+      "command": "javac --release 21 and java on three retained PatternExample sources in isolated temp directories",
+      "exit_code": 0,
+      "result": "builder checks passed; adapter checks passed; specification checks passed. JDK 23 compiler/runtime with Java 21 target."
+    }
+  ]
+}

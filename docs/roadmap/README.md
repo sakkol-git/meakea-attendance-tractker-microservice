@@ -68,3 +68,5 @@ Begin with [START-HERE](START-HERE.md) and [YOU-ARE-HERE](YOU-ARE-HERE.md); deve
 [ID map](STEP-ID-MAP.md) and [draft map](DRAFT-ID-MAP.md) preserve old progress/tags. Cloud deployment remains future improvement. All required security and restore tests stay in the gate; no single-host availability or certification claim.
 
 [Toolchain evidence](TOOLCHAIN-REFERENCE.md) and [operation script interface](runbooks/SCRIPT-INTERFACE.md) explain exact version/target prerequisites without inventing installed tools or production hosts.
+
+[Finalization checkpoint map](FINALIZATION-ID-MAP.md) covers the final dependency-order correction; [proofs](LINTER-PROOFS.md) document linter verification. No application progress is implied.

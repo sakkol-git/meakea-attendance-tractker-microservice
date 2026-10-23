@@ -44,7 +44,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s07` for implementation or `docs(w07): w07-s07` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w07): w07-s07` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -88,7 +88,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s08` for implementation or `docs(w07): w07-s08` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w07): w07-s08` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -132,7 +132,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s09` for implementation or `docs(w07): w07-s09` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w07): w07-s09` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -165,7 +165,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** Committing the signing key or omitting issuer/audience/expiry checks makes a signed token unsafe.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -174,7 +174,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s10` for implementation or `docs(w07): w07-s10` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w07): w07-s10` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -207,7 +207,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** Committing the signing key or omitting issuer/audience/expiry checks makes a signed token unsafe.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -216,7 +216,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s11` for implementation or `docs(w07): w07-s11` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w07): w07-s11` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -249,7 +249,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** Committing the signing key or omitting issuer/audience/expiry checks makes a signed token unsafe.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -258,7 +258,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w07): w07-s12` for implementation or `docs(w07): w07-s12` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w07): w07-s12` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w07-s12-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

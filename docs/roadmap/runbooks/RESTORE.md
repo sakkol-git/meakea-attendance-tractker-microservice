@@ -25,3 +25,11 @@ Procedure defined; execution **NOT RUN**. Referenced ops scripts are proposed, n
 Record owner database cut, Registry schemas/configuration and consumer replay position together. Restore business DB/private files to scratch first, then restore event schemas and rebuild projections from a verified replay point or owner snapshot. A retention gap fails the drill until snapshot bootstrap is proved. Never rewind a live production consumer or delete a topic as an automatic restore action.
 
 [Script interface and safe target configuration](SCRIPT-INTERFACE.md) defines exact creation order, refusal guards and invocations. Missing prerequisite or report is a failed gate, not permission to guess a target.
+
+## Offline release artifacts
+
+An image digest or Git commit ID is a reference, not the image/source itself. Before a clean-host drill, the encrypted external backup must contain the verified release image archive and Git source bundle (or a tested independently available registry/repository), plus config/model-version inventory. The local-only finish line uses the external offline archive; no cloud repository availability is assumed.
+
+Save immutable release images and the reviewed Git bundle once per release, checksum them, and reference that artifact set from nightly data manifests instead of duplicating it every night. In scratch/clean recovery verify the bundle, load the images, compare their IDs to the release manifest, then restore DB/private files/roles/schema/replay metadata with live delivery disabled. Test access to the recovery keys separately; do not place secret values in Git or reports.
+
+Use the actual allowlisted image references and protected release directory chosen by the script interface; no arbitrary user-supplied shell/image arguments. git bundle verify and docker image load must succeed on the isolated target before the clean-host application smoke. Data-only restore does not claim a complete lost-host recovery.

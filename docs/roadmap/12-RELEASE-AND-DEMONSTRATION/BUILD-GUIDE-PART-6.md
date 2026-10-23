@@ -18,15 +18,17 @@
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/reporting/src/test/java/com/hrflow/reporting/RecordsRehearsesDemoTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use synthetic names, no secrets or private addresses on recording; rehearse fallback screenshots/evidence if live network fails. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first: review current equivalents for `mobile/test/recordsrehearsesdemo_test.dart`, `web/test/recordsrehearsesdemo.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Use synthetic names, no secrets or private addresses on recording; rehearse fallback screenshots/evidence if live network fails. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/reporting -am test
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
 ```
 
-**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Recording contains synthetic names and no tokens/private addresses.
+**Expect:** An existing implemented behavior may already pass; missing regression must expose a real defect before a repair is claimed. Required result: Recording contains synthetic names and no tokens/private addresses.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -42,7 +44,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w12): w12-s25` for implementation or `docs(w12): w12-s25` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w12): w12-s25` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -60,12 +62,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/reporting/src/main/java/com/hrflow/reporting/application/RecordsRehearsesDemoService.java`, `services/reporting/src/main/java/com/hrflow/reporting/infrastructure/RecordsRehearsesDemoRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with this delta only: Use synthetic names, no secrets or private addresses on recording; rehearse fallback screenshots/evidence if live network fails. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Inspect first: review current equivalents for `mobile/test/recordsrehearsesdemo_test.dart`, `web/test/recordsrehearsesdemo.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Use synthetic names, no secrets or private addresses on recording; rehearse fallback screenshots/evidence if live network fails. Run the existing assertion; if it fails, apply only its smallest demonstrated repair and make it green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/reporting -am test
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
 ```
 
 **Expect:** Recording contains synthetic names and no tokens/private addresses.
@@ -84,7 +88,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w12): w12-s26` for implementation or `docs(w12): w12-s26` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w12): w12-s26` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -102,12 +106,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/reporting/src/test/java/com/hrflow/reporting/RecordsRehearsesDemoTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `mobile/test/recordsrehearsesdemo_test.dart`, `web/test/recordsrehearsesdemo.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: Recording contains synthetic names and no tokens/private addresses. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/reporting -am test
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
 ```
 
 **Expect:** Recording contains synthetic names and no tokens/private addresses.
@@ -126,7 +132,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w12): w12-s27` for implementation or `docs(w12): w12-s27` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w12): w12-s27` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -144,12 +150,12 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/reporting/src/main/java/com/hrflow/reporting/application/FinalReleaseService.java`, `services/reporting/src/main/java/com/hrflow/reporting/infrastructure/FinalReleaseRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `scripts/acceptance/w12.sh`, `docs/validation/W12-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice; required quality delta: Only after all Must/Q acceptance and drills pass, record changelog/manifest and create an unused semantic version tag on the tested commit; compare image digests to deployed candidate. Do not retag failures.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/reporting -am test
+bash scripts/acceptance/w12.sh regression
 ```
 
 **Expect:** Release tag and manifest identify the exact passing commit/images; no claim of certification or high availability.
@@ -159,7 +165,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Logging credentials/evidence or adding per-employee metric labels creates privacy and cardinality problems.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -168,7 +174,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w12): w12-s28` for implementation or `docs(w12): w12-s28` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w12): w12-s28` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w12-s28-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

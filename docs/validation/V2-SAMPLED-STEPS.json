@@ -1,0 +1,450 @@
+[
+  {
+    "week": 1,
+    "selection": "risky",
+    "step": "W01-S05",
+    "guide": "docs/roadmap/01-FOUNDATION/BUILD-GUIDE.md",
+    "command": "mvn -o validate",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 1,
+    "selection": "middle",
+    "step": "W01-S17",
+    "guide": "docs/roadmap/01-FOUNDATION/BUILD-GUIDE-PART-4.md",
+    "command": "mvn -f services/api-gateway/pom.xml test",
+    "existing_owner_roots": [
+      "services/api-gateway"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 1,
+    "selection": "failure",
+    "step": "W01-S31",
+    "guide": "docs/roadmap/01-FOUNDATION/BUILD-GUIDE-PART-6.md",
+    "command": "bash -n ops/backup.sh ops/restore-scratch.sh",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 2,
+    "selection": "risky",
+    "step": "W02-S20",
+    "guide": "docs/roadmap/02-IDENTITY-AND-HOST/BUILD-GUIDE-PART-4.md",
+    "command": "mvn -f services/identity-org/pom.xml test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 2,
+    "selection": "middle",
+    "step": "W02-S19",
+    "guide": "docs/roadmap/02-IDENTITY-AND-HOST/BUILD-GUIDE-PART-4.md",
+    "command": "mvn -f services/identity-org/pom.xml test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 2,
+    "selection": "failure",
+    "step": "W02-S12",
+    "guide": "docs/roadmap/02-IDENTITY-AND-HOST/BUILD-GUIDE-PART-3.md",
+    "command": "mvn -f services/identity-org/pom.xml test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 3,
+    "selection": "risky",
+    "step": "W03-S34",
+    "guide": "docs/roadmap/03-ORGANIZATION-AND-ADMIN/BUILD-GUIDE-PART-6.md",
+    "command": "mvn -pl services/identity-org -am test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 3,
+    "selection": "middle",
+    "step": "W03-S11",
+    "guide": "docs/roadmap/03-ORGANIZATION-AND-ADMIN/BUILD-GUIDE-PART-2.md",
+    "command": "mvn -pl services/identity-org -am test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 3,
+    "selection": "failure",
+    "step": "W03-S27",
+    "guide": "docs/roadmap/03-ORGANIZATION-AND-ADMIN/BUILD-GUIDE-PART-5.md",
+    "command": "mvn -pl services/identity-org -am test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 4,
+    "selection": "risky",
+    "step": "W04-S05",
+    "guide": "docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-2.md",
+    "command": "mvn -pl services/attendance -am test",
+    "existing_owner_roots": [
+      "services/attendance"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 4,
+    "selection": "middle",
+    "step": "W04-S14",
+    "guide": "docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-4.md",
+    "command": "mvn -pl services/attendance -am test",
+    "existing_owner_roots": [
+      "services/attendance"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 4,
+    "selection": "failure",
+    "step": "W04-S12",
+    "guide": "docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-3.md",
+    "command": "mvn -pl services/attendance -am test",
+    "existing_owner_roots": [
+      "services/attendance"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 5,
+    "selection": "risky",
+    "step": "W05-S14",
+    "guide": "docs/roadmap/05-OUTBOX-AND-NOTIFICATIONS/BUILD-GUIDE-PART-4.md",
+    "command": "mvn -pl services/notification -am test",
+    "existing_owner_roots": [
+      "services/notification"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 5,
+    "selection": "middle",
+    "step": "W05-S28",
+    "guide": "docs/roadmap/05-OUTBOX-AND-NOTIFICATIONS/BUILD-GUIDE-PART-6.md",
+    "command": "mvn -pl libs/hrflow-contracts -am verify\nbash scripts/acceptance/avro-spike.sh compatibility",
+    "existing_owner_roots": [
+      "libs/hrflow-contracts"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 5,
+    "selection": "failure",
+    "step": "W05-S18",
+    "guide": "docs/roadmap/05-OUTBOX-AND-NOTIFICATIONS/BUILD-GUIDE-PART-4.md",
+    "command": "npm --prefix web run test -- --run\n# From the confirmed Flutter root:\nflutter test",
+    "existing_owner_roots": [
+      "web"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 6,
+    "selection": "risky",
+    "step": "W06-S11",
+    "guide": "docs/roadmap/06-LEAVE-WORKFLOW/BUILD-GUIDE-PART-3.md",
+    "command": "mvn -pl services/leave -am test",
+    "existing_owner_roots": [
+      "services/leave"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 6,
+    "selection": "middle",
+    "step": "W06-S20",
+    "guide": "docs/roadmap/06-LEAVE-WORKFLOW/BUILD-GUIDE-PART-5.md",
+    "command": "mvn -pl services/leave -am test",
+    "existing_owner_roots": [
+      "services/leave"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 6,
+    "selection": "failure",
+    "step": "W06-S28",
+    "guide": "docs/roadmap/06-LEAVE-WORKFLOW/BUILD-GUIDE-PART-6.md",
+    "command": "mvn -pl services/leave -am test",
+    "existing_owner_roots": [
+      "services/leave"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 7,
+    "selection": "risky",
+    "step": "W07-S11",
+    "guide": "docs/roadmap/07-REQUESTS-AND-APPROVALS/BUILD-GUIDE-PART-2.md",
+    "command": "mvn -pl services/request -am test",
+    "existing_owner_roots": [
+      "services/request"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 7,
+    "selection": "middle",
+    "step": "W07-S26",
+    "guide": "docs/roadmap/07-REQUESTS-AND-APPROVALS/BUILD-GUIDE-PART-5.md",
+    "command": "mvn -pl services/request -am test",
+    "existing_owner_roots": [
+      "services/request"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 7,
+    "selection": "failure",
+    "step": "W07-S30",
+    "guide": "docs/roadmap/07-REQUESTS-AND-APPROVALS/BUILD-GUIDE-PART-5.md",
+    "command": "mvn -pl services/request -am test",
+    "existing_owner_roots": [
+      "services/request"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 8,
+    "selection": "risky",
+    "step": "W08-S11",
+    "guide": "docs/roadmap/08-WEB-AND-MOBILE-INTEGRATION/BUILD-GUIDE-PART-3.md",
+    "command": "mvn -pl services/identity-org -am test",
+    "existing_owner_roots": [
+      "services/identity-org"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 8,
+    "selection": "middle",
+    "step": "W08-S05",
+    "guide": "docs/roadmap/08-WEB-AND-MOBILE-INTEGRATION/BUILD-GUIDE.md",
+    "command": "npm --prefix web run test -- --run\n# From the confirmed Flutter root:\nflutter test",
+    "existing_owner_roots": [
+      "web"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 8,
+    "selection": "failure",
+    "step": "W08-S15",
+    "guide": "docs/roadmap/08-WEB-AND-MOBILE-INTEGRATION/BUILD-GUIDE-PART-4.md",
+    "command": "npm --prefix web run test -- --run\n# From the confirmed Flutter root:\nflutter test",
+    "existing_owner_roots": [
+      "web"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 9,
+    "selection": "risky",
+    "step": "W09-S11",
+    "guide": "docs/roadmap/09-REPORTING-AUDIT-OBSERVABILITY/BUILD-GUIDE-PART-2.md",
+    "command": "mvn -pl services/reporting -am test",
+    "existing_owner_roots": [
+      "services/reporting"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 9,
+    "selection": "middle",
+    "step": "W09-S32",
+    "guide": "docs/roadmap/09-REPORTING-AUDIT-OBSERVABILITY/BUILD-GUIDE-PART-6.md",
+    "command": "mvn -pl services/reporting -am test",
+    "existing_owner_roots": [
+      "services/reporting"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 9,
+    "selection": "failure",
+    "step": "W09-S35",
+    "guide": "docs/roadmap/09-REPORTING-AUDIT-OBSERVABILITY/BUILD-GUIDE-PART-6.md",
+    "command": "mvn -pl services/reporting -am test",
+    "existing_owner_roots": [
+      "services/reporting"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 10,
+    "selection": "risky",
+    "step": "W10-S20",
+    "guide": "docs/roadmap/10-OPERATIONS-AND-RESTORE/BUILD-GUIDE-PART-4.md",
+    "command": "bash scripts/acceptance/w10.sh recovery",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 10,
+    "selection": "middle",
+    "step": "W10-S17",
+    "guide": "docs/roadmap/10-OPERATIONS-AND-RESTORE/BUILD-GUIDE-PART-3.md",
+    "command": "bash scripts/acceptance/w10.sh recovery",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 10,
+    "selection": "failure",
+    "step": "W10-S21",
+    "guide": "docs/roadmap/10-OPERATIONS-AND-RESTORE/BUILD-GUIDE-PART-4.md",
+    "command": "bash scripts/acceptance/w10.sh negative",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 11,
+    "selection": "risky",
+    "step": "W11-S14",
+    "guide": "docs/roadmap/11-HARDENING-AND-PILOT/BUILD-GUIDE-PART-4.md",
+    "command": "bash scripts/acceptance/w11.sh regression",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 11,
+    "selection": "middle",
+    "step": "W11-S08",
+    "guide": "docs/roadmap/11-HARDENING-AND-PILOT/BUILD-GUIDE-PART-3.md",
+    "command": "npm --prefix web run test -- --run\n# From the confirmed Flutter root:\nflutter test",
+    "existing_owner_roots": [
+      "web"
+    ],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 11,
+    "selection": "failure",
+    "step": "W11-S03",
+    "guide": "docs/roadmap/11-HARDENING-AND-PILOT/BUILD-GUIDE.md",
+    "command": "bash scripts/acceptance/w11.sh negative",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 12,
+    "selection": "risky",
+    "step": "W12-S02",
+    "guide": "docs/roadmap/12-RELEASE-AND-DEMONSTRATION/BUILD-GUIDE.md",
+    "command": "bash scripts/acceptance/w12.sh regression",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 12,
+    "selection": "middle",
+    "step": "W12-S20",
+    "guide": "docs/roadmap/12-RELEASE-AND-DEMONSTRATION/BUILD-GUIDE-PART-5.md",
+    "command": "bash scripts/acceptance/w12.sh regression",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  },
+  {
+    "week": 12,
+    "selection": "failure",
+    "step": "W12-S12",
+    "guide": "docs/roadmap/12-RELEASE-AND-DEMONSTRATION/BUILD-GUIDE-PART-3.md",
+    "command": "bash scripts/acceptance/w12.sh negative",
+    "existing_owner_roots": [],
+    "leaf_targets": "explicitly proposed; Inspect first and creation precede execution",
+    "whole_step_execution": "Not run",
+    "review": "static command/path/expected-result inspection completed; future endpoint/DB/drill assertions not fabricated"
+  }
+]

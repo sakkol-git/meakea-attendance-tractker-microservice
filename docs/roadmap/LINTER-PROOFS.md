@@ -4,7 +4,7 @@
 
 Run python3 docs/roadmap/tools/prove-docs-lint.py from repository root. It first requires the real docs to pass, then makes an isolated temporary copy for each mutation, proves the clean copy passes, changes one rule and checks the expected rule ID/exit. Application source is never copied or modified. The parent README is included so relative root links remain valid in the temp copy. All temp copies are removed automatically.
 
-Real-doc result at this run: **PASS**, 273 Markdown files, zero errors and zero warnings. Additional validation-log files added later are covered by the final full lint. Detailed machine results are preserved in docs/validation/DOCS-LINT-V2-PROOFS.json.
+Real-doc result at this run: **PASS**, 276 Markdown files, zero errors and zero warnings. Final full lint also includes the root README.
 
 | Broken fixture | Rule | Expected exit | Actual result |
 | --- | --- | --- | --- |
@@ -17,6 +17,7 @@ Real-doc result at this run: **PASS**, 273 Markdown files, zero errors and zero 
 | missing Check | step | nonzero | **PASS**, exit 1 |
 | missing If it fails | step | nonzero | **PASS**, exit 1 |
 | missing Status | step | nonzero | **PASS**, exit 1 |
+| stone ends red | stone-tag | nonzero | **PASS**, exit 1 |
 | duration over 90 | duration | nonzero | **PASS**, exit 1 |
 | duplicate ID | step-ids | nonzero | **PASS**, exit 1 |
 | nonsequential ID | step-ids | nonzero | **PASS**, exit 1 |

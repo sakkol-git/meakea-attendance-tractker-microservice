@@ -33,7 +33,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Writing into an unmounted external-disk directory can fill local disk and create a false backup.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -42,7 +42,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w02): w02-s34` for implementation or `docs(w02): w02-s34` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w02): w02-s34` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -62,6 +62,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 1. Inspect first: review current equivalents for `docs/validation/W02-EVIDENCE.md`, `docs/roadmap/YOU-ARE-HERE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Run the reviewed scratch restore again from the release backup, record reports and all required Q-items, map next position, commit the gate evidence and tag only if green. Stop for weekend rest; failed security/restore remains the first next action.
+1. Include the checksum-verified offline release image archive/source bundle and protected config/model inventory in the existing backup/restore manifest, as defined by the runbook interface; do not assume local images survive a lost host.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -75,7 +76,7 @@ Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,7 +85,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w02): w02-s35` for implementation or `docs(w02): w02-s35` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w02): w02-s35` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w02-s35-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

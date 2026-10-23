@@ -116,3 +116,7 @@ Verification methods:
 - [Idempotency primer](IDEMPOTENCY.md)
 - [Current architecture decision](../../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md)
 - [System architecture](../../Architecture.md)
+
+## One active owner relay
+
+The approved design uses a PostgreSQL advisory lock, a named application-level lock, on one dedicated relay connection per owner service. Standbys do not publish; loss of that connection stops the active relay until leadership is reacquired. SKIP LOCKED bounds batches but cannot alone guarantee ordering across multiple publishers. Inbox/revision checks still protect against duplicate/stale delivery.

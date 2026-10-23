@@ -6,6 +6,50 @@
 
 **You will have:** A synthetic stopped consumer raises lag alert and logs join to correlation without PII.
 
+### W05-S25 — Stop and resume the Kafka consumer — state the failing behavior (30–30 min)
+
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/KAFKA-BASICS.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `mobile/test/stopresumekafkaconsumer_test.dart`, `web/test/stopresumekafkaconsumer.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: On isolated synthetic data pause the notification consumer, commit a command, resume it and compare event/receipt/effect IDs. Keep broker/topic data intact. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
+```
+
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Pending lag is visible and recovers within measured time; no second in-app record is created.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `test(w05): w05-s25` after staging only exact reviewed paths and recording command/exit/report evidence.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
 ### W05-S26 — Stop and resume the Kafka consumer — make the narrow behavior pass (45–45 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
@@ -44,7 +88,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w05): w05-s26` for implementation or `docs(w05): w05-s26` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w05): w05-s26` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -88,7 +132,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w05): w05-s27` for implementation or `docs(w05): w05-s27` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w05): w05-s27` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -106,12 +150,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/notification/src/main/java/com/hrflow/notification/application/AvroCompatibilityService.java`, `services/notification/src/main/java/com/hrflow/notification/infrastructure/AvroCompatibilityRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `libs/hrflow-contracts/events/attendance-checked-in.v1.avsc`, `libs/hrflow-contracts/src/test/java/com/hrflow/contracts/AvroCompatibilityTest.java`, `.github/workflows/verify.yml`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice; required quality delta: Add one optional/defaulted event field and test Registry backward-transitive compatibility; incompatible required-field/type mutation in a temp schema must fail. Pin event schema ID/version in evidence.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/notification -am test
+mvn -pl libs/hrflow-contracts -am verify
+bash scripts/acceptance/avro-spike.sh compatibility
 ```
 
 **Expect:** Compatible change passes, breaking copy fails and old consumer fixture still decodes.
@@ -130,7 +175,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w05): w05-s28` for implementation or `docs(w05): w05-s28` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w05): w05-s28` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -172,7 +217,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w05): w05-s29` for implementation or `docs(w05): w05-s29` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w05): w05-s29` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -205,7 +250,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Logging credentials/evidence or adding per-employee metric labels creates privacy and cardinality problems.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -214,7 +259,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w05): w05-s30` for implementation or `docs(w05): w05-s30` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w05): w05-s30` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w05-s30-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

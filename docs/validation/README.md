@@ -70,3 +70,7 @@ See [architecture](../Architecture.md), [contracts](../REST-API-DATABASE-DESIGN.
 ## V2 roadmap audit data
 
 The original 182-step inventory is preserved in ROADMAP-V1-BASELINE.json; the structured first-pair draft is in ROADMAP-V2-PAIR-12-DRAFT.json. Both are documentation audit data, not application inputs. [Progress](../roadmap/PROGRESS-V2.md), [validation log](../roadmap/V2-VALIDATION-LOG.md) and [interim metrics](../roadmap/CHANGELOG-V2.md) explain limitations and resumption.
+
+Final parsed instructions/capacity are in ROADMAP-V2-FINAL-LEDGER.json; V2-SAMPLED-STEPS.json records the 36 static samples, V2-COMMAND-RESULTS.json the actual safe commands, and DOCS-LINT-V2-PROOFS.json the isolated negative fixtures. These are audit data; Markdown guides remain the execution reference.
+
+INCOMING-DOCS-V2-SNAPSHOT.json preserves the complete pre-pass Markdown input, including incoming uncommitted documentation. It is a non-executable historical audit archive; the current Markdown/ADR 008 guide remains authoritative.

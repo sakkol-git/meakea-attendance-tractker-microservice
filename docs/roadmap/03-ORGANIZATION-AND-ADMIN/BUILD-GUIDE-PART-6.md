@@ -6,6 +6,48 @@
 
 **You will have:** A new attendance instance builds its known tenant schedule without querying identity_org tables; duplicate snapshot is harmless.
 
+### W03-S30 — Fail forbidden service and layer imports — prove the denied or failure path (30–30 min)
+
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/ARCHITECTURE-TESTS.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/FailForbiddenServiceLayerImportsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -pl services/identity-org -am test
+```
+
+**Expect:** Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `test(w03): w03-s30` after staging only exact reviewed paths and recording command/exit/report evidence.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
 ### W03-S31 — Publish organization facts through owner intent — state the failing behavior (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
@@ -35,7 +77,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** Treating broker acknowledgment and the database mark-sent as one atomic action misses duplicate publication.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -44,7 +86,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s31` for implementation or `docs(w03): w03-s31` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w03): w03-s31` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -63,7 +105,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/lib/features/publishorganizationfactsthroughownerintent.dart`, `web/app/pages/publishorganizationfactsthroughownerintent.vue`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with this delta only: Write organization fact and owner outbox in one transaction, using the existing Avro starter shape. Publish to Kafka before marking sent; keep a repeatable tenant-scoped snapshot bootstrap for a new attendance consumer. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Use one active relay per owner service, selected by PostgreSQL pg_try_advisory_lock on a dedicated relay connection; standbys do not publish. Release/close it on shutdown and stop publishing after lock/connection loss. SKIP LOCKED alone does not guarantee per-key order. Repeat the golden slice with this delta only: Write organization fact and owner outbox in one transaction, using the existing Avro starter shape. Publish to Kafka before marking sent; keep a repeatable tenant-scoped snapshot bootstrap for a new attendance consumer. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -79,7 +121,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** Treating broker acknowledgment and the database mark-sent as one atomic action misses duplicate publication.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -88,7 +130,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s32` for implementation or `docs(w03): w03-s32` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s32` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -123,7 +165,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** Treating broker acknowledgment and the database mark-sent as one atomic action misses duplicate publication.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -132,7 +174,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s33` for implementation or `docs(w03): w03-s33` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w03): w03-s33` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -165,7 +207,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Running tenant tests as the schema owner can hide a bypass; use the non-owner runtime role and transaction-local context.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -174,7 +216,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s34` for implementation or `docs(w03): w03-s34` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s34` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -216,7 +258,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s35` for implementation or `docs(w03): w03-s35` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s35` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w03-s35-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

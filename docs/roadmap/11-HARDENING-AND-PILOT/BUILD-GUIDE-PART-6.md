@@ -18,22 +18,22 @@
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/RehearsesLimitedPilotStoryTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use 5 to 10 consenting users only if control gate passed; otherwise synthetic fixtures; record defects/energy and freeze scope. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first: review current equivalents for `scripts/acceptance/w11.sh`, `docs/validation/W11-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Use 5 to 10 consenting users only if control gate passed; otherwise synthetic fixtures; record defects/energy and freeze scope. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/attendance -am test
+bash scripts/acceptance/w11.sh regression
 ```
 
-**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: No consenting pilot proceeds with an unresolved critical control.
+**Expect:** An existing implemented behavior may already pass; missing regression must expose a real defect before a repair is claimed. Required result: No consenting pilot proceeds with an unresolved critical control.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** Upgrading a dependency during freeze invalidates the tested release manifest.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -42,7 +42,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w11): w11-s25` for implementation or `docs(w11): w11-s25` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w11): w11-s25` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -60,12 +60,12 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/attendance/src/main/java/com/hrflow/attendance/application/RehearsesLimitedPilotStoryService.java`, `services/attendance/src/main/java/com/hrflow/attendance/infrastructure/RehearsesLimitedPilotStoryRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with this delta only: Use 5 to 10 consenting users only if control gate passed; otherwise synthetic fixtures; record defects/energy and freeze scope. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Inspect first: review current equivalents for `scripts/acceptance/w11.sh`, `docs/validation/W11-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Use 5 to 10 consenting users only if control gate passed; otherwise synthetic fixtures; record defects/energy and freeze scope. Run the existing assertion; if it fails, apply only its smallest demonstrated repair and make it green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/attendance -am test
+bash scripts/acceptance/w11.sh regression
 ```
 
 **Expect:** No consenting pilot proceeds with an unresolved critical control.
@@ -75,7 +75,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** Upgrading a dependency during freeze invalidates the tested release manifest.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,7 +84,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w11): w11-s26` for implementation or `docs(w11): w11-s26` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w11): w11-s26` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -102,12 +102,12 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/RehearsesLimitedPilotStoryTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `scripts/acceptance/w11.sh`, `docs/validation/W11-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: No consenting pilot proceeds with an unresolved critical control. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/attendance -am test
+bash scripts/acceptance/w11.sh negative
 ```
 
 **Expect:** No consenting pilot proceeds with an unresolved critical control.
@@ -117,7 +117,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** Upgrading a dependency during freeze invalidates the tested release manifest.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -126,7 +126,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w11): w11-s27` for implementation or `docs(w11): w11-s27` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w11): w11-s27` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -144,12 +144,12 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/reporting/src/main/java/com/hrflow/reporting/application/ReleaseScorecardService.java`, `services/reporting/src/main/java/com/hrflow/reporting/infrastructure/ReleaseScorecardRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `scripts/acceptance/w11.sh`, `docs/validation/W11-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice; required quality delta: Fill all fourteen Q rows from actual reports: **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN**. No critical security/restore gap can be conditional. Reconcile every Must checklist ID.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -pl services/reporting -am test
+bash scripts/acceptance/w11.sh regression
 ```
 
 **Expect:** Each rating links a report; missing evidence is **NOT RUN** and critical failures block release.
@@ -159,7 +159,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** An archive listing is not a restore; verify isolated rows/files and reject production target names.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -168,7 +168,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w11): w11-s28` for implementation or `docs(w11): w11-s28` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w11): w11-s28` after staging only exact reviewed paths and recording command/exit/report evidence.
 - [ ] Tagged `w11-s28-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.

@@ -42,7 +42,7 @@ Old tags and commits remain valid historical checkpoints; do not move or delete 
 | W02-S15 | W02-S34 | Redeploy the checked artifact |
 | W02-S16 | W02-S29, W02-S33, W02-S35 | B verifies deployed workflow and restore |
 | W02-S17 | W02-S22, W02-S35 | Decide gate and shut down |
-| W03-S01 | W03-S07, W03-S08, W03-S09 | Add employee master migrations |
+| W03-S01 | W03-S06, W03-S07, W03-S08 | Add employee master migrations |
 | W03-S02 | W03-S10, W03-S11, W03-S12 | Add owner-scoped employee APIs |
 | W03-S03 | W03-S13, W03-S14, W03-S15 | B renders employee profile |
 | W03-S04 | W03-S16, W03-S17, W03-S18 | Add site and shift templates |

@@ -6,7 +6,7 @@
 
 Dates: 2026-10-26 through 2026-10-30; weekend rest follows.
 
-**Planned hours:** A=13.75; B=14.25.
+**Planned hours:** A=14; B=14.25.
 
 **Extra hours:** A=1; B=1.
 
@@ -33,12 +33,12 @@ A stone may span working days; stop at the day cap and save its next exact step.
 
 | Stone | Visible result group | Steps | A/B step h |
 | --- | --- | --- | --- |
-| 1 | Prerequisites and compatibility | W01-S01 to W01-S06 | 3.75/0 |
-| 2 | First private service baseline | W01-S07 to W01-S12 | 2.5/1.5 |
-| 3 | Contract and client fixtures | W01-S13 to W01-S18 | 1.25/2.5 |
-| 4 | Error and integrity boundaries | W01-S19 to W01-S24 | 2.25/1.75 |
-| 5 | Repeatable tools and event proof | W01-S25 to W01-S29 | 1.5/2.25 |
-| 6 | CI and private operational prerequisites | W01-S30 to W01-S34 | 0/3.25 |
+| 1 | Prerequisites and compatibility | W01-S01 to W01-S05 | 3/0 |
+| 2 | First private service baseline | W01-S06 to W01-S10 | 3.5/0.5 |
+| 3 | Contract and client fixtures | W01-S11 to W01-S16 | 0.75/3 |
+| 4 | Error and integrity boundaries | W01-S17 to W01-S22 | 1.25/2.25 |
+| 5 | Repeatable tools and event proof | W01-S23 to W01-S28 | 3/1.5 |
+| 6 | CI and private operational prerequisites | W01-S29 to W01-S34 | 0/4 |
 | 7 | Thursday recovery buffer | W01-S35 to W01-S36 | 0.5/1 |
 | 8 | Friday deploy restore and gate | W01-S37 to W01-S38 | 1/1 |
 

@@ -14,9 +14,9 @@ Every step ends with a focused commit. Stage only its exact reviewed paths. Put 
 
 ## Stone 1 — Prerequisites and compatibility
 
-**You will have:** Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner.
+**You will have:** Reactor lists ten projects and BUILD SUCCESS for validation; compilation is separately recorded and never inferred from validate.
 
-### W01-S01 — Inventory the dirty workspace (30–30 min)
+### W01-S01 — Inventory the dirty workspace (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -24,35 +24,37 @@ Every step ends with a focused commit. Stage only its exact reviewed paths. Put 
 
 **Before you start:**
 
-- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+- [ ] The project root is open and Git is available; no earlier green application tag is required for this first inventory/checkpoint.
 
 **Do:**
 
 1. Inspect first: review current equivalents for `docs/validation/W01-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first: record staged/untracked paths and current branch; save a reviewed checkpoint plan without adding source or secrets. Record the evidence file as a documentation-only commit.
+1. Inspect staged/untracked source and .gitignore first; confirm node_modules, .venv, generated output, real secrets and OS files will not be staged. Create the implementation branch with `git switch -c codex/w01-foundation` from this reviewed docs checkpoint; if it already exists inspect it and use `git switch codex/w01-foundation` without resetting. Review every explicitly selected existing source path and save a baseline source commit with `git commit -m "chore: preserve reviewed source baseline"` before CI/feature edits; no code is changed by making this checkpoint. Then save the inventory/baseline commit ID in the evidence file as the final documentation-only step commit. This source-inventory checkpoint is the explicit many-files exception; later feature commits stay narrow.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 git status --short
+git diff --cached --stat
+git check-ignore web/node_modules ml/confidence-service/.venv
 ```
 
-**Expect:** Existing source paths remain staged/untracked exactly as before; checkpoint plan names the work to preserve.
+**Expect:** The implementation branch has a reviewed baseline commit containing the real scaffold source, excluding generated files/secrets; the final evidence commit records its ID. git show --stat BASELINE_ID lists the reviewed paths. This step is performed during development, not by the documentation author.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.
 Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 ```
 
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
+**Common mistake:** Pushing documentation-only history to CI leaves untracked Application/web files absent; committing generated files or secrets to fix that creates a second problem.
 
-**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+**Undo:** After verifying HEAD is the final documentation-only inventory commit, `git revert HEAD` reverses that evidence only. Keep the baseline source commit; `git switch -c recovery/w01-baseline BASELINE_ID` recovers its reviewed files on a new branch. Substitute the recorded baseline ID; never reset or delete the protected source checkpoint.
 
 **Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
 
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s01` for implementation or `docs(w01): w01-s01` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `docs(w01): w01-s01` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -94,7 +96,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s02` for implementation or `docs(w01): w01-s02` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s02` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -136,7 +138,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s03` for implementation or `docs(w01): w01-s03` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s03` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -178,7 +180,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s04` for implementation or `docs(w01): w01-s04` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s04` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -220,50 +222,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s05` for implementation or `docs(w01): w01-s05` for findings/evidence, with exact reviewed paths only.
-
-**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
-
-**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
-
-### W01-S06 — Align the identity JDBC scaffold (60–60 min)
-
-**Why:** A owns one observable result in the preserved weekly objective.
-
-**Read first (up to 10 min, included):** [One concept](../primers/SPRING-JDBC.md). Reuse prior learning; no new concept on Thursday/Friday.
-
-**Before you start:**
-
-- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
-
-**Do:**
-
-1. Inspect first: review current equivalents for `services/identity-org/pom.xml`, `services/identity-org/src/test/java/com/hrflow/identityorg/IdentityOrgApplicationTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first: use the spike findings to align this one service to the reviewed root baseline; replace JPA with JDBC and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step. Correct this service application.yaml to real YAML (or deliberately rename it to application.properties); do not leave properties syntax in a .yaml file. Run with explicit private DB/test configuration.
-1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
-
-```bash
-mvn -f services/identity-org/pom.xml test
-```
-
-**Expect:** Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner.
-
-```text
-Evidence: exact command, exit code, safe result line and report path.
-Missing target/prerequisite: BLOCKED; never a fabricated successful result.
-```
-
-**Common mistake:** Calling a command invocation proof without inspecting the recorded assertion/output.
-
-**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
-
-**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
-
-**Check:**
-
-- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s06` for implementation or `docs(w01): w01-s06` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w01-s06-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `docs(w01): w01-s05` after staging only exact reviewed paths and recording command/exit/report evidence.
+- [ ] Tagged `w01-s05-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

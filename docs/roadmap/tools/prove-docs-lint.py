@@ -34,6 +34,7 @@ def main():
     for label in ['Why','Do','Expect','Common mistake','Undo','Senior habit','Check','If it fails','Status']:
         cases.append(('missing '+label,'step',lambda r,l=label:replace(r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md','**'+l+':**','FIELD REMOVED')))
     cases.extend([
+        ('stone ends red','stone-tag',lambda r:replace(r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md',re.findall(r'^### W01-S\d{2} — (.*?) \(\d+', (r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md').read_text(),re.M)[-1],'State the failing behavior')),
         ('duration over 90','duration',lambda r:replace(r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md','(30–30 min)','(91–91 min)')),
         ('duplicate ID','step-ids',lambda r:replace(r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md','### W01-S02','### W01-S01')),
         ('nonsequential ID','step-ids',lambda r:replace(r/'roadmap/01-FOUNDATION/BUILD-GUIDE.md','### W01-S02','### W01-S99')),
@@ -41,8 +42,8 @@ def main():
         ('missing old map row','step-map',lambda r:(r/'roadmap/STEP-ID-MAP.md').write_text('\n'.join(x for x in (r/'roadmap/STEP-ID-MAP.md').read_text().splitlines() if not x.startswith('| W01-S01 |'))+'\n')),
         ('missing enterprise gate','enterprise-gate',lambda r:replace(r/'roadmap/01-FOUNDATION/VERIFY-AND-GATE.md','## Enterprise gate','## Removed section')),
         ('missing minimum gate','minimum-gate',lambda r:replace(r/'roadmap/01-FOUNDATION/VERIFY-AND-GATE.md','## Minimum Viable Gate','## Removed section')),
-        ('capacity overflow','capacity',lambda r:replace(r/'roadmap/01-FOUNDATION/README.md','**Planned hours:** A=13.75','**Planned hours:** A=99')),
-        ('capacity arithmetic mismatch','capacity-total',lambda r:replace(r/'roadmap/01-FOUNDATION/README.md','**Planned hours:** A=13.75','**Planned hours:** A=13')),
+        ('capacity overflow','capacity',lambda r:replace(r/'roadmap/01-FOUNDATION/README.md','**Planned hours:** A=14','**Planned hours:** A=99')),
+        ('capacity arithmetic mismatch','capacity-total',lambda r:replace(r/'roadmap/01-FOUNDATION/README.md','**Planned hours:** A=14','**Planned hours:** A=13')),
         ('missing Q introducing week','quality-week',lambda r:row_change(r/'roadmap/QUALITY-COVERAGE.md',2,'missing')),
         ('missing Q enforcing ID','quality-steps',lambda r:row_change(r/'roadmap/QUALITY-COVERAGE.md',3,'W99-S01')),
         ('missing literal Q gate','quality-gate',lambda r:replace(r/'roadmap/01-FOUNDATION/VERIFY-AND-GATE.md','- [ ] Q01:','- [ ] Removed:')),

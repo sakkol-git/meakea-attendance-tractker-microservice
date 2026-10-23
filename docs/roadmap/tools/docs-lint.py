@@ -160,6 +160,9 @@ def check_v2(root):
             for stone in re.split(r'^## Stone ',source,flags=re.M)[1:]:
                 stones+=1; last=re.findall(r'^### (W\d{2}-S\d{2})',stone,re.M)
                 tag=re.search(r'- \[ \] Tagged `(w\d{2}-s\d{2}-green)`',stone)
+                last_title=re.findall(r'^### W\d{2}-S\d{2} ([^\n]+)',stone,re.M)
+                if last_title and re.search(r'state the failing behavior|write the valid-login red test',last_title[-1],re.I):
+                    err(guide,1,'stone-tag','stone cannot end before the intended red assertion is made green')
                 if last and tag and tag[1]!=last[-1].lower()+'-green':
                     err(guide,1,'stone-tag','tag must match final step in stone')
         if not 5<=stones<=8:err(week,1,'stone-count','week must have five to eight stones')
@@ -182,7 +185,7 @@ def check_v2(root):
             value=float(declared[j+1]);expected=minutes[owner]/60+float(extras[j+1])
             if value>limits[j]+0.001:err(readme,1,'capacity',f'{owner} planned {value:g} exceeds {limits[j]:g}')
             if abs(value-expected)>0.011:err(readme,1,'capacity-total',f'{owner} README {value:g} differs from steps+extras {expected:g}')
-    for name in ['STEP-ID-MAP.md','DRAFT-ID-MAP.md']:
+    for name in ['STEP-ID-MAP.md','DRAFT-ID-MAP.md','FINALIZATION-ID-MAP.md']:
         path=root/name
         if not path.exists():err(path,1,'step-map','ID map required');continue
         old_ids=set();rows=0
@@ -196,7 +199,7 @@ def check_v2(root):
         if not rows:err(path,1,'step-map','no mapping rows')
         baseline=root.parent/'validation'/'ROADMAP-V1-BASELINE.json'
         opening=root.parent/'validation'/'ROADMAP-V2-PAIR-12-DRAFT.json'
-        if baseline.is_file():
+        if baseline.is_file() and name!='FINALIZATION-ID-MAP.md':
             try:
                 records=json.loads(baseline.read_text())
                 expected={x['id'] for x in records}

@@ -1,6 +1,6 @@
 # Approved architecture detail 02
 
-> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the canonical Architecture index for supersession, security gaps and deployment constraints.
+> **Decision:** This is part of the latest user-approved final system design. It is authoritative design intent, not evidence of implemented behavior. Read the [canonical Architecture index](../Architecture.md) for supersession, security limits and deployment constraints. Cloud chapters remain the approved future topology; the latest user decision defers their execution beyond this twelve-week local finish line.
 
 ## 9. Service catalogue
 

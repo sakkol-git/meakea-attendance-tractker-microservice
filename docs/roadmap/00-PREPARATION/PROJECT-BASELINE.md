@@ -30,7 +30,7 @@ There is no green application tag. Dashboard starts at W01-S01, status **Not run
 
 ## V2 supersession and capacity blocker
 
-The table above is historical evidence of why the original guide used a monolith. It is not the current decision or a feasibility claim. The user explicitly retained the latest service design and deferred AWS/Kubernetes execution. [Current review](../ARCHITECTURE-REVIEW-V2.md) recalculates seven-service/JDBC/Kafka/quality demand and records a capacity shortfall. Only the single dashboard input is authoritative for hours. Do not execute hrflow-app or React migration instructions from an unconverted week.
+The table above is historical evidence of why the original guide used a monolith. It is not the current decision or a feasibility claim. The user explicitly retained the latest service design and deferred AWS/Kubernetes execution. [Current review](../ARCHITECTURE-REVIEW-V2.md) retains the initial coarse shortfall and supplies the superseding itemized atomic ledger. Only the single dashboard input is authoritative for hours. All current weekly guides use the final design; historical C/React text is not execution guidance.
 
 ## Final V2 ledger
 

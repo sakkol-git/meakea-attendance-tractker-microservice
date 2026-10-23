@@ -51,3 +51,39 @@
 **Caddy:** Reverse proxy; public automatic TLS requires reachable validation or configured DNS.
 
 **Cloudflare Tunnel:** Outbound connector; remote access still depends on ISP/provider.
+
+**JDBC:** Java API for explicit parameterized SQL; HRFlow uses Spring JdbcClient as its helper.
+
+**Kafka:** Durable partitioned event log; an offset is a consumer's recorded position, not proof a database effect committed.
+
+**Avro and Registry:** Versioned event schema and its compatibility catalog; payload fields must match the reviewed wire schema.
+
+**Nuxt:** The existing Vue/TypeScript web framework; Flutter is the mobile UI framework.
+
+**RLS:** PostgreSQL row-level policies that deny foreign-tenant data even when application SQL is faulty; runtime roles cannot bypass them.
+
+**CSRF:** A hostile site tries to make a browser send its cookies; exact Origin and CSRF-token checks protect cookie-authenticated mutations.
+
+**Idempotency:** Retrying the same scoped command key/body returns the same result instead of performing the effect twice.
+
+**MDC:** Request-scoped logging context used for safe correlation/technical tenant fields; clear it when a request or job ends.
+
+**Optimistic version:** A saved revision checked by If-Match; stale changes fail with 412 rather than overwriting a newer decision.
+
+**JDBC:** Java API for explicit parameterized SQL; HRFlow uses Spring JdbcClient as its helper.
+
+**Kafka:** Durable partitioned event log; an offset is a consumer's recorded position, not proof a database effect committed.
+
+**Avro and Registry:** Versioned event schema and its compatibility catalog; payload fields must match the reviewed wire schema.
+
+**Nuxt:** The existing Vue/TypeScript web framework; Flutter is the mobile UI framework.
+
+**RLS:** PostgreSQL row-level policies that deny foreign-tenant data even when application SQL is faulty; runtime roles cannot bypass them.
+
+**CSRF:** A hostile site tries to make a browser send its cookies; exact Origin and CSRF-token checks protect cookie-authenticated mutations.
+
+**Idempotency:** Retrying the same scoped command key/body returns the same result instead of performing the effect twice.
+
+**MDC:** Request-scoped logging context used for safe correlation/technical tenant fields; clear it when a request or job ends.
+
+**Optimistic version:** A saved revision checked by If-Match; stale changes fail with 412 rather than overwriting a newer decision.

@@ -71,7 +71,7 @@ This translates the 215-step partial checkpoint at 847dd7e to the final V2 guide
 | W02-S30 | W02-S33 | Inspect completed evidence, then resume earliest unmet result |
 | W02-S31 | W02-S34 | Inspect completed evidence, then resume earliest unmet result |
 | W02-S32 | W02-S35 | Inspect completed evidence, then resume earliest unmet result |
-| W03-S01 | W03-S07, W03-S08, W03-S09 | Original legacy step decomposed; preserve existing evidence |
+| W03-S01 | W03-S06, W03-S07, W03-S08 | Original legacy step decomposed; preserve existing evidence |
 | W03-S02 | W03-S10, W03-S11, W03-S12 | Original legacy step decomposed; preserve existing evidence |
 | W03-S03 | W03-S13, W03-S14, W03-S15 | Original legacy step decomposed; preserve existing evidence |
 | W03-S04 | W03-S16, W03-S17, W03-S18 | Original legacy step decomposed; preserve existing evidence |

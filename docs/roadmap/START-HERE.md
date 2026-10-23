@@ -3,9 +3,9 @@
 ## Your first fifteen minutes
 
 1. Open [You are here](YOU-ARE-HERE.md). Current position is W01-S01, not started; A and B have 24 hours each weekly, at most 70 percent planned. No application feature is checked off.
-1. Read the first three paragraphs of [final decisions](DECISION-REGISTER.md): retain seven services, JDBC, Kafka/Avro, Nuxt and Flutter. AWS/Kubernetes deployment is future improvement. Proposed names in a step are targets to inspect/create, never discovered code.
-1. Open [Week 1 overview](01-FOUNDATION/README.md), then [Week 1 Step 1](01-FOUNDATION/BUILD-GUIDE.md). W01-S01 inventories the dirty Git workspace; it does not delete files, reset history or deploy anything.
-1. Read the linked Git primer only if unfamiliar. Git means versioned checkpoints; a commit saves one reviewed change, a branch keeps a line of work, a tag names a checked checkpoint. The guide uses ordinary Markdown links, so IntelliJ/Obsidian/Notion can follow the same path.
+1. Read the first three paragraphs of [final decisions](DECISION-REGISTER.md): retain seven services: gateway is the verified front door; JDBC is Java SQL access, Kafka is the event log, Avro defines event schemas, Nuxt/Vue is web and Flutter is mobile. A tenant is one company. AWS/Kubernetes deployment is future improvement. Proposed names in a step are targets to inspect/create, never discovered code.
+1. Open [Week 1 overview](01-FOUNDATION/README.md), then [Week 1 Step 1](01-FOUNDATION/BUILD-GUIDE.md). W01-S01 inventories the dirty Git workspace and saves a reviewed implementation-source baseline on its own branch; it does not delete files, reset history or deploy anything.
+1. Read the linked Git primer only if unfamiliar. Git means versioned checkpoints; staged means queued for the next commit, untracked means Git has not yet recorded that file; a commit saves one reviewed change, a branch keeps a line of work, a tag names a checked checkpoint. The guide uses ordinary Markdown links, so IntelliJ/Obsidian/Notion can follow the same path.
 1. Run the safe status command printed in that step. Record the next action and blocker before changing code. Stop at the cap; no green tag exists yet.
 
 ## Calendar and rhythm

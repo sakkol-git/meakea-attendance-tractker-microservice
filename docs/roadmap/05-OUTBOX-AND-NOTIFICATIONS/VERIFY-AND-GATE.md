@@ -6,7 +6,7 @@
 
 All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W05-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Step range: W05-S01 to W05-S36. Required new stone tags: `w05-s05-green`, `w05-s10-green`, `w05-s15-green`, `w05-s20-green`, `w05-s25-green`, `w05-s30-green`, `w05-s33-green`, `w05-s36-green`. Existing historical tags are not moved.
+Step range: W05-S01 to W05-S36. Required new stone tags: `w05-s03-green`, `w05-s06-green`, `w05-s12-green`, `w05-s18-green`, `w05-s24-green`, `w05-s30-green`, `w05-s33-green`, `w05-s36-green`. Existing historical tags are not moved.
 
 ## Feature and failure assertions
 

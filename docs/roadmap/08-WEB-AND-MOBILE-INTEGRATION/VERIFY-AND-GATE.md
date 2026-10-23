@@ -6,7 +6,7 @@
 
 All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W08-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Step range: W08-S01 to W08-S33. Required new stone tags: `w08-s05-green`, `w08-s10-green`, `w08-s15-green`, `w08-s19-green`, `w08-s23-green`, `w08-s27-green`, `w08-s30-green`, `w08-s33-green`. Existing historical tags are not moved.
+Step range: W08-S01 to W08-S33. Required new stone tags: `w08-s06-green`, `w08-s09-green`, `w08-s12-green`, `w08-s15-green`, `w08-s21-green`, `w08-s27-green`, `w08-s30-green`, `w08-s33-green`. Existing historical tags are not moved.
 
 ## Feature and failure assertions
 

@@ -6,7 +6,7 @@
 
 **You will have:** Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty.
 
-### W03-S07 — Add employee master migrations — state the failing behavior (30–30 min)
+### W03-S06 — Add employee master migrations — state the failing behavior (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/AddEmployeeMasterMigrationsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create department, position, employee tables and same-tenant composite FKs in new migration; enforce no self manager and test cyclic hierarchy validation. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create department, position, employee tables and same-tenant composite FKs in new migration; enforce no self manager and test cyclic hierarchy validation. Create this week runner at scripts/acceptance/w03.sh with real Maven/client cases and exact nonzero exit propagation. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -33,7 +33,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** Editing an applied Flyway file breaks reproducible upgrade history; add the next unused version.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -42,13 +42,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s07` for implementation or `docs(w03): w03-s07` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w03): w03-s06` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S08 — Add employee master migrations — make the narrow behavior pass (45–45 min)
+### W03-S07 — Add employee master migrations — make the narrow behavior pass (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -75,7 +75,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** Editing an applied Flyway file breaks reproducible upgrade history; add the next unused version.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -84,13 +84,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s08` for implementation or `docs(w03): w03-s08` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s07` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S09 — Add employee master migrations — prove the denied or failure path (30–30 min)
+### W03-S08 — Add employee master migrations — prove the denied or failure path (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -117,7 +117,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+**Common mistake:** Editing an applied Flyway file breaks reproducible upgrade history; add the next unused version.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -126,7 +126,49 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s09` for implementation or `docs(w03): w03-s09` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w03): w03-s08` after staging only exact reviewed paths and recording command/exit/report evidence.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+
+### W03-S09 — Create the department golden write (60–60 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/SPRING-JDBC.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/application/GoldenDepartmentService.java`, `services/identity-org/src/main/java/com/hrflow/identityorg/infrastructure/GoldenDepartmentRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice; required quality delta: Repeat the golden slice: add the typed department create using confirmed department migration, tenant-scoped JDBC, method HR check, idempotency result/audit/intent transaction and problem adapter. Keep this name-only endpoint smaller than employee lifecycle.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -pl services/identity-org -am test
+```
+
+**Expect:** 201/Location and duplicate-key behavior match the sole contract; blank input and foreign tenant fail.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Editing an applied Flyway file breaks reproducible upgrade history; add the next unused version.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Keep a reproducible evidence trail and a safe rollback boundary.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w03): w03-s09` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -159,7 +201,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+**Common mistake:** Automatically retrying a stale decision after 412 can overwrite a different current state.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -168,7 +210,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s10` for implementation or `docs(w03): w03-s10` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `test(w03): w03-s10` after staging only exact reviewed paths and recording command/exit/report evidence.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
@@ -201,7 +243,7 @@ Red: expected behavior assertion fails; build/setup errors are diagnosed separat
 Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 ```
 
-**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+**Common mistake:** Automatically retrying a stale decision after 412 can overwrite a different current state.
 
 **Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
 
@@ -210,50 +252,8 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s11` for implementation or `docs(w03): w03-s11` for findings/evidence, with exact reviewed paths only.
-
-**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
-
-**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
-
-### W03-S12 — Add owner-scoped employee APIs — prove the denied or failure path (30–30 min)
-
-**Why:** B owns one observable result in the preserved weekly objective.
-
-**Read first (up to 10 min, included):** [One concept](../primers/REPOSITORY.md). Reuse prior learning; no new concept on Thursday/Friday.
-
-**Before you start:**
-
-- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
-
-**Do:**
-
-1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/AddOwnerscopedEmployeeApisTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with the failure delta: Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
-1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
-
-```bash
-mvn -pl services/identity-org -am test
-```
-
-**Expect:** Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty.
-
-```text
-Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
-Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
-```
-
-**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
-
-**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
-
-**Senior habit:** Test denial and rollback as carefully as the happy path.
-
-**Check:**
-
-- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s12` for implementation or `docs(w03): w03-s12` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w03-s12-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w03): w03-s11` after staging only exact reviewed paths and recording command/exit/report evidence.
+- [ ] Tagged `w03-s11-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

@@ -42,7 +42,7 @@ Nothing is prechecked. Keep existing requirement IDs; evidence belongs to actual
 
 Find the ID in its week BUILD guide; completion needs actual committed report evidence.
 
-- [ ] W01-S01: owner A; 30 min; [Week 01](01-FOUNDATION/README.md).
+- [ ] W01-S01: owner A; 45 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S02: owner A; 30 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S03: owner A; 30 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S04: owner A; 30 min; [Week 01](01-FOUNDATION/README.md).
@@ -118,12 +118,12 @@ Find the ID in its week BUILD guide; completion needs actual committed report ev
 - [ ] W03-S01: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S02: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S03: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
-- [ ] W03-S04: owner A; 60 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
+- [ ] W03-S04: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S05: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
-- [ ] W03-S06: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
-- [ ] W03-S07: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
-- [ ] W03-S08: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
-- [ ] W03-S09: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
+- [ ] W03-S06: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
+- [ ] W03-S07: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
+- [ ] W03-S08: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
+- [ ] W03-S09: owner A; 60 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S10: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S11: owner A; 45 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).
 - [ ] W03-S12: owner B; 30 min; [Week 03](03-ORGANIZATION-AND-ADMIN/README.md).

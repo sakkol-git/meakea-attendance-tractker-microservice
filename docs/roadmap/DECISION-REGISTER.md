@@ -39,3 +39,7 @@ Move visual polish, extra reports, optional push/SSE and unadmitted pattern refa
 Tenant comes from a verified JWT at the gateway, not body/path/caller headers. Final header trust requires tested sanitization and private ingress; it does not excuse method/resource authorization or scoped SQL/RLS. [ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) quality clauses carry forward except its superseded local-dispatch topology.
 
 Raw attendance evidence is append-only; approved manual interpretation takes precedence over inference. Leave NEEDS_REVIEW retains debit until explicit HR resolution. HR policy/retention approval remains unknown. One computer is not high availability; restore evidence does not claim compliance certification.
+
+## Web and packaging execution choices
+
+Nuxt is a static client with ssr:false for the MVP: run generate and serve .output/public through the private Caddy edge. Java identity owns cookie/CSRF token transport; no new BFF runtime is added. One pinned generic Java Service.Dockerfile/build-images script packages the existing owner modules from verified Maven jar paths. Week 2 deploys the private foundation profile, Week 3 adds reviewed owner contexts/images, and later endpoints/features pass their own gates. Cloud deployment and richer SSR remain future decisions, not silently added services.

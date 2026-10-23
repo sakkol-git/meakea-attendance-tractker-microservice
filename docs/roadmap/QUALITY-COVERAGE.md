@@ -8,7 +8,7 @@ Every row has an introducing week, existing enforcing step IDs and a literal unc
 | --- | --- | --- | --- | --- |
 | Q01 | 01 | W01-S10, W01-S14 | [Q01 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
 | Q02 | 01 | W01-S16, W01-S17 | [Q02 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
-| Q03 | 03 | W03-S08, W03-S09, W03-S11, W03-S12 | [Q03 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q03 | 03 | W03-S07, W03-S08, W03-S11, W03-S12 | [Q03 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
 | Q04 | 03 | W03-S25, W03-S26, W03-S27, W03-S34 | [Q04 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
 | Q05 | 02 | W02-S10, W02-S11, W02-S12, W02-S13, W02-S14, W02-S20 | [Q05 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | **NOT RUN** |
 | Q06 | 02 | W02-S05, W02-S26 | [Q06 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | **NOT RUN** |

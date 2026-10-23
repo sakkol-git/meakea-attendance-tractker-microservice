@@ -21,8 +21,8 @@ Capacity planning accounts for real-world constraints, learning curves, and unex
 | Planned allocation (70%) | 16.8 hours | 16.8 hours | 33.6 hours |
 | Light weeks allocation (Weeks 4 and 8) | 14.28 hours | 14.28 hours | 28.56 hours |
 | Total planned twelve-week capacity | 196.56 hours | 196.56 hours | 393.12 hours |
-| Final V2 atomic plan incl review | 138.5 hours | 162.5 hours | 301.0 hours |
-| Remaining under 70-percent ceiling | 58.06 hours | 34.06 hours | 92.12 hours |
+| Final V2 atomic plan incl review | 138.75 hours | 162.5 hours | 301.25 hours |
+| Remaining under 70-percent ceiling | 57.81 hours | 34.06 hours | 91.87 hours |
 
 ## Twelve-week milestone roadmap
 

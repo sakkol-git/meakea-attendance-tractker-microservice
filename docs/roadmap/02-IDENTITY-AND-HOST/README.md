@@ -33,12 +33,12 @@ A stone may span working days; stop at the day cap and save its next exact step.
 
 | Stone | Visible result group | Steps | A/B step h |
 | --- | --- | --- | --- |
-| 1 | Prerequisites and compatibility | W02-S01 to W02-S06 | 3/0.5 |
-| 2 | First private service baseline | W02-S07 to W02-S11 | 2.75/0.5 |
-| 3 | Contract and client fixtures | W02-S12 to W02-S16 | 2/1 |
-| 4 | Error and integrity boundaries | W02-S17 to W02-S21 | 1.5/1.75 |
-| 5 | Repeatable tools and event proof | W02-S22 to W02-S26 | 1/2.75 |
-| 6 | CI and private operational prerequisites | W02-S27 to W02-S31 | 1.5/1.5 |
+| 1 | Prerequisites and compatibility | W02-S01 to W02-S05 | 2.5/0.5 |
+| 2 | First private service baseline | W02-S06 to W02-S10 | 2.25/0.5 |
+| 3 | Contract and client fixtures | W02-S11 to W02-S15 | 3/0.5 |
+| 4 | Error and integrity boundaries | W02-S16 to W02-S20 | 1.5/1.5 |
+| 5 | Repeatable tools and event proof | W02-S21 to W02-S25 | 0.5/3 |
+| 6 | CI and private operational prerequisites | W02-S26 to W02-S31 | 2/2 |
 | 7 | Thursday recovery buffer | W02-S32 to W02-S33 | 0.5/1 |
 | 8 | Friday deploy restore and gate | W02-S34 to W02-S35 | 1/1 |
 
@@ -56,6 +56,10 @@ A stone may span working days; stop at the day cap and save its next exact step.
 - [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
 At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.
+
+## Private HTTPS setup
+
+Read [host and TLS setup](ACCESS-SETUP.md) before the private browser smoke. Week 1 HTTP is diagnostic only; Week 2 uses trusted Caddy internal TLS without weakening Secure cookies. Public domain/Tunnel access remains separately gated.
 
 ## Continue and shutdown
 

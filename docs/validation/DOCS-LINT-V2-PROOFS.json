@@ -1,6 +1,6 @@
 {
   "real_docs_exit": 0,
-  "real_docs_result": "PASS: 273 Markdown files; zero errors; 0 warnings",
+  "real_docs_result": "PASS: 276 Markdown files; zero errors; 0 warnings",
   "fixtures": [
     {
       "fixture": "missing Why",
@@ -61,6 +61,13 @@
     {
       "fixture": "missing Status",
       "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "stone ends red",
+      "rule": "stone-tag",
       "expected_exit": "nonzero",
       "actual_exit": 1,
       "pass": true

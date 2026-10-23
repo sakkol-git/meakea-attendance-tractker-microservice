@@ -84,3 +84,5 @@ Design pattern lessons for maintainable domain and test code:
 
 - [Spring JDBC](SPRING-JDBC.md).
 - [Reactive gateway](REACTIVE-GATEWAY.md).
+
+- [Browser cookies and CSRF](BROWSER-CSRF.md).

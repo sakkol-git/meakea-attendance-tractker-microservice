@@ -33,7 +33,7 @@ trap cleanup EXIT
 umask 077
 compose=(docker compose -f infra/selfhost/compose.yaml)
 "${compose[@]}" exec -T postgres pg_dump -U backup_operator -d hrflow -Fc > "$temp"
-pg_restore --list "$temp" >/dev/null
+"${compose[@]}" exec -T postgres pg_restore --list < "$temp" >/dev/null
 mv "$temp" "$file"
 shasum -a 256 "$file" > "${file}.sha256"
 find "$BACKUP_ROOT/hrflow" -name 'hrflow-*.dump' -type f -mtime +13 -delete
@@ -63,7 +63,7 @@ Create a separate scratch Compose project/manifest with no production bind mount
 
 ```bash
 shasum -a 256 -c BACKUP_CHECKSUM_FILE
-pg_restore --list BACKUP_DUMP_FILE
+docker compose -f infra/selfhost/compose.yaml exec -T postgres pg_restore --list < BACKUP_DUMP_FILE
 ```
 
 `BACKUP_CHECKSUM_FILE` and `BACKUP_DUMP_FILE` are replacement tokens, not literal filenames. Connect only to the scratch target and restore using its private role. Record employee/session/leave/request row counts, ledger totals, file checksums and auth smoke. Suppress real outbound delivery and invalidate old provider/refresh tokens in restore validation. Remove only the explicitly named scratch project after evidence; never use an unreviewed volume deletion command.
@@ -91,3 +91,11 @@ Use a different clean host or fresh isolated VM without production volumes, with
 Private Kuma checks authenticated-safe readiness and last backup/restore status. Never expose it or give it database credentials unnecessarily. If the entire host loses power Kuma on that host cannot notify; the operator's external availability check and agreed contact process must cover host-wide outage. No new hosted monitoring subscription is required; the limitation remains explicit.
 
 Record alert owner, phone/contact channel outside public docs, and safe rollback/restore evidence. One computer, one database volume and one ISP are not high availability.
+
+## Offline release artifacts
+
+An image digest or Git commit ID is a reference, not the image/source itself. Before a clean-host drill, the encrypted external backup must contain the verified release image archive and Git source bundle (or a tested independently available registry/repository), plus config/model-version inventory. The local-only finish line uses the external offline archive; no cloud repository availability is assumed.
+
+Save immutable release images and the reviewed Git bundle once per release, checksum them, and reference that artifact set from nightly data manifests instead of duplicating it every night. In scratch/clean recovery verify the bundle, load the images, compare their IDs to the release manifest, then restore DB/private files/roles/schema/replay metadata with live delivery disabled. Test access to the recovery keys separately; do not place secret values in Git or reports.
+
+Use the actual allowlisted image references and protected release directory chosen by the script interface; no arbitrary user-supplied shell/image arguments. git bundle verify and docker image load must succeed on the isolated target before the clean-host application smoke. Data-only restore does not claim a complete lost-host recovery.

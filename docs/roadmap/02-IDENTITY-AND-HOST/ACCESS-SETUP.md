@@ -47,3 +47,28 @@ Use the official [Tunnel setup](https://developers.cloudflare.com/tunnel/get-sta
 ## Friday repeat
 
 Run the deployment manifest/smoke script on the real host with the exact checked image. Preserve previous digest/config and test a known authenticated request from Nuxt and Flutter. Backup/restore still run when remote access is blocked; label private versus public result separately. Complete final operational drills with the Week 10 host runbook.
+
+## Private browser TLS before public DNS
+
+Week 1 HTTP is disposable diagnostic mode only. Week 2 browser refresh cookies remain Secure; do not remove that flag to make a private HTTP demonstration work. The local-only finish line uses Caddy internal TLS on a private test hostname mapped to the intended host on each test device. Install only the Caddy public root certificate into the controlled test-device trust store through its documented operator procedure; never ignore a certificate warning or publish the root private key.
+
+```text
+https://hrflow.test {
+    tls internal
+    handle /actuator* {
+        respond 404
+    }
+    handle /api/* {
+        reverse_proxy api-gateway:8080
+    }
+    handle {
+        root * /srv/web
+        try_files {path} /index.html
+        file_server
+    }
+}
+```
+
+hrflow.test is the reserved example private name; confirm its actual device mapping and certificate hostname before running. Verify trusted HTTPS, Origin/CSRF checks and Secure-cookie rotation from both clients on the private host. The private CA/config belongs in protected recovery material; only the public CA certificate goes to test devices. [Caddy internal HTTPS](https://caddyserver.com/docs/automatic-https#local-https) documents this existing free capability.
+
+When an owned public domain and the full exposure gate are available, the selected Tunnel path supplies public HTTPS and the private origin remains restricted. Until then public exposure is **NOT RUN**; private HTTPS is not falsely reported as publicly reachable. This procedure requires no purchased domain or new runtime component for local acceptance.

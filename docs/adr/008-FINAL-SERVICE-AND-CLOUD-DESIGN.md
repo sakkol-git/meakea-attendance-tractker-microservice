@@ -34,3 +34,7 @@ RLS is adopted for personal-data tables as planned defense, with transaction-loc
 ## Consequences
 
 The old capacity assessment does not transfer. [Architecture review](../roadmap/ARCHITECTURE-REVIEW-V2.md) gives the recalculated planning estimates and blocking conflicts. [Architecture](../Architecture.md) owns the final design. This record does not assert high availability, compliance certification, a cloud spend ceiling, or guaranteed delivery.
+
+## Relay ordering refinement from the approved design
+
+Retain one active outbox relay per owner service, chosen with PostgreSQL advisory lock on a dedicated relay connection; standby instances do not publish. Bounded SKIP LOCKED batches do not by themselves preserve per-key ordering across multiple publishers. Connection/lock loss stops publication until leadership is re-established. Inbox/revision checks still handle duplicate or stale delivery; this does not create host/broker failover.

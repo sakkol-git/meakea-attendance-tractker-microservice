@@ -59,7 +59,7 @@ Step durations include first reading/tests/commit; these totals also include exp
 
 | Week | A planned h | B planned h | Limit each h | Steps | Gate |
 | --- | --- | --- | --- | --- | --- |
-| 01 | 13.75 | 14.25 | 16.8 | 38 | **NOT RUN** |
+| 01 | 14 | 14.25 | 16.8 | 38 | **NOT RUN** |
 | 02 | 14.25 | 11 | 16.8 | 35 | **NOT RUN** |
 | 03 | 14.25 | 14.25 | 16.8 | 41 | **NOT RUN** |
 | 04 | 9.5 | 12.25 | 14.28 | 36 | **NOT RUN** |
@@ -72,4 +72,4 @@ Step durations include first reading/tests/commit; these totals also include exp
 | 11 | 9.25 | 14 | 16.8 | 34 | **NOT RUN** |
 | 12 | 9.25 | 14 | 16.8 | 34 | **NOT RUN** |
 
-Total planned A=138.5, B=162.5, combined 301 contributor-hours against 393.12 planned-capacity hours. Unallocated capacity is recovery headroom, not a hidden scope increase; the separate 30 percent reserve is still unallocated. Weeks 4/8 are lighter and each has the reduced 14.28-hour cap. These are conditional estimates, not measured velocity or a guaranteed delivery date. Review actual times every Friday.
+Total planned A=138.75, B=162.5.5, combined 301.25 contributor-hours against 393.12 planned-capacity hours. Unallocated capacity is recovery headroom, not a hidden scope increase; the separate 30 percent reserve is still unallocated. Weeks 4/8 are lighter and each has the reduced 14.28-hour cap. These are conditional estimates, not measured velocity or a guaranteed delivery date. Review actual times every Friday.
