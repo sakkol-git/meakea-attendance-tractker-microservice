@@ -15,14 +15,14 @@
 
 - Symptom: Migration/constraint/idempotency test returns an unexpected failure.
 - Likely cause: Applied migration edited, missing tenant/key predicate or stale fixture.
-- Diagnose: `mvn -f services/hrflow-app/pom.xml test`; inspect target first, because scripts are proposed until their build step.
+- Diagnose: `mvn -f services/request/pom.xml test`; inspect target first, because scripts are proposed until their build step.
 - Healthy result: Zero failures with real PostgreSQL fixtures.
 - Fix: Reproduce smallest row pair; add a new migration or correct scoped query; preserve applied history.
 - Verify: Run integrity and duplicate/concurrency scenarios.
 
 ## Client and contract disagree
 
-- Symptom: Flutter/React parses wrong field or sees unexpected HTTP code.
+- Symptom: Flutter/Nuxt parses wrong field or sees unexpected HTTP code.
 - Likely cause: Stale mock/example, wrong base URL or changed token state.
 - Diagnose: `flutter test`; inspect target first, because scripts are proposed until their build step.
 - Healthy result: Mock and live schema agree and token failure is explicit.
@@ -50,3 +50,15 @@
 ## Stop rule
 
 [Stuck protocol](../STUCK-PROTOCOL.md) applies after 45 minutes. Never run destructive cleanup, disable tenant checks, or skip restore to manufacture a green gate.
+
+## Final-service V2 diagnostics
+
+| New failure | Inspect first | Safe response |
+| --- | --- | --- |
+| A red test will not compile | Resolved fixture/API versions and proposed class names | Repair setup separately; only semantic assertion failure is intended red |
+| A query leaks or RLS test passes as owner | Runtime role, transaction-local tenant and predicate | Use non-owner role and same transaction; pool/rollback/insert negatives are mandatory |
+| Kafka duplicate/stale fact appears | Owner intent, inbox uniqueness, revision and offset ordering | Commit effect/receipt before offset and suppress stale full snapshot; retain failed event |
+| A script exists but behavior is unproved | Actual script case and exit propagation | Execute its isolated assertion, never treat bash syntax/config validation as deployment/restore |
+| Client refresh loops or cookie is rejected | Origin/CSRF flags, credentials mode and single-flight guard | Fail closed once; keep refresh off web storage and do not retry hostile CSRF |
+| Archive restores but files/projection differ | Backup cut, file checksums, schemas and replay range | Repeat isolated restore and snapshot bootstrap; never overwrite source DB |
+| Learning/time cap exceeded | Actual next smallest step and known/unfamiliar primer count | Stop at cap, use recovery reserve, cut Stretch first and record schedule impact |

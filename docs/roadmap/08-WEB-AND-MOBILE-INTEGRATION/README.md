@@ -1,69 +1,65 @@
 # Week 08 — Integration and accessibility
 
-> **Navigation:** [Previous: Week 07](../07-REQUESTS-AND-APPROVALS/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 09](../09-REPORTING-AUDIT-OBSERVABILITY/README.md)
+> **Navigation:** [Build](BUILD-GUIDE.md) · [Dashboard](../YOU-ARE-HERE.md) · [Roadmap](../ROADMAP.md)
 
-## At a glance
+## Capacity and calendar
 
-| Field | Value |
-| --- | --- |
-| Week | 08 |
-| Owners | A backend/web/infra; B Flutter and client acceptance |
-| Planned maximum | A 14.28 h, B 14.28 h; 70 percent of 24, light-week reduction where applicable |
-| Depends on | Week 07 critical gate or its explicit carried failure |
-| Gate | **NOT RUN** |
+Dates: 2026-12-14 through 2026-12-18; weekend rest follows.
 
-## Objective and starting point
+**Planned hours:** A=7.75; B=12.25.
 
-Build integration and accessibility as a visible mini-win. The audit found scaffolds, not this feature. Prerequisites are earlier green stones; none are pre-checked. Every named new path/class/script is a proposed implementation target: inspect for existing work first, then create only what is missing.
+The single input is in YOU-ARE-HERE.md; this week's limit is 14.28 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 2 h; B receives review during its already counted fixture/operations steps. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
 
-## Stepping stones
+## Preserved objective and starting point
 
-| Stone | Visible win | Steps | Upper step time |
+Week 08 — Integration and accessibility remains the weekly objective, now under the accepted service/JDBC/Kafka/Nuxt design. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
+
+## Day plan
+
+| Day | Work | Per-person cap | Learning rule |
 | --- | --- | --- | --- |
-| 1 | One wire contract for both clients | W08-S01 to S03 | 135 min, shared steps counted per owner |
-| 2 | Offline and authentication edges | W08-S04 to S06 | 135 min, shared steps counted per owner |
-| 3 | Usability without new scope | W08-S07 to S09 | 135 min, shared steps counted per owner |
-| 4 | Buffer evidence and failure recovery | W08-S10 to S12 | 135 min, shared steps counted per owner |
-| 5 | Friday gate deploy and recovery | W08-S13 to S15 | 135 min, shared steps counted per owner |
+| Monday | Earliest prerequisite, then feature stones 1–2 | 3.4 h | At most two unfamiliar concepts |
+| Tuesday | Continue feature stones 2–4 in order | 3.4 h | At most two unfamiliar concepts |
+| Wednesday | Finish earliest feature/quality stones through 6 | 3.4 h | At most two unfamiliar concepts |
+| Thursday | Stone 7 buffer, review/mentoring and existing failures | 2.125 h | No new concept or scope |
+| Friday | Stone 8 checked redeploy, smoke, restore and gate | 1.955 h | No new concept or scope |
+| Weekend | Rest | 0 h | No catch-up allocation |
+
+A stone may span working days; stop at the day cap and save its next exact step. A's scheduled review may also happen beside a B fixture Monday–Wednesday, with the same time removed from Thursday allowance; do not count it twice. If prerequisites/learning overrun, use buffer for repair and report the schedule impact, never cramming new concepts into Thursday/Friday.
+
+## Stone table
+
+| Stone | Visible result group | Steps | A/B step h |
+| --- | --- | --- | --- |
+| 1 | First feature red and green | W08-S01 to W08-S05 | 2/0.5 |
+| 2 | Feature scope and negative paths | W08-S06 to W08-S10 | 0/2.5 |
+| 3 | Client and integration deltas | W08-S11 to W08-S15 | 1/1.5 |
+| 4 | Remaining domain invariants | W08-S16 to W08-S19 | 0/2 |
+| 5 | Quality and failure recovery | W08-S20 to W08-S23 | 0.5/1.5 |
+| 6 | Final feature integration | W08-S24 to W08-S27 | 0/2 |
+| 7 | Thursday recovery buffer | W08-S28 to W08-S30 | 1/1 |
+| 8 | Friday deploy restore and gate | W08-S31 to W08-S33 | 1.25/1.25 |
 
 ## Minimum Viable Gate
 
-- [ ] Live phone and React show same resources and recover after API errors.
-- [ ] Same persisted resource appears once; stale dashboards are labeled.
-- [ ] Both clients observe same committed versions; no contract forks.
-- [ ] Friday redeploy, authenticated smoke and scratch restore evidence exist.
-- [ ] Security/correctness/event/restore failures are fixed or this critical gate stays **FAIL**.
+- [ ] All required feature, tenant, role, validation, race/replay and recovery outcomes in VERIFY-AND-GATE have actual report evidence.
+- [ ] Every stone has reviewed tests/startup and its unused new green tag; red work is not deployed.
+- [ ] Friday intended-host redeploy, authenticated/denied smoke and external-backup scratch restore pass. Week 1 is explicitly disposable/local only.
+- [ ] No critical failure is downgraded for schedule pressure; record exact next repair before the next week.
 
 ## Stretch and exact cuts
 
-- [ ] Improve wording/visual styling only if all critical tests are green.
-- [ ] Add no more than the current lesson refactor after admission passes.
+- [ ] Visual polish, additional filters/reports and provider push/SSE only after the required gate.
+- [ ] Builder/Adapter/Specification refactors only if the preserved pattern admission test passes; they are not prerequisites.
+- [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
-At 90 minutes stuck, simplify Stone 1 to one synthetic tenant and one happy-path fixture for diagnosis only; retain two-tenant security acceptance before the gate. Stone 2 drops optional filters/channels/extra forms, never locking or authorization. Stone 3 drops optional UI polish or pattern refactor and keeps the plain tested implementation. Stone 4 cuts all new scope. Stone 5 never skips backup/restore or substitutes a development machine for the agreed host.
+At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.
 
-## Friday demo and risks
+## Continue and shutdown
 
-I can demonstrate one wire contract for both clients, offline and authentication edges, and usability without new scope. If prerequisites remain blocked, I show the failing check and recovery evidence instead of calling it done.
+- [Build](BUILD-GUIDE.md), [part two](BUILD-GUIDE-PART-2.md), [part three](BUILD-GUIDE-PART-3.md), [part four](BUILD-GUIDE-PART-4.md).
+- [Part five](BUILD-GUIDE-PART-5.md), [part six](BUILD-GUIDE-PART-6.md), [part seven](BUILD-GUIDE-PART-7.md), [part eight](BUILD-GUIDE-PART-8.md).
+- [Verify and gate](VERIFY-AND-GATE.md), [troubleshooting](TROUBLESHOOTING.md), [ID map](../STEP-ID-MAP.md).
+- [Standards](../ENGINEERING-STANDARDS.md), [golden slice](../GOLDEN-SLICE.md), [self-review](../CODE-REVIEW-CHECKLIST.md).
 
-Main risks are missing prerequisites, unmeasured junior learning speed and host readiness. Do not start next week until this critical gate passes; when deadline pressure requires moving a noncritical item, record a conditional pass with owner/date and cut stretch first. No weekend work.
-
-## Learn just in time
-
-- [Openapi](../primers/OPENAPI.md).
-- [Offline Queue](../primers/OFFLINE-QUEUE.md).
-
-Introduce at most two new concepts on any build day. Primers are 10 to 20 minutes; Thursday revises familiar concepts only. Required code/tests are not replaced by reading.
-
-## Out of scope
-
-Kafka runtime, ML, Kubernetes, cloud databases, tracking, new frameworks and unapproved patterns are excluded. A simpler tested switch beats an unadmitted abstraction.
-
-## Files
-
-- [Build guide](BUILD-GUIDE.md).
-- [Build guide part two](BUILD-GUIDE-PART-2.md).
-- [Verify and gate](VERIFY-AND-GATE.md).
-- [Troubleshooting](TROUBLESHOOTING.md).
-- [Stuck protocol](../STUCK-PROTOCOL.md).
-- [Definition of done](../DEFINITION-OF-DONE.md).
-- [Dashboard](../YOU-ARE-HERE.md).
+Five-minute close: reviewed commit, actual evidence, next exact ID/command, blocker/energy and stop. Failed critical work is tomorrow's first action. No weekend rescue work and no guarantee of delivery from estimates alone.

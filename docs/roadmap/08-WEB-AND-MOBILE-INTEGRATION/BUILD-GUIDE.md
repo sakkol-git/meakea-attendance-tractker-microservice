@@ -1,332 +1,232 @@
 # Week 08 build guide
 
-> **Navigation:** [Previous: Week 07](../07-REQUESTS-AND-APPROVALS/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 09](../09-REPORTING-AUDIT-OBSERVABILITY/README.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Working rules
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 3.4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 3.4 h |
-| Wednesday | Stone 3, three small steps | At most two | 3.4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.125 h |
-| Friday | Stone 5, gate and redeploy | None | 1.955 h |
-| Weekend | Two rest days | None | 0 h |
+All paths for new code/tests/scripts below are proposed targets, not discovered classes. Inspect current equivalents first and record exact selected migration, controller/DTO/repository and fixture names in the commit body before editing. Existing Application roots and service poms are source evidence. If an action needs an API adapter or migration, use its inspected actual path instead of blindly creating the proposed Service/Repository pair; at most three files change. A larger change becomes a 45-minute finding and the smallest next atomic step, never a hidden multi-hour task.
 
-Totals stay within 14.28 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+Read first is inside the stated duration, once per unfamiliar concept; later repetitions reuse the primer. A/B already need basic Java/SQL/Git or Flutter skills: check them in Week 1. Limit first-time learning to two concepts per day. If the skill check reveals more learning, carry the named step forward and flag the schedule; do not borrow Thursday, Friday or weekends for new concepts. A reviews B's Java fixture/operations work in the scheduled pairing allowance, not unpaid extra time.
 
-## Stone 1 — One wire contract for both clients
+A red step writes one behavior assertion against the existing golden fixture. Compile/setup failures are not its intended red. A green step changes the smallest real adapter; the next negative step covers the stated denied/failure case. Repeat the [golden slice](../GOLDEN-SLICE.md): shared contract/problem/tenant/CI/observability are reused; the scope and expected case below are the delta. Reuse existing tests rather than build a parallel framework.
 
-**You will have:** Live phone and React show same resources and recover after API errors.
+Every step ends with a focused commit. Stage only its exact reviewed paths. Put command/exit/report path and a safe output line in the commit body; aggregate into the weekly evidence file during buffer/Friday, avoiding a fourth source file in each commit. Red commits are work-branch checkpoints, never deployable tags. Every stone ends in the ten-minute review and tests/startup before its tag. For a read-only finding before app creation, startup is the current baseline scaffold or an explicit failed prerequisite; never falsely claim a business app starts.
 
-### W08-S01 — Compare OpenAPI and live responses (30–45 min)
+## Stone 1 — First feature red and green
 
-**Why:** A makes one observable improvement before changing anything else.
+**You will have:** Hidden navigation never bypasses server role/resource checks.
 
-**Read first (10 min):** [Openapi primer](../primers/OPENAPI.md)
+### W08-S01 — Compare OpenAPI and live responses — state the failing behavior (30–30 min)
+
+**Why:** A owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] Week 07 critical gate is green or its carried failure replaces this action.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Validate all implemented routes against sole OpenAPI; remove stale mock shapes; retain stable errors/ETags/date and body schemas.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/CompareOpenapiLiveResponsesTest.java`, `scripts/acceptance/w08.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Validate all implemented routes against sole OpenAPI; remove stale mock shapes; retain stable errors/ETags/date and body schemas. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/identity-org -am test
 ```
 
-**Expect:** Recorded contract examples match live auth/attendance/leave/request responses.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Any undocumented response/property makes contract regression fail.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): compare openapi and live responses`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w08): w08-s01` for implementation or `docs(w08): w08-s01` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W08-S02 — Connect React feature navigation (30–45 min)
+### W08-S02 — Compare OpenAPI and live responses — make the narrow behavior pass (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Openapi primer](../primers/OPENAPI.md)
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W08-S01 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use feature folders/API client, role navigation, bounded pagination and explicit loading/empty/stale/permission states; backend still enforces scope.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/application/CompareOpenapiLiveResponsesService.java`, `services/identity-org/src/main/java/com/hrflow/identityorg/infrastructure/CompareOpenapiLiveResponsesRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Validate all implemented routes against sole OpenAPI; remove stale mock shapes; retain stable errors/ETags/date and body schemas. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-npm --prefix web run build
+mvn -pl services/identity-org -am test
 ```
 
-**Expect:** React tests/build pass and no Nuxt welcome dependency remains in target build.
+**Expect:** Any undocumented response/property makes contract regression fail.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): connect react feature navigation`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w08): w08-s02` for implementation or `docs(w08): w08-s02` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W08-S03 — Connect Flutter to staged API (30–45 min)
+### W08-S03 — Compare OpenAPI and live responses — prove the denied or failure path (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Openapi primer](../primers/OPENAPI.md)
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W08-S02 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use deployment base URL outside source secrets; retain local mock for error tests; run core flows on emulator/device.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/CompareOpenapiLiveResponsesTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Any undocumented response/property makes contract regression fail. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+mvn -pl services/identity-org -am test
 ```
 
-**Expect:** Live phone and React show same resources and recover after API errors.
+**Expect:** Any undocumented response/property makes contract regression fail.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): connect flutter to staged api`.
-- [ ] Tagged `w08-s03-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w08): w08-s03` for implementation or `docs(w08): w08-s03` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W08-S04 — Connect Nuxt feature navigation — state the failing behavior (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-## Stone 2 — Offline and authentication edges
-
-**You will have:** Same persisted resource appears once; stale dashboards are labeled.
-
-### W08-S04 — Test refresh concurrency and revocation (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W08-S03 committed with its check passing; tag `w08-s03-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Execute parallel refresh/old-token tests plus logout and employee termination window; document short access expiry rather than promise immediate revocation.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/ConnectNuxtFeatureNavigationTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use feature folders/API client, role navigation, bounded pagination and explicit loading/empty/stale/permission states; backend still enforces scope. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+mvn -pl services/identity-org -am test
 ```
 
-**Expect:** Family reuse revoked, no credentials logged, inactive account cannot renew.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Hidden navigation never bypasses server role/resource checks.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): test refresh concurrency and revocation`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w08): w08-s04` for implementation or `docs(w08): w08-s04` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W08-S05 — B tests queued command durability (30–45 min)
+### W08-S05 — Connect Nuxt feature navigation — make the narrow behavior pass (30–30 min)
 
-**Why:** A makes one observable improvement before changing anything else.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
+**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W08-S04 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Restart app offline, regain connection, send stable key once; 409/412 goes to review and 429 respects Retry-After; never overwrite edited body under old key.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/application/ConnectNuxtFeatureNavigationService.java`, `services/identity-org/src/main/java/com/hrflow/identityorg/infrastructure/ConnectNuxtFeatureNavigationRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Use feature folders/API client, role navigation, bounded pagination and explicit loading/empty/stale/permission states; backend still enforces scope. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter test
+mvn -pl services/identity-org -am test
 ```
 
-**Expect:** No duplicated attendance or approvals after interrupted client restart.
+**Expect:** Hidden navigation never bypasses server role/resource checks.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): b tests queued command durability`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w08): w08-s05` for implementation or `docs(w08): w08-s05` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w08-s05-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W08-S06 — React handles timeout and stale state (30–45 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
-
-**Before you start:**
-
-- [ ] W08-S05 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Test response lost after commit, refetch canonical state and allow explicit retry with same key; do not optimistic-update balances as final.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-npm --prefix web run build
-```
-
-**Expect:** Same persisted resource appears once; stale dashboards are labeled.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): react handles timeout and stale state`.
-- [ ] Tagged `w08-s06-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
-
-## Stone 3 — Usability without new scope
-
-**You will have:** Both clients observe same committed versions; no contract forks.
-
-### W08-S07 — Review keyboard and form errors (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
-
-**Before you start:**
-
-- [ ] W08-S06 committed with its check passing; tag `w08-s06-green` exists.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. A checks tab order/focus/error labels and date timezone display for each core form; fix only verified access barriers.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-npm --prefix web run build
-```
-
-**Expect:** Keyboard-only employee can complete check-in and submit request.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): review keyboard and form errors`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W08-S08 — B reviews permissions and phone limits (30–45 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
-
-**Before you start:**
-
-- [ ] W08-S07 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Test denied biometrics/push/location and foreground/background network behavior; manual authenticated check-in remains usable without tracking.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-flutter test
-```
-
-**Expect:** No permission denial blocks required attendance flow unexpectedly.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): b reviews permissions and phone limits`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W08-S09 — Run one cross-client acceptance story (30–45 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Offline Queue primer](../primers/OFFLINE-QUEUE.md)
-
-**Before you start:**
-
-- [ ] W08-S08 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create current acceptance script and fixture setup; one employee logs in/checks in/submits leave/request and manager decides from other client.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
-bash scripts/acceptance/w08.sh happy
-```
-
-**Expect:** Both clients observe same committed versions; no contract forks.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-08): run one cross-client acceptance story`.
-- [ ] Tagged `w08-s09-green` only after tests pass and app starts.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-Shutdown ritual for this day:
-
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Part two: buffer and Friday](BUILD-GUIDE-PART-2.md).
+[Next part](BUILD-GUIDE-PART-2.md).

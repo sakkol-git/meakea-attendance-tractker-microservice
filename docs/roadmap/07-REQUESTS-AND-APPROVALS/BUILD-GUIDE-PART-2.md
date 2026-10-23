@@ -1,228 +1,270 @@
-# Week 07 build guide part two
+# Week 07 build guide part 2
 
-> **Navigation:** [Previous: Week 06](../06-LEAVE-WORKFLOW/README.md) · [You are here](../YOU-ARE-HERE.md) · [Next: Week 08](../08-WEB-AND-MOBILE-INTEGRATION/README.md)
+> **Navigation:** [Overview](README.md) · [Dashboard](../YOU-ARE-HERE.md) · [Golden slice](../GOLDEN-SLICE.md)
 
-## Day plan
+## Stone 2 — Feature scope and negative paths
 
-| Day | Work | New concepts | Time cap per person |
-| --- | --- | --- | --- |
-| Monday | Stone 1, three small steps | First two linked primers only | 4 h |
-| Tuesday | Stone 2, three small steps | Next two if needed | 4 h |
-| Wednesday | Stone 3, three small steps | At most two | 4 h |
-| Thursday | Stone 4, review and recovery only | None | 2.5 h |
-| Friday | Stone 5, gate and redeploy | None | 2.3 h |
-| Weekend | Two rest days | None | 0 h |
+**You will have:** Only current assigned independent approver advances one step under a race.
 
-Totals stay within 16.8 h per contributor; unused time is buffer, not permission for more scope. Each code example is a proposed minimal pattern/contract; inspect first and adapt names to verified files. Run Maven from repository root; run Flutter tests from the confirmed mobile root. A/B step pairing may use reserved buffer, never exceed day cap.
+### W07-S07 — B renders draft and request detail — state the failing behavior (30–30 min)
 
-## Stone 4 — Buffer evidence and failure recovery
+**Why:** B owns one observable result in the preserved weekly objective.
 
-**You will have:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
-
-### W07-S10 — Inspect the smallest uncertain behavior (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/ADAPTER.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W07-S09 committed with its check passing; tag `w07-s09-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Inspect prior feature steps and write proposed scripts/acceptance/w07.sh as a real scenario runner, not echo **PASS**. Its diagnose branch checks target JDK, Docker, migrations, readiness and fixture IDs without secrets. No new feature scope on Thursday.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `mobile/test/rendersdraftrequestdetail_test.dart`, `web/test/rendersdraftrequestdetail.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use mock schemas for material/other forms and quantity; show participants/comments/status; no arbitrary script schemas. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash scripts/acceptance/w07.sh diagnose
-```
-
-**Expect:** One precise failed or healthy check is recorded; script exits nonzero for failed assertions.
-
-**Check:**
-
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-07): inspect the smallest uncertain behavior`.
-
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
-
-**Status:** **Not run**; authored from source inspection, not executed implementation.
-
-### W07-S11 — B exercises negative and recovery paths (45–60 min)
-
-**Why:** B makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
-
-**Before you start:**
-
-- [ ] W07-S10 committed with its check passing.
-
-**Do:**
-
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use the week-specific matrix in VERIFY-AND-GATE; test malformed input, unauthorized and other-tenant attempts, duplicate commands, stale versions and client restart. Save minimal reproduction; do not add a new screen.
-1. Run the following check only after its target exists; record actual output without secrets.
-
-```bash
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
 flutter test
 ```
 
-**Expect:** Each executed case has command, actual result and safe report; critical failures remain visible.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Malformed schema/oversized quantity renders stable validation errors.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-07): b exercises negative and recovery paths`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s07` for implementation or `docs(w07): w07-s07` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W07-S12 — Close only the reviewed gap (45–60 min)
+### W07-S08 — B renders draft and request detail — make the narrow behavior pass (45–45 min)
 
-**Why:** A and B makes one observable improvement before changing anything else.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/ADAPTER.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W07-S11 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Use buffer for regression fix and review, not scope. Check migrations/check constraints and unchanged historical data; update OpenAPI examples and dashboard if discrepancy is found. If still blocked, carry exact failing step forward.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `mobile/lib/features/rendersdraftrequestdetail.dart`, `web/app/pages/rendersdraftrequestdetail.vue`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Use mock schemas for material/other forms and quantity; show participants/comments/status; no arbitrary script schemas. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-mvn -f services/hrflow-app/pom.xml test
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
 ```
 
-**Expect:** Known failing reproduction passes or gate is honestly **FAIL**; no unsafe workaround.
+**Expect:** Malformed schema/oversized quantity renders stable validation errors.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `test(week-07): close only the reviewed gap`.
-- [ ] Tagged `w07-s12-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s08` for implementation or `docs(w07): w07-s08` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W07-S09 — B renders draft and request detail — prove the denied or failure path (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** B owns one observable result in the preserved weekly objective.
 
-## Stone 5 — Friday gate deploy and recovery
-
-**You will have:** Gate decision is justified; final tag exists only if tests pass and app starts; laptop closes for two rest days.
-
-### W07-S13 — Redeploy the checked artifact (45–60 min)
-
-**Why:** A makes one observable improvement before changing anything else.
-
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/ADAPTER.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W07-S12 committed with its check passing; tag `w07-s12-green` exists.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. Create or inspect proposed ops/deploy.sh before invocation: validate Compose/config, record previous image digest, apply only additive tested migrations, update containers, run authenticated smoke, retain last working manifest. On the confirmed real production host redeploy the exact tested artifact; if host is not ready record **FAIL**, do not substitute a dev demo. Never enable public route before security/backup gate.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `mobile/test/rendersdraftrequestdetail_test.dart`, `web/test/rendersdraftrequestdetail.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Malformed schema/oversized quantity renders stable validation errors. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/deploy.sh
+npm --prefix web run test -- --run
+# From the confirmed Flutter root:
+flutter test
 ```
 
-**Expect:** Release commit and image IDs match; app starts and authenticated health/business smoke succeeds; failed deploy retains recovery path.
+**Expect:** Malformed schema/oversized quantity renders stable validation errors.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-07): redeploy the checked artifact`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s09` for implementation or `docs(w07): w07-s09` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W07-S14 — B verifies deployed workflow and restore (45–60 min)
+### W07-S10 — Approve exactly the current step — state the failing behavior (30–30 min)
 
-**Why:** B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/ATTACHMENT-SECURITY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W07-S13 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. From an external test network only after exposure gate, or private LAN while blocked, B exercises this week mini-win. Every Friday run scratch restore of latest external backup, count/checksum known synthetic records; week 1 uses disposable local dump before external host exists.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/request/src/test/java/com/hrflow/request/ApproveExactlyCurrentStepTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Lock request/current step/version; allow assigned independent approver only; append action audit and advance chain. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-bash ops/restore-scratch.sh
+mvn -pl services/request -am test
 ```
 
-**Expect:** Phone/web mini-win and restored synthetic records match; no production volume is overwritten.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Only current assigned independent approver advances one step under a race.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Treating a missing environment/class as the intended failing behavior.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Write the failing assertion before changing production behavior.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `feat(week-07): b verifies deployed workflow and restore`.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s10` for implementation or `docs(w07): w07-s10` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W07-S15 — Decide gate and shut down (45–60 min)
+### W07-S11 — Approve exactly the current step — make the narrow behavior pass (45–45 min)
 
-**Why:** A and B makes one observable improvement before changing anything else.
+**Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (10 min):** [Git primer](../primers/GIT.md)
+**Read first (up to 10 min, included):** [One concept](../primers/ATTACHMENT-SECURITY.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
-- [ ] W07-S14 committed with its check passing.
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
 
 **Do:**
 
-1. Inspect first: find the current implementation, test and configuration for this action; if absent use the explicitly proposed path below.
-1. A and B review VERIFY-AND-GATE evidence, require all critical items, and write **PASS**/**CONDITIONAL PASS**/**FAIL** with owner/deadline. Update global checklist/dashboard and next first action. Preserve failed critical item as next week first stone; do not borrow weekends.
-1. Run the following check only after its target exists; record actual output without secrets.
+1. Inspect first: review current equivalents for `services/request/src/main/java/com/hrflow/request/application/ApproveExactlyCurrentStepService.java`, `services/request/src/main/java/com/hrflow/request/infrastructure/ApproveExactlyCurrentStepRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with this delta only: Lock request/current step/version; allow assigned independent approver only; append action audit and advance chain. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-git status --short
+mvn -pl services/request -am test
 ```
 
-**Expect:** Gate decision is justified; final tag exists only if tests pass and app starts; laptop closes for two rest days.
+**Expect:** Only current assigned independent approver advances one step under a race.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Tagging or deploying before this behavior and its negative check pass.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Make the smallest tested change and reuse the shared contract.
 
 **Check:**
 
-- [ ] Output matches Expect and required tests pass with zero failures.
-- [ ] Committed with message `docs(progress): record W07-S15`.
-- [ ] Tagged `w07-s15-green` only after tests pass and app starts.
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s11` for implementation or `docs(w07): w07-s11` for findings/evidence, with exact reviewed paths only.
 
-**If it fails:** [Week diagnostics](TROUBLESHOOTING.md); after 45 minutes use the [stuck protocol](../STUCK-PROTOCOL.md). At 90 minutes use this stone’s exact cut in README; a failed critical check stays **FAIL**.
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; authored from source inspection, not executed implementation.
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-Shutdown ritual for this day:
+### W07-S12 — Approve exactly the current step — prove the denied or failure path (30–30 min)
 
-- [ ] Commit reviewed files or preserve the safe WIP branch.
-- [ ] Save the next exact step and blocker in YOU-ARE-HERE.md.
-- [ ] Record energy in words and close the laptop.
+**Why:** B owns one observable result in the preserved weekly objective.
+
+**Read first (up to 10 min, included):** [One concept](../primers/ATTACHMENT-SECURITY.md). Reuse prior learning; no new concept on Thursday/Friday.
+
+**Before you start:**
+
+- [ ] Earlier prerequisite result is green; an intended red assertion is isolated on the work branch. A critical failed prior gate replaces this action.
+
+**Do:**
+
+1. Inspect first: review current equivalents for `services/request/src/test/java/com/hrflow/request/ApproveExactlyCurrentStepTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Repeat the golden slice with the failure delta: Only current assigned independent approver advances one step under a race. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
+
+```bash
+mvn -pl services/request -am test
+```
+
+**Expect:** Only current assigned independent approver advances one step under a race.
+
+```text
+Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
+Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
+```
+
+**Common mistake:** Asserting an error without checking that no forbidden row/effect escaped.
+
+**Undo:** For this isolated un-deployed commit run `git revert HEAD`. Applied SQL/data needs a new forward migration or the reviewed [rollback/restore procedure](../runbooks/ROLLBACK.md); Git does not reverse data. For temporary read-only findings this reverses only their recorded commit.
+
+**Senior habit:** Test denial and rollback as carefully as the happy path.
+
+**Check:**
+
+- [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
+- [ ] Committed with message `feat(w07): w07-s12` for implementation or `docs(w07): w07-s12` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w07-s12-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+
+**If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
+
+**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
 ## Continue
 
-[Verify the gate](VERIFY-AND-GATE.md).
+[Next part](BUILD-GUIDE-PART-3.md).
