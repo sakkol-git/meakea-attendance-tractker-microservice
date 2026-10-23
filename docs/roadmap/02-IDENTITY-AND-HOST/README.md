@@ -8,6 +8,8 @@ Dates: 2026-11-02 through 2026-11-06; weekend rest follows.
 
 **Planned hours:** A=14.25; B=11.
 
+**Extra hours:** A=1; B=1.
+
 The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
 
 ## Preserved objective and starting point

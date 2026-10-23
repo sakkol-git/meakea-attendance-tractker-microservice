@@ -6,12 +6,12 @@ Inspected on 2026-10-23 using `git status --short`, `git log`, `rg --files`, bui
 
 | Feature | Status | Evidence | Consequence |
 | --- | --- | --- | --- |
-| Git baseline | **Unknown** release history | `git log` says no commits; staged and untracked work exists | Make documentation-only commits; preserve source index |
+| Git baseline | **Unknown** release history | Initial audit had no commits; V2 now has docs commits and preserved staged/untracked source | Make documentation-only commits; preserve source index |
 | Java services | **Partial** | `services/*/src/main/java` has seven startup classes | No working business services to preserve as deployables |
 | Database tables | **Not started** | No migrations/entities in services | DDL in docs is proposed, not installed |
 | Auth and tenant scope | **Not started** | No controllers/security policy | Security is week 2 gate |
-| Outbox and Kafka | **Partial** | Dependencies/YAML and one Avro record only | Keep transactional outbox; park broker in outcome C |
-| Web | **Verified** Nuxt scaffold | `web/package.json`, welcome component, passing build | React migration is future build work |
+| Outbox and Kafka | **Partial** | Dependencies/YAML and one Avro record only | Keep owner outbox and Kafka; ADR 008 supersedes prior deferral |
+| Web | **Verified** Nuxt scaffold | `web/package.json`, welcome component, passing build | Retain Nuxt; no React migration |
 | Flutter | **Unknown** | No Flutter files found here | B establishes location in week 1 |
 | Confidence model | **Verified** standalone prototype | Five passing tests in own directory | Deferred; not attendance integration |
 | Compose | **Partial** | Syntax passes; mount/Registry defects in file | New narrow deployment config, no blind startup |
@@ -35,12 +35,12 @@ Inspected on 2026-10-23 using `git status --short`, `git log`, `rg --files`, bui
 
 ## Important mismatches
 
-- `pom.xml` parent 4.1.1 differs from service parents 4.0.8; gateway Cloud 2025.1.3 exists but is unused in outcome C.
+- `pom.xml` parent 4.1.1 differs from service parents 4.0.8; gateway Cloud 2025.1.3 exists and needs reactive/Boot compatibility verification.
 - Six `.yaml` resources contain properties syntax; attendance port is 8082 while old API design said 8102.
 - Compose repeats `infra/docker` in its relative SQL mount and points Registry to nonexistent port 19092.
 - Avro plugin reads an absent root contracts directory.
-- Source is Nuxt while the latest user requirement explicitly selects React.
-- Old architecture is seven services with Kafka-only integration; latest user scope allows consolidation and requires self-hosted Compose.
+- Source Nuxt now matches the final accepted client choice; the prior React migration is superseded.
+- Old architecture is seven services with Kafka-only integration; latest accepted design retains those service/event boundaries and local Compose; cloud execution is deferred.
 
 ## Safe next action
 

@@ -1,5 +1,7 @@
 # Actual validation and beginner dry-run
 
+> **Note:** Historical V1 record; current final design and execution status are in ADR 008, PROGRESS-V2 and V2-VALIDATION-LOG. Earlier C/React/Kafka-deferral statements are superseded, not current instructions.
+
 ## Scope and execution status
 
 Validated on 2026-10-23. Documentation is authored, not a finished application. Twelve weeks contain 60 stones and 182 sequential steps. Implementation steps marked **Run**: 0. Steps marked **Not run**: 182. No green application tags were created by documentation work.

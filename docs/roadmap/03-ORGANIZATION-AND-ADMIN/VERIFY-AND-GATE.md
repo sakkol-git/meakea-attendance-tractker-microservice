@@ -6,25 +6,25 @@
 
 All implementation gates are **NOT RUN**. Save exact command, exit, assertion/report path, sanitized result, operator and elapsed time in proposed docs/validation/W03-EVIDENCE.md. Scripts/classes are authored in the steps before invocation; a missing target or skipped container never counts as a passed behavior. The weekly runner dispatches real tests and preserves nonzero exits, never echo-only pass messages.
 
-Step range: W03-S01 to W03-S36. Required new stone tags: `w03-s05-green`, `w03-s10-green`, `w03-s15-green`, `w03-s20-green`, `w03-s25-green`, `w03-s30-green`, `w03-s33-green`, `w03-s36-green`. Existing historical tags are not moved.
+Step range: W03-S01 to W03-S41. Required new stone tags: `w03-s06-green`, `w03-s12-green`, `w03-s18-green`, `w03-s24-green`, `w03-s30-green`, `w03-s35-green`, `w03-s38-green`, `w03-s41-green`. Existing historical tags are not moved.
 
 ## Feature and failure assertions
 
 | Focus | Observable check | Evidence |
 | --- | --- | --- |
-| W03-S03 | Reject a cross-tenant department/position FK and manager hierarchy cycle. | Exact focused test and full owner regression report |
-| W03-S07 | Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty. | Exact focused test and full owner regression report |
-| W03-S10 | Missing employee link/inactive profile renders a safe empty/disabled state. | Exact focused test and full owner regression report |
+| W03-S09 | Reject a cross-tenant department/position FK and manager hierarchy cycle. | Exact focused test and full owner regression report |
+| W03-S12 | Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty. | Exact focused test and full owner regression report |
+| W03-S15 | Missing employee link/inactive profile renders a safe empty/disabled state. | Exact focused test and full owner regression report |
 | All implemented routes | Shared anonymous/invalid-token/wrong-role/foreign-tenant/list/count/file/export/job cases; explicit reason only for genuinely inapplicable cases | Route registry agrees with sole OpenAPI |
 | Recovery | Duplicate/lost-response/concurrency/rollback and latest backup restore leave no forbidden duplicate or lost state | Actual DB/Kafka/client reports, not mocked success |
 
 ## Enterprise gate
 
-- [ ] Q03: Invalid edge/domain input writes no row, and direct invalid SQL is rejected by a real PostgreSQL constraint. Evidence: W03-S01 to W03-S36, focused result and this week release/restore report.
-- [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W03-S01 to W03-S36, focused result and this week release/restore report.
-- [ ] Q07: Flyway clean/upgrade history, tenant FK/unique/checks, exact balances and stale/concurrent update assertions pass. Evidence: W03-S01 to W03-S36, focused result and this week release/restore report.
-- [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W03-S01 to W03-S36, focused result and this week release/restore report.
-- [ ] Q10: Actual nonempty package and module tests reject forbidden imports/cycles; shared libraries contain no owner business repositories. Evidence: W03-S01 to W03-S36, focused result and this week release/restore report.
+- [ ] Q03: Invalid edge/domain input writes no row, and direct invalid SQL is rejected by a real PostgreSQL constraint. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
+- [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
+- [ ] Q07: Flyway clean/upgrade history, tenant FK/unique/checks, exact balances and stale/concurrent update assertions pass. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
+- [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
+- [ ] Q10: Actual nonempty package and module tests reject forbidden imports/cycles; shared libraries contain no owner business repositories. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
 
 ## Minimum Viable Gate
 

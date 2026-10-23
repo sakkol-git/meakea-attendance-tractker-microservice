@@ -23,7 +23,7 @@ Step range: W09-S01 to W09-S41. Required new stone tags: `w09-s06-green`, `w09-s
 - [ ] Q01: One /api/v1 OpenAPI validates and its request/response/error fixtures match implemented routes; broken schema copy fails. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
 - [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
 - [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
-- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, critical coverage targets are nonempty and container failures are not skipped. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
+- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, implemented critical coverage selectors are nonempty, future packages are explicitly not yet covered, and container failures are not skipped. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
 - [ ] Q11: Private readiness, safe correlation/technical-tenant logs, bounded business/lag/error metrics and a firing/recovering alert have evidence. Evidence: W09-S01 to W09-S41, focused result and this week release/restore report.
 
 ## Minimum Viable Gate

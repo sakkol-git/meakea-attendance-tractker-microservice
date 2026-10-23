@@ -6,7 +6,9 @@
 
 Dates: 2026-11-09 through 2026-11-13; weekend rest follows.
 
-**Planned hours:** A=10.5; B=14.25.
+**Planned hours:** A=14.25; B=14.25.
+
+**Extra hours:** A=2; B=0.
 
 The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 2 h; B receives review during its already counted fixture/operations steps. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
 
@@ -31,14 +33,14 @@ A stone may span working days; stop at the day cap and save its next exact step.
 
 | Stone | Visible result group | Steps | A/B step h |
 | --- | --- | --- | --- |
-| 1 | First feature red and green | W03-S01 to W03-S05 | 1.75/1.5 |
-| 2 | Feature scope and negative paths | W03-S06 to W03-S10 | 0.75/2.25 |
-| 3 | Client and integration deltas | W03-S11 to W03-S15 | 1.5/1.5 |
-| 4 | Remaining domain invariants | W03-S16 to W03-S20 | 0/2.75 |
-| 5 | Quality and failure recovery | W03-S21 to W03-S25 | 1.5/1.5 |
-| 6 | Final feature integration | W03-S26 to W03-S30 | 0.75/2.5 |
-| 7 | Thursday recovery buffer | W03-S31 to W03-S33 | 1/1 |
-| 8 | Friday deploy restore and gate | W03-S34 to W03-S36 | 1.25/1.25 |
+| 1 | First feature red and green | W03-S01 to W03-S06 | 4.75/0 |
+| 2 | Feature scope and negative paths | W03-S07 to W03-S12 | 1.5/2 |
+| 3 | Client and integration deltas | W03-S13 to W03-S18 | 0.75/2.75 |
+| 4 | Remaining domain invariants | W03-S19 to W03-S24 | 0.75/2.75 |
+| 5 | Quality and failure recovery | W03-S25 to W03-S30 | 1.5/2 |
+| 6 | Final feature integration | W03-S31 to W03-S35 | 0.75/2.5 |
+| 7 | Thursday recovery buffer | W03-S36 to W03-S38 | 1/1 |
+| 8 | Friday deploy restore and gate | W03-S39 to W03-S41 | 1.25/1.25 |
 
 ## Minimum Viable Gate
 

@@ -2,27 +2,27 @@
 
 ## Meaning of coverage
 
-Every Q-item is **NOT RUN** as an implemented practice. Draft chain means a planned step and literal unchecked gate exist, not that the practice passes. Partial/gap rows require additional enforcing IDs and final gates. No future ID is invented to make the matrix look complete. Week 1–2 drafts still require the repairs in V2-VALIDATION-LOG.
+Every row has an introducing week, existing enforcing step IDs and a literal unchecked Q-item gate. This is complete planned traceability, not implemented quality: every implementation item remains **NOT RUN** until actual reports exist. Shared golden-slice checks are repeated for every later feature delta; they are not replaced by a coverage percentage or a prose promise.
 
-| Quality | Introduce week | Enforcing steps | Verifying gate checkbox | Trace state |
+| Quality | Introducing week | Enforcing step IDs | Verifying gate | Execution |
 | --- | --- | --- | --- | --- |
-| Q01 | 01 | W01-S09, W01-S12, W01-S16 | [Q01 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | Draft chain; validator/version commands still require proof |
-| Q02 | 01 | W01-S14, W01-S15, W01-S17 | [Q02 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | Draft chain; behavior unexecuted |
-| Q03 | 03 | Pending Week 3 decomposition | Q03 gate pending | Gap: introducing/enforcing Week-3 IDs and gate missing |
-| Q04 | 03 | W02-S06, W02-S07, W02-S15; Week-3 RLS pending | [Q04 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | Partial: full RLS/repository suite/gate missing |
-| Q05 | 02 | W02-S02, W02-S05, W02-S07, W02-S09, W02-S11, W02-S12, W02-S14, W02-S19 | [Q05 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | Draft chain; web cookie/CSRF and profile steps missing |
-| Q06 | 02 | W02-S05, W02-S23 | [Q06 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | Draft chain; rotation/scan unexecuted |
-| Q07 | 03 | Pending Week 3 decomposition | Q07 gate pending | Gap: migration/integrity/locking steps and gate missing |
-| Q08 | 04 | Pending Weeks 4–5 decomposition | Q08 gate pending | Gap: retry/outbox/inbox/offset/crash steps and gate missing |
-| Q09 | 01 | W01-S08, W01-S20, W01-S21 | [Q09 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | Partial: Kafka/critical-domain enforcing steps later missing |
-| Q10 | 03 | W01-S29 spike only; Week-3 enforcement pending | Q10 gate pending | Gap: spike is not architecture-test enforcement |
-| Q11 | 02 | W02-S17, W02-S27; Week-9 completion pending | [Q11 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | Partial: full service/lag/business metrics/alert proof missing |
-| Q12 | 01 | W01-S25, W01-S26, W01-S27, W01-S28 | [Q12 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | Draft chain; exact CI/image scanner checks unproved |
-| Q13 | 10 | W02-S25, W02-S26, W02-S32 early; Weeks 10–12 pending | [Q13 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | Partial: scheduled drills/runbook/release enforcement missing |
-| Q14 | 01 | W01-S18, W01-S19, W01-S32 | [Q14 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | Draft chain; every-stone later adoption pending |
+| Q01 | 01 | W01-S10, W01-S14 | [Q01 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q02 | 01 | W01-S16, W01-S17 | [Q02 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q03 | 03 | W03-S08, W03-S09, W03-S11, W03-S12 | [Q03 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q04 | 03 | W03-S25, W03-S26, W03-S27, W03-S34 | [Q04 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q05 | 02 | W02-S10, W02-S11, W02-S12, W02-S13, W02-S14, W02-S20 | [Q05 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q06 | 02 | W02-S05, W02-S26 | [Q06 checkbox](02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q07 | 03 | W03-S01, W03-S02, W03-S03, W06-S28 | [Q07 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q08 | 04 | W04-S28, W05-S10, W05-S11, W05-S12, W05-S13, W05-S14, W05-S15 | [Q08 checkbox](05-OUTBOX-AND-NOTIFICATIONS/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q09 | 01 | W01-S08, W01-S22, W01-S23, W05-S16, W05-S17, W05-S18 | [Q09 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q10 | 03 | W03-S28, W03-S29, W03-S30 | [Q10 checkbox](03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q11 | 02 | W02-S17, W09-S22, W09-S23, W09-S24, W09-S25, W09-S26, W09-S27, W09-S28, W09-S29, W09-S30 | [Q11 checkbox](09-REPORTING-AUDIT-OBSERVABILITY/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q12 | 01 | W01-S32, W01-S33, W01-S34 | [Q12 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q13 | 10 | W10-S02, W10-S03, W10-S05, W10-S06, W10-S08, W10-S09, W10-S11, W10-S12, W10-S14, W10-S15, W10-S17, W10-S18, W10-S20, W10-S21, W10-S23, W10-S24, W10-S26, W10-S27, W10-S29, W10-S30, W10-S32, W10-S33, W10-S35, W10-S36, W12-S28 | [Q13 checkbox](10-OPERATIONS-AND-RESTORE/VERIFY-AND-GATE.md) | **NOT RUN** |
+| Q14 | 01 | W01-S20, W01-S21, W01-S37 | [Q14 checkbox](01-FOUNDATION/VERIFY-AND-GATE.md) | **NOT RUN** |
 
-## Gaps that must close
+## Coverage gate semantics
 
-Finish Week-3 validation/tenant/RLS/integrity/architecture enforcement; Week-4/5 retry and Kafka durability; complete critical tests and coverage; Week-9 metrics and alerts; Weeks-10/12 deployment/restore/semantic release. Add exact browser transport/CSRF implementation and profile read to the auth ladder. Trace every later reused golden-slice delta and Q gate, with real final step IDs. Phase 6 must verify this matrix and reject unresolved planned placeholders.
+Q08 has a minimal owner-intent skeleton in Week 3, retry correctness in Week 4 and full Kafka crash/replay proof in Week 5. Q13 has early safe backup/restore in Weeks 1–2 and complete operations enforcement in Weeks 10–12. Q11 starts in Week 2 and completes Week 9. Q09 critical code coverage is 80 percent lines/70 percent branches only on nonempty auth/attendance/leave domain/application packages, plus required real PostgreSQL/Kafka tests.
 
-Full acceptance requires introducing week, actual enforcing step IDs and a literal gate checkbox for every item. Full implementation acceptance separately requires executed reports. Mentioning Q in prose or passing the format linter is insufficient. No certification or single-host availability claim.
+No Q-item is a planned traceability gap after this mapping. Missing or failing runtime evidence remains **NOT RUN** or **FAIL**, never an implied pass. Week-11/12 all-Q scorecards must be populated by the developers. The linter checks IDs, introducing week and actual gate task; it cannot certify test quality, privacy policy approval or real uptime.

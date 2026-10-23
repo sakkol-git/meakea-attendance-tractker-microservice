@@ -1,73 +1,45 @@
-# Developer onboarding and daily execution guide
+# Start here
 
-> **Navigation:** [Documentation root](../README.md) · [Source of truth](../SOURCE-OF-TRUTH.md) · [Current dashboard](YOU-ARE-HERE.md) · [Roadmap](ROADMAP.md)
+## Your first fifteen minutes
 
-## Ten-minute orientation
+1. Open [You are here](YOU-ARE-HERE.md). Current position is W01-S01, not started; A and B have 24 hours each weekly, at most 70 percent planned. No application feature is checked off.
+1. Read the first three paragraphs of [final decisions](DECISION-REGISTER.md): retain seven services, JDBC, Kafka/Avro, Nuxt and Flutter. AWS/Kubernetes deployment is future improvement. Proposed names in a step are targets to inspect/create, never discovered code.
+1. Open [Week 1 overview](01-FOUNDATION/README.md), then [Week 1 Step 1](01-FOUNDATION/BUILD-GUIDE.md). W01-S01 inventories the dirty Git workspace; it does not delete files, reset history or deploy anything.
+1. Read the linked Git primer only if unfamiliar. Git means versioned checkpoints; a commit saves one reviewed change, a branch keeps a line of work, a tag names a checked checkpoint. The guide uses ordinary Markdown links, so IntelliJ/Obsidian/Notion can follow the same path.
+1. Run the safe status command printed in that step. Record the next action and blocker before changing code. Stop at the cap; no green tag exists yet.
 
-Welcome to the HRFlow engineering roadmap. This documentation is an executable, build-along playbook designed to guide developers from an unbuilt scaffolding repository to a fully tested, production-ready modular monolith.
+## Calendar and rhythm
 
-Crucial operational realities to understand before writing code:
+Start Monday 26 October 2026. Twelve-week release rehearsal is Friday 15 January 2027, with two rest days after each Friday. The 84-day boundary is Monday 18 January. Each week has eight small stones: six feature/quality groups, a Thursday repair buffer and Friday reviewed redeploy/restore/gate. Step reading, tests and commit fit the stated timebox; separately allocated pairing/review is included in weekly totals.
 
-- Work is unbuilt: Scaffolding exists in `services/` and `web/`, but core HR business features are planned, not implemented.
-- Evidence-based status: Implementation steps are marked **Not run** until you execute the step, run its verification tests, and record authentic test outputs.
-- Proposed paths: Commands referencing files that do not exist yet (such as `services/hrflow-app` or `contracts/openapi.yaml`) indicate targets to create during that designated step.
+A owns backend decisions and reviews B's repeatable tests/scripts. B owns Flutter, narrow Nuxt work, fixtures and scripted acceptance. A's review time is budgeted. You need basic Java/SQL/Git or Flutter fluency; Week 1 records any gap. At most two unfamiliar concepts per day; new learning that exceeds that is a visible schedule risk, never weekend debt.
 
-## The five daily files
+## When a term or command is unclear
 
-Every developer must keep these five central files bookmarked during daily implementation:
+Inspect first means locate the actual file/name before editing; absent names are explicitly proposed. Red/green means first observe a behavior assertion fail, then make the smallest change pass. A stone is two to six steps with one reviewed green tag; **Not run** means the complete step has not been executed. A gate is the checklist that blocks moving ahead when a critical result fails. An MVP is the minimum complete tested feature set, with cosmetic/richer variants in Stretch.
 
-1. [You are here](YOU-ARE-HERE.md): Your primary active dashboard indicating the current week, next step ID, last verified green milestone tag, and active blockers.
-1. [Current build guide](01-FOUNDATION/BUILD-GUIDE.md): The step-by-step manual for the active week, specifying exact prerequisites, implementation tasks, and test commands.
-1. [Current gate](01-FOUNDATION/VERIFY-AND-GATE.md): The acceptance test matrix, regression checks, and exit criteria required before closing the week.
-1. [Stuck protocol](STUCK-PROTOCOL.md): The time-boxed 45-minute and 90-minute escalation procedures for recovering from unexpected blockers.
-1. [Global checklist](GLOBAL-CHECKLIST.md): The complete functional requirements traceability matrix mapping business features to verified test evidence.
+Use [glossary](GLOSSARY.md), [primers](primers/README.md), [daily commands](DAILY-COMMANDS.md), [stuck protocol](STUCK-PROTOCOL.md) and [definition of done](DEFINITION-OF-DONE.md). Never paste a production secret or real employee record into evidence. Inspect before running a command against a database or a host.
 
-## The daily five-minute routine
+## Shared quality recipe
 
-To ensure continuous, sustainable velocity and avoid fatigue, follow this three-phase daily routine:
+- [Engineering standards Q01–Q14](ENGINEERING-STANDARDS.md).
+- [Quality coverage and exact enforcing IDs](QUALITY-COVERAGE.md).
+- [Golden slice built in Weeks 1–3](GOLDEN-SLICE.md).
+- [Ten-minute code review](CODE-REVIEW-CHECKLIST.md).
+- [Test strategy](TEST-STRATEGY.md).
+- [Security baseline](SECURITY-BASELINE.md).
+- [API guidelines](API-GUIDELINES.md).
+- [Daily commands](DAILY-COMMANDS.md).
+- [Deploy/rollback/restore/reboot/disk/internet runbooks](runbooks/README.md).
 
-- Morning kickoff (2 minutes): Open [You are here](YOU-ARE-HERE.md) to inspect today's assigned step. Check prerequisites in the active build guide. Confirm that you have energy (rested, steady, or tired) and start a 45-minute timer before writing code.
-- Focused execution (30 to 90 minutes): Work on one single, bounded implementation step. Introduce no more than two new concepts per day. Run the step's specific check command.
-- Evening shutdown (3 minutes): Commit only intended files with a conventional commit message. If completing a stepping stone, tag the commit. Record safe output evidence in the dashboard, update tomorrow's first step, and close your laptop.
+## Progress and recovery
 
-## Weekly cadence and operational boundaries
+Use [roadmap](ROADMAP.md), [milestones](MILESTONE-MAP.md) and [global checklist](GLOBAL-CHECKLIST.md). Old progress translates through [STEP-ID-MAP](STEP-ID-MAP.md); the intermediate draft uses [DRAFT-ID-MAP](DRAFT-ID-MAP.md). Preserve every old tag and inspect evidence before repeating a migration or restore.
 
-The twelve-week curriculum enforces strict weekly boundaries to guarantee code quality and prevent burnout:
+Five-minute daily routine: read dashboard/blocker, check branch/status, pick one next mapped step, read prerequisite/Expect/Undo, record energy/time and start or stop. End by saving the exact next command and closing the laptop. Critical failure is tomorrow's first action.
 
-- Monday through Wednesday: Active implementation across Stones 1, 2, and 3 (three 30–90 minute steps per day).
-- Thursday: Review and buffer in Stone 4. Zero new feature scope may be introduced. Time is dedicated to test hardening, diagnostic investigations, and refactoring admitted patterns.
-- Friday: Stone 5 gate execution, private host deployment, and automated scratch disaster recovery testing.
-- Saturday and Sunday: Mandatory rest days. Never pay for missed weekday tasks with weekend work.
+## Honest readiness
 
-## Escalation and stop rules
+[V2 progress](PROGRESS-V2.md), [changelog](CHANGELOG-V2.md) and [validation log](V2-VALIDATION-LOG.md) distinguish completed documentation checks from unexecuted application work. Current prerequisites remain Java 21, at least 30 GiB free, running Docker and an intended host/external backup. Private deployment can be prepared while domain/DNS is unknown; public launch waits for TLS/auth/firewall/secrets/verified restore. One computer is not high availability and this guide is not compliance certification.
 
-If an implementation step encounters technical difficulties:
-
-- 45-minute limit: If you make zero observable progress for 45 minutes, stop coding and consult the active week's `TROUBLESHOOTING.md` and [Stuck protocol](STUCK-PROTOCOL.md).
-- 90-minute cut rule: If a task remains blocked after 90 minutes, apply the documented stone cut in the phase README. Never skip multi-tenant security or backup verification.
-- Critical gate failures: If a Friday gate fails, record **FAIL**. The failed check becomes Monday's first action in the following week, cutting non-essential stretch features.
-
-## Preparation and baseline references
-
-- [Source of truth map](../SOURCE-OF-TRUTH.md)
-- [System architecture](../Architecture.md)
-- [Twelve-week roadmap](ROADMAP.md)
-- [Repository audit](00-PREPARATION/REPOSITORY-AUDIT.md)
-- [Project capacity baseline](00-PREPARATION/PROJECT-BASELINE.md)
-- [Git safety protocol](GIT-SAFETY.md)
-- [Decision register](DECISION-REGISTER.md)
-
-## Senior quality reference
-
-- [Engineering Standards](ENGINEERING-STANDARDS.md).
-- [Code Review Checklist](CODE-REVIEW-CHECKLIST.md).
-- [Test Strategy](TEST-STRATEGY.md).
-- [Security Baseline](SECURITY-BASELINE.md).
-- [Api Guidelines](API-GUIDELINES.md).
-- [Daily Commands](DAILY-COMMANDS.md).
-- [Golden Slice](GOLDEN-SLICE.md).
-- [Operational runbooks](runbooks/README.md).
-
-## V2 partial-upgrade checkpoint
-
-Open [V2 progress](PROGRESS-V2.md) before executing this roadmap. The final seven-service architecture supersedes old C/React instructions; cloud execution is deferred. Weeks 1–2 are atomic drafts with known validation gaps, Weeks 3–12 remain unconverted, and the requested linter extensions are not implemented yet. [Interim changelog](CHANGELOG-V2.md), [ID map](STEP-ID-MAP.md), [validation log](V2-VALIDATION-LOG.md), and [remaining architecture references](V2-REMAINING-REFERENCES.md) make the unfinished work explicit. No application work is marked complete.
+[Toolchain evidence](TOOLCHAIN-REFERENCE.md) and [operation script interface](runbooks/SCRIPT-INTERFACE.md) explain exact version/target prerequisites without inventing installed tools or production hosts.

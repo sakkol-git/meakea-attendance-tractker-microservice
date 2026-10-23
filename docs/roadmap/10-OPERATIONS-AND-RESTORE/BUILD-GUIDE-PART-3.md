@@ -18,7 +18,7 @@
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-tunnel-credentials-privately.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-tunnel.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Only if public tunnel is enabled, rotate its protected connector credential and prove private origin remains restricted; otherwise record not applicable with private-only evidence. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -60,7 +60,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-tunnel-credentials-privately.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-tunnel.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with this delta only: Only if public tunnel is enabled, rotate its protected connector credential and prove private origin remains restricted; otherwise record not applicable with private-only evidence. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -102,7 +102,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-tunnel-credentials-privately.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-tunnel.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: Old connector cannot reconnect, new one works and no business/DB port is exposed. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -144,7 +144,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/verify-nightly-cron-retention-and-mounts.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/backup.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Nightly pg_dump -Fc to private temp path, pg_restore --list, atomic rename, checksum and external-disk copy; prune only matching owned files older than 14 days after successful verified copy. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -186,7 +186,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/verify-nightly-cron-retention-and-mounts.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/backup.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with this delta only: Nightly pg_dump -Fc to private temp path, pg_restore --list, atomic rename, checksum and external-disk copy; prune only matching owned files older than 14 days after successful verified copy. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -228,7 +228,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/verify-nightly-cron-retention-and-mounts.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/backup.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: Missing external mount fails before pruning; corrupt archive is rejected. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 

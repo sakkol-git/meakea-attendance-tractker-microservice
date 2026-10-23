@@ -6,7 +6,7 @@
 
 **You will have:** Existing client build and selected Flutter negative fixture pass; retry is bounded and safe.
 
-### W01-S34 — Use Thursday only to repair one blocker (30–30 min)
+### W01-S35 — Use Thursday only to repair one blocker (30–30 min)
 
 **Why:** A and B owns one observable result in the preserved weekly objective.
 
@@ -42,13 +42,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s34` for implementation or `docs(w01): w01-s34` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s35` for implementation or `docs(w01): w01-s35` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S35 — Review the client recovery fixture (30–30 min)
+### W01-S36 — Review the client recovery fixture (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -84,8 +84,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s35` for implementation or `docs(w01): w01-s35` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w01-s35-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w01): w01-s36` for implementation or `docs(w01): w01-s36` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w01-s36-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

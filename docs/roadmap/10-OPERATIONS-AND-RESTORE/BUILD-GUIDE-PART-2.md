@@ -18,7 +18,7 @@
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-jwt-signing-keys.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-jwt.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use staging test keys and configured key IDs; add new public validator key before issuer switch, then retire old key only after access lifetime/clock skew. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -60,7 +60,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-jwt-signing-keys.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-jwt.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with this delta only: Use staging test keys and configured key IDs; add new public validator key before issuer switch, then retire old key only after access lifetime/clock skew. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -102,7 +102,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-jwt-signing-keys.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-jwt.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: New key validates, old key fails after bounded overlap, neither key value appears in Git/logs. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -144,7 +144,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-database-runtime-credentials.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-database.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use the verified scratch host to rotate one service runtime credential, update secret reference and restart its pool without changing migration-role privileges. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -186,7 +186,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-database-runtime-credentials.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-database.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with this delta only: Use the verified scratch host to rotate one service runtime credential, update secret reference and restart its pool without changing migration-role privileges. Make the preceding behavior assertion green; use existing validation/problem/auth/tenant adapters. If more than three files are needed, take the next smallest adapter first and record the remaining delta, keeping the stone untagged until complete.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
@@ -228,7 +228,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `ops/rotate-database-runtime-credentials.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect first: review current equivalents for `ops/rotate-database.sh`, `scripts/acceptance/w10.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
 1. Repeat the golden slice with the failure delta: Old runtime credential is refused after rotation; new role still cannot cross owner schema or bypass RLS. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 

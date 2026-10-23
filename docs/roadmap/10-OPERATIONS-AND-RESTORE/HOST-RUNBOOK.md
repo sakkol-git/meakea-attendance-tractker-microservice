@@ -2,7 +2,7 @@
 
 ## Inspect before copying commands
 
-These are implementation instructions, not installed scripts. Target files are `ops/backup.sh`, `ops/restore-scratch.sh`, `ops/restore-clean.sh`, `ops/deploy.sh` and the read-only checks named in the weekly guide. Create and test them first on synthetic data. Use Compose project name `hrflow` consistently through environment configuration. PostgreSQL service is proposed `postgres`; application is proposed `app`. Inspect actual names before running anything.
+These are implementation instructions, not installed scripts. Target files are `ops/backup.sh`, `ops/restore-scratch.sh`, `ops/restore-clean.sh`, `ops/deploy.sh` and the read-only checks named in the weekly guide. Create and test them first on synthetic data. Use Compose project name `hrflow` consistently through environment configuration. PostgreSQL service is proposed `postgres`; gateway is proposed `api-gateway`, business workloads retain owner service names. Inspect actual names before running anything.
 
 The host is not ready according to the user. Disk headroom, domain/DNS, external disk, Docker and reboot/login behavior must be proven. Do not expose a debug route to speed setup.
 
@@ -80,7 +80,7 @@ Use non-destructive drills: stop the app's dependency connection in a controlled
 
 Disk alarms inspect free space and simulate thresholds with a test override. Never deliberately fill the production disk. Bound logs, dumps, evidence and export retention, and stop admission with explicit retryable error before accepting work without durable storage.
 
-Restart PostgreSQL after verified backup; allow crash recovery, then run health, migration, ledger/outbox and key-retry checks. Never delete/recreate its volume to make readiness green. Kafka is not in outcome C, so the gate verifies its absence; a future broker requires a new ADR and real topic/offset/replay outage tests.
+Restart PostgreSQL after verified backup; allow crash recovery, then run health, migration, ledger/outbox and key-retry checks. Never delete/recreate its volume to make readiness green. Kafka is retained under ADR 008: restore Registry schemas/config, record DB backup cut and replay position, test duplicate/offset recovery and retention-gap snapshot bootstrap. A single broker/host has no failover.
 
 ## Clean-machine restore in Weeks 10 and 12
 

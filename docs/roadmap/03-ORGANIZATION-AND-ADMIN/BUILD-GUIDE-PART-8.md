@@ -6,7 +6,7 @@
 
 **You will have:** Gate is **PASS** only with evidence; critical failure is **FAIL** and becomes the next action.
 
-### W03-S34 — Redeploy the checked service candidate (45–45 min)
+### W03-S39 — Redeploy the checked service candidate (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -43,13 +43,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s34` for implementation or `docs(w03): w03-s34` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s39` for implementation or `docs(w03): w03-s39` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S35 — Restore the release backup in scratch (45–45 min)
+### W03-S40 — Restore the release backup in scratch (45–45 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -86,13 +86,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s35` for implementation or `docs(w03): w03-s35` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s40` for implementation or `docs(w03): w03-s40` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S36 — Decide the gate and stop for rest (30–30 min)
+### W03-S41 — Decide the gate and stop for rest (30–30 min)
 
 **Why:** A and B owns one observable result in the preserved weekly objective.
 
@@ -128,8 +128,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s36` for implementation or `docs(w03): w03-s36` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w03-s36-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w03): w03-s41` for implementation or `docs(w03): w03-s41` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w03-s41-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

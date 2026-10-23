@@ -2,9 +2,12 @@
 
 ## Step
 
-- [ ] One change takes 30 to 90 minutes, has a visible result, and has a focused commit.
+- [ ] One intent targets 30 to 60 minutes, never exceeds 90, has a visible result, and has a focused commit.
 - [ ] Any new term has a linked primer; at most two new concepts were introduced today.
 - [ ] Expected result and failure recovery are checked; no secret is committed.
+
+- [ ] Common mistake, exact Undo and one Senior habit are present; unknown names were inspected first.
+- [ ] Reading/tests/commit and any pairing are counted; status is Run only when the full step result was actually obtained.
 
 ## Stone
 
@@ -26,3 +29,7 @@
 - [ ] Reboot, failed deploy, migration compatibility, secrets rotation and clean-host restore pass.
 - [ ] HTTPS/auth/firewall/secrets/backup gate passed before external exposure.
 - [ ] Known limitations and single-host outage risk are disclosed; guide completion is not product completion.
+
+## Senior release contract
+
+All Q01–Q14 rows resolve to enforcing steps and unchecked gate tasks; actual reports later establish **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN**. Both clients use one /api/v1 contract; services keep JDBC/schema/event ownership and safe problem details. Full final local stack includes Kafka/Registry, so broker offset/replay and snapshot bootstrap are tested. Cloud execution is deferred; no compliance or single-host availability guarantee is implied.

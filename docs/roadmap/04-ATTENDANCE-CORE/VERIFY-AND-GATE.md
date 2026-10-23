@@ -24,7 +24,7 @@ Step range: W04-S01 to W04-S36. Required new stone tags: `w04-s05-green`, `w04-s
 - [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W04-S01 to W04-S36, focused result and this week release/restore report.
 - [ ] Q07: Flyway clean/upgrade history, tenant FK/unique/checks, exact balances and stale/concurrent update assertions pass. Evidence: W04-S01 to W04-S36, focused result and this week release/restore report.
 - [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W04-S01 to W04-S36, focused result and this week release/restore report.
-- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, critical coverage targets are nonempty and container failures are not skipped. Evidence: W04-S01 to W04-S36, focused result and this week release/restore report.
+- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, implemented critical coverage selectors are nonempty, future packages are explicitly not yet covered, and container failures are not skipped. Evidence: W04-S01 to W04-S36, focused result and this week release/restore report.
 
 ## Minimum Viable Gate
 

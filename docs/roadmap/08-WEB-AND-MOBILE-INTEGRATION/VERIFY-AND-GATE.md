@@ -24,7 +24,7 @@ Step range: W08-S01 to W08-S33. Required new stone tags: `w08-s05-green`, `w08-s
 - [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W08-S01 to W08-S33, focused result and this week release/restore report.
 - [ ] Q05: Missing/invalid tokens, wrong role/resource, enumeration, throttle, refresh race/reuse and browser Origin/CSRF negatives all fail closed. Evidence: W08-S01 to W08-S33, focused result and this week release/restore report.
 - [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W08-S01 to W08-S33, focused result and this week release/restore report.
-- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, critical coverage targets are nonempty and container failures are not skipped. Evidence: W08-S01 to W08-S33, focused result and this week release/restore report.
+- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, implemented critical coverage selectors are nonempty, future packages are explicitly not yet covered, and container failures are not skipped. Evidence: W08-S01 to W08-S33, focused result and this week release/restore report.
 
 ## Minimum Viable Gate
 

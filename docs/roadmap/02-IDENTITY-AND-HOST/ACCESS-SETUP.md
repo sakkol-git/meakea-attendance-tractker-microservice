@@ -4,14 +4,14 @@
 
 Production setup is not ready. First confirm the exact host, at least 30 GiB free, Docker runtime, domain/DNS control, external encrypted disk and operator. Complete W02 security tests and restore before enabling a public hostname. Until then deploy loopback/private LAN only and mark external access **FAIL**. Never forward router ports or publish database/monitoring administration.
 
-## Caddy is the application gateway
+## Caddy is the private edge proxy
 
-Create proposed `infra/selfhost/Caddyfile`. This private origin example assumes the new app listens on internal 8080 and React production files are mounted read-only under `/srv/web`. It is not a config already present in the repository.
+Create proposed `infra/selfhost/Caddyfile`. This private origin example assumes the reactive api-gateway listens on internal 8080 and Nuxt generated static files are mounted read-only under `/srv/web`. It is not a config already present in the repository.
 
 ```text
 http://:80 {
     handle /api/* {
-        reverse_proxy app:8080
+        reverse_proxy api-gateway:8080
     }
     handle {
         root * /srv/web
@@ -46,4 +46,4 @@ Use the official [Tunnel setup](https://developers.cloudflare.com/tunnel/get-sta
 
 ## Friday repeat
 
-Run the deployment manifest/smoke script on the real host with the exact checked image. Preserve previous digest/config and test a known authenticated request from React and Flutter. Backup/restore still run when remote access is blocked; label private versus public result separately. Complete final operational drills with the Week 10 host runbook.
+Run the deployment manifest/smoke script on the real host with the exact checked image. Preserve previous digest/config and test a known authenticated request from Nuxt and Flutter. Backup/restore still run when remote access is blocked; label private versus public result separately. Complete final operational drills with the Week 10 host runbook.

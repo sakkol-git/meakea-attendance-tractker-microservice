@@ -1,5 +1,7 @@
 # Roadmap engineering progress
 
+> **Note:** Historical V1 record; current final design and execution status are in ADR 008, PROGRESS-V2 and V2-VALIDATION-LOG. Earlier C/React/Kafka-deferral statements are superseded, not current instructions.
+
 > **Note:** Guide complete as documentation; HRFlow implementation is not complete.
 
 ## Resume state
@@ -14,7 +16,7 @@ Weekly authoring complete: yes.
 | --- | --- | --- | --- |
 | A audit | **PASS** | Actual source/config/build/host inspection | Application blockers remain |
 | B reconcile | **PASS** | ADR 006, outcome C, separate case-only Git rename | Execute migration later |
-| C0 format | **PASS** | 154 Markdown files lint zero; selftest pass; broken fixture rejected | Manual viewers below |
+| C0 format | **PASS** | 155 Markdown files lint zero; selftest pass; broken fixture rejected | Manual viewers below |
 | C navigation | **PASS** | Master files, primers and daily dashboard | User chooses kickoff date |
 | D weeks | **PASS** | Six two-week commits; all gates/tests/recovery paths authored | Execute build-along later |
 | E dry-run | **CONDITIONAL PASS** | Auth split, capacity/prerequisite review, code/diagram checks | Three-viewer manual acceptance not run |
@@ -24,7 +26,7 @@ Weekly authoring complete: yes.
 
 [Actual validation](ACTUAL-VALIDATION.md) records commands/results, manual UI denials, example checks and source integrity. [Exact tree](FOLDER-TREE.md) lists files. [Baseline](00-PREPARATION/PROJECT-BASELINE.md) contains capacity math.
 
-Full linter output is `PASS: 154 Markdown files; zero errors`. Before every documentation commit the linter was executed successfully. A deliberately broken temporary file produced five format errors and nonzero exit; it was never committed.
+Full linter output is `PASS: 155 Markdown files; zero errors`. Before every documentation commit the linter was executed successfully. A deliberately broken temporary file produced five format errors and nonzero exit; it was never committed.
 
 ## Important corrections from dry-run
 

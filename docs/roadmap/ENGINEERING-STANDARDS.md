@@ -92,9 +92,9 @@ Introduced: Week 04; final enforcing IDs and literal gate tasks appear in [quali
 
 Rule: Small domain tests, real PostgreSQL integration tests and a few end-to-end stories cover critical behavior.
 
-Beginner minimum: JUnit 5 with Testcontainers PostgreSQL 16 and real Kafka for retained event flows; JaCoCo only for auth/attendance/leave domain and service packages.
+Beginner minimum: JUnit Jupiter (Boot-managed JUnit 6) with Testcontainers PostgreSQL 16 and real Kafka for retained event flows; JaCoCo only for auth/attendance/leave domain and service packages.
 
-Acceptance check: Critical packages target at least 80 percent lines and 70 percent branches, zero failing tests; negative/race/recovery cases cannot be replaced by coverage.
+Acceptance check: Implemented critical packages target at least 80 percent lines and 70 percent branches, zero failing tests; negative/race/recovery cases cannot be replaced by coverage.
 
 Introduced: Week 01; final enforcing IDs and literal gate tasks appear in [quality coverage](QUALITY-COVERAGE.md).
 
@@ -102,7 +102,7 @@ Introduced: Week 01; final enforcing IDs and literal gate tasks appear in [quali
 
 Rule: Foreign internals and dependency cycles fail the build.
 
-Beginner minimum: ArchUnit test imports actual compiled classes; api/internal boundaries, own controllers/services and no domain-to-web/persistence dependency.
+Beginner minimum: ArchUnit test imports actual compiled classes; api/application/domain/infrastructure direction, own controllers/services and no domain-to-web/persistence dependency.
 
 Acceptance check: Deliberately forbidden import and module cycle make test fail; zero imported classes is a failure, not a vacuous pass.
 
@@ -175,3 +175,7 @@ Q10 checks per-service package direction and Maven dependencies, not a fictional
 The final design's Prometheus/Grafana, structured logs and trace propagation remain observability targets; optional full log/trace storage must fit measured host resources. Health, correlation, lag/error metrics and alerting are minimum gates. Final cloud topology is future improvement per user instruction. Do not describe deferred cloud or unexecuted monitoring as delivered.
 
 Confluent Registry licensing and Terraform licensing must be checked before redistribution or future cloud work. Existing final architecture names them; this guide does not claim every named product is OSI-licensed merely because a container is downloadable. No new paid product is introduced by the quality practices.
+
+## Coverage bootstrap rule
+
+Week 1 proves real PostgreSQL/unit test execution and the coverage gate configuration. Auth/attendance/leave packages that are not built yet are explicitly not covered, never reported as 100 percent. Once an implemented critical package appears, its selector must be nonempty and its 80/70 threshold enforced in that same feature week. An empty selector for an implemented package fails. This avoids a circular Week-1 requirement to have completed Week-6 leave code.

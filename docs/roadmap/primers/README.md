@@ -28,7 +28,7 @@ Event delivery patterns, outbox persistence, and broker fundamentals:
 
 - [Transactional outbox pattern](TRANSACTIONAL-OUTBOX.md): Dual-write elimination, atomic outbox persistence, and asynchronous worker polling.
 - [API idempotency and duplicate prevention](IDEMPOTENCY.md): Client-supplied idempotency keys, duplicate response caching, and concurrent conflicts.
-- [Apache Kafka fundamentals and deferral rationale](KAFKA-BASICS.md): Topic partitions, consumer offsets, and rationale for deferring Kafka in MVP.
+- [Apache Kafka fundamentals and delivery boundaries](KAFKA-BASICS.md): Topic partitions, consumer offsets, and retained Kafka/Avro and consumer/outbox failure boundaries.
 - [Mobile offline command queues](OFFLINE-QUEUE.md): Client-side persistence, background synchronization, and network reconciliation.
 
 ## Security, ingress, and authentication

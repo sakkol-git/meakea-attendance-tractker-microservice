@@ -2,7 +2,7 @@
 
 ## Status and prerequisites
 
-First draft for implementation; **NOT RUN**. Referenced ops scripts are proposed, not installed today. Inspect/create them in named weekly steps first. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
+Procedure defined; execution **NOT RUN**. Referenced ops scripts are proposed, not installed today. Inspect/create them in named weekly steps first. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
 
 ## Numbered procedure
 
@@ -19,3 +19,5 @@ First draft for implementation; **NOT RUN**. Referenced ops scripts are proposed
 - [ ] Failure remains visible and the next action names a safe reproduction or recovery checkpoint.
 
 [Host detail](../10-OPERATIONS-AND-RESTORE/HOST-RUNBOOK.md), [daily commands](../DAILY-COMMANDS.md), and [stuck protocol](../STUCK-PROTOCOL.md).
+
+[Script interface and safe target configuration](SCRIPT-INTERFACE.md) defines exact creation order, refusal guards and invocations. Missing prerequisite or report is a failed gate, not permission to guess a target.

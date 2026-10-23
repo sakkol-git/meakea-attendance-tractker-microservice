@@ -6,7 +6,7 @@
 
 **You will have:** A new attendance instance builds its known tenant schedule without querying identity_org tables; duplicate snapshot is harmless.
 
-### W03-S26 — Publish organization facts through owner intent — state the failing behavior (30–30 min)
+### W03-S31 — Publish organization facts through owner intent — state the failing behavior (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -44,13 +44,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s26` for implementation or `docs(w03): w03-s26` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s31` for implementation or `docs(w03): w03-s31` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S27 — Publish organization facts through owner intent — make the narrow behavior pass (45–45 min)
+### W03-S32 — Publish organization facts through owner intent — make the narrow behavior pass (45–45 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -88,13 +88,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s27` for implementation or `docs(w03): w03-s27` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s32` for implementation or `docs(w03): w03-s32` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S28 — Publish organization facts through owner intent — prove the denied or failure path (30–30 min)
+### W03-S33 — Publish organization facts through owner intent — prove the denied or failure path (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -132,13 +132,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s28` for implementation or `docs(w03): w03-s28` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s33` for implementation or `docs(w03): w03-s33` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S29 — Verify RLS role grants and pool reuse (45–45 min)
+### W03-S34 — Verify RLS role grants and pool reuse (45–45 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -174,13 +174,13 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s29` for implementation or `docs(w03): w03-s29` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w03): w03-s34` for implementation or `docs(w03): w03-s34` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S30 — Bootstrap organization facts for attendance (45–45 min)
+### W03-S35 — Bootstrap organization facts for attendance (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -216,8 +216,8 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w03): w03-s30` for implementation or `docs(w03): w03-s30` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w03-s30-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w03): w03-s35` for implementation or `docs(w03): w03-s35` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w03-s35-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

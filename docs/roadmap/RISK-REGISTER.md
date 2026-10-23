@@ -40,7 +40,7 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 
 - Likelihood: Med; impact: High; severity: High.
 - Early warning: Someone adds broker without operational budget.
-- Prevention: No Kafka runtime in outcome C.
+- Prevention: Measure single-host memory/disk for actual Kafka/Registry/services; bound JVM/log/retention usage and test restore.
 - Contingency: Require new ADR and real-broker tests before adoption.
 - Owner: A; milestone: W5/W10.
 
@@ -179,3 +179,24 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 - Prevention: Four yes admission and baseline first.
 - Contingency: Keep simple method/switch and reject refactor.
 - Owner: A+B; milestone: W3/W7/W9.
+
+## Quality work overloads the schedule
+
+- Likelihood: High; impact: High; owner A+B; review every Friday.
+- Signal: Actual step/learning time exceeds weekly ledger, especially first-time Java fixtures or service integration.
+- Prevention: Count pairing/reading, reuse the golden slice once, keep narrow MVP behavior, cut optional polish/patterns/cloud first.
+- Contingency: Preserve security/tenant/replay/restore; show exact remaining Must hours and scope/date conflict. A plan passing lint is not measured productivity.
+
+## Step splitting increases total time
+
+- Likelihood: Medium; impact: High; owner A; review Weeks 1–3.
+- Signal: Commit/context switching consumes more than the stated included allowance.
+- Prevention: Keep adjacent red/green steps on one work branch, reuse fixtures and commit exact paths; never green-tag a red assertion.
+- Contingency: Use recovery headroom; merge only if one intent stays below 60 minutes and at most three files. Recompute hours and ID map, never omit tests.
+
+## Gateway header trust and single-host failure
+
+- Likelihood: Medium; impact: High; owner A; gates Weeks 2/3/10/11.
+- Signal: Direct business ingress, forged identity headers, wrong runtime DB role or missing external restore proof.
+- Prevention: Strip/verify identity at gateway, private business ports, method/resource checks, scoped JDBC plus personal-table RLS; cross-tenant/direct-ingress tests.
+- Contingency: Block exposure, repair boundary and repeat security/restore suite. A compromised trusted network peer remains a residual risk; a single host/broker/DB is not highly available.

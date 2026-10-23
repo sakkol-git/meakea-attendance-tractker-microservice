@@ -6,7 +6,7 @@
 
 **You will have:** Private readiness, denied unauthenticated business access and scratch restore have actual evidence, or gate remains **FAIL**; no production-readiness claim.
 
-### W01-S36 — Self-review the first private release (30–30 min)
+### W01-S37 — Self-review the first private release (30–30 min)
 
 **Why:** A and B owns one observable result in the preserved weekly objective.
 
@@ -42,13 +42,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s36` for implementation or `docs(w01): w01-s36` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s37` for implementation or `docs(w01): w01-s37` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S37 — Redeploy locally and record the gate (30–30 min)
+### W01-S38 — Redeploy locally and record the gate (30–30 min)
 
 **Why:** A and B owns one observable result in the preserved weekly objective.
 
@@ -86,8 +86,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s37` for implementation or `docs(w01): w01-s37` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w01-s37-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w01): w01-s38` for implementation or `docs(w01): w01-s38` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w01-s38-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 

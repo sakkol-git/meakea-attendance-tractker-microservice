@@ -22,7 +22,7 @@ Step range: W12-S01 to W12-S34. Required new stone tags: `w12-s05-green`, `w12-s
 
 - [ ] Q01: One /api/v1 OpenAPI validates and its request/response/error fixtures match implemented routes; broken schema copy fails. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
 - [ ] Q06: No secret in Git/logs; secret scan and environment/key rotation evidence prove bounded old-key retirement. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
-- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, critical coverage targets are nonempty and container failures are not skipped. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
+- [ ] Q09: Required domain/real PostgreSQL/Kafka/client assertions execute, implemented critical coverage selectors are nonempty, future packages are explicitly not yet covered, and container failures are not skipped. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
 - [ ] Q12: Every-push build/test/format/static/contract/dependency/image/secret jobs run pinned tools/images; scan/runner failure is not success. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
 - [ ] Q13: Intended-host deploy/rollback/external backup/scratch restore and applicable failure drills verify rows/files/schema/replay metadata; no high-availability claim. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.
 - [ ] Q14: Formatter/static checks and ten-minute self-review precede every green stone tag; optional patterns pass admission. Evidence: W12-S01 to W12-S34, focused result and this week release/restore report.

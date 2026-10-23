@@ -61,6 +61,10 @@
 - [Golden Slice](GOLDEN-SLICE.md).
 - [Operational runbooks](runbooks/README.md).
 
-## V2 partial-upgrade checkpoint
+## Final V2 execution path
 
-Open [V2 progress](PROGRESS-V2.md) before executing this roadmap. The final seven-service architecture supersedes old C/React instructions; cloud execution is deferred. Weeks 1–2 are atomic drafts with known validation gaps, Weeks 3–12 remain unconverted, and the requested linter extensions are not implemented yet. [Interim changelog](CHANGELOG-V2.md), [ID map](STEP-ID-MAP.md), [validation log](V2-VALIDATION-LOG.md), and [remaining architecture references](V2-REMAINING-REFERENCES.md) make the unfinished work explicit. No application work is marked complete.
+Begin with [START-HERE](START-HERE.md) and [YOU-ARE-HERE](YOU-ARE-HERE.md); development starts 2026-10-26 and targets the 2027-01-15 release rehearsal. All twelve weeks now use the final seven-service/JDBC/Kafka/Nuxt design. [Changelog](CHANGELOG-V2.md), [validation](V2-VALIDATION-LOG.md), [quality coverage](QUALITY-COVERAGE.md) and [progress](PROGRESS-V2.md) distinguish authoring completion from implementation evidence.
+
+[ID map](STEP-ID-MAP.md) and [draft map](DRAFT-ID-MAP.md) preserve old progress/tags. Cloud deployment remains future improvement. All required security and restore tests stay in the gate; no single-host availability or certification claim.
+
+[Toolchain evidence](TOOLCHAIN-REFERENCE.md) and [operation script interface](runbooks/SCRIPT-INTERFACE.md) explain exact version/target prerequisites without inventing installed tools or production hosts.

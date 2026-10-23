@@ -4,7 +4,7 @@
 
 **Capacity inputs:** A=24; B=24; fraction=0.70; light=0.85.
 
-User confirmed no change on this second pass. These inputs are authoritative; weekly planned totals include reading, self-review and recovery. Start date/host readiness remain unconfirmed.
+User confirmed no change on this second pass. These inputs are authoritative; weekly planned totals include reading, self-review and recovery. Start date is 2026-10-26 per next-week instruction; host readiness remains unconfirmed.
 
 ## Current position
 
@@ -37,6 +37,8 @@ Tomorrow's first action: W01-S01 until its checkpoint and disk checks pass. A fa
 | 11 | Not started | None | **NOT RUN** | Week 10 |
 | 12 | Not started | None | **NOT RUN** | Week 11 |
 
-## Final-design correction
+## Calendar and final design
 
-Latest user instruction accepts the final seven-service Architecture and defers AWS/Kubernetes as future improvement. Open [V2 progress](PROGRESS-V2.md) before following weekly code instructions: unconverted monolith/React steps are not executable guidance. Current position remains W01-S01; no application tag passed and no progress is translated to done.
+Development starts Monday 2026-10-26. Week 12 is 2027-01-11 through Friday 2027-01-15; weekend rest ends 2027-01-17 and the 84-day boundary is 2027-01-18. This is the twelve-week goal, not an implementation guarantee. Current position stays W01-S01/not started.
+
+The approved architecture is seven services with JDBC, reactive gateway, Kafka/Avro, Nuxt, Flutter and confidence integration. AWS/Kubernetes execution is future improvement. The V2 guide is the execution reference; open START-HERE first. Quality gates still require actual developer reports. No documentation commit is a green application tag.

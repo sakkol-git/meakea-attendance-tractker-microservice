@@ -4,7 +4,7 @@
 
 ## Stone 2 — First private service baseline
 
-**You will have:** Confirmed Flutter version/root recorded; one shell widget test passes and the emulator shows the shell.
+**You will have:** Nuxt build completes without error and the panel identifies its data as a fixture.
 
 ### W01-S07 — Prove the reactive gateway starts (45–45 min)
 
@@ -174,11 +174,11 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S11 — Retain and build the Nuxt client (30–30 min)
+### W01-S11 — Create the locked Nuxt test runner (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
-**Read first (up to 10 min, included):** [One concept](../primers/OPENAPI.md). Reuse prior learning; no new concept on Thursday/Friday.
+**Read first (up to 10 min, included):** [One concept](../primers/CONTRACT-TESTS.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
@@ -186,15 +186,15 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `web/app/app.vue`, `docs/validation/W01-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect web/package.json, package-lock.json and current welcome source. Replace only the welcome view with a minimal contract-fixture panel, retaining Nuxt/Vue and the matching lockfile. Do not rewrite web to React.
+1. Inspect first: review current equivalents for `web/package.json`, `web/package-lock.json`, `web/vitest.config.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Use the exact Nuxt-compatible Vitest/test-utils versions recorded by the prior tool lock. Add the test script and minimal defineVitestConfig from the official Nuxt test-utils docs, keep build/dev scripts and lockfile intact. Prove test runner discovery with a tiny temporary assertion, then remove the temporary fixture; real fixtures arrive in the following steps.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-npm --prefix web run build
+npm --prefix web run test -- --run
 ```
 
-**Expect:** Nuxt build completes without error and the panel identifies its data as a fixture.
+**Expect:** The selected fixture is discovered and executes; a deliberately false assertion exits nonzero. No-test discovery is not a successful feature test.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.
@@ -216,7 +216,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S12 — Locate or create the Flutter shell (45–45 min)
+### W01-S12 — Retain and build the Nuxt client (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -228,15 +228,15 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `mobile/pubspec.yaml`, `mobile/lib/main.dart`, `mobile/test/widget_test.dart`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first: locate an existing Flutter project before choosing mobile. If absent create a Flutter shell at proposed mobile, record flutter --version and lockfile, and keep one widget test. No backend call yet. Run flutter test from the confirmed mobile root.
+1. Inspect first: review current equivalents for `web/app/app.vue`, `docs/validation/W01-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Inspect web/package.json, package-lock.json and current welcome source. Replace only the welcome view with a minimal contract-fixture panel, retaining Nuxt/Vue and the matching lockfile. Do not rewrite web to React.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
-flutter --version
+npm --prefix web run build
 ```
 
-**Expect:** Confirmed Flutter version/root recorded; one shell widget test passes and the emulator shows the shell.
+**Expect:** Nuxt build completes without error and the panel identifies its data as a fixture.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.

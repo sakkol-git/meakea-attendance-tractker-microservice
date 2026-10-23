@@ -15,7 +15,7 @@ The requirement satisfied is service-owned HR domains with Kafka event integrati
 - ml/confidence-service contains standalone confidence code/tests; Kafka worker integration remains future implementation. Existing Python tests passing do not prove event integration.
 - Safe recorded outputs: `mvn -o validate` passed ten reactor projects; `mvn -o test` failed resolving uncached Avro/Jackson before Java compilation; Nuxt build passed; Python pytest passed five tests with one warning; Docker daemon was unavailable. These results are baseline evidence, not application gates.
 
-## Capacity recomputation and schedule verdict
+## Historical pre-decomposition demand estimate
 
 Single source inputs are in [dashboard](YOU-ARE-HERE.md): 24 h each, fraction 0.70, light factor 0.85. Normal planned capacity is 16.8 each, Weeks 4/8 14.28 each. Twelve-week capacity is 196.56 each, 393.12 combined. The old 182-step upper-duration ledger totals A=117 and B=80.5 hours; reading adds 24 each. It described a different architecture and omitted much of the quality bar.
 
@@ -36,7 +36,7 @@ The following is a planning-demand estimate, not scheduled hours or measured jun
 | 11 | 10/7 | 15/3 | 27/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
 | 12 | 10/7 | 10/3 | 22/12 | 16.8/16.8 | **FAIL** A demand exceeds limit |
 
-Total demand is A=349, B=140.5, combined 489.5 contributor-hours. This exceeds combined planned capacity by 96.38 h and A's capacity by 152.44 h. B's unused budget cannot be treated as backend expertise without training/pairing costs. This estimate does not include AWS/Kubernetes execution, which is now deferred. Full-scope twelve-week feasibility is **FAIL** under these estimates; it must not be advertised as a funded plan.
+Total demand is A=349, B=140.5, combined 489.5 contributor-hours. This exceeds combined planned capacity by 96.38 h and A's capacity by 152.44 h. B's unused budget cannot be treated as backend expertise without training/pairing costs. This estimate does not include AWS/Kubernetes execution, which is now deferred. The initial full-scope estimate was **FAIL**; it is retained as a risk signal, not the final atomic ledger. The final schedule below supersedes it for planned hours.
 
 Delta estimate basis: Weeks 1–3 align seven builds, reactive gateway/JDBC, Avro compatibility and tenant/security fixtures; Weeks 4–8 add service-owned projections, Kafka outbox/inbox replay and cross-client/event tests; Week 9 adds reporting/confidence integration and observability; Weeks 10–12 add multi-workload deploy/recovery, replay/security hardening and release rehearsal. These are planning allowances, not invented command timings. Phase 4 atomic ledgers must refine or disprove them with evidence.
 
@@ -166,3 +166,26 @@ Keep final gateway header-trust decision. Gateway removes all incoming identity 
 | Global checklist, pattern path, definition of done, start/dashboard | All IDs | New steps/gates untraced | Map every old ID; preserve tags; no prechecked tasks |
 
 The exact per-file map after splitting belongs in STEP-ID-MAP.md. This impact matrix deliberately identifies unconverted files; it does not declare their contents consistent before edits.
+
+## Final bottom-up schedule and reconciliation
+
+The previous 489.5-hour figure added coarse service/quality allowances to broad V1 tasks; it was not measured velocity. Decomposition now assigns every narrow feature delta, reused golden-slice check, five additional service context alignments, explicit browser/profile/CSRF work, Kafka recovery and six runbooks to real step IDs. B owns repeatable fixtures/client/ops work, with A review/mentoring explicitly charged; mandatory security/restore is not cut. Optional pattern refactors, richer UI/report variants, push/SSE and cloud execution do not consume the minimum path.
+
+| Week | A h | B h | Limit each | Evidence |
+| --- | --- | --- | --- | --- |
+| 01 | 13.75 | 14.25 | 16.8 | [38 steps](01-FOUNDATION/README.md) |
+| 02 | 14.25 | 11 | 16.8 | [35 steps](02-IDENTITY-AND-HOST/README.md) |
+| 03 | 14.25 | 14.25 | 16.8 | [41 steps](03-ORGANIZATION-AND-ADMIN/README.md) |
+| 04 | 9.5 | 12.25 | 14.28 | [36 steps](04-ATTENDANCE-CORE/README.md) |
+| 05 | 10 | 14.25 | 16.8 | [36 steps](05-OUTBOX-AND-NOTIFICATIONS/README.md) |
+| 06 | 10.25 | 14 | 16.8 | [36 steps](06-LEAVE-WORKFLOW/README.md) |
+| 07 | 13.5 | 14.25 | 16.8 | [42 steps](07-REQUESTS-AND-APPROVALS/README.md) |
+| 08 | 7.75 | 12.25 | 14.28 | [33 steps](08-WEB-AND-MOBILE-INTEGRATION/README.md) |
+| 09 | 13.25 | 14 | 16.8 | [41 steps](09-REPORTING-AUDIT-OBSERVABILITY/README.md) |
+| 10 | 13.5 | 14 | 16.8 | [42 steps](10-OPERATIONS-AND-RESTORE/README.md) |
+| 11 | 9.25 | 14 | 16.8 | [34 steps](11-HARDENING-AND-PILOT/README.md) |
+| 12 | 9.25 | 14 | 16.8 | [34 steps](12-RELEASE-AND-DEMONSTRATION/README.md) |
+
+Final planned total is 301 h, A=138.5/B=162.5, leaving 92.12 h below the 70-percent planning ceiling. This is an itemized estimate, not evidence that work became faster or the initial risk disappeared. Shared infrastructure is built once then tested per feature; the earlier blanket overhead is not charged a second time. Basic source/test/tool familiarity and narrow MVP screens are explicit assumptions. If Week-1 actuals invalidate the durations, keep critical gates and report a concrete scope/date conflict instead of lowering observed timings.
+
+[Roadmap](ROADMAP.md) and weekly README totals are derived outputs from the single dashboard capacity input. [Quality coverage](QUALITY-COVERAGE.md) links every Q-item and [ID map](STEP-ID-MAP.md) preserves all old progress. The user accepted the final design; no further architecture approval is needed for this documented local finish line. Runtime evidence remains **NOT RUN**.

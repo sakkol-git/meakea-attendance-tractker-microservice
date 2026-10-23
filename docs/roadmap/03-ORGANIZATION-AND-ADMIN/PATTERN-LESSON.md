@@ -63,7 +63,7 @@ java -cp /tmp PatternExample
 
 ## Unit tests
 
-The example includes executable assertions in main. Production refactor also keeps the existing JUnit 5 domain/repository tests green. Add the following small JUnit file to the new app test source only during the lesson; do not introduce a test dependency in this documentation task.
+The example includes executable assertions in main. Production refactor also keeps the existing JUnit Jupiter (Boot-managed JUnit 6) domain/repository tests green. Add the following small JUnit file to the new app test source only during the lesson; do not introduce a test dependency in this documentation task.
 
 ```java
 import org.junit.jupiter.api.Test;

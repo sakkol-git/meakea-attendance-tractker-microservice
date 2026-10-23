@@ -2,11 +2,11 @@
 
 ## Inputs and honesty
 
-The user replied “24” to the combined hours question. This guide interprets that as A 24 and B 24 hours per week; correct the dashboard if the answer meant only one contributor or 24 combined. Start date remains unknown. Working rhythm is Monday through Friday; steps last 45 to 60 minutes, or 30 to 45 in light weeks. Deadline is start plus exactly 84 calendar days, with release completed by the preceding Friday if needed.
+The user confirmed A=24 and B=24 hours per week. Start is 2026-10-26; the release rehearsal is 2027-01-15. Working rhythm is Monday through Friday; steps last 45 to 60 minutes, or 30 to 45 in light weeks. Deadline is start plus exactly 84 calendar days, with release completed by the preceding Friday if needed.
 
 Only 70 percent is planned: 16.8 hours each in ordinary weeks. Weeks 4 and 8 are 15 percent lighter: 14.28 hours each. No weekend work is allocated. Production setup is not ready, according to the user; host/domain/backup gates remain blocked.
 
-## Capacity math
+## Historical V1 capacity math
 
 Normal weeks: 10 times 33.6 equals 336 combined hours. Light weeks: 2 times 28.56 equals 57.12. Total planned capacity is 393.12 contributor-hours; the unplanned 30 percent is not allocated secretly.
 
@@ -31,3 +31,7 @@ There is no green application tag. Dashboard starts at W01-S01, status **Not run
 ## V2 supersession and capacity blocker
 
 The table above is historical evidence of why the original guide used a monolith. It is not the current decision or a feasibility claim. The user explicitly retained the latest service design and deferred AWS/Kubernetes execution. [Current review](../ARCHITECTURE-REVIEW-V2.md) recalculates seven-service/JDBC/Kafka/quality demand and records a capacity shortfall. Only the single dashboard input is authoritative for hours. Do not execute hrflow-app or React migration instructions from an unconverted week.
+
+## Final V2 ledger
+
+The final [roadmap ledger](../ROADMAP.md) supersedes V1 step totals and the initial coarse service-overhead estimate. All 448 current steps and explicit pairing allocations fit each weekly 70-percent limit; actual implementation/time remains **NOT RUN**. Preserve the risk and recalibrate after Week 1 rather than treat the estimates as guaranteed throughput.

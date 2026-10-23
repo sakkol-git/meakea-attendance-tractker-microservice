@@ -6,7 +6,7 @@
 
 **You will have:** Private skeleton config validates; only the reviewed edge has a loopback published port; DB/business ports remain private.
 
-### W01-S24 — Time-box Avro Registry compatibility (45–45 min)
+### W01-S25 — Time-box Avro Registry compatibility (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -42,13 +42,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s24` for implementation or `docs(w01): w01-s24` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s25` for implementation or `docs(w01): w01-s25` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S25 — Record the first event round-trip result (45–45 min)
+### W01-S26 — Record the first event round-trip result (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -84,13 +84,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s25` for implementation or `docs(w01): w01-s25` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s26` for implementation or `docs(w01): w01-s26` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S26 — Build pinned private candidate images (60–60 min)
+### W01-S27 — Build pinned private candidate images (60–60 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -126,13 +126,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s26` for implementation or `docs(w01): w01-s26` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s27` for implementation or `docs(w01): w01-s27` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S27 — Repair the actual dependency Compose paths (30–30 min)
+### W01-S28 — Repair the actual dependency Compose paths (30–30 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -168,13 +168,13 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s27` for implementation or `docs(w01): w01-s27` for findings/evidence, with exact reviewed paths only.
+- [ ] Committed with message `feat(w01): w01-s28` for implementation or `docs(w01): w01-s28` for findings/evidence, with exact reviewed paths only.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W01-S28 — Create the private skeleton manifest (45–45 min)
+### W01-S29 — Create the private skeleton manifest (45–45 min)
 
 **Why:** B owns one observable result in the preserved weekly objective.
 
@@ -210,8 +210,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Check:**
 
 - [ ] This result and its stated denial/failure assertion have real report evidence; red commits stay untagged.
-- [ ] Committed with message `feat(w01): w01-s28` for implementation or `docs(w01): w01-s28` for findings/evidence, with exact reviewed paths only.
-- [ ] Tagged `w01-s28-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
+- [ ] Committed with message `feat(w01): w01-s29` for implementation or `docs(w01): w01-s29` for findings/evidence, with exact reviewed paths only.
+- [ ] Tagged `w01-s29-green` after the [ten-minute review](../CODE-REVIEW-CHECKLIST.md), all stone assertions and current private app startup pass; never overwrite an old tag.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
