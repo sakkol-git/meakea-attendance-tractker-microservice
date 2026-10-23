@@ -1,1 +1,74 @@
-spring.application.name=api-gateway
+# Run from this service directory or the HRFlow repository root.
+spring:
+  application:
+    name: api-gateway
+  config:
+    import:
+      - "optional:file:./.env[.properties]"
+      - "optional:file:./services/api-gateway/.env[.properties]"
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration
+      - org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration
+  main:
+    web-application-type: reactive
+  webflux:
+    problemdetails:
+      enabled: true
+  http:
+    codecs:
+      max-in-memory-size: 1MB
+  cloud:
+    gateway:
+      server:
+        webflux:
+          httpclient:
+            connect-timeout: 3000
+            response-timeout: 10s
+          # No forwarding routes until JWT/header-trust checks are implemented.
+          routes: []
+
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  forward-headers-strategy: none
+  max-http-request-header-size: 16KB
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: false
+
+management:
+  server:
+    address: ${MANAGEMENT_ADDRESS:127.0.0.1}
+    port: ${MANAGEMENT_PORT:9080}
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    org.springframework.web: INFO
+  structured:
+    format:
+      console: logstash

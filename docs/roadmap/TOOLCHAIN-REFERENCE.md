@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | Java target | 21 | pom.xml and service poms | Active local Java 17 must be replaced/selected before compiling |
 | Maven | 3.9.16 | mvn --version | Use root reactor/service -pl; preserve wrapper if adopted |
-| Boot | Root 4.1.1; services 4.0.8 | Actual poms | Week-1 spike then explicit owner context alignment |
+| Boot | Root/services inherit 4.1.1 | Actual poms | Baseline aligned; real owner/Java-21/integration startup still required |
 | Cloud | 2025.1.3 scaffold | api-gateway pom | Official matrix supports Boot 4.1.x from 2025.1.2; retain 2025.1.3 and verify reactive startup |
 | Avro | 1.11.4 | Root property | Fix actual schema sourceDirectory before generation |
 | Web | Nuxt ^4.6.1 manifest plus package-lock | web/package.json | npm ci uses lock, not an unreviewed upgrade |
@@ -31,3 +31,7 @@ npm --prefix web run test -- --run
 ```
 
 The Nuxt test script is added with its first feature fixture using the locked compatible runner. It is absent in the audited scaffold and therefore is not run or claimed to exist today. One Maven test command uses actual selected class/method from inspection as documented in DAILY-COMMANDS. A grep/config/syntax check is not a domain assertion or a cloud deployment.
+
+## Service baseline update
+
+[Service configuration](../SERVICE-CONFIGURATION.md) records the current parent/JDBC/reactive alignment and environment setup. Older audits capture pre-alignment source, not instructions to undo this baseline. The schema generator now reads libs/hrflow-contracts/events. Configuration/security slice tests do not replace the planned real PostgreSQL/Kafka and Java-21 gates.

@@ -17,6 +17,7 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/PROJECT-ANALYSIS.md](PROJECT-ANALYSIS.md) | Audit/history | Dated analysis or authoring record; final guides govern execution |
 | [docs/README.md](README.md) | Navigation/governance | Route by topic; map controls authority |
 | [docs/REST-API-DATABASE-DESIGN.md](REST-API-DATABASE-DESIGN.md) | Design specification | Current target; implementation requires evidence |
+| [docs/SERVICE-CONFIGURATION.md](SERVICE-CONFIGURATION.md) | Developer procedure | Current environment/loading/ports/security baseline and remaining gates |
 | [docs/SOURCE-OF-TRUTH.md](SOURCE-OF-TRUTH.md) | Navigation/governance | Route by topic; map controls authority |
 | [docs/adr/001-SERVICE-AND-EVENT-BOUNDARIES.md](adr/001-SERVICE-AND-EVENT-BOUNDARIES.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
 | [docs/adr/002-TENANT-AND-PERSISTENCE-ISOLATION.md](adr/002-TENANT-AND-PERSISTENCE-ISOLATION.md) | Architecture decisions | Read index status and supersession; policy may be proposed |

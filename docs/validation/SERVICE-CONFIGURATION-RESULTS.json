@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-23",
+  "scope": "Configuration baseline, not business acceptance",
+  "java": {
+    "command": "mvn -o verify",
+    "jdk": "Existing Corretto 23.0.2 selected only for this command",
+    "compiler_release": 21,
+    "reactor_projects": 10,
+    "tests": 28,
+    "failures": 0,
+    "errors": 0,
+    "executable_service_jars": 7,
+    "result": "PASS",
+    "warnings": [
+      "Mockito dynamic agent loading on JDK 23"
+    ],
+    "limit": "Java 21 runtime, real PostgreSQL/Kafka and business behavior not validated"
+  },
+  "python": {
+    "cwd": "ml/confidence-service",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider",
+    "tests": 12,
+    "result": "PASS",
+    "warnings": [
+      "Existing Starlette/httpx deprecation warning"
+    ]
+  },
+  "live_checks": [
+    {
+      "target": "Packaged api-gateway on temporary loopback application and management ports",
+      "result": "PASS",
+      "assertions": [
+        "Live liveness/readiness HTTP 200",
+        "Minimal health body contains status only",
+        "Anonymous business and sensitive management paths HTTP 401"
+      ],
+      "process_stopped": true
+    },
+    {
+      "target": "confidence-service run.py on temporary loopback port",
+      "result": "PASS",
+      "assertions": [
+        "Process environment port honored",
+        "Health HTTP 200",
+        "Server header absent"
+      ],
+      "process_stopped": true
+    }
+  ],
+  "environment_files": {
+    "services": [
+      "api-gateway",
+      "identity-org",
+      "attendance",
+      "leave",
+      "request",
+      "notification",
+      "reporting",
+      "ml/confidence-service"
+    ],
+    "blank_dotenv_files": 8,
+    "all_zero_bytes": true,
+    "all_ignored": true,
+    "all_examples_trackable": true
+  },
+  "not_run": [
+    "Java 21 runtime",
+    "Live PostgreSQL/Kafka integration",
+    "Production authentication and tenant isolation",
+    "Production deployment",
+    "Backup restore"
+  ]
+}

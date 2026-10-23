@@ -60,7 +60,7 @@ The database instance hosts six logical schemas, enforcing service ownership:
 
 ## Transactional outbox and consumer inbox tables
 
-Spring JDBC is the target; existing JPA dependencies are scaffold drift, not permission to adopt Hibernate. The following are proposed shapes, not installed migrations. Instantiate outbox_events in each publishing owner schema; the attendance example is shown. Each handler owns its inbox_receipts with its effect. This deliberate infrastructure-write exception does not permit cross-domain business-table access:
+Spring JDBC is selected in the aligned business-service builds; no Hibernate/JPA persistence is introduced. The following are proposed shapes, not installed migrations. Instantiate outbox_events in each publishing owner schema; the attendance example is shown. Each handler owns its inbox_receipts with its effect. This deliberate infrastructure-write exception does not permit cross-domain business-table access:
 
 ```sql
 CREATE TABLE attendance.outbox_events (

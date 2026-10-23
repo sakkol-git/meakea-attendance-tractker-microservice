@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.1</version> <!-- MUST equal the version in your service poms -->
+        <version>4.1.1</version>
         <relativePath/>
     </parent>
 
@@ -19,6 +19,7 @@
 
     <properties>
         <java.version>21</java.version>
+        <spring-cloud.version>2025.1.3</spring-cloud.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <avro.version>1.11.4</avro.version>
         <confluent.version>8.1.0</confluent.version>

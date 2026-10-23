@@ -6,6 +6,10 @@ Date: 2026-10-23. Scope: documentation suite, not application release certificat
 
 Use [V2 validation log](../roadmap/V2-VALIDATION-LOG.md) for the final roadmap checkpoint commands and limits, [linter proofs](../roadmap/LINTER-PROOFS.md) for semantic-check verification, and [source of truth](../SOURCE-OF-TRUTH.md) for authority. The sections below retain historical results; they are not current product acceptance. Old 112-route/schema export tooling was superseded when long documents were split.
 
+## Service configuration baseline
+
+[Service configuration](../SERVICE-CONFIGURATION.md) records the later implementation baseline, environment files, tests and limits. SERVICE-CONFIGURATION-RESULTS.json contains its dated Maven/Python/live-loopback check receipt. Earlier V2 and baseline records remain checkpoint-specific; no old test result is silently promoted to production acceptance.
+
 ## Historical structural checks
 
 ```bash

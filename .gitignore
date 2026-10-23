@@ -6,6 +6,8 @@ node_modules/
 .vscode/
 *.iml
 .env
+.env.*
+!.env.example
 __pycache__/
 .venv/
 ml/**/runs/

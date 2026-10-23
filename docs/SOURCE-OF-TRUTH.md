@@ -56,6 +56,7 @@ The approved domain chapters describe target behavior; the Must/Stretch boundary
 | --- | --- | --- |
 | Runtime topology, synchronous boundaries and service ownership | [Architecture](Architecture.md) and [ADR 008](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) | [Architecture review](roadmap/ARCHITECTURE-REVIEW-V2.md) diagrams and failure modes |
 | Package layout, dependency direction and architecture fitness | [Engineering standards Q10/Q14](roadmap/ENGINEERING-STANDARDS.md) | [Architecture review](roadmap/ARCHITECTURE-REVIEW-V2.md) and [Week 03](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) tests |
+| Environment files, service ports and runtime baseline | [Service configuration](SERVICE-CONFIGURATION.md) | Actual application YAML/.env.example and security/configuration tests; no business acceptance implied |
 | Tool/build versions, compatibility and dependency pins | [Toolchain reference](roadmap/TOOLCHAIN-REFERENCE.md) | Inspect actual manifests/lockfiles; distinguish observed versions from target alignment |
 | HTTP routes, versioning, methods, status, pagination and errors | [API/database design](REST-API-DATABASE-DESIGN.md) | [API guidelines](roadmap/API-GUIDELINES.md) and [Week 01](roadmap/01-FOUNDATION/README.md) contract checks |
 | OpenAPI and client/server contract agreement | [Engineering standards Q01](roadmap/ENGINEERING-STANDARDS.md) | One proposed contracts/openapi.yaml is created/checked in Week 01; no existing executable contract is inferred |

@@ -83,6 +83,10 @@ The engineering journey is organized into twelve sequential weekly phases, takin
 | 11 | [Hardening and pilot](roadmap/11-HARDENING-AND-PILOT/README.md) | Security vulnerability scan, rate limiting, measured load testing | 100 bounded virtual clients **NOT RUN** |
 | 12 | [Release and demonstration](roadmap/12-RELEASE-AND-DEMONSTRATION/README.md) | Code freeze, user acceptance testing, operator training, release handoff | Stakeholder demonstration **NOT RUN** |
 
+## Service environment configuration
+
+[Service configuration](SERVICE-CONFIGURATION.md) explains the seven Java services and Python prototype: local blank .env files, committed examples, loading precedence, private ports, required database roles and closed security defaults. Use this before startup; an empty environment is not a configured database or completed authentication flow.
+
 ## Build and test execution
 
 The development environment requires Java 21, Maven 3.9+, Docker Desktop or Docker Engine, Node.js 20+, and Flutter 3.19+:

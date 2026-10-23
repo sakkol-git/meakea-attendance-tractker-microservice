@@ -34,7 +34,7 @@
                         <phase>generate-sources</phase>
                         <goals><goal>schema</goal></goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/../../contracts/events</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/events</sourceDirectory>
                             <stringType>String</stringType>
                             <fieldVisibility>PRIVATE</fieldVisibility>
                         </configuration>
