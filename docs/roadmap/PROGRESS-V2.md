@@ -2,14 +2,14 @@
 
 ## Resume state
 
-Branch docs/roadmap-v2. Phase 1 complete; phase 2 audit next. Incoming uncommitted docs/source were snapshotted before changes; only measured canonical contradictions and format defects were touched. No source code or staged source blob changed.
+Branch docs/roadmap-v2. Phases 1–2 complete; phase 3 standards next. Incoming uncommitted docs/source were snapshotted before changes; only measured canonical contradictions and format defects were touched. No source code or staged source blob changed.
 
 ## Phase ledger
 
 | Phase | State | Evidence | Next action |
 | --- | --- | --- | --- |
 | 1 architecture | **PASS** | Review, ADR 007, canonical mapping | Audit all 182 steps |
-| 2 measurement | **NOT RUN** | Baseline step snapshot saved | Score and rank |
+| 2 measurement | **PASS** | All 182 steps scored; top fifteen ranked | Close quality gaps through plan |
 | 3 standards | **NOT RUN** | Q01–Q14 required | Author shared assets |
 | 4 decomposition | **NOT RUN** | Preserve objectives and map IDs | Rewrite pairs from current Week 1 |
 | 5 cross-cutting | **NOT RUN** | Gates/scorecards required | Trace quality enforcement |
