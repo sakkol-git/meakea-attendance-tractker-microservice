@@ -73,7 +73,7 @@ Each week contributes its riskiest, a middle and a failure-path step. Existing o
 
 ## Findings repaired during simulation
 
-- The department write now follows its migration; every feature stone ends on a green/negative/quality result, never a red assertion whose implementation is in another stone.
+- The known Avro source/listener repair now precedes Registry compatibility/round-trip; the department write follows its migration; every feature stone ends on a green/negative/quality result, never a red assertion whose implementation is in another stone.
 - Client/credential/accessibility checks target client tests, and hardening checks use existing regressions/acceptance rather than inventing production Java service classes.
 - First source checkpoint protects actual untracked scaffold before CI. Week-1 tool/test-runner, private manifest, generic image builder, deploy/smoke and disposable restore are created before use.
 - Five business-owner JDBC/YAML/context alignments are explicit in Week 3. Nuxt uses a tested static generation artifact and the Java browser-cookie/CSRF adapter, not an unplanned server runtime.
@@ -82,7 +82,7 @@ Each week contributes its riskiest, a middle and a failure-path step. Existing o
 
 ## Dependency capacity and feature checks
 
-All 182 original IDs resolve; the 215-step intermediate draft and the later six-ID ordering correction are mapped too. No old tag was moved/deleted; no green application tags exist. Required paths are introduced before invocation; later-feature stubs remain private/denied. Optional patterns, styling, push/SSE, richer report variants and cloud execution are not next-week prerequisites. Shared golden-slice tests are rerun for each route delta, not accepted from an unrelated feature's green result.
+All 182 original IDs resolve; the 215-step intermediate draft and the later ten-ID ordering correction are mapped too. No old tag was moved/deleted; no green application tags exist. Required paths are introduced before invocation; later-feature stubs remain private/denied. Optional patterns, styling, push/SSE, richer report variants and cloud execution are not next-week prerequisites. Shared golden-slice tests are rerun for each route delta, not accepted from an unrelated feature's green result.
 
 Every week has eight stones with two-to-six steps, Thursday buffer, Friday private redeploy/restore and weekend rest. Reading is inside durations, extra review/mentoring is counted once, each owner is below its 70-percent limit and light Weeks 4/8 use the 14.28-hour cap. Monday–Wednesday feature work is at most 12 hours each (10.2 in light weeks); A can place scheduled mentoring beside fixtures only within that remaining window or use Thursday for familiar review. Actual unfamiliar-topic count/velocity is checked by the developers, and overruns remain a visible schedule risk.
 

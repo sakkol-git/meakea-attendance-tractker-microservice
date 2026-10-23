@@ -15,14 +15,14 @@ Old tags and commits remain valid historical checkpoints; do not move or delete 
 | W01-S03 | W01-S13 | B opens the mobile workspace |
 | W01-S04 | W01-S05, W01-S06, W01-S07 | Create the narrow application; superseded hrflow-app creation replaced by existing service/JDBC alignment |
 | W01-S05 | W01-S08, W01-S19, W01-S23 | Persist one diagnostic row |
-| W01-S06 | W01-S07, W01-S27, W01-S38 | Start a private Caddy gateway |
+| W01-S06 | W01-S07, W01-S28, W01-S38 | Start a private Caddy gateway |
 | W01-S07 | W01-S10, W01-S18 | Write the first OpenAPI slice |
 | W01-S08 | W01-S12, W01-S15 | Replace the welcome view deliberately |
 | W01-S09 | W01-S14, W01-S15 | B calls the generated mock |
-| W01-S10 | W01-S24, W01-S25, W01-S26, W01-S35, W03-S28 | Inspect the smallest uncertain behavior |
+| W01-S10 | W01-S24, W01-S26, W01-S27, W01-S35, W03-S28 | Inspect the smallest uncertain behavior |
 | W01-S11 | W01-S15, W01-S36 | B exercises negative and recovery paths |
 | W01-S12 | W01-S16, W01-S17, W01-S20, W01-S21, W01-S22, W01-S32, W01-S33, W01-S34 | Close only the reviewed gap |
-| W01-S13 | W01-S27, W01-S37, W01-S38 | Redeploy the checked artifact |
+| W01-S13 | W01-S28, W01-S37, W01-S38 | Redeploy the checked artifact |
 | W01-S14 | W01-S36, W01-S38 | B verifies deployed workflow and restore |
 | W01-S15 | W01-S37, W01-S38 | Decide gate and shut down |
 | W02-S01 | W02-S01, W02-S04, W02-S10 | Add user and refresh migrations |

@@ -77,7 +77,7 @@ CREATE TABLE attendance.outbox_events (
 );
 
 CREATE INDEX idx_outbox_pending
-ON attendance.outbox_events (status, created_at)
+ON attendance.outbox_events (tenant_id, status, created_at)
 WHERE status = 'PENDING';
 ```
 

@@ -28,9 +28,9 @@ This translates the 215-step partial checkpoint at 847dd7e to the final V2 guide
 | W01-S20 | W01-S22 | Inspect completed evidence, then resume earliest unmet result |
 | W01-S21 | W01-S23 | Inspect completed evidence, then resume earliest unmet result |
 | W01-S22 | W01-S24 | Inspect completed evidence, then resume earliest unmet result |
-| W01-S23 | W01-S25 | Inspect completed evidence, then resume earliest unmet result |
-| W01-S24 | W01-S26 | Inspect completed evidence, then resume earliest unmet result |
-| W01-S25 | W01-S27 | Inspect completed evidence, then resume earliest unmet result |
+| W01-S23 | W01-S26 | Inspect completed evidence, then resume earliest unmet result |
+| W01-S24 | W01-S27 | Inspect completed evidence, then resume earliest unmet result |
+| W01-S25 | W01-S28 | Inspect completed evidence, then resume earliest unmet result |
 | W01-S26 | W01-S32 | Inspect completed evidence, then resume earliest unmet result |
 | W01-S27 | W01-S33 | Inspect completed evidence, then resume earliest unmet result |
 | W01-S28 | W01-S34 | Inspect completed evidence, then resume earliest unmet result |

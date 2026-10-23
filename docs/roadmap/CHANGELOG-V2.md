@@ -51,7 +51,7 @@ Builder/Adapter/Specification refactors, visual polish, additional report/filter
 
 ## Mapping and recoverability
 
-STEP-ID-MAP covers every original ID; DRAFT-ID-MAP covers 847dd7e and FINALIZATION-ID-MAP covers the later ordering correction. W01-S01/not started remains W01-S01. Old tags are not deleted/moved/reinterpreted; new tags use current stone-ending IDs and require review/tests/startup. The original bodies/durations and final parsed instructions are preserved as documentation audit JSON under docs/validation.
+STEP-ID-MAP covers every original ID; DRAFT-ID-MAP covers 847dd7e and FINALIZATION-ID-MAP covers the later ordering corrections (department migration and Avro/schema-path prerequisites). W01-S01/not started remains W01-S01. Old tags are not deleted/moved/reinterpreted; new tags use current stone-ending IDs and require review/tests/startup. The original bodies/durations and final parsed instructions are preserved as documentation audit JSON under docs/validation.
 
 ## Tooling and actual verification
 

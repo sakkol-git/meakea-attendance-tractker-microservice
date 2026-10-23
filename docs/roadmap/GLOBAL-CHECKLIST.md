@@ -66,10 +66,10 @@ Find the ID in its week BUILD guide; completion needs actual committed report ev
 - [ ] W01-S22: owner B; 45 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S23: owner A; 60 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S24: owner A; 30 min; [Week 01](01-FOUNDATION/README.md).
-- [ ] W01-S25: owner A; 45 min; [Week 01](01-FOUNDATION/README.md).
+- [ ] W01-S25: owner B; 30 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S26: owner A; 45 min; [Week 01](01-FOUNDATION/README.md).
-- [ ] W01-S27: owner B; 60 min; [Week 01](01-FOUNDATION/README.md).
-- [ ] W01-S28: owner B; 30 min; [Week 01](01-FOUNDATION/README.md).
+- [ ] W01-S27: owner A; 45 min; [Week 01](01-FOUNDATION/README.md).
+- [ ] W01-S28: owner B; 60 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S29: owner B; 45 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S30: owner B; 45 min; [Week 01](01-FOUNDATION/README.md).
 - [ ] W01-S31: owner B; 45 min; [Week 01](01-FOUNDATION/README.md).
