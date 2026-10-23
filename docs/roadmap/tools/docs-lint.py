@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Portable HRFlow documentation checks. No third-party packages or application writes."""
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -11,8 +12,11 @@ ALLOWED={'java','sql','yaml','bash','json','ts','dart','xml','properties','text'
 EXCEPT={'README.md','Architecture.md'}
 REQUIRED={'README.md','BUILD-GUIDE.md','VERIFY-AND-GATE.md','TROUBLESHOOTING.md'}
 LABELS=['**Why:**','**Read first','**Before you start:**','**Do:**','**Expect:**',
+        '**Common mistake:**','**Undo:**','**Senior habit:**',
         '**Check:**','**If it fails:**','**Status:**']
 errors=[]
+warnings=[]
+def warn(p,n,r,m): warnings.append(f'{p}:{n}: {r}: {m}')
 def err(p,n,r,m): errors.append(f'{p}:{n}: {r}: {m}')
 def check(p):
     try: raw=p.read_bytes(); text=raw.decode('utf-8')
@@ -106,6 +110,9 @@ def check(p):
     if 'BUILD-GUIDE' in p.name:
         for m in re.finditer(r'^### (W\d{2}-S\d{2})[^\n]*\n(.*?)(?=^### |^## |\Z)',text,re.M|re.S):
             body=m[2]; line=text[:m.start()].count('\n')+1
+            title=re.sub(r'\s*\(\d+[–-]\d+ min\)$','',m[0].splitlines()[0].split(' — ',1)[-1])
+            if re.fullmatch(r'(implement|configure|set up|handle)\s+[\w -]+',title,re.I):
+                warn(p,line,'vague-title',f'{m[1]} title may be vague; heuristic only')
             for label in LABELS:
                 if label not in body: err(p,line,'step',f'{m[1]} missing {label}')
             duration=re.search(r'\((\d+)[–-](\d+) min\)',m[0].splitlines()[0])
@@ -123,6 +130,102 @@ def check(p):
         for label in ['Admission test','Requirement','Baseline','Pain','Refactor','Class roles','Runnable example','Unit tests','Debugging','Trade-offs','When not to use','Spot it later','Pattern review']:
             if label not in text: err(p,1,'pattern',f'missing {label}')
 
+def check_v2(root):
+    """Cross-file roadmap invariants. Scope/file/concept estimates remain human-reviewed."""
+    dashboard=root/'YOU-ARE-HERE.md'
+    text=dashboard.read_text() if dashboard.exists() else ''
+    caps=re.findall(r'\*\*Capacity inputs:\*\* A=(\d+(?:\.\d+)?); B=(\d+(?:\.\d+)?); fraction=(\d+(?:\.\d+)?); light=(\d+(?:\.\d+)?)',text)
+    if len(caps)!=1:
+        err(dashboard,1,'capacity-input','one numeric capacity input block required'); return
+    try:
+        ca,cb,fraction,light=map(float,caps[0])
+        if min(ca,cb)<=0 or not 0<fraction<=1 or not 0<light<=1: raise ValueError()
+    except ValueError:
+        err(dashboard,1,'capacity-input','positive hours and fractions in (0,1] required'); return
+    weeks=sorted(p for p in root.iterdir() if p.is_dir() and re.match(r'^(0[1-9]|1[0-2])-',p.name))
+    all_ids=set()
+    for week in weeks:
+        ids=[]; minutes={'A':0,'B':0}; stones=0
+        for guide in sorted(week.glob('BUILD-GUIDE*.md'),key=lambda x:(x.name!='BUILD-GUIDE.md',x.name)):
+            source=guide.read_text()
+            for m in re.finditer(r'^### (W\d{2}-S\d{2})[^\n]*\n(.*?)(?=^### |^## |\Z)',source,re.M|re.S):
+                sid,body=m[1],m[2];ids.append(sid)
+                if sid[:3]!='W'+week.name[:2]: err(guide,1,'step-ids','week prefix does not match folder')
+                duration=re.search(r'\((\d+)[–-](\d+) min\)',m[0].splitlines()[0])
+                who=re.search(r'\*\*Why:\*\* (A and B|A|B)\b',body)
+                if not who: err(guide,1,'capacity-owner',f'{sid} needs explicit A/B owner')
+                elif duration:
+                    for owner in ('A','B'):
+                        if owner in who[1]:minutes[owner]+=int(duration[2])
+            for stone in re.split(r'^## Stone ',source,flags=re.M)[1:]:
+                stones+=1; last=re.findall(r'^### (W\d{2}-S\d{2})',stone,re.M)
+                tag=re.search(r'- \[ \] Tagged `(w\d{2}-s\d{2}-green)`',stone)
+                if last and tag and tag[1]!=last[-1].lower()+'-green':
+                    err(guide,1,'stone-tag','tag must match final step in stone')
+        if not 5<=stones<=8:err(week,1,'stone-count','week must have five to eight stones')
+        if len(ids)!=len(set(ids)) or [int(x[-2:]) for x in ids]!=list(range(1,len(ids)+1)):
+            err(week,1,'step-ids','unique sequential step IDs required per week')
+        if all_ids.intersection(ids):err(week,1,'step-ids','duplicate global step ID')
+        all_ids.update(ids)
+        verify=week/'VERIFY-AND-GATE.md';gate=verify.read_text() if verify.exists() else ''
+        if not re.search(r'^## Enterprise gate$',gate,re.M):err(verify,1,'enterprise-gate','Enterprise gate section required')
+        if not re.search(r'^## Minimum Viable Gate$',gate,re.M):err(verify,1,'minimum-gate','Minimum Viable Gate section required')
+        qtasks=re.findall(r'^- \[ \] (Q\d{2}):',gate,re.M)
+        if not 3<=len(qtasks)<=6:err(verify,1,'enterprise-gate','three to six explicit Q-item tasks required')
+        readme=week/'README.md';overview=readme.read_text() if readme.exists() else ''
+        declared=re.search(r'\*\*Planned hours:\*\* A=(\d+(?:\.\d+)?); B=(\d+(?:\.\d+)?)',overview)
+        extras=re.search(r'\*\*Extra hours:\*\* A=(\d+(?:\.\d+)?); B=(\d+(?:\.\d+)?)',overview)
+        if not declared or not extras:err(readme,1,'capacity','planned and extra owner hours required');continue
+        limits=[ca*fraction,cb*fraction]
+        if week.name[:2] in ['04','08']:limits=[x*light for x in limits]
+        for j,owner in enumerate(['A','B']):
+            value=float(declared[j+1]);expected=minutes[owner]/60+float(extras[j+1])
+            if value>limits[j]+0.001:err(readme,1,'capacity',f'{owner} planned {value:g} exceeds {limits[j]:g}')
+            if abs(value-expected)>0.011:err(readme,1,'capacity-total',f'{owner} README {value:g} differs from steps+extras {expected:g}')
+    for name in ['STEP-ID-MAP.md','DRAFT-ID-MAP.md']:
+        path=root/name
+        if not path.exists():err(path,1,'step-map','ID map required');continue
+        old_ids=set();rows=0
+        for n,line in enumerate(path.read_text().splitlines(),1):
+            cells=[x.strip() for x in line.split('|')[1:-1]]
+            if len(cells)<2 or not re.fullmatch(r'W\d{2}-S\d{2}',cells[0]):continue
+            rows+=1
+            if cells[0] in old_ids:err(path,n,'step-map','duplicate old ID')
+            old_ids.add(cells[0]);targets=re.findall(r'W\d{2}-S\d{2}',cells[1])
+            if not targets or any(t not in all_ids for t in targets):err(path,n,'step-map','every mapped target must resolve')
+        if not rows:err(path,1,'step-map','no mapping rows')
+        baseline=root.parent/'validation'/'ROADMAP-V1-BASELINE.json'
+        opening=root.parent/'validation'/'ROADMAP-V2-PAIR-12-DRAFT.json'
+        if baseline.is_file():
+            try:
+                records=json.loads(baseline.read_text())
+                expected={x['id'] for x in records}
+                if name=='DRAFT-ID-MAP.md' and opening.is_file():
+                    expected={x['id'] for x in records if x['week']>2}
+                    for week,items in json.loads(opening.read_text()).items():
+                        expected.update(f'W{int(week):02}-S{i:02}' for i in range(1,len(items)+1))
+                if old_ids!=expected:err(path,1,'step-map','all baseline old IDs must have exactly one row')
+            except (ValueError,KeyError,TypeError):err(path,1,'step-map','baseline ID inventory is invalid')
+    coverage=root/'QUALITY-COVERAGE.md'
+    if not coverage.exists():err(coverage,1,'quality-coverage','coverage matrix required');return
+    seen=set()
+    for n,line in enumerate(coverage.read_text().splitlines(),1):
+        cells=[x.strip() for x in line.split('|')[1:-1]]
+        if not cells or not re.fullmatch(r'Q\d{2}',cells[0]):continue
+        q=cells[0]
+        if q in seen:err(coverage,n,'quality-coverage','duplicate Q row')
+        seen.add(q)
+        if len(cells)<4:err(coverage,n,'quality-coverage','week, steps and gate required');continue
+        if not re.fullmatch(r'0?[1-9]|1[0-2]',cells[1]):err(coverage,n,'quality-week','introducing week 01–12 required')
+        refs=re.findall(r'W\d{2}-S\d{2}',cells[2])
+        if not refs or any(t not in all_ids for t in refs):err(coverage,n,'quality-steps','enforcing IDs must all resolve')
+        link=re.search(r'\[[^\]]+\]\(([^)]+\.md)\)',cells[3])
+        target=root/link[1] if link else None
+        if target is None or not target.is_file() or not re.search(r'^- \[ \] '+q+r':',target.read_text(),re.M):
+            err(coverage,n,'quality-gate','linked file must contain the literal Q checkbox')
+    if seen!={f'Q{i:02}' for i in range(1,15)}:err(coverage,1,'quality-coverage','all fourteen Q-items required')
+
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('paths',nargs='+');args=ap.parse_args()
     files=[]
@@ -130,7 +233,7 @@ def main():
         p=Path(arg)
         files.extend(sorted(f for f in p.rglob('*') if f.suffix.lower()=='.md') if p.is_dir() else [p])
     for p in files: check(p)
-    roots=[Path(x)/'roadmap' for x in args.paths if Path(x).is_dir() and (Path(x)/'roadmap').is_dir()]
+    roots=sorted({Path(x)/'roadmap' for x in args.paths if Path(x).is_dir() and (Path(x)/'roadmap').is_dir()} | {Path(x) for x in args.paths if Path(x).is_dir() and Path(x).name=='roadmap' and (Path(x)/'YOU-ARE-HERE.md').exists()})
     for root in roots:
         weeks=sorted(p for p in root.iterdir() if re.match(r'^(0[1-9]|1[0-2])-',p.name) and p.is_dir())
         # Preparation commits explicitly declare weekly authoring incomplete until pair generation finishes.
@@ -148,7 +251,9 @@ def main():
                 err(week,1,'step-ids','steps must be sequential across guide parts')
         for folder in [root]+[p for p in root.rglob('*') if p.is_dir() and p.name!='__pycache__']:
             if not (folder/'README.md').exists(): err(folder,1,'folder-index','README.md required')
+    for root in roots: check_v2(root)
+    for warning in warnings: print('WARNING: '+warning)
     if errors:
         print('\n'.join(errors));print(f'FAIL: {len(errors)} errors');return 1
-    print(f'PASS: {len(files)} Markdown files; zero errors');return 0
+    print(f'PASS: {len(files)} Markdown files; zero errors; {len(warnings)} warnings');return 0
 if __name__=='__main__': sys.exit(main())

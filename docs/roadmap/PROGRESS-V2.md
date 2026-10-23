@@ -109,3 +109,7 @@ Weeks 11–12 now contain the final-service atomic sequence, eight stones, expli
 ## Phase 5 finalization checkpoint
 
 All twelve weeks now use final service architecture, eight stones, mapped IDs, explicit Enterprise/Minimum gates and counted extra review hours. Global checklist, milestones, standards, runbook interface and root plan agree. Five business-service context alignment steps, own profile/browser-CSRF/Nuxt-runner creation and concrete operation script names close dependency gaps. The final itemized ledger is 448 steps and 301 hours with all owner/week limits respected; execution remains Not run. New linter/negative-fixture and sampled validation results are recorded in the next phases.
+
+## Phase 6 finalization checkpoint
+
+The standard-library linter now enforces required fields, duration, sequential/unique IDs and tag endings, all old/draft mappings, week gates, calculated owner capacity and complete Q chains. Twenty-two isolated broken-fixture proofs pass; the vague-title fixture warns with exit zero. Original format rules remain enforced; no skip flag hides a week. Full runtime/visual verification remains separate from authoring validation.

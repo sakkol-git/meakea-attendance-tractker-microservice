@@ -1,0 +1,160 @@
+{
+  "real_docs_exit": 0,
+  "real_docs_result": "PASS: 273 Markdown files; zero errors; 0 warnings",
+  "fixtures": [
+    {
+      "fixture": "missing Why",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Do",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Expect",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Common mistake",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Undo",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Senior habit",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Check",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing If it fails",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Status",
+      "rule": "step",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "duration over 90",
+      "rule": "duration",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "duplicate ID",
+      "rule": "step-ids",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "nonsequential ID",
+      "rule": "step-ids",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "unresolved map target",
+      "rule": "step-map",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing old map row",
+      "rule": "step-map",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing enterprise gate",
+      "rule": "enterprise-gate",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing minimum gate",
+      "rule": "minimum-gate",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "capacity overflow",
+      "rule": "capacity",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "capacity arithmetic mismatch",
+      "rule": "capacity-total",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Q introducing week",
+      "rule": "quality-week",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing Q enforcing ID",
+      "rule": "quality-steps",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "missing literal Q gate",
+      "rule": "quality-gate",
+      "expected_exit": "nonzero",
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "fixture": "vague title warning",
+      "rule": "vague-title",
+      "expected_exit": "zero with warning",
+      "actual_exit": 0,
+      "pass": true
+    }
+  ]
+}
