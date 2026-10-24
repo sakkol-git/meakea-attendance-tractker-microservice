@@ -8,7 +8,7 @@ Why HRFlow needs it: Seven services still need enforceable layer and artifact ow
 
 ## Tiny example
 
-A leave domain class importing Spring JDBC infrastructure makes ArchUnit fail; a Maven dependency on attendance implementation is also forbidden.
+A leave domain class importing Spring persistence infrastructure (JPA, JDBC) or another service implementation makes ArchUnit fail; a Maven dependency on attendance implementation is also forbidden.
 
 ## Common mistake
 

@@ -29,7 +29,7 @@ Every step ends with a focused commit. Stage only its exact reviewed paths. Put 
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/CompareOpenapiLiveResponsesTest.java`, `scripts/acceptance/w08.sh`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Validate all implemented routes against sole OpenAPI; remove stale mock shapes; retain stable errors/ETags/date and body schemas. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Validate all implemented routes against sole OpenAPI; remove stale mock shapes; retain stable errors/ETags/date and body schemas. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -155,7 +155,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/connectnuxtfeaturenavigation_test.dart`, `web/test/connectnuxtfeaturenavigation.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use feature folders/API client, role navigation, bounded pagination and explicit loading/empty/stale/permission states; backend still enforces scope. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Use feature folders/API client, role navigation, bounded pagination and explicit loading/empty/stale/permission states; backend still enforces scope. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

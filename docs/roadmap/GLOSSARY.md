@@ -52,7 +52,7 @@
 
 **Cloudflare Tunnel:** Outbound connector; remote access still depends on ISP/provider.
 
-**JDBC:** Java API for explicit parameterized SQL; HRFlow uses Spring JdbcClient as its helper.
+**JPA:** Spring Data JPA (Hibernate) is the HRFlow persistence layer. Repositories extend JpaRepository; Flyway owns the schema (ddl-auto: validate); open-in-view: false prevents hidden DB calls in controllers.
 
 **Kafka:** Durable partitioned event log; an offset is a consumer's recorded position, not proof a database effect committed.
 
@@ -70,7 +70,7 @@
 
 **Optimistic version:** A saved revision checked by If-Match; stale changes fail with 412 rather than overwriting a newer decision.
 
-**JDBC:** Java API for explicit parameterized SQL; HRFlow uses Spring JdbcClient as its helper.
+**JPA:** Spring Data JPA (Hibernate) is the HRFlow persistence layer. Repositories extend JpaRepository; Flyway owns the schema (ddl-auto: validate); open-in-view: false prevents hidden DB calls in controllers.
 
 **Kafka:** Durable partitioned event log; an offset is a consumer's recorded position, not proof a database effect committed.
 

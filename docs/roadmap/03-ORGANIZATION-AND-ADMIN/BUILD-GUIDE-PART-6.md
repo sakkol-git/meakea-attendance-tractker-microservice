@@ -19,14 +19,14 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/FailForbiddenServiceLayerImportsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with the failure delta: Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
+1. Repeat the golden slice with the failure delta: Domain-to-JPA persistence edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails. Add this one negative/race assertion to the current feature fixture; assert no forbidden row/effect or leaked bytes. Fix only the proven minimal defect and rerun its red/green tests.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/identity-org -am test
 ```
 
-**Expect:** Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
+**Expect:** Domain-to-JPA persistence edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -61,7 +61,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/publishorganizationfactsthroughownerintent_test.dart`, `web/test/publishorganizationfactsthroughownerintent.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Write organization fact and owner outbox in one transaction, using the existing Avro starter shape. Publish to Kafka before marking sent; keep a repeatable tenant-scoped snapshot bootstrap for a new attendance consumer. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Write organization fact and owner outbox in one transaction, using the existing Avro starter shape. Publish to Kafka before marking sent; keep a repeatable tenant-scoped snapshot bootstrap for a new attendance consumer. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

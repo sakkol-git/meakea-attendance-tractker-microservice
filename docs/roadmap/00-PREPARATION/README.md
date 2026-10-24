@@ -17,7 +17,7 @@ The preparation phase comprises five specialized engineering documents:
 | [Repository audit](REPOSITORY-AUDIT.md) | Codebase and configuration inspection | Verified toolchain discrepancies, missing migrations, and prototype inventory. |
 | [Project baseline and capacity](PROJECT-BASELINE.md) | Capacity math and velocity assumptions | Historical V1 estimates distinguished from final V2 allocations; dashboard owns capacity inputs. |
 | [Hardware and hosting assessment](HARDWARE-AND-HOSTING-ASSESSMENT.md) | Physical machine and network constraints | Mac16,12 host verified, 16 GiB RAM, 5.1 GiB free disk blocker identified. |
-| [Migration plan](MIGRATION-PLAN.md) | Incremental final-service alignment | Retain seven service roots; align JDBC, reactive gateway, Nuxt and Kafka without data loss. |
+| [Migration plan](MIGRATION-PLAN.md) | Incremental final-service alignment | Retain seven service roots; align JPA persistence, reactive gateway, Nuxt and Kafka without data loss. |
 | [Start here](../START-HERE.md) | Daily implementation workflow | 5-minute daily routine, 30–90 minute steps, and stop rules. |
 
 ## Pre-flight verification gates

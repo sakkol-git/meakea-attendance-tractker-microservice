@@ -8,7 +8,7 @@ User confirmed no change on this second pass. These inputs are authoritative; we
 
 ## Current position
 
-Current week: 01. Current step: W01-S01. Step state: **Not run**. Gate: **NOT RUN**.
+Current week: 01. Current step: W01-S06. Step state: **Not run**. Gate: **NOT RUN**.
 
 Next action: inspect the dirty working tree, save a safe code checkpoint without staging secrets, and verify at least 30 GiB free before container pulls.
 
@@ -41,4 +41,4 @@ Tomorrow's first action: W01-S01 until its checkpoint and disk checks pass. A fa
 
 Development starts Monday 2026-10-26. Week 12 is 2027-01-11 through Friday 2027-01-15; weekend rest ends 2027-01-17 and the 84-day boundary is 2027-01-18. This is the twelve-week goal, not an implementation guarantee. Current position stays W01-S01/not started.
 
-The approved architecture is seven services with JDBC, reactive gateway, Kafka/Avro, Nuxt, Flutter and confidence integration. AWS/Kubernetes execution is future improvement. The V2 guide is the execution reference; open START-HERE first. Quality gates still require actual developer reports. No documentation commit is a green application tag.
+The approved architecture is seven services with Spring Data JPA, reactive gateway, Kafka/Avro, Nuxt, Flutter and confidence integration. AWS/Kubernetes execution is future improvement. The V2 guide is the execution reference; open START-HERE first. Quality gates still require actual developer reports. No documentation commit is a green application tag.

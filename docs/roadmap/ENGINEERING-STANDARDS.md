@@ -4,7 +4,7 @@
 
 Enterprise standard here means repeatable, testable engineering practices on one computer. It is not certification, regulatory compliance, guaranteed availability, or a guarantee that a junior team finishes in twelve weeks. Each rule below has a beginner minimum and an observable acceptance check; every item is planned until executed evidence exists.
 
-Observed package roots are com.hrflow.attendance, com.hrflow.leave and other service roots in services. Retain those service roots. Proposed api/application/domain/infrastructure subpackages follow the final design; no hrflow-app monolith is created. Inspect actual files before selecting class names. Java target 21 and root Boot 4.1.1 come from pom.xml; services still use 4.0.8 and must not be called aligned. Maven wrapper is the build tool. No dependency/tool version is silently upgraded by this document. JDBC replaces scaffold JPA; reactive gateway replaces scaffold MVC only after a compatibility spike.
+Observed package roots are com.hrflow.attendance, com.hrflow.leave and other service roots in services. Retain those service roots. Proposed api/application/domain/infrastructure subpackages follow the final design; no hrflow-app monolith is created. Inspect actual files before selecting class names. Java target 21 and root Boot 4.1.1 come from pom.xml; services still use 4.0.8 and must not be called aligned. Maven wrapper is the build tool. No dependency/tool version is silently upgraded by this document. Spring Data JPA is the persistence layer; reactive gateway replaces scaffold MVC only after a compatibility spike.
 
 One OpenAPI file owns wire shapes, canonical API document owns persistence semantics, and ADR 007 owns tenant defense. Code snippets are proposed examples, not classes discovered in source.
 
@@ -170,7 +170,7 @@ All four answers must be yes: current requirement, plain tested version hurts, t
 
 Gateway strips caller identity headers, verifies JWT, then creates trusted internal identity; services enforce role/resource checks at method level. No direct business port is published. Shared tests cover forged headers and bypass attempts as well as cross-tenant IDs. Until those tests prove the boundary, Q04/Q05 are conditional, never accepted merely because a header is present. Runtime database roles stay non-owner with no BYPASSRLS.
 
-Q10 checks per-service package direction and Maven dependencies, not a fictional com.hrflow.app package. Domain imports no Spring/JDBC/Kafka. No service imports another service artifact or implementation; shared libraries contain contracts and infrastructure without domain repositories. SQL tenant predicates require integration/RLS tests in addition to ArchUnit.
+Q10 checks per-service package direction and Maven dependencies, not a fictional com.hrflow.app package. Domain imports no Spring/JPA/Kafka. No service imports another service artifact or implementation; shared libraries contain contracts and infrastructure without domain repositories. SQL tenant predicates require integration/RLS tests in addition to ArchUnit.
 
 The final design's Prometheus/Grafana, structured logs and trace propagation remain observability targets; optional full log/trace storage must fit measured host resources. Health, correlation, lag/error metrics and alerting are minimum gates. Final cloud topology is future improvement per user instruction. Do not describe deferred cloud or unexecuted monitoring as delivered.
 

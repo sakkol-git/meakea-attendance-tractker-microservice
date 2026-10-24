@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/keepbusinessauditintentatomic_test.dart`, `web/test/keepbusinessauditintentatomic.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Persist command result, business write, audit and Avro publication intent in the owner transaction. Inject a failure before commit; then retry the same durable command key. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Persist command result, business write, audit and Avro publication intent in the owner transaction. Inject a failure before commit; then retry the same durable command key. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -151,7 +151,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/notification/src/test/java/com/hrflow/notification/PublishBoundedOrderedKafkaWorkTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Claim bounded aggregate heads with a short lease/SKIP LOCKED; publish outside row locks and mark sent only after broker acknowledgment. Same aggregate revisions cannot overtake each other. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Claim bounded aggregate heads with a short lease/SKIP LOCKED; publish outside row locks and mark sent only after broker acknowledgment. Same aggregate revisions cannot overtake each other. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

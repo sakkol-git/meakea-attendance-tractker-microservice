@@ -8,7 +8,7 @@ Final V2 authoring and static validation are complete on docs/roadmap-v2. All tw
 
 Start Monday 2026-10-26, release rehearsal Friday 2027-01-15, twelve-week boundary Monday 2027-01-18. A=24 and B=24 h weekly; at most 70 percent planned, Weeks 4/8 fifteen percent lower cap. Final planned total is 301.25 h including stated review/mentoring and reading inside durations, below 393.12 h capacity. These are estimates to recalibrate against actual Week-1 pace, not a guaranteed completion date.
 
-Final design retains seven Java services, reactive gateway, JDBC, Kafka/Avro/Registry, Nuxt static client, Flutter and existing confidence integration. ADR 008 supersedes C/React/local-dispatch. AWS/Kubernetes execution is future improvement by latest user instruction; preserve its approved production topology and create no cloud resources.
+Final design retains seven Java services, reactive gateway, Spring Data JPA, Kafka/Avro/Registry, Nuxt static client, Flutter and existing confidence integration. ADR 008 supersedes C/React/local-dispatch. AWS/Kubernetes execution is future improvement by latest user instruction; preserve its approved production topology and create no cloud resources.
 
 ## Phase ledger
 

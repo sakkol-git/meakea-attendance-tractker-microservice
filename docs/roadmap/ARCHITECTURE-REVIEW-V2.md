@@ -4,12 +4,12 @@
 
 Accept the latest user-approved seven-service system design, not the earlier modular-monolith simplification. The user first required AWS/Kubernetes within twelve weeks, then said “skip it for now, it will be future improvment” when asked about region/budget. The latest instruction defers cloud execution; the approved production design is preserved. Twelve-week deployment is local Compose, with no cloud spending assumed. [ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) records this supersession.
 
-The requirement satisfied is service-owned HR domains with Kafka event integration, JDBC, Nuxt and Flutter. It is a final design choice, not proof that the scope fits 24 hours each. User confirmed W01-S01 unstarted, unchanged A/B hours and host not ready. No application changes were made in this pass.
+The requirement satisfied is service-owned HR domains with Kafka event integration, JPA, Nuxt and Flutter. It is a final design choice, not proof that the scope fits 24 hours each. User confirmed W01-S01 unstarted, unchanged A/B hours and host not ready. No application changes were made in this pass.
 
 ## Re-inspection evidence
 
 - services/identity-org/src/main/java/com/hrflow/identityorg/IdentityOrgApplication.java and six peer Application files are startup scaffolds; no business controllers/entities/migrations/security are inferred. `rg --files services libs infra` is the inventory command.
-- pom.xml selects Java 21 and Boot 4.1.1; service poms still use 4.0.8. services/api-gateway/pom.xml currently uses MVC gateway dependencies, conflicting with the approved reactive target. Business poms contain JPA dependencies; the accepted design calls for JDBC.
+- pom.xml selects Java 21 and Boot 4.1.1; service poms still use 4.0.8. services/api-gateway/pom.xml currently uses MVC gateway dependencies, conflicting with the approved reactive target. Business poms contain JPA dependencies; the accepted design keeps JPA per ADR-009 (ddl-auto: validate, open-in-view: false).
 - web/package.json and web/package-lock.json select Nuxt/Vue; retaining them avoids the superseded React migration. libs/hrflow-contracts/events/attendance-checked-in.v1.avsc is an actual Avro file; contracts/openapi.yaml is still proposed.
 - infra/docker/postgres-init.sql creates identity_org plus the five other owner schemas. infra/docker/docker-compose.yaml has PostgreSQL/Kafka/Registry scaffolding, but the SQL mount/listener paths require inspection and correction before running. It is not a deployed service topology.
 - ml/confidence-service contains standalone confidence code/tests; Kafka worker integration remains future implementation. Existing Python tests passing do not prove event integration.
@@ -47,7 +47,7 @@ Optional polish/push/extra charts/pattern refactors move to Stretch first. Secur
 | ADR | Verdict | Evidence and simplest permitted option | Cost and beginner adoption |
 | --- | --- | --- | --- |
 | 001 | **Adjust** | Restore service ownership/Kafka per latest Architecture; clarify outbox/inbox | More processes and failure paths; template plus real integration tests required |
-| 002 | **Adjust** | Scoped JDBC, tenant composite keys/indexes plus personal-data RLS | No paid tool; non-owner roles/pool tests consume explicit Week-3 quality time |
+| 002 | **Adjust** | Scoped JPA repositories, tenant composite keys/indexes plus personal-data RLS | No paid tool; non-owner roles/pool tests consume explicit Week-3 quality time |
 | 003 | **Adjust** | Kafka/Avro restored; owner transaction and effect/receipt before offset | Registry and broker recovery are real work, not local-worker substitutes |
 | 004 | **Keep** proposed | Manual evidence precedence/review preserved; HR sign-off unknown | No component; policy test fixtures before coding |
 | 005 | **Adjust** | Nuxt retained; cloud topology future, Compose now | Existing npm lockfile reused; cloud has no approved spend |
@@ -137,7 +137,7 @@ Text version:
 - Use existing roots com.hrflow.identityorg, attendance, leave, request, notification, reporting and gateway; inspect before choosing a class name. Proposed subpackages are api, application, domain and infrastructure, matching the final design's dependency direction rather than a new monolith root.
 - Domain imports no Spring/JDBC/Kafka/web classes. API calls its own application layer. Infrastructure implements domain/application ports; domain never imports infrastructure.
 - No service imports another service's implementation packages or depends on its Maven artifact. Shared contracts/event starter contain no owner business logic or repositories.
-- Service JDBC code names only owner schema. Dynamic SQL identifiers are allowlisted; ArchUnit cannot prove SQL tenant predicates, so repository/RLS tests remain mandatory.
+- Service JPA repositories use only owner schema. Dynamic SQL identifiers are allowlisted; ArchUnit cannot prove SQL tenant predicates, so repository/RLS tests remain mandatory.
 - Automated architecture tests import nonempty actual packages, assert cycles/dependency rules, and fail on an intentional forbidden import fixture. Empty tests cannot satisfy Q10.
 - Build module dependencies are checked as well as packages, so an empty service or shared library cannot conceal a reverse dependency. API gateway owns no domain persistence.
 
@@ -153,7 +153,7 @@ Keep final gateway header-trust decision. Gateway removes all incoming identity 
 | Preparation baseline/migration and repo audit | W01-S01–S06 | Old architecture cost assumed | Preserve source roots and recompute service work |
 | W01 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W01-S01–S15 | hrflow-app and React migration | Seven-service compatibility spike, Nuxt, broker baseline |
 | W02 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W02-S01–S17 | Auth combined; one-app host | Atomic auth and private multi-service host/restore |
-| W03 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W03-S01–S15 | JPA/module assumptions | JDBC/RLS/golden slice/service fitness |
+| W03 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W03-S01–S15 | JPA/module assumptions | JPA/RLS/golden slice/service fitness |
 | W04 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W04-S01–S15 | In-process dependencies | Attendance owner projections and invariants |
 | W05 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W05-S01–S15 | Local worker semantics | Kafka/Avro publisher/receipt/offset/replay |
 | W06 README, BUILD-GUIDE parts, VERIFY, TROUBLESHOOTING | W06-S01–S15 | Monolith leave integration | Exact balances plus event conflict handling |

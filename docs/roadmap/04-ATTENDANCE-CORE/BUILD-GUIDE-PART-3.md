@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/retrieslostresponse_test.dart`, `web/test/retrieslostresponse.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Persist command key before send; simulate server commit then dropped response and retry unchanged body; Nuxt shows canonical returned state. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Persist command key before send; simulate server commit then dropped response and retry unchanged body; Nuxt shows canonical returned state. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -151,7 +151,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/attendance/src/test/java/com/hrflow/attendance/CloseAnOwnedSessionOnceTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Implement check-out with owner scope and If-Match; checkout before check-in 422; two concurrent checkouts cannot corrupt interval. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Implement check-out with owner scope and If-Match; checkout before check-in 422; two concurrent checkouts cannot corrupt interval. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

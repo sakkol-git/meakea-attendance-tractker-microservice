@@ -14,9 +14,9 @@ Every step ends with a focused commit. Stage only its exact reviewed paths. Put 
 
 ## Stone 1 — First feature red and green
 
-**You will have:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**You will have:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
-### W03-S01 — Align the attendance JDBC context (45–45 min)
+### W03-S01 — Align the attendance JPA context (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -29,14 +29,14 @@ Every step ends with a focused commit. Stage only its exact reviewed paths. Put 
 **Do:**
 
 1. Inspect first: review current equivalents for `services/attendance/pom.xml`, `services/attendance/src/main/resources/application.yaml`, `services/attendance/src/test/java/com/hrflow/attendance/AttendanceContextTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, use JDBC instead of JPA and correct properties-in-YAML syntax. Add the proposed nonempty AttendanceApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
+1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, keep spring-boot-starter-data-jpa (ADR-009) and add ddl-auto: validate plus open-in-view: false; correct properties-in-YAML syntax. Add the proposed nonempty AttendanceApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/attendance -am test
 ```
 
-**Expect:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**Expect:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -58,7 +58,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S02 — Align the leave JDBC context (45–45 min)
+### W03-S02 — Align the leave JPA context (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -71,14 +71,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/leave/pom.xml`, `services/leave/src/main/resources/application.yaml`, `services/leave/src/test/java/com/hrflow/leave/LeaveContextTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, use JDBC instead of JPA and correct properties-in-YAML syntax. Add the proposed nonempty LeaveApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
+1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, keep spring-boot-starter-data-jpa (ADR-009) and add ddl-auto: validate plus open-in-view: false; correct properties-in-YAML syntax. Add the proposed nonempty LeaveApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/leave -am test
 ```
 
-**Expect:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**Expect:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -100,7 +100,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S03 — Align the request JDBC context (45–45 min)
+### W03-S03 — Align the request JPA context (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -113,14 +113,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/request/pom.xml`, `services/request/src/main/resources/application.yaml`, `services/request/src/test/java/com/hrflow/request/RequestContextTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, use JDBC instead of JPA and correct properties-in-YAML syntax. Add the proposed nonempty RequestApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
+1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, keep spring-boot-starter-data-jpa (ADR-009) and add ddl-auto: validate plus open-in-view: false; correct properties-in-YAML syntax. Add the proposed nonempty RequestApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/request -am test
 ```
 
-**Expect:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**Expect:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -142,7 +142,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S04 — Align the notification JDBC context (45–45 min)
+### W03-S04 — Align the notification JPA context (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -155,14 +155,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/notification/pom.xml`, `services/notification/src/main/resources/application.yaml`, `services/notification/src/test/java/com/hrflow/notification/NotificationContextTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, use JDBC instead of JPA and correct properties-in-YAML syntax. Add the proposed nonempty NotificationApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
+1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, keep spring-boot-starter-data-jpa (ADR-009) and add ddl-auto: validate plus open-in-view: false; correct properties-in-YAML syntax. Add the proposed nonempty NotificationApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/notification -am test
 ```
 
-**Expect:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**Expect:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -184,7 +184,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 
 **Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
 
-### W03-S05 — Align the reporting JDBC context (45–45 min)
+### W03-S05 — Align the reporting JPA context (45–45 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
@@ -197,14 +197,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/reporting/pom.xml`, `services/reporting/src/main/resources/application.yaml`, `services/reporting/src/test/java/com/hrflow/reporting/ReportingContextTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, use JDBC instead of JPA and correct properties-in-YAML syntax. Add the proposed nonempty ReportingApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
+1. Repeat the golden slice; required quality delta: Inspect this existing service pom and main application.yaml; align to the compatible root baseline recorded in Week 1, keep spring-boot-starter-data-jpa (ADR-009) and add ddl-auto: validate plus open-in-view: false; correct properties-in-YAML syntax. Add the proposed nonempty ReportingApplication context test against disposable PostgreSQL. Do not add another service artifact dependency or move the Application root.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/reporting -am test
 ```
 
-**Expect:** This owner context compiles/starts on Java 21 with reviewed JDBC/test dependencies and no accidental Hibernate runtime; actual DB connection is private.
+**Expect:** This owner context compiles/starts on Java 21 with JPA/test dependencies; Hibernate is present (correct per ADR-009); actual DB connection is private.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.

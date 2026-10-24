@@ -13,7 +13,7 @@ Old tags and commits remain valid historical checkpoints; do not move or delete 
 | W01-S01 | W01-S01, W01-S02 | Protect current work and free disk |
 | W01-S02 | W01-S03, W01-S04 | Select Java 21 and start Docker safely |
 | W01-S03 | W01-S13 | B opens the mobile workspace |
-| W01-S04 | W01-S05, W01-S06, W01-S07 | Create the narrow application; superseded hrflow-app creation replaced by existing service/JDBC alignment |
+| W01-S04 | W01-S05, W01-S06, W01-S07 | Create the narrow application; superseded hrflow-app creation replaced by existing service/JPA alignment |
 | W01-S05 | W01-S08, W01-S19, W01-S23 | Persist one diagnostic row |
 | W01-S06 | W01-S07, W01-S28, W01-S38 | Start a private Caddy gateway |
 | W01-S07 | W01-S10, W01-S18 | Write the first OpenAPI slice |

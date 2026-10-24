@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/runsfinalphonewebstory_test.dart`, `web/test/runsfinalphonewebstory.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Repeat employee-to-manager story against exact release candidate on real devices and Nuxt; preserve failures with precise steps. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Repeat employee-to-manager story against exact release candidate on real devices and Nuxt; preserve failures with precise steps. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -151,7 +151,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `scripts/acceptance/w12.sh`, `docs/validation/W12-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Use most recent nightly external copy on clean scratch target, restore DB/private files, verify checksums/counts and suppress live notifications. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Use most recent nightly external copy on clean scratch target, restore DB/private files, verify checksums/counts and suppress live notifications. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Include the checksum-verified offline release image archive/source bundle and protected config/model inventory in the existing backup/restore manifest, as defined by the runbook interface; do not assume local images survive a lost host.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 

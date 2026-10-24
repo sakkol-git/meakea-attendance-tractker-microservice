@@ -76,7 +76,7 @@ Each week contributes its riskiest, a middle and a failure-path step. Existing o
 - The known Avro source/listener repair now precedes Registry compatibility/round-trip; the department write follows its migration; every feature stone ends on a green/negative/quality result, never a red assertion whose implementation is in another stone.
 - Client/credential/accessibility checks target client tests, and hardening checks use existing regressions/acceptance rather than inventing production Java service classes.
 - First source checkpoint protects actual untracked scaffold before CI. Week-1 tool/test-runner, private manifest, generic image builder, deploy/smoke and disposable restore are created before use.
-- Five business-owner JDBC/YAML/context alignments are explicit in Week 3. Nuxt uses a tested static generation artifact and the Java browser-cookie/CSRF adapter, not an unplanned server runtime.
+- Five business-owner JPA/YAML/context alignments are explicit in Week 3. Nuxt uses a tested static generation artifact and the Java browser-cookie/CSRF adapter, not an unplanned server runtime.
 - Exact script names, ignored target config, private internal TLS/Secure cookies, non-owner RLS, one-active-relay ordering and complete offline source/image artifacts are covered before their later gates.
 - Tests report actual semantic results. Shell syntax/config validation, Maven validate and empty selectors are never passed off as domain/recovery evidence.
 

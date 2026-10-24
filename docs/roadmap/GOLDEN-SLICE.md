@@ -8,7 +8,7 @@ Choose POST /api/v1/departments, a planned identity-org write in the preserved c
 
 - Week 1: versioned OpenAPI/example, diagnostic DB skeleton, problem shape, red/green test recipe and CI formatting/scanning/coverage baseline.
 - Week 2: real login/JWT/refresh/throttle, trusted tenant/resource role, private confirmed-host deploy and first verified external backup/restore.
-- Week 3: department migration/JDBC repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
+- Week 3: department migration/JPA repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
 
 The diagnostic route is not a completed secure golden slice. Until Week 3 gate passes, later code cannot claim the full recipe is proven.
 
@@ -88,7 +88,7 @@ These are real enforcing IDs for first-time construction, not new extra hours. L
 | 11 Browser security | Origin/CSRF before cookie mutation | W02-S20 |
 | 12 Migration red | Constraint assertion for department/employee owner | W03-S06 |
 | 13 Migration green | Owned keys/constraints and failure rollback | W03-S07 |
-| 14 Typed write | Minimum department input, JDBC and 201 result | W03-S09 |
+| 14 Typed write | Minimum department input, JPA repository and 201 result | W03-S09 |
 | 15 Tenant defense | Personal-table RLS | W03-S25 |
 | 16 Role/pool negatives | Non-owner role/pool reuse and insert denial | W03-S34 |
 | 17 Architecture | Nonempty layer/module fitness | W03-S28 |

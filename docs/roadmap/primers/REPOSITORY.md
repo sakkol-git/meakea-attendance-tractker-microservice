@@ -1,6 +1,6 @@
 # Repository pattern and data access boundaries
 
-> **Note:** HRFlow ADR 008 chooses explicit JDBC. Any JPA example below is comparative teaching only, never the selected implementation. Use the Spring JDBC primer and owner-scoped SQL; no extra ORM dependency is admitted.
+> **Decision ADR-009:** HRFlow uses Spring Data JPA (Hibernate) for all persistence. Repositories extend `JpaRepository`; Flyway owns the schema (`ddl-auto: validate`); `open-in-view: false` prevents hidden DB access in controllers. For complex filters use the Specification pattern; for outbox claiming use a native `@Query` with `FOR UPDATE SKIP LOCKED`. Design patterns come before raw SQL.
 
 > **Note:** The Repository pattern mediates between the domain and data mapping layers, providing an in-memory collection-like interface for accessing and mutating domain entities.
 
@@ -128,7 +128,7 @@ Validation routine:
 
 Data access patterns:
 
-- Repository pattern (HRFlow choice): Clean abstraction, high testability, decouples domain logic from database drivers; requires defining and maintaining interface boundaries.
+- Repository pattern with JPA (HRFlow choice, ADR-009): Clean abstraction, high testability, decouples domain logic from database drivers; Spring Data generates common finders; complex queries use Specification or native `@Query`; requires defining and maintaining interface boundaries.
 - Active Record pattern: Entities contain their own save and delete methods (`employee.save()`); simpler for rapid prototyping, but tightly couples domain models to database infrastructure.
 - Direct jOOQ / JDBC queries in services: Fast and direct; scatters SQL strings and complicates unit testing.
 

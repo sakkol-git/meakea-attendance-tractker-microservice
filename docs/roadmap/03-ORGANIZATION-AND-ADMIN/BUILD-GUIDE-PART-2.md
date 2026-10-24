@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/AddEmployeeMasterMigrationsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create department, position, employee tables and same-tenant composite FKs in new migration; enforce no self manager and test cyclic hierarchy validation. Create this week runner at scripts/acceptance/w03.sh with real Maven/client cases and exact nonzero exit propagation. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Create department, position, employee tables and same-tenant composite FKs in new migration; enforce no self manager and test cyclic hierarchy validation. Create this week runner at scripts/acceptance/w03.sh with real Maven/client cases and exact nonzero exit propagation. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -145,7 +145,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/application/GoldenDepartmentService.java`, `services/identity-org/src/main/java/com/hrflow/identityorg/infrastructure/GoldenDepartmentRepository.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice; required quality delta: Repeat the golden slice: add the typed department create using confirmed department migration, tenant-scoped JDBC, method HR check, idempotency result/audit/intent transaction and problem adapter. Keep this name-only endpoint smaller than employee lifecycle.
+1. Repeat the golden slice; required quality delta: Repeat the golden slice: add the typed department create using confirmed department migration, tenant-scoped JPA repository, method HR check, idempotency result/audit/intent transaction and problem adapter. Keep this name-only endpoint smaller than employee lifecycle.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -187,7 +187,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/AddOwnerscopedEmployeeApisTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Implement OpenAPI employees list/create/detail/update with HR scope and If-Match; never bind persistence objects directly. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Implement OpenAPI employees list/create/detail/update with HR scope and If-Match; never bind persistence objects directly. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

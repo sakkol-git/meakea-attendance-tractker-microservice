@@ -33,7 +33,7 @@ Current position is unstarted W01-S01, confirmed unchanged. Upgrade Weeks 1–2,
 
 ## Historical pre-decomposition correction
 
-ADR 008 replaces C after the user's latest architecture acceptance. Add explicit Boot/Cloud/Avro compatibility, JDBC/reactive gateway alignment, Kafka integration/replay/bootstrap, consumer metrics, seven-workload deployment and broker-aware recovery. The old reserve does not prove these fit. The initial coarse demand estimate was 489.5 combined h against 393.12 capacity, with A as the bottleneck. That was the pre-decomposition unallocated estimate; the final itemized allocation below supersedes it without increasing any 70-percent limit.
+ADR 008 replaces C after the user's latest architecture acceptance. Add explicit Boot/Cloud/Avro compatibility, JPA persistence/reactive gateway alignment, Kafka integration/replay/bootstrap, consumer metrics, seven-workload deployment and broker-aware recovery. The old reserve does not prove these fit. The initial coarse demand estimate was 489.5 combined h against 393.12 capacity, with A as the bottleneck. That was the pre-decomposition unallocated estimate; the final itemized allocation below supersedes it without increasing any 70-percent limit.
 
 Cloud execution is future improvement by latest user instruction, while its final design is retained. Do not count deferral as successful AWS deployment. The architecture-specific confidence/event integration also needs an explicit step estimate; passing standalone Python tests is not proof of that integration.
 

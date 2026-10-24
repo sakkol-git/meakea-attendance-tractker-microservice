@@ -6,7 +6,7 @@ Spring Cloud Gateway has reactive and MVC variants; the final design chooses the
 
 ## HRFlow use
 
-Keep JDBC/password hashing in business services, not gateway filters. The gateway validates tokens, strips caller identity headers and routes to private services; services still enforce role/resource checks.
+Keep JPA persistence/password hashing in business services, not gateway filters. The gateway validates tokens, strips caller identity headers and routes to private services; services still enforce role/resource checks.
 
 ## Small proposed example
 

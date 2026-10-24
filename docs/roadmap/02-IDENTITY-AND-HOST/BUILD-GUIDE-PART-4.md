@@ -145,7 +145,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/api/ProfileController.java`, `services/identity-org/src/test/java/com/hrflow/identityorg/api/ProfileTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect actual trusted principal/user repository. Add proposed GET /api/v1/me returning only safe own user/employee-link fields via tenant-scoped JDBC; no caller user/tenant selector. Test missing identity, foreign identifier injection and inactive/unlinked user safe states.
+1. Inspect actual trusted principal/user repository. Add proposed GET /api/v1/me returning only safe own user/employee-link fields via tenant-scoped JPA repository; no caller user/tenant selector. Test missing identity, foreign identifier injection and inactive/unlinked user safe states.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

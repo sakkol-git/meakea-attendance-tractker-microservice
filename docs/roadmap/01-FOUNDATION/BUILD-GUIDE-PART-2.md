@@ -6,11 +6,11 @@
 
 **You will have:** Exactly one OpenAPI source is listed; its validator succeeds and a deliberate invalid local copy fails.
 
-### W01-S06 — Align the identity JDBC scaffold (60–60 min)
+### W01-S06 — Align the identity JPA scaffold (60–60 min)
 
 **Why:** A owns one observable result in the preserved weekly objective.
 
-**Read first (up to 10 min, included):** [One concept](../primers/SPRING-JDBC.md). Reuse prior learning; no new concept on Thursday/Friday.
+**Read first (up to 10 min, included):** [One concept](../primers/SPRING-JPA.md). Reuse prior learning; no new concept on Thursday/Friday.
 
 **Before you start:**
 
@@ -19,14 +19,24 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/pom.xml`, `services/identity-org/src/test/java/com/hrflow/identityorg/IdentityOrgApplicationTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first: use the spike findings to align this one service to the reviewed root baseline; replace JPA with JDBC and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step. Correct this service application.yaml to real YAML (or deliberately rename it to application.properties); do not leave properties syntax in a .yaml file. Run with explicit private DB/test configuration.
+1. Inspect first: use the spike findings to align this one service to the reviewed root baseline; **keep** `spring-boot-starter-data-jpa` (ADR-009) and add the minimum test dependencies. Create the proposed context test using the actual existing IdentityOrgApplication. Do not align six other poms in this step. Correct this service application.yaml to real YAML (or deliberately rename it to application.properties); do not leave properties syntax in a .yaml file. Add the two JPA safety settings to the YAML:
+
+   ```yaml
+   spring:
+     jpa:
+       hibernate:
+         ddl-auto: validate
+       open-in-view: false
+   ```
+
+   Run with explicit private DB/test configuration.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Context test executes with Failures: 0; dependency tree has JDBC and no accidental Hibernate runtime for this owner.
+**Expect:** Context test executes with Failures: 0; Hibernate **is** present in the dependency tree (this is correct per ADR-009); no JDBC-only alternative dependency.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.
@@ -103,14 +113,29 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/main/resources/db/migration/V1__diagnostic.sql`, `services/identity-org/src/test/java/com/hrflow/identityorg/DiagnosticDatabaseTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first: if a migration already exists, select the next unused version instead of V1. In a disposable real PostgreSQL container create a non-personal diagnostic row, query it through JdbcClient and assert duplicate constraint failure. Keep it out of public business endpoints.
+1. Inspect first: if a migration already exists, select the next unused version instead of V1. In a disposable real PostgreSQL Testcontainers container write one JPA entity and Spring Data repository for the diagnostic table. Save one row, assert `count() == 1`, then try `saveAndFlush` with a duplicate name and assert `DataIntegrityViolationException`. Use `saveAndFlush` for the duplicate — plain `save` may not flush until commit and the constraint would not fire in time. The migration `V1__diagnostic.sql` is unchanged; `ddl-auto: validate` will fail the test if the entity and table disagree. Keep it out of public business endpoints.
+
+   Proposed minimal entity and repository (confirm actual column names in the migration first):
+
+   ```java
+   @Entity
+   @Table(name = "diagnostic_check", schema = "identity_org")
+   class DiagnosticCheck {
+       @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+       Long id;
+       @Column(name = "check_name", nullable = false, unique = true)
+       String checkName;
+   }
+   interface DiagnosticCheckRepository extends JpaRepository<DiagnosticCheck, Long> {}
+   ```
+
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -f services/identity-org/pom.xml test
 ```
 
-**Expect:** Real PostgreSQL test passes clean migration, one stored diagnostic row and rejected duplicate; H2 is not used.
+**Expect:** Real PostgreSQL test passes clean migration, one stored diagnostic row and rejected duplicate via `DataIntegrityViolationException`; H2 is not used; `ddl-auto: validate` confirms entity-table alignment.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.

@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `scripts/acceptance/w11.sh`, `docs/validation/W11-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Create bounded load runner against isolated data; warm up, record hardware/count/errors/p50/p95/p99 and commit-to-projection duration; include duplicates. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Create bounded load runner against isolated data; warm up, record hardware/count/errors/p50/p95/p99 and commit-to-projection duration; include duplicates. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -145,7 +145,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `mobile/test/testsnetworkdeviceacceptance_test.dart`, `web/test/testsnetworkdeviceacceptance.test.ts`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Two representative devices exercise poor network and permission denial; log background limitations without promising notification timing. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Two representative devices exercise poor network and permission denial; log background limitations without promising notification timing. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

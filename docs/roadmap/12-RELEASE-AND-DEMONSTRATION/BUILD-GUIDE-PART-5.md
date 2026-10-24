@@ -19,7 +19,7 @@
 **Do:**
 
 1. Inspect first: review current equivalents for `scripts/acceptance/w12.sh`, `docs/validation/W12-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Record 10-minute sequence: tenant security, check-in retry, stopped worker, leave conflict/cancel, material approval, correction, CSV, restore evidence. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Record 10-minute sequence: tenant security, check-in retry, stopped worker, leave conflict/cancel, material approval, correction, CSV, restore evidence. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -145,7 +145,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `scripts/acceptance/w12.sh`, `docs/validation/W12-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Document single-host downtime, power/internet/Cloudflare dependency, Desktop login requirement, backup responsibilities, critical open issues and operator. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Locate the existing assertion or add a missing regression for this existing objective: Document single-host downtime, power/internet/Cloudflare dependency, Desktop login requirement, backup responsibilities, critical open issues and operator. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

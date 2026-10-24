@@ -198,5 +198,5 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 
 - Likelihood: Medium; impact: High; owner A; gates Weeks 2/3/10/11.
 - Signal: Direct business ingress, forged identity headers, wrong runtime DB role or missing external restore proof.
-- Prevention: Strip/verify identity at gateway, private business ports, method/resource checks, scoped JDBC plus personal-table RLS; cross-tenant/direct-ingress tests.
+- Prevention: Strip/verify identity at gateway, private business ports, method/resource checks, scoped JPA queries plus personal-table RLS; cross-tenant/direct-ingress tests.
 - Contingency: Block exposure, repair boundary and repeat security/restore suite. A compromised trusted network peer remains a residual risk; a single host/broker/DB is not highly available.

@@ -55,7 +55,7 @@
 
 | Symptom | Inspect first | Safe next action |
 | --- | --- | --- |
-| MVC advice does not catch gateway failure | Nuxtive dependency and filter error path | Assert the WebFlux error writer directly; do not add JDBC/blocking calls to gateway |
+| MVC advice does not catch gateway failure | Nuxtive dependency and filter error path | Assert the WebFlux error writer directly; do not add JPA/blocking calls to gateway |
 | Registry cannot connect despite valid Compose YAML | Host/container listeners and Registry bootstrap env | Correct the one actual mismatch, then test connectivity; preserve volumes |
 | Tests green with Docker stopped | Skipped test flags and fallback DB | Remove silent skip/H2 fallback for required integration tests; environment failure stays visible |
 | Empty coverage or architecture result | Actual compiled packages and selectors | Fail on absent implemented critical packages; record not-yet-built packages honestly |

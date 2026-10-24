@@ -2,14 +2,14 @@
 
 ## Final system design
 
-- **Decision:** Seven Spring services in their existing roots, reactive API gateway, explicit JDBC, PostgreSQL 16 service schemas, Kafka KRaft, Avro/Schema Registry, Nuxt/Vue/TypeScript, Flutter and Python confidence service.
-- **Reason:** User explicitly accepted the latest Architecture as final; this supersedes ADR 006 monolith/React simplification.
-- **Rejected alternatives:** Monolith, React migration, replacing Kafka with a local dispatcher. Cloud execution was initially requested in twelve weeks and then explicitly deferred as future improvement.
-- **Implementation impact:** Align seven builds, replace scaffold JPA/MVC gateway drift, preserve service-owned schemas and event-built read models. Outbox producer acknowledgment and consumer effect/inbox/offset ordering require real Kafka tests.
+- **Decision:** Seven Spring services in their existing roots, reactive API gateway, Spring Data JPA (Hibernate) for persistence, PostgreSQL 16 service schemas, Kafka KRaft, Avro/Schema Registry, Nuxt/Vue/TypeScript, Flutter and Python confidence service.
+- **Reason:** User explicitly accepted the latest Architecture as final; this supersedes ADR 006 monolith/React simplification. Persistence uses JPA per ADR-009: team familiarity and time are the deciding factors; design patterns (Specification, Strategy, Template) address complex queries before raw SQL is considered.
+- **Rejected alternatives:** Monolith, React migration, replacing Kafka with a local dispatcher. JdbcClient rejected (more boilerplate, new concept to learn). Cloud execution was initially requested in twelve weeks and then explicitly deferred as future improvement.
+- **Implementation impact:** Align seven builds, remove scaffold MVC from gateway drift, preserve service-owned schemas and event-built read models. Flyway is the only schema owner (`ddl-auto: validate`); `open-in-view: false` in every service. Outbox claiming uses one native `@Query` with `FOR UPDATE SKIP LOCKED`. Outbox producer acknowledgment and consumer effect/inbox/offset ordering require real Kafka tests.
 - **Cost and operational impact:** Local Compose on one confirmed computer; no paid service required by the current finish line. Hardware, disk, power/domain/provider accounts are still real dependencies. The approved cloud topology stays documented but unbuilt.
 - **Reconsider when:** User changes the design or measured compatibility/resource/capacity evidence requires a superseding ADR. Never silently change topology to hide a schedule shortfall.
 
-[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. The initial coarse demand exceeded available backend hours; final decomposed allocations are within the ceiling, as recorded in the review and weekly READMEs. Actual development velocity remains unmeasured; no completion guarantee is implied.
+[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [ADR 009](../adr/009-JPA-OVER-JDBC.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. The initial coarse demand exceeded available backend hours; final decomposed allocations are within the ceiling, as recorded in the review and weekly READMEs. Actual development velocity remains unmeasured; no completion guarantee is implied.
 
 ## Fixed choices
 
@@ -19,7 +19,7 @@
 | Web | Existing Nuxt/Vue TypeScript | web/package.json and lockfile | W1 build, W8 integration |
 | Mobile | Flutter, inspect actual root first | No existing Flutter source inferred | W1 mock, W8 real tests |
 | HTTP contract | Proposed contracts/openapi.yaml | One versioned /api/v1 authority, not yet installed | W1 contract CI |
-| Persistence | JDBC and Flyway, schema per owner | Existing physical identity_org retained | W3 constraints/RLS |
+| Persistence | Spring Data JPA, Flyway owns schema, `ddl-auto: validate`, `open-in-view: false` | ADR-009; `spring-boot-starter-data-jpa`; outbox via native `@Query` | W1 context test, W3 constraints/RLS |
 | Events | Kafka/Avro/Registry plus owner outbox and consumer inbox | libs/hrflow-contracts/events actual root | W2 spike, W5 crash/replay |
 | Auth | Gateway JWT, hashed rotating refresh family, method/resource roles | No trusted caller identity headers | W2 security negatives |
 | Host | Local Compose, private until safe | Host not ready; exact resources measured before pull | W2 private host, W10 restore |

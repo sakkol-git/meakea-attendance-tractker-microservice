@@ -8,7 +8,7 @@ The initial inventory identified 41 candidate files with C/React/local-dispatch 
 | --- | --- | --- |
 | Weekly hrflow-app/React commands | Replaced with existing owner roots, Nuxt/client targets and inspected future adapters | Twelve BUILD guide sets and step maps |
 | Local event worker/absence of Kafka | Replaced with owner outbox, broker ack, inbox/offset and one-active-relay recovery | Weeks 3/5/9/10/11 and ADR 008 |
-| JPA-only teaching | Explicit comparative history; selected implementation is JDBC | Spring JDBC primer, package/dependency standards |
+| JPA persistence pattern | Explicit comparative history; selected implementation is Spring Data JPA (ADR-009) | Spring JDBC primer, package/dependency standards |
 | JUnit 5 assumption | Corrected to actual Boot-managed Jupiter 6.0.3 and Testcontainers 2.0.5 | Toolchain reference/cached Boot 4.1.1 BOM |
 | Old five-stone/ending tags | New eight-stone tables and mapped unchanged old tags | Milestone/global checklist/ID maps |
 | Cloud within twelve weeks | Latest user deferral applied; production design retained as future | Architecture index/detail banners/ADR 008 |

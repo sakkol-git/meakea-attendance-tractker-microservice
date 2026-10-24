@@ -14,7 +14,7 @@ The single input is in YOU-ARE-HERE.md; this week's limit is 14.28 h each. Step 
 
 ## Preserved objective and starting point
 
-Week 04 — Attendance correctness remains the weekly objective, now under the accepted service/JDBC/Kafka/Nuxt design. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
+Week 04 — Attendance correctness remains the weekly objective, now under the accepted service/JPA/Kafka/Nuxt design. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
 
 ## Day plan
 

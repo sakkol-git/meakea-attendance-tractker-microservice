@@ -4,7 +4,7 @@
 
 ## Stone 5 — Quality and failure recovery
 
-**You will have:** Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
+**You will have:** Domain-to-JPA persistence edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
 
 ### W03-S24 — B displays today schedule — prove the denied or failure path (30–30 min)
 
@@ -63,7 +63,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/IsolatePersonalRowsRlsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Add tenant-leading keys and ENABLE/FORCE RLS using transaction-local app.tenant_id; runtime role is non-owner and cannot BYPASSRLS. Use parameterized set_config inside the same transaction. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Add tenant-leading keys and ENABLE/FORCE RLS using transaction-local app.tenant_id; runtime role is non-owner and cannot BYPASSRLS. Use parameterized set_config inside the same transaction. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -189,14 +189,14 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/FailForbiddenServiceLayerImportsTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Add nonempty ArchUnit rules for api/application/domain/infrastructure direction and forbid service-to-service artifact dependencies. Trial a forbidden import in a disposable test fixture, then remove it. Use the current HTTP/JDBC/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
+1. Inspect first and repeat the golden slice. Write one failing assertion for this existing objective: Add nonempty ArchUnit rules for api/application/domain/infrastructure direction and forbid service-to-service artifact dependencies. Trial a forbidden import in a disposable test fixture, then remove it. Use the current HTTP/JPA/client fixture, fixed clock and synthetic tenant; make the test fail for behavior, not missing imports. Add this behavior to the week runner on its first use.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -pl services/identity-org -am test
 ```
 
-**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
+**Expect:** The behavior assertion fails on the documented missing behavior. Target after green: Domain-to-JPA persistence edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.
@@ -238,7 +238,7 @@ Green: Failures: 0, Errors: 0; negative assertion prevents the forbidden effect.
 mvn -pl services/identity-org -am test
 ```
 
-**Expect:** Domain-to-JDBC edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
+**Expect:** Domain-to-JPA persistence edge and a foreign service artifact fail; clean dependencies pass; zero imported classes fails.
 
 ```text
 Red: expected behavior assertion fails; build/setup errors are diagnosed separately.

@@ -1,30 +1,14 @@
-# Spring JDBC and scoped SQL
+# Spring JDBC — superseded
 
-## Ten-minute concept
+> **Decision ADR-009:** HRFlow uses Spring Data JPA (Hibernate) for all persistence, not
+> JdbcClient. This file is kept for reference only. Follow
+> [SPRING-JPA.md](SPRING-JPA.md) instead.
 
-JDBC executes explicit parameterized SQL without a JPA entity session. JdbcClient is a fluent Spring helper; transactions still define what commits together.
-
-## HRFlow use
-
-Repositories receive trusted tenant context from the application boundary and bind it in every select, update, delete and count. Never concatenate user values or table identifiers into SQL.
-
-## Small proposed example
-
-```java
-// Proposed shape; table/column names are confirmed by the migration inventory first.
-var names = jdbc.sql("select name from identity_org.department where tenant_id = :tenant")
-    .param("tenant", trustedTenantId)
-    .query(String.class)
-    .list();
-```
-
-## Common mistake
-
-> **Pitfall:** An unscoped count/export query leaks information even when find-by-id is scoped. RLS is a second guard, not permission to remove predicates.
-
-## Check understanding
-
-- [ ] Explain the boundary in two sentences.
-- [ ] Name one failing test before returning to the step.
-
-[Final architecture](../../Architecture.md), [standards](../ENGINEERING-STANDARDS.md), and [dashboard](../YOU-ARE-HERE.md).
+- **Decision:** Spring Data JPA (Hibernate) for persistence, not JdbcClient.
+- **Reason:** Team already knows JPA; time is the scarcest resource.
+- **Rejected alternatives:** JdbcClient adds boilerplate and a new concept to learn.
+- **Implementation impact:** Keep `spring-boot-starter-data-jpa`; Flyway owns the
+  schema; `ddl-auto: validate`; `open-in-view: false`.
+- **Cost and operational impact:** None.
+- **Reconsider when:** Outbox or report queries become awkward in JPA; at that point
+  add a single native `@Query` first before introducing a new dependency.

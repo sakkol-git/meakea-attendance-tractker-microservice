@@ -32,4 +32,4 @@
 
 ## Senior release contract
 
-All Q01–Q14 rows resolve to enforcing steps and unchecked gate tasks; actual reports later establish **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN**. Both clients use one /api/v1 contract; services keep JDBC/schema/event ownership and safe problem details. Full final local stack includes Kafka/Registry, so broker offset/replay and snapshot bootstrap are tested. Cloud execution is deferred; no compliance or single-host availability guarantee is implied.
+All Q01–Q14 rows resolve to enforcing steps and unchecked gate tasks; actual reports later establish **PASS**, **CONDITIONAL PASS**, **FAIL** or **NOT RUN**. Both clients use one /api/v1 contract; services keep JPA/schema/event ownership and safe problem details. Full final local stack includes Kafka/Registry, so broker offset/replay and snapshot bootstrap are tested. Cloud execution is deferred; no compliance or single-host availability guarantee is implied.
