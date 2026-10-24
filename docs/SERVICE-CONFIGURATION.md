@@ -2,7 +2,7 @@
 
 ## Scope and entry points
 
-The seven Java service roots now inherit the root Maven/Boot version, use valid YAML and select JDBC for business services plus the reactive gateway. Each service and the Python confidence prototype has a tracked .env.example and a local, empty .env. Blank files are deliberately ignored, so a fresh clone must create them locally. No application secrets, login flow, tenant policies, business migrations, Kafka handlers or production deployment are supplied by this baseline.
+The seven Java service roots now inherit the root Maven/Boot version, use valid YAML and select Spring Data JPA for business services plus the reactive gateway (ADR-009). Each service and the Python confidence prototype has a tracked .env.example and a local, empty .env. Blank files are deliberately ignored, so a fresh clone must create them locally. No application secrets, login flow, tenant policies, business migrations, Kafka handlers or production deployment are supplied by this baseline.
 
 [Architecture](Architecture.md), [ADR 008](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) and [engineering standards](roadmap/ENGINEERING-STANDARDS.md) still define the target. The following settings are implementation configuration, not completion of all Q-items. Historical audits retain their older findings; inspect current source before repeating a roadmap repair step.
 
@@ -52,7 +52,7 @@ An empty .env is a placeholder, not a runnable database configuration. Unresolve
 - CSRF remains enabled; state is not persisted in server sessions. Secure/HttpOnly/SameSite cookie defaults are configured for servlet services. Do not disable CSRF or Secure cookies to get a later login demo working.
 - Forwarded headers are not trusted automatically. Add the approved proxy/header sanitization and tenant provenance checks before enabling forwarding or opening business routes. Keep service/management ports private.
 - Shutdown allows twenty seconds per phase. Logs use Boot's JSON format. Stack traces, exception names, validation internals and exception messages are excluded from default HTTP errors; framework problem-details support is enabled. Stable business error codes and correlation/tenant context still need implementation and tests.
-- JDBC pools default to five maximum connections with bounded acquisition, connection and socket waits; connection timezone is UTC. Each pool selects its own schema, which is not tenant isolation by itself. No Hibernate/JPA dependency remains in the service builds.
+- Connection pools default to five maximum connections with bounded acquisition, connection and socket waits; connection timezone is UTC. Each pool selects its own schema, which is not tenant isolation by itself. Spring Data JPA (Hibernate) is configured with ddl-auto: validate and open-in-view: false per ADR-009.
 - Flyway validation is enabled; clean, schema auto-creation and automatic baselining are disabled. Separate credentials are required for migrations. No applied migration is edited by this change.
 - Kafka uses Avro, producer idempotence/all acknowledgments, manual consumer acknowledgment, read-committed isolation, bounded batches and explicit schema/topic registration. The local endpoints use private development transport; broker TLS/SASL and full inbox/outbox guarantees are not implied by these properties.
 - The gateway uses the accepted reactive starter, a bounded codec buffer and explicit connection/response timeouts. No automatic retry of mutating HTTP requests is introduced.

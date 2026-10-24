@@ -64,7 +64,7 @@
 
 ## Final V2 execution path
 
-Begin with [START-HERE](START-HERE.md) and [YOU-ARE-HERE](YOU-ARE-HERE.md); development starts 2026-10-26 and targets the 2027-01-15 release rehearsal. All twelve weeks now use the final seven-service/JDBC/Kafka/Nuxt design. [Changelog](CHANGELOG-V2.md), [validation](V2-VALIDATION-LOG.md), [quality coverage](QUALITY-COVERAGE.md) and [progress](PROGRESS-V2.md) distinguish authoring completion from implementation evidence.
+Begin with [START-HERE](START-HERE.md) and [YOU-ARE-HERE](YOU-ARE-HERE.md); development starts 2026-10-26 and targets the 2027-01-15 release rehearsal. All twelve weeks now use the final seven-service/JPA/Kafka/Nuxt design. [Changelog](CHANGELOG-V2.md), [validation](V2-VALIDATION-LOG.md), [quality coverage](QUALITY-COVERAGE.md) and [progress](PROGRESS-V2.md) distinguish authoring completion from implementation evidence.
 
 [ID map](STEP-ID-MAP.md) and [draft map](DRAFT-ID-MAP.md) preserve old progress/tags. Cloud deployment remains future improvement. All required security and restore tests stay in the gate; no single-host availability or certification claim.
 
