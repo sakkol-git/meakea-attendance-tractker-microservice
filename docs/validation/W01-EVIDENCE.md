@@ -12,3 +12,7 @@
 ## W01-S03
 - Command: java -version
 - Result: paste the first line here. PASS if major 21, else BLOCKED
+
+## W01-S03
+- Command: java -version
+- Result: openjdk version "21.0.13.0.2" 2026-10-22 PASS 
