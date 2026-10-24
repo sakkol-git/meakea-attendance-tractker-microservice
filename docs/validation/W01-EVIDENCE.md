@@ -16,3 +16,10 @@
 ## W01-S04
 - Command: docker info
 - Result: Server responded. Memory: 7.748GiB. No containers started.
+
+## W01-S05
+- mvn -o validate: exit 0, 10 projects, BUILD SUCCESS
+- mvn -o compile: exit 0, 10 projects, BUILD SUCCESS, javac release 21
+- Boot version root: 4.1.1, services: inherit 4.1.1 (no mismatch found)
+- Spring Cloud: 025.1.3 (api-gateway only), JUnit: 6.0.3:test
+- Smallest next fix: confirm the Spring Cloud release train supports Boot 4.1.1 before adding more gateway dependencies.
