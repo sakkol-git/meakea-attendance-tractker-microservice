@@ -8,3 +8,7 @@
 ## W01-S02
 - Command: df -h .
 - Result: AVAILABLE_SPACE free (needs 41 GiB). PASS 
+
+## W01-S03
+- Command: java -version
+- Result: paste the first line here. PASS if major 21, else BLOCKED
