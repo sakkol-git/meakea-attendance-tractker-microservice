@@ -4,6 +4,7 @@ node_modules/
 .output/
 .idea/
 .vscode/
+.DS_Store
 *.iml
 .env
 .env.*
@@ -18,3 +19,10 @@ ml/confidence-service/.venv/
 ml/confidence-service/data/*.csv
 web/
 /mobile/
+
+# Local verification dependencies
+.venv-checks/
+
+# Machine-specific local MCP environment and registration
+.venv-mcp/
+/.codex/config.toml

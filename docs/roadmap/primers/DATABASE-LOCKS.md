@@ -1,6 +1,6 @@
 # Database locks and concurrency control
 
-> **Decision ADR-009:** HRFlow uses Spring Data JPA (Hibernate). JPA examples in this primer are production-intended patterns, not comparative teaching. Follow the SPRING-JPA primer for the authoritative reference.
+> **Decision:** HRFlow uses Spring Data JPA (Hibernate). JPA examples in this primer are production-intended patterns, not comparative teaching. Follow the SPRING-JPA primer for the authoritative reference.
 
 > **Note:** Database locks and concurrency controls protect shared business invariants from race conditions when multiple transactions access the same records concurrently.
 

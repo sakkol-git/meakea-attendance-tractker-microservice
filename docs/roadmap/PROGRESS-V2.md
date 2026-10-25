@@ -2,7 +2,7 @@
 
 ## Documentation completion
 
-Final V2 authoring and static validation are complete on docs/roadmap-v2. All twelve weeks use the latest user-approved service design, 448 atomic steps and 96 stones. Every original ID maps forward, Q01–Q14 have complete planned coverage and the extended linter/proof harness passes. This is not application completion; current position remains W01-S01, **Not run**, with no green application tag.
+Final V2 authoring and static validation are complete. All twelve weeks use the latest user-approved service design, 448 atomic steps and 96 stones. Every original ID maps forward, Q01–Q14 have complete planned coverage and the extended linter/proof harness passes. Application execution has advanced to W02-S24: Week 1 is complete, W02-S01 through W02-S23 have evidence, and the last recorded green application tag remains `bd53438`.
 
 ## Confirmed plan
 
@@ -14,31 +14,31 @@ Final design retains seven Java services, reactive gateway, Spring Data JPA, Kaf
 
 | Phase | Authoring state | Evidence | Runtime state |
 | --- | --- | --- | --- |
-| 1 architecture review | **PASS** | Every ADR verdict, ADR 008, diagrams/data/event/failure boundaries, explicit initial/final capacity | Implementation **NOT RUN** |
-| 2 objective audit | **PASS** | All 182 baseline rows, weekly scorecards/worst 15 and upgrade plan | Original implementation unbuilt |
-| 3 shared assets | **PASS** | Standards/review/tests/security/API/commands/golden slice/runbooks/primers | Future tool/script creation and drills **NOT RUN** |
-| 4 decomposition | **PASS** | All twelve weeks, two-to-six steps/stone, eight stones/week, owner budgets and old/draft maps | 448 steps **Not run** |
-| 5 cross-cutting | **PASS** | Fourteen Q chains, week gates, final scorecards/global/risk/master consistency | Every product scorecard **NOT RUN** |
-| 6 tooling | **PASS** | Standard-library semantic checks; 23 isolated broken-fixture proofs | No source/production command run by linter |
-| 7 author simulation/checks | **PASS** with limits | Cold-read path, 36 static samples, safe commands, seven Mermaid/three Java examples, dependency/capacity/coverage and final metrics | Native viewers and business/restore/load acceptance **NOT RUN** |
+| 1 architecture review | **PASS** | Every ADR verdict, ADR 008, diagrams/data/event/failure boundaries, explicit initial/final capacity | Local foundation **PASS**; production topology unverified |
+| 2 objective audit | **PASS** | All 182 baseline rows, weekly scorecards/worst 15 and upgrade plan | Auth slice 6/158 implemented |
+| 3 shared assets | **PASS** | Standards/review/tests/security/API/commands/golden slice/runbooks/primers | Contract verifier, Compose and auth smoke now run; operational drills remain |
+| 4 decomposition | **PASS** | All twelve weeks, two-to-six steps/stone, eight stones/week, owner budgets and old/draft maps | 61 steps have evidence; current step W02-S24 |
+| 5 cross-cutting | **PASS** | Fourteen Q chains, week gates, final scorecards/global/risk/master consistency | Auth and client checks pass; full product gates remain open |
+| 6 tooling | **PASS** | Standard-library semantic checks; 23 isolated broken-fixture proofs | Current documentation lint passes 305 files |
+| 7 author simulation/checks | **PASS** with limits | Cold-read path, 36 static samples, safe commands, seven Mermaid/three Java examples, dependency/capacity/coverage and final metrics | Physical devices, host, restore, business, load and user acceptance remain **NOT RUN** |
 
 ## Decisions and constraints carried forward
 
 - No extra architecture approval is required for the accepted local guide. HR policy/consent is not inferred from design approval.
-- Active Java 17 must become target 21, Docker daemon must respond, at least 30 GiB free must precede pulls, and Flutter location/SDK must be established. Current free disk was about 4.8 GiB.
+- Java 21, Docker and the pinned Flutter SDK now run locally. Host disk headroom and the intended production machine must still be recorded in W02-S24 before deployment work.
 - Actual production host, external encrypted backup/recovery keys, public domain/network reachability and unattended reboot behavior remain unknown. Private Caddy internal TLS avoids removing Secure-cookie protection or assuming a purchased domain.
-- Source remains scaffolding. Future ops/CI/contracts/classes are explicitly created in the guide, not claimed installed. Initial developer source baseline protects currently untracked files before CI; this documentation task did not stage or refactor source.
+- Source now contains the local foundation, synchronized OpenAPI bundles and the six-operation authentication slice. Most business endpoints remain scaffolding or pending; the contract ledger is the implementation authority.
 - All critical security/tenant/DB/event/restore checks remain required. If actual learning or work exceeds the itemized estimate, cut Stretch first and record the residual scope/date conflict; no weekends or hidden use of the 30-percent reserve.
 
-## Actual checks and limitations
+## Current application checks and limitations
 
-[V2 validation log](V2-VALIDATION-LOG.md) and [linter proofs](LINTER-PROOFS.md) contain commands/exits and all 36 sampled IDs. Current scaffold Maven validate passed; Maven tests stop at the Avro plugin's nonexistent configured schema directory. Nuxt build/static generation passed; five Python prototype tests passed with one deprecation warning. Docker daemon is unavailable, so real PostgreSQL/Kafka and application security/recovery are **NOT RUN**. No native IntelliJ/Obsidian/Notion visual result is claimed; CommonMark/GFM and text diagram fallback remain enforced.
+[V2 validation log](V2-VALIDATION-LOG.md), [Week 1 evidence](../validation/W01-EVIDENCE.md), [Week 2 evidence](../validation/W02-EVIDENCE.md) and [linter proofs](LINTER-PROOFS.md) contain commands and results. Docker Compose now runs PostgreSQL, Kafka, schema registry, identity-org and the gateway locally; gateway health passes. The full Maven reactor, Nuxt checks/build, Flutter analysis/tests/build, contract validation and documentation lint pass. The contract records 6 implemented authentication operations and 152 pending operations. Real-host deployment, external-backup restore, physical-device acceptance, business modules and release gates remain **NOT RUN**.
 
 The complete incoming Markdown input is durably archived in docs/validation/INCOMING-DOCS-V2-SNAPSHOT.json. All 94 source/config fingerprints and eight original non-document staged blobs match the pre-pass snapshot. Documentation commits use an isolated index, no source reset/history rewrite or cloud deployment. Final saved-tree validation is run after the finishing commit so tracked artifacts cannot be missing behind a clean working-tree lint.
 
 ## Resuming development
 
-No documentation phase remains intentionally pending. Open [START-HERE](START-HERE.md), [YOU-ARE-HERE](YOU-ARE-HERE.md), then [W01-S01](01-FOUNDATION/BUILD-GUIDE.md). It records dirty work, reviews ignore/secrets and preserves the actual source baseline on the implementation branch before code/CI changes. Do not mark it Run from this authoring pass.
+No documentation phase remains intentionally pending. Open [START-HERE](START-HERE.md), [YOU-ARE-HERE](YOU-ARE-HERE.md), then [W02-S24](02-IDENTITY-AND-HOST/BUILD-GUIDE-PART-5.md). Record the production-host facts and continue through the private manifest, secret, backup, restore and Week 2 gate steps. The next backend contract slice is current-tenant and self-service account context, but do not start it before the requested vertical-slice report boundary is accepted.
 
 [STEP-ID-MAP](STEP-ID-MAP.md), [DRAFT-ID-MAP](DRAFT-ID-MAP.md) and [finalization map](FINALIZATION-ID-MAP.md) preserve older positions/tags. [CHANGELOG-V2](CHANGELOG-V2.md) contains final metrics and per-week hours; [QUALITY-COVERAGE](QUALITY-COVERAGE.md) contains every senior-quality gate. Five-minute routine: read blocker, check branch/status, choose one next mapped ID, read prerequisite/Expect/Undo, record energy/time and start or stop. End by saving the next exact command and protecting rest days.
 

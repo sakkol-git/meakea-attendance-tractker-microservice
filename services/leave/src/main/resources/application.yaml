@@ -125,6 +125,3 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
-  structured:
-    format:
-      console: logstash

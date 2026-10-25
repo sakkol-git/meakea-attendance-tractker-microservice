@@ -12,7 +12,7 @@ One OpenAPI file owns wire shapes, canonical API document owns persistence seman
 
 Rule: One versioned OpenAPI file is wire authority.
 
-Beginner minimum: Extend proposed contracts/openapi.yaml only for implemented slice; mock Flutter from it and validate examples/live schema.
+Beginner minimum: Extend canonical contracts/openapi.json incrementally for the shared slice; its current leave review operations are provisional consumer requirements. Synchronize client bundles and validate fixtures; add provider response/security checks when the server slice is implemented. See [project context](../development/PROJECT-CONTEXT.md).
 
 Acceptance check: CI fails on invalid spec, broken example or response mismatch; /api/v1 is explicit.
 

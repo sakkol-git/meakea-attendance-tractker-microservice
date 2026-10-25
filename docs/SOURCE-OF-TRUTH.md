@@ -59,7 +59,7 @@ The approved domain chapters describe target behavior; the Must/Stretch boundary
 | Environment files, service ports and runtime baseline | [Service configuration](SERVICE-CONFIGURATION.md) | Actual application YAML/.env.example and security/configuration tests; no business acceptance implied |
 | Tool/build versions, compatibility and dependency pins | [Toolchain reference](roadmap/TOOLCHAIN-REFERENCE.md) | Inspect actual manifests/lockfiles; distinguish observed versions from target alignment |
 | HTTP routes, versioning, methods, status, pagination and errors | [API/database design](REST-API-DATABASE-DESIGN.md) | [API guidelines](roadmap/API-GUIDELINES.md) and [Week 01](roadmap/01-FOUNDATION/README.md) contract checks |
-| OpenAPI and client/server contract agreement | [Engineering standards Q01](roadmap/ENGINEERING-STANDARDS.md) | One proposed contracts/openapi.yaml is created/checked in Week 01; no existing executable contract is inferred |
+| OpenAPI and client/server contract agreement | [Engineering standards Q01](roadmap/ENGINEERING-STANDARDS.md) | `contracts/openapi.json` contains the provisional shared consumer inventory; only the leave review fixture currently has cross-client evidence, and no consumer fixture establishes server implementation. See [project context](development/PROJECT-CONTEXT.md) and the [frontend-to-backend plan](roadmap/FRONTEND-TO-BACKEND-ALIGNMENT.md) |
 | Domain schema ownership, constraints and migrations | [API/database design](REST-API-DATABASE-DESIGN.md) and [ADR 008](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) | Q07; real Flyway migrations own installed DDL once created, not reference SQL exports |
 | Event envelopes, Avro schemas, topic keys and compatibility | [Event backbone](reference/INCOMING-ARCHITECTURE-V2-02.md) and ADR 008 | Inspect libs/hrflow-contracts/events; [Week 01](roadmap/01-FOUNDATION/README.md) compatibility and [Week 05](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) replay tests |
 | Outbox/inbox, acknowledgments, ordering and retry recovery | ADR 008 and [API/database design](REST-API-DATABASE-DESIGN.md) | [Week 05](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md); local-only dispatch is superseded |
@@ -141,6 +141,10 @@ Evidence records must identify the command, target, time/checkpoint, result and 
 | New topic with no owner/specification yet | Add an explicit gap to the decision/risk register and this map | Inspect first; write/review the minimum specification before dependent implementation |
 
 There is no separate approved legal/compliance, production SLA, localization or design-system specification identified by this map. Do not manufacture one from primer examples, aspirational performance targets or old open-question IDs. New requirements enter the decision/scope process and capacity math first.
+
+## AI context and coordinated changes
+
+[Project context](development/PROJECT-CONTEXT.md) owns the lightweight context/check workflow. [Engineering rules](development/ENGINEERING-RULES.md) define business-first design, proportional BDD/TDD and evidence requirements; they do not supersede accepted domain policy. [Change checklist](development/CHANGE-CHECKLIST.md) owns impact review. Actual source and executed tests still establish implementation; generated contract copies do not override canonical definitions or prove provider compatibility.
 
 ## Keeping the source of truth current
 

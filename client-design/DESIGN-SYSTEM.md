@@ -1,6 +1,6 @@
 # HRFlow design system
 
-Status: proposed v0.1 · 23 October 2026
+Status: implemented shared foundation v0.2 · 25 October 2026
 
 See [source evidence and open decisions](README.md) and the [typography specification](TYPOGRAPHY.md).
 
@@ -11,6 +11,20 @@ See [source evidence and open decisions](README.md) and the [typography specific
 3. Keep related information together. A request's dates, duration, status, and next action belong in one readable unit.
 4. Share identity across platforms. Reuse semantic tokens and terminology, while adapting navigation and information density to the available space.
 5. Prefer restrained surfaces. Use spacing, borders, and hierarchy before strong shadows or large decorative headers.
+
+## Cross-client brand contract
+
+Mobile and web implement one HRFlow identity. The shared contract is Kantumruy Pro, primary teal `#006151`, the semantic colors below, the same status meanings, and the same product terminology. New screens must consume the existing Flutter theme or CSS tokens instead of introducing a feature-specific brand palette.
+
+The platforms may express the contract through their native interaction patterns: mobile uses safe areas, bottom navigation and touch-first controls; web uses a sidebar, responsive tables, keyboard focus and pointer states. These are intentional platform adaptations, not different branding. Screen density and navigation placement may differ while labels, workflow outcomes, validation, status meaning and action hierarchy remain consistent.
+
+The implemented sources are:
+
+- Flutter: `mobile/lib/core/theme.dart` and the bundled `KantumruyPro` font family.
+- Nuxt: `web/app/assets/css/tokens.css` and `@fontsource-variable/kantumruy-pro`.
+- Product language and state rules: this document, `CONTENT-GUIDE.md`, and the accepted shared API contract.
+
+Review any token change in this document and both client implementations together. A platform-only token is allowed when the other platform has no equivalent interaction, such as web pointer hover, but it must remain derived from this palette.
 
 ## Color system
 

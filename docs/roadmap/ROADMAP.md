@@ -59,8 +59,8 @@ Step durations include first reading/tests/commit; these totals also include exp
 
 | Week | A planned h | B planned h | Limit each h | Steps | Gate |
 | --- | --- | --- | --- | --- | --- |
-| 01 | 14 | 14.25 | 16.8 | 38 | **NOT RUN** |
-| 02 | 14.25 | 11 | 16.8 | 35 | **NOT RUN** |
+| 01 | 14 | 14.25 | 16.8 | 38 | **PASS** |
+| 02 | 14.25 | 11 | 16.8 | 35 | **ACTIVE: S01–S23 PASS; GATE NOT RUN** |
 | 03 | 14.25 | 14.25 | 16.8 | 41 | **NOT RUN** |
 | 04 | 9.5 | 12.25 | 14.28 | 36 | **NOT RUN** |
 | 05 | 10 | 14.25 | 16.8 | 36 | **NOT RUN** |

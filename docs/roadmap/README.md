@@ -11,6 +11,7 @@
 - [Source of Truth](../SOURCE-OF-TRUTH.md).
 - [Complete document catalog](../DOCUMENTATION-CATALOG.md).
 - [Roadmap](ROADMAP.md).
+- [Frontend-to-backend synchronization plan](FRONTEND-TO-BACKEND-ALIGNMENT.md).
 - [Milestone Map](MILESTONE-MAP.md).
 - [Global Checklist](GLOBAL-CHECKLIST.md).
 - [Decision Register](DECISION-REGISTER.md).

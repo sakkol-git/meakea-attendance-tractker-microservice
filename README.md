@@ -8,6 +8,23 @@ HRFlow delivers comprehensive workforce management for small and medium enterpri
 
 The platform is designed for reliable self-hosting on private infrastructure, combining Docker Compose, PostgreSQL 16 domain schemas, local transactional event outbox processing, Caddy gateway routing, and secure Cloudflare Tunnel ingress without requiring cloud subscriptions or public open router ports.
 
+## AI context and coordinated changes
+
+Start with [project instructions](AGENTS.md), [fresh context and checks](docs/development/PROJECT-CONTEXT.md), and the [cross-system checklist](docs/development/CHANGE-CHECKLIST.md). Run `python3 scripts/project-context.py` for current revisions and entry points. The [shared OpenAPI slice](contracts/README.md) and synchronized client fixtures are provisional; they do not establish live backend compatibility.
+
+## Local stack and checks
+
+From the repository root, run `docker compose up --build -d`. Compose builds the gateway and identity service, starts PostgreSQL and Kafka, and waits for service health. Check `curl --fail http://localhost:8080/actuator/health` after startup. Business API routes remain closed until their security and contract slices are implemented. Stop the stack with `docker compose down` without deleting its volumes.
+
+For schema checks, create `.venv-checks` and install `scripts/requirements-checks.txt` as shown in [project context](docs/development/PROJECT-CONTEXT.md). `python3 scripts/verify-project.py` selects that interpreter automatically when present. The [backend slice order](docs/development/BACKEND-SLICES.md) tracks implemented and pending operations.
+
+To exercise the local password-session slice, start Compose with a development-only seed password and run the gateway smoke test:
+
+```bash
+HRFLOW_DEV_PASSWORD='choose-a-local-password' docker compose up --build -d
+HRFLOW_DEV_PASSWORD='choose-a-local-password' .venv-checks/bin/python scripts/live-auth-smoke.py
+```
+
 ## Documentation navigation
 
 The engineering documentation suite is organized into authoritative specifications, decision records, implementation roadmaps, and technical primers:

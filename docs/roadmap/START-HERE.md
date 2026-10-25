@@ -2,11 +2,11 @@
 
 ## Your first fifteen minutes
 
-1. Open [You are here](YOU-ARE-HERE.md). Current position is W01-S01, not started; A and B have 24 hours each weekly, at most 70 percent planned. No application feature is checked off.
+1. Open [You are here](YOU-ARE-HERE.md). Current position is W02-S24, not run; W01 is complete and W02-S01 through W02-S23 have evidence. A and B have 24 hours each weekly, at most 70 percent planned. The authentication slice has 6 implemented operations; 152 contract operations remain pending.
 1. Read the first three paragraphs of [final decisions](DECISION-REGISTER.md): retain seven services: gateway is the verified front door; JPA (Hibernate) is Java persistence, Kafka is the event log, Avro defines event schemas, Nuxt/Vue is web and Flutter is mobile. A tenant is one company. AWS/Kubernetes deployment is future improvement. Proposed names in a step are targets to inspect/create, never discovered code.
-1. Open [Week 1 overview](01-FOUNDATION/README.md), then [Week 1 Step 1](01-FOUNDATION/BUILD-GUIDE.md). W01-S01 inventories the dirty Git workspace and saves a reviewed implementation-source baseline on its own branch; it does not delete files, reset history or deploy anything.
+1. Open [Week 2 overview](02-IDENTITY-AND-HOST/README.md), then [Week 2 Step 24](02-IDENTITY-AND-HOST/BUILD-GUIDE-PART-5.md). W02-S24 records the intended production computer before private deployment work; it does not claim that the local Compose result proves host readiness.
 1. Read the linked Git primer only if unfamiliar. Git means versioned checkpoints; staged means queued for the next commit, untracked means Git has not yet recorded that file; a commit saves one reviewed change, a branch keeps a line of work, a tag names a checked checkpoint. The guide uses ordinary Markdown links, so IntelliJ/Obsidian/Notion can follow the same path.
-1. Run the safe status command printed in that step. Record the next action and blocker before changing code. Stop at the cap; no green tag exists yet.
+1. Run the safe status command printed in that step. Record the next action and blocker before changing code. Stop at the cap; the last recorded green application tag remains `bd53438`, so later uncommitted evidence must not be described as a green tag.
 
 ## Calendar and rhythm
 
@@ -35,6 +35,8 @@ Use [glossary](GLOSSARY.md), [primers](primers/README.md), [daily commands](DAIL
 ## Progress and recovery
 
 Use [roadmap](ROADMAP.md), [milestones](MILESTONE-MAP.md) and [global checklist](GLOBAL-CHECKLIST.md). Old progress translates through [STEP-ID-MAP](STEP-ID-MAP.md); the intermediate draft uses [DRAFT-ID-MAP](DRAFT-ID-MAP.md). Preserve every old tag and inspect evidence before repeating a migration or restore.
+
+When implementing an API used by web or mobile, also open the [frontend-to-backend synchronization plan](FRONTEND-TO-BACKEND-ALIGNMENT.md). It maps current client outcomes to backend owners and decision gates without promoting provisional client routes into accepted provider behavior.
 
 Five-minute daily routine: read dashboard/blocker, check branch/status, pick one next mapped step, read prerequisite/Expect/Undo, record energy/time and start or stop. End by saving the exact next command and closing the laptop. Critical failure is tomorrow's first action.
 

@@ -28,16 +28,16 @@ Local snapshots use preferences and contain fictional data only. Remote tokens/c
 
 ## Web
 
-Nuxt remains a separate starter UI with the original bounded data-source foundation. It has not received the mobile application, session/cache implementation or full business workflows in this task.
+The Nuxt client now includes workspace pages, typed API wrappers, runtime response schemas, forms, role guards, reporting and workflow adapters. Inspect the current [architecture](../web/docs/ARCHITECTURE.md), [integration contract](../web/docs/INTEGRATION.md) and [feature coverage](../web/docs/FEATURE-COVERAGE.md) rather than the earlier starter checkpoint. Demo and mock-server browser journeys are separate from live backend acceptance.
 
 ```dotenv
 NUXT_PUBLIC_DATA_SOURCE=remote
 NUXT_PUBLIC_API_BASE_URL=https://hr.example.com/api/v1
 ```
 
-See `web/.env.example`. The plugin injects `$clientData`; request/error/UUID definitions live in `web/app/data/source.ts`, local simulation in `local.ts`, remote transport in `remote.ts`, and mode/bearer selection in `client.ts`. Source instances belong to one Nuxt app, not a global store. Local SSR and browser state are separate; interactive demo mutations should run in the browser.
+See `web/.env.example`. `web/app/api/workspace.ts` owns core route mappings and `web/app/schemas/contracts.ts` owns current runtime response validation. Advanced workflows use a typed adapter boundary that rejects unagreed remote operations. Authentication uses an in-memory access token and a server-owned refresh cookie with CSRF checks; bootstrap, cookie/CORS policy and the actual provider still require agreement. There is no demo fallback for remote failures.
 
-Web foundation limitations remain: transient demo state, no full authentication rotation or secure cookie/CSRF integration, no production feature repositories or complete screens. Its original tests/build passed at the foundation checkpoint; no new web verification or dependency remediation is claimed by the mobile delivery. The earlier audit reported ten Nuxt/transitive advisories (eight high, two moderate); the web release needs separate remediation.
+The current dependency audit and release blockers live in the web integration guide. Earlier counts and starter-only results are historical evidence and must not be presented as current application state.
 
 ## Shared synthetic seed
 
@@ -54,9 +54,9 @@ The seed contains fictional identities and simplified transitions. Mobile extend
 
 Domain paths are relative to `/api/v1`; query values are encoded separately. Base URLs require HTTPS except loopback HTTP, reject embedded credentials and do not follow redirects. Failures expose status/code/detail/trace ID. Timeout/network failures can leave mutation outcomes unknown. Preserve a command key and exact payload across retries; preserve quoted ETags on versioned commands. Do not log tokens or personal payloads.
 
-Mobile excludes login/refresh from command idempotency and handles one replay after token refresh. The web foundation has its earlier request validation and no authentication lifecycle; see its implementation before connecting auth endpoints. Browser deployment requires accepted CORS/cookie/CSRF policies and exposed ETag headers.
+Mobile excludes login/refresh from command idempotency and handles one replay after token refresh. Web uses its separate cookie/CSRF authentication adapter; the two refresh protocols are not reconciled by the shared leave contract. Browser deployment requires accepted CORS/cookie/CSRF policies and exposed ETag headers.
 
-Route names in historical [API-MAP.md](../docs/business-flow/API-MAP.md) are planned references. [REST-API-DATABASE-DESIGN.md](../docs/REST-API-DATABASE-DESIGN.md) owns intended wire conventions. The future canonical `contracts/openapi.yaml` is not present. The current mobile adapter document names deliberate provisional DTOs/extensions; it must be reconciled with the actual backend rather than advertised as a published server schema.
+Route names in historical [API-MAP.md](../docs/business-flow/API-MAP.md) are planned references. [REST-API-DATABASE-DESIGN.md](../docs/REST-API-DATABASE-DESIGN.md) owns intended wire conventions. The canonical `contracts/openapi.json` now models a provisional shared leave detail/approval slice with synchronized fixtures and adapter tests; other routes and DTOs remain unreconciled. See [project context](../docs/development/PROJECT-CONTEXT.md). The current mobile adapter document names deliberate provisional DTOs/extensions; it must be reconciled with the actual backend rather than advertised as a published server schema.
 
 ## Repository boundaries
 

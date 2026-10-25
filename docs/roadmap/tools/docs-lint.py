@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 ALLOWED={'java','sql','yaml','bash','json','ts','dart','xml','properties','text','mermaid'}
 # Explicit user-requested canonical name; README is the folder entry-point contract.
-EXCEPT={'README.md','Architecture.md'}
+EXCEPT={'README.md','Architecture.md','_inventory.md'}
 REQUIRED={'README.md','BUILD-GUIDE.md','VERIFY-AND-GATE.md','TROUBLESHOOTING.md'}
 LABELS=['**Why:**','**Read first','**Before you start:**','**Do:**','**Expect:**',
         '**Common mistake:**','**Undo:**','**Senior habit:**',
@@ -31,11 +31,11 @@ def check(p):
     for i,line in enumerate(lines,1):
         if '\t' in line: err(p,i,'tabs','tabs are forbidden')
         if line.rstrip()!=line: err(p,i,'whitespace','trailing spaces')
-        if line.startswith('```'):
+        if line.lstrip().startswith('```') and len(line)-len(line.lstrip()) <= 3:
             if fence is None:
-                fence=line[3:]; code=[]
+                fence=line.lstrip()[3:]; code=[]
                 if fence not in ALLOWED: err(p,i,'fence','unsupported or missing language')
-            elif line=='```':
+            elif line.strip()=='```':
                 if fence=='mermaid':
                     if not code or not re.match(r'(flowchart|sequenceDiagram|erDiagram|stateDiagram-v2)',code[0]):
                         err(p,i,'mermaid','unsupported diagram type')
@@ -102,7 +102,7 @@ def check(p):
     inside=False
     code_lines=set()
     for ix, val in enumerate(lines):
-        if val.startswith('```'):
+        if val.lstrip().startswith('```') and len(val)-len(val.lstrip()) <= 3:
             code_lines.add(ix); inside=not inside
         elif inside: code_lines.add(ix)
     for i in range(1,len(lines)):

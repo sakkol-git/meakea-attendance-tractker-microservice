@@ -1,6 +1,6 @@
 # Specification pattern and composable business rules
 
-> **Decision ADR-009:** HRFlow uses Spring Data JPA (Hibernate). JPA examples in this primer are production-intended patterns, not comparative teaching. Follow the SPRING-JPA primer for the authoritative reference.
+> **Decision:** HRFlow uses Spring Data JPA (Hibernate). JPA examples in this primer are production-intended patterns, not comparative teaching. Follow the SPRING-JPA primer for the authoritative reference.
 
 > **Note:** The Specification pattern encapsulates business rules and validation predicates into reusable, composable boolean criteria objects that can be combined using logical operators.
 

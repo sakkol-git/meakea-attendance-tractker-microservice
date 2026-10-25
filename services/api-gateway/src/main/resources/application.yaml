@@ -27,8 +27,13 @@ spring:
           httpclient:
             connect-timeout: 3000
             response-timeout: 10s
-          # No forwarding routes until JWT/header-trust checks are implemented.
-          routes: []
+          routes:
+            - id: identity-session
+              uri: ${IDENTITY_URI:http://localhost:8101}
+              predicates:
+                - Path=/api/v1/auth/**,/api/v1/.well-known/jwks.json
+              filters:
+                - StripPrefix=2
 
 server:
   address: ${SERVER_ADDRESS:127.0.0.1}
@@ -44,7 +49,6 @@ server:
 
 management:
   server:
-    address: ${MANAGEMENT_ADDRESS:127.0.0.1}
     port: ${MANAGEMENT_PORT:9080}
   endpoints:
     web:

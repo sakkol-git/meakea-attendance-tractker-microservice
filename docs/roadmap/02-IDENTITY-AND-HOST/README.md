@@ -10,7 +10,9 @@ Dates: 2026-11-02 through 2026-11-06; weekend rest follows.
 
 **Extra hours:** A=1; B=1.
 
-The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
+The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically.
+
+Execution status on 25 October 2026: W02-S01 through W02-S23 have automated evidence. The six-operation authentication slice, gateway smoke, web sign-in/sign-out and mobile login/restore/logout pass locally. W02-S24 through W02-S35, physical-device credential acceptance, intended-host deployment, external backup and the weekly gate remain **NOT RUN**.
 
 ## Preserved objective and starting point
 

@@ -30,8 +30,8 @@ The implementation is partitioned into twelve sequential milestone weeks, each p
 
 | Week | Phase name | Key deliverables | Primary acceptance gate |
 | --- | --- | --- | --- |
-| 01 | [Foundation](roadmap/01-FOUNDATION/README.md) | Private identity/reactive gateway skeleton, PostgreSQL and Kafka baseline, mock Flutter shell. | Web-to-Caddy-to-app-to-DB ping **NOT RUN**. |
-| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | JWT access, rotating refresh tokens, private host deployment, initial dump. | Two-tenant auth and local deploy **NOT RUN**. |
+| 01 | [Foundation](roadmap/01-FOUNDATION/README.md) | Private identity/reactive gateway skeleton, PostgreSQL and Kafka baseline, mock Flutter shell. | Local foundation gate **PASS**; private Caddy/host proof remains later operational work. |
+| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | JWT access, rotating refresh tokens, private host deployment, initial dump. | Auth/client portion **PASS** through W02-S23; host, backup and weekly gate **NOT RUN**. |
 | 03 | [Organization and admin](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | Tenant onboarding, org units, positions, employee hierarchy, RLS and architecture tests. | Org tree and employee assignment **NOT RUN**. |
 | 04 | [Attendance core](roadmap/04-ATTENDANCE-CORE/README.md) | Append-only evidence, shift windows, auto-checkout, manual corrections. | Attendance invariant test matrix **NOT RUN**. |
 | 05 | [Outbox and notifications](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) | Transactional outbox, inbox receipts, in-app notification inbox. | At-least-once outbox dispatch **NOT RUN**. |

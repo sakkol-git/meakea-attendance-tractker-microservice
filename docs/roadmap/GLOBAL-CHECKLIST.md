@@ -2,7 +2,7 @@
 
 ## Stable acceptance IDs
 
-Nothing is prechecked. Keep existing requirement IDs; evidence belongs to actual reports, not authored documents.
+Keep existing requirement IDs; evidence belongs to actual reports, not authored documents. The dashboard and Week 1/2 evidence record current execution through W02-S23. Checkboxes below remain unchecked until their required reviewed commit or green tag exists; the last recorded green application tag is still `bd53438`.
 
 - [ ] SEC-01: owner A; Week 02; depends on W1 skeleton; evidence: JWT tenant and resource negative suite.
 - [ ] API-01: owner A+B; Week 01; depends on Wire examples; evidence: One validated OpenAPI file and generated mock.

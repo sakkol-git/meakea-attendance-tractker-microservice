@@ -30,6 +30,7 @@
    ```
 
    Run with explicit private DB/test configuration.
+
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

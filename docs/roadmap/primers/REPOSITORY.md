@@ -1,6 +1,6 @@
 # Repository pattern and data access boundaries
 
-> **Decision ADR-009:** HRFlow uses Spring Data JPA (Hibernate) for all persistence. Repositories extend `JpaRepository`; Flyway owns the schema (`ddl-auto: validate`); `open-in-view: false` prevents hidden DB access in controllers. For complex filters use the Specification pattern; for outbox claiming use a native `@Query` with `FOR UPDATE SKIP LOCKED`. Design patterns come before raw SQL.
+> **Decision:** HRFlow uses Spring Data JPA (Hibernate) for all persistence. Repositories extend `JpaRepository`; Flyway owns the schema (`ddl-auto: validate`); `open-in-view: false` prevents hidden DB access in controllers. For complex filters use the Specification pattern; for outbox claiming use a native `@Query` with `FOR UPDATE SKIP LOCKED`. Design patterns come before raw SQL.
 
 > **Note:** The Repository pattern mediates between the domain and data mapping layers, providing an in-memory collection-like interface for accessing and mutating domain entities.
 

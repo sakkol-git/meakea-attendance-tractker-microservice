@@ -11,6 +11,14 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | Document | Category | How to use |
 | --- | --- | --- |
 | [README.md](../README.md) | Navigation/governance | Route by topic; map controls authority |
+| [AGENTS.md](../AGENTS.md) | Developer procedure | AI entry points, cross-system impact and verification rules |
+| [.github/pull_request_template.md](../.github/pull_request_template.md) | Review procedure | Boundary impact, compatible revisions and verification evidence |
+| [contracts/README.md](../contracts/README.md) | Developer procedure | Shared HTTP slice, bundles and consumer-check limits |
+| [docs/development/PROJECT-CONTEXT.md](development/PROJECT-CONTEXT.md) | Developer procedure | Fresh AI context, contract synchronization and CI |
+| [docs/development/CHANGE-CHECKLIST.md](development/CHANGE-CHECKLIST.md) | Developer procedure | Assess all boundaries and record compatibility evidence |
+| [docs/development/VERIFICATION.md](development/VERIFICATION.md) | Validation evidence | Local foundation checks, existing failures and acceptance limits |
+| [docs/development/ENGINEERING-RULES.md](development/ENGINEERING-RULES.md) | Developer procedure | Business-first SOLID, clean architecture, BDD/TDD and evidence rules |
+| [tools/project_mcp/README.md](../tools/project_mcp/README.md) | Developer procedure | Install and operate bounded local MCP tools |
 | [docs/Architecture.md](Architecture.md) | Design specification | Current target; implementation requires evidence |
 | [docs/DOCUMENTATION-CATALOG.md](DOCUMENTATION-CATALOG.md) | Navigation/governance | Route by topic; map controls authority |
 | [docs/PLAN.md](PLAN.md) | Delivery summary | Derives from roadmap/dashboard and weekly totals |
@@ -210,6 +218,7 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/roadmap/FOLDER-TREE.md](roadmap/FOLDER-TREE.md) | Navigation/governance | Roadmap tree; catalog covers the complete doc set |
 | [docs/roadmap/FORMAT-GUIDE.md](roadmap/FORMAT-GUIDE.md) | Documentation format | Portable format contract and fixture |
 | [docs/roadmap/FORMAT-SELFTEST.md](roadmap/FORMAT-SELFTEST.md) | Documentation format | Portable format contract and fixture |
+| [docs/roadmap/FRONTEND-TO-BACKEND-ALIGNMENT.md](roadmap/FRONTEND-TO-BACKEND-ALIGNMENT.md) | Delivery control | Client outcomes mapped to provider decisions, owners and acceptance gates |
 | [docs/roadmap/GIT-SAFETY.md](roadmap/GIT-SAFETY.md) | Git recovery/mapping | Use named checkpoint; preserve old commits/tags |
 | [docs/roadmap/GLOBAL-CHECKLIST.md](roadmap/GLOBAL-CHECKLIST.md) | Delivery control | Scoped authority assigned in source-of-truth map |
 | [docs/roadmap/GLOSSARY.md](roadmap/GLOSSARY.md) | Learning | Terminology/pattern admission; not feature scope |
