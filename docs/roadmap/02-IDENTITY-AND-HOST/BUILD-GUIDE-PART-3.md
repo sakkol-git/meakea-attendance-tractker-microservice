@@ -145,7 +145,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/main/java/com/hrflow/identityorg/auth/MethodSecurity.java`, `services/identity-org/src/test/java/com/hrflow/identityorg/auth/AuthorizationTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect actual service methods; enable method checks and build the service principal only from the verified gateway boundary. Assert employee cannot perform HR operation and unrelated-manager resource is hidden. Do not merely hide a UI button.
+1. Inspect actual service methods; configure identity-org's servlet Spring Security OAuth2 resource server, `JwtDecoder` and explicit validators to independently validate the forwarded bearer JWT, and construct the service principal only from that result. Do not create a custom `JwtAuthenticationFilter`. Assert gateway-accepted/service-rejected token cases, employee cannot perform an HR operation and an unrelated manager's resource is hidden. Do not merely hide a UI button or trust gateway identity headers.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -187,7 +187,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `services/identity-org/src/test/java/com/hrflow/identityorg/auth/TenantBoundaryTest.java`, `contracts/openapi.yaml`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Repeat the golden slice with delta: auth bootstrap exception and tenant-scoped profile/logout/refresh. Match implemented route registry to OpenAPI; test tenant B IDs, foreign-family revocation, forged headers and direct service ingress. Do not call private Docker network cryptographic identity.
+1. Repeat the golden slice with delta: auth bootstrap exception and tenant-scoped profile/logout/refresh. Match implemented route registry to OpenAPI; test tenant B IDs, foreign-family revocation, forged headers, bearer forwarding, both validation gates and direct service ingress. Prove a token accepted at the gateway is still rejected when identity-org detects a wrong audience, retired key or other service-side validation failure. Do not call the private Docker network cryptographic identity.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

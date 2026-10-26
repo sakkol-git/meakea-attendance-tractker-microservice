@@ -145,7 +145,7 @@ These volumes are small; the architecture's value is isolation and correctness, 
 
 | Step                                     | Budget                             |
 | ---------------------------------------- | ---------------------------------- |
-| Gateway (JWT + routing)                  | 10 ms                              |
+| Gateway (JWT + routing)                  | 10 ms planning target; remeasure with dual validation |
 | Controller + validation                  | 5 ms                               |
 | Local reads (shift, holiday, leave refs) | 10 ms                              |
 | Insert session + upsert status + outbox  | 30 ms                              |
@@ -211,8 +211,8 @@ Keep each decision as a short file in `docs/adr/`.
 | 004 | Transactional outbox + inbox                    | Dual writes; Kafka transactions across DB | Atomic publish without distributed transactions                      |
 | 005 | Avro + Schema Registry                          | JSON                                      | Enforced, evolvable contracts; JSON was the earlier simpler choice   |
 | 006 | Partition key `tenantId:employeeId`             | Random key                                | Per-employee ordering                                                |
-| 007 | JWT RS256, gateway verifies with public key     | Shared HMAC secret                        | Services and gateway never hold the signing key                      |
-| 008 | Gateway-injected identity headers               | Each service validates JWT                | One validation point; requires network isolation                     |
+| 007 | JWT RS256, gateway and services verify with public key | Shared HMAC secret                  | Services and gateway never hold the signing key                      |
+| 008 | Gateway and each service validate the bearer JWT | Gateway-injected identity headers         | Two independent authentication gates; ADR 010 supersedes this row's earlier choice |
 | 009 | Tap first, infer if forgotten                   | Fully automatic detection                 | Cheap, robust, defensible; ML supports instead of replacing the user |
 | 010 | scikit-learn confidence model                   | YOLO / camera, deep learning              | Cheaper, explainable, matches the data we have                       |
 | 011 | JDBC, not JPA                                   | JPA/Hibernate                             | Explicit SQL for outbox and conditional updates                      |

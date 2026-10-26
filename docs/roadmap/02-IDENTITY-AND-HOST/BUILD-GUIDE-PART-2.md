@@ -60,15 +60,15 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **Do:**
 
-1. Inspect first: review current equivalents for `services/api-gateway/src/main/java/com/hrflow/gateway/IdentityFilter.java`, `services/api-gateway/src/test/java/com/hrflow/gateway/IdentityFilterTest.java`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Inspect reactive hooks; strip incoming identity headers, validate bearer public-key JWT, add trusted principal fields only after verification. Test protected route without/invalid token and forged X-Tenant-Id. Keep service ports unpublished.
+1. Inspect the gateway's current `SecurityWebFilterChain`, resource-server dependency, `ReactiveJwtDecoder`, validators and security tests. Follow ADR 010's two-gate boundary and ADR 011's Spring Security OAuth2 Resource Server mechanism; do not create a custom `JwtAuthenticationFilter`. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
+1. Configure the gateway's reactive OAuth2 resource server to strip incoming identity headers, validate the bearer public-key JWT, and forward the original `Authorization` credential to the destination service. Do not add tenant, employee or role authority headers. Test missing, malformed, expired, not-yet-valid, wrong-issuer, wrong-audience, disallowed-algorithm and invalid-signature tokens plus forged X-Tenant-Id. Keep service ports unpublished.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
 mvn -f services/api-gateway/pom.xml test
 ```
 
-**Expect:** Anonymous/invalid token is 401 with problem shape; forged caller tenant header never reaches a business handler.
+**Expect:** Anonymous/invalid token is 401 with problem shape; a valid bearer credential is preserved for the second gate; forged caller identity headers never become service authority.
 
 ```text
 Evidence: exact command, exit code, safe result line and report path.

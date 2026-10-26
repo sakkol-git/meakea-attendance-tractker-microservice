@@ -194,9 +194,9 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 - Prevention: Keep adjacent red/green steps on one work branch, reuse fixtures and commit exact paths; never green-tag a red assertion.
 - Contingency: Use recovery headroom; merge only if one intent stays below 60 minutes and at most three files. Recompute hours and ID map, never omit tests.
 
-## Gateway header trust and single-host failure
+## Dual JWT validation drift and single-host failure
 
 - Likelihood: Medium; impact: High; owner A; gates Weeks 2/3/10/11.
-- Signal: Direct business ingress, forged identity headers, wrong runtime DB role or missing external restore proof.
-- Prevention: Strip/verify identity at gateway, private business ports, method/resource checks, scoped JPA queries plus personal-table RLS; cross-tenant/direct-ingress tests.
-- Contingency: Block exposure, repair boundary and repeat security/restore suite. A compromised trusted network peer remains a residual risk; a single host/broker/DB is not highly available.
+- Signal: Any service trusts gateway identity headers, fails to validate the bearer token locally, uses mismatched issuer/audience/key-rotation settings, exposes direct business ingress, uses the wrong runtime DB role or lacks external restore proof.
+- Prevention: Strip identity headers at the gateway; validate the same bearer JWT independently at gateway and service; keep business ports private; enforce method/resource checks, scoped JPA queries and personal-table RLS; run both-gate, cross-tenant and direct-ingress tests.
+- Contingency: Block exposure, repair the failed validation gate/configuration and repeat security/rotation/restore suites. A single host/broker/DB is not highly available.

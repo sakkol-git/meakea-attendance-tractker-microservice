@@ -77,12 +77,14 @@ services:
       DB_URL: jdbc:postgresql://postgres:5432/hrflow
       DB_USERNAME: hrflow
       DB_PASSWORD: ${POSTGRES_PASSWORD:-hrflow}
+      FLYWAY_USERNAME: hrflow
+      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD:-hrflow}
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       SCHEMA_REGISTRY_URL: http://schema-registry:8081
       HRFLOW_AUTH_LOCAL_BOOTSTRAP: "true"
       HRFLOW_AUTH_DEV_PASSWORD: ${HRFLOW_DEV_PASSWORD:-}
-      HRFLOW_AUTH_SECURE_COOKIES: "false"
-      HRFLOW_AUTH_BROWSER_ORIGIN: http://localhost:3000,http://localhost:3001
+      HRFLOW_AUTH_SECURE_COOKIES: "true"
+      HRFLOW_AUTH_BROWSER_ORIGIN: https://hrflow.test
     volumes:
       - jwtkeys:/keys
     depends_on:

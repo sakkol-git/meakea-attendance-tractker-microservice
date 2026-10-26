@@ -1,6 +1,6 @@
 # HRFlow twelve-week execution plan
 
-> **Decision:** ADR 008 restores the final seven-service/JDBC/Kafka/Nuxt architecture; cloud execution is future improvement. The target duration is twelve weeks (84 calendar days).
+> **Decision:** ADR 008 restores the final seven-service/Kafka/Nuxt architecture, ADR 009 selects JPA, ADR 010 requires access-token validation at the gateway and every Java service, and ADR 011 selects Spring Security OAuth2 Resource Server instead of custom JWT filters; cloud execution is future improvement. The target duration is twelve weeks (84 calendar days).
 
 ## Execution philosophy and delivery cadence
 
@@ -31,8 +31,8 @@ The implementation is partitioned into twelve sequential milestone weeks, each p
 | Week | Phase name | Key deliverables | Primary acceptance gate |
 | --- | --- | --- | --- |
 | 01 | [Foundation](roadmap/01-FOUNDATION/README.md) | Private identity/reactive gateway skeleton, PostgreSQL and Kafka baseline, mock Flutter shell. | Local foundation gate **PASS**; private Caddy/host proof remains later operational work. |
-| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | JWT access, rotating refresh tokens, private host deployment, initial dump. | Auth/client portion **PASS** through W02-S23; host, backup and weekly gate **NOT RUN**. |
-| 03 | [Organization and admin](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | Tenant onboarding, org units, positions, employee hierarchy, RLS and architecture tests. | Org tree and employee assignment **NOT RUN**. |
+| 02 | [Identity and host](roadmap/02-IDENTITY-AND-HOST/README.md) | JWT issue/refresh plus Spring Security resource-server validation at the gateway and identity service, private host deployment, initial dump. | Gateway/identity resource-server chains exist, but the complete ADR-010/011 dual-gate matrix, host, backup and weekly gate are **NOT RUN**. |
+| 03 | [Organization and admin](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | OAuth2 resource-server JWT validation in the five remaining owner services, tenant onboarding, org units, positions, employee hierarchy, RLS and architecture tests. | Service JWT gates, org tree and employee assignment **NOT RUN**. |
 | 04 | [Attendance core](roadmap/04-ATTENDANCE-CORE/README.md) | Append-only evidence, shift windows, auto-checkout, manual corrections. | Attendance invariant test matrix **NOT RUN**. |
 | 05 | [Outbox and notifications](roadmap/05-OUTBOX-AND-NOTIFICATIONS/README.md) | Transactional outbox, inbox receipts, in-app notification inbox. | At-least-once outbox dispatch **NOT RUN**. |
 | 06 | [Leave workflow](roadmap/06-LEAVE-WORKFLOW/README.md) | Entitlement balances, pessimistic reservation locks, manager approvals. | Concurrency overspend test **NOT RUN**. |

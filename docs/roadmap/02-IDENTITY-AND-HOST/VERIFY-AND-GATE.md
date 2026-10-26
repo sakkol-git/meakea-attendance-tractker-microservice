@@ -15,13 +15,14 @@ Step range: W02-S01 to W02-S35. Required new stone tags: `w02-s05-green`, `w02-s
 | W02-S01 | Inventory distinguishes existing scaffold from new auth targets and names the next failing test. | Exact focused test and full owner regression report |
 | W02-S02 | The login behavior assertion fails for missing response; red commit is not green-tagged or deployed. | Exact focused test and full owner regression report |
 | W02-S03 | Password tests pass, stored value differs from plaintext, wrong password fails; outstanding login red stays on work branch. | Exact focused test and full owner regression report |
+| W02-S07/S14/S15/S22 | Gateway and identity-org independently reject the invalid-token matrix; gateway preserves the bearer credential and strips identity headers; service principal comes only from service validation. | Separate gateway/service reports plus routed integration proof |
 | All implemented routes | Shared anonymous/invalid-token/wrong-role/foreign-tenant/list/count/file/export/job cases; explicit reason only for genuinely inapplicable cases | Route registry agrees with sole OpenAPI |
 | Recovery | Duplicate/lost-response/concurrency/rollback and latest backup restore leave no forbidden duplicate or lost state | Actual DB/Kafka/client reports, not mocked success |
 
 ## Enterprise gate
 
-- [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
-- [ ] Q05: Missing/invalid tokens, wrong role/resource, enumeration, throttle, refresh race/reuse and browser Origin/CSRF negatives all fail closed. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
+- [ ] Q04: Every implemented route/count/list/file/job has tenant derived from the destination service's validated token, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
+- [ ] Q05: Gateway and identity-org independently reject missing/malformed/expired/not-yet-valid/wrong-issuer/wrong-audience/disallowed-algorithm/invalid-signature tokens; bearer forwarding, forged-header stripping, bounded key rotation, wrong role/resource, enumeration, throttle, refresh race/reuse and browser Origin/CSRF negatives all fail closed. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
 - [ ] Q06: No secret in Git/logs; secret scan and environment/key rotation evidence prove bounded old-key retirement. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
 - [ ] Q11: Private readiness, safe correlation/technical-tenant logs, bounded business/lag/error metrics and a firing/recovering alert have evidence. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.
 - [ ] Q13: Intended-host deploy/rollback/external backup/scratch restore and applicable failure drills verify rows/files/schema/replay metadata; no high-availability claim. Evidence: W02-S01 to W02-S35, focused result and this week release/restore report.

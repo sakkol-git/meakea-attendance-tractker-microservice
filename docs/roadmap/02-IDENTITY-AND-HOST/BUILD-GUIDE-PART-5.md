@@ -61,7 +61,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `docs/validation/W02-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Run the shared self-review and all auth/gateway tests including wrong password, throttling, expiry, reuse, roles, tenant/provenance and logs. If cookie/CSRF transport is not implemented, record a critical blocker; do not tag a working backend as completed web security.
+1. Run the shared self-review and all auth/gateway tests including wrong password, throttling, expiry, reuse, roles, tenant/provenance and logs. Prove the gateway and identity-org each reject the complete invalid-token matrix, the gateway forwards the bearer credential without identity authority headers, and key overlap/retirement is bounded at both validators. If cookie/CSRF transport or either validation gate is not implemented, record a critical blocker; do not tag a working backend as completed web security.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash

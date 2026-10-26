@@ -9,7 +9,7 @@
 - **Cost and operational impact:** Local Compose on one confirmed computer; no paid service required by the current finish line. Hardware, disk, power/domain/provider accounts are still real dependencies. The approved cloud topology stays documented but unbuilt.
 - **Reconsider when:** User changes the design or measured compatibility/resource/capacity evidence requires a superseding ADR. Never silently change topology to hide a schedule shortfall.
 
-[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [ADR 009](../adr/009-JPA-OVER-JDBC.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. The initial coarse demand exceeded available backend hours; final decomposed allocations are within the ceiling, as recorded in the review and weekly READMEs. Actual development velocity remains unmeasured; no completion guarantee is implied.
+[ADR 008](../adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), [ADR 009](../adr/009-JPA-OVER-JDBC.md), [ADR 010](../adr/010-DUAL-JWT-VALIDATION.md), [ADR 011](../adr/011-SPRING-RESOURCE-SERVER-JWT.md), [final Architecture](../Architecture.md) and [capacity review](ARCHITECTURE-REVIEW-V2.md) govern. ADR 010 supersedes only ADR 008's gateway-header trust clause; ADR 011 supersedes only ADR 010's custom-filter implementation mechanism. The initial coarse demand exceeded available backend hours; final decomposed allocations were within the ceiling before this decision delta. Measure the dual-validation rework against remaining reserve and replan if it exceeds that reserve; no completion guarantee is implied.
 
 ## Fixed choices
 
@@ -21,7 +21,7 @@
 | HTTP contract | Proposed contracts/openapi.yaml | One versioned /api/v1 authority, not yet installed | W1 contract CI |
 | Persistence | Spring Data JPA, Flyway owns schema, `ddl-auto: validate`, `open-in-view: false` | ADR-009; `spring-boot-starter-data-jpa`; outbox via native `@Query` | W1 context test, W3 constraints/RLS |
 | Events | Kafka/Avro/Registry plus owner outbox and consumer inbox | libs/hrflow-contracts/events actual root | W2 spike, W5 crash/replay |
-| Auth | Gateway JWT, hashed rotating refresh family, method/resource roles | No trusted caller identity headers | W2 security negatives |
+| Auth | Spring Security OAuth2 Resource Server validates bearer JWT independently at gateway and each Java service; hashed rotating refresh family; method/resource roles | ADR 010 boundary and ADR 011 mechanism; no trusted caller identity headers or custom JWT filter | W2 gateway/identity negatives; W3 remaining service gates |
 | Host | Local Compose, private until safe | Host not ready; exact resources measured before pull | W2 private host, W10 restore |
 | External access | Cloudflare Tunnel to private edge/gateway origin | Domain/DNS unknown; no automatic public exposure | HTTPS/auth/firewall/backup |
 | Backups | Nightly custom pg_dump, 14 days and external encrypted copy | Include private files, Registry schemas/config and replay position | W2 first, W10/12 clean restore |
@@ -36,7 +36,7 @@ Move visual polish, extra reports, optional push/SSE and unadmitted pattern refa
 
 ## Boundary and policy limits
 
-Tenant comes from a verified JWT at the gateway, not body/path/caller headers. Final header trust requires tested sanitization and private ingress; it does not excuse method/resource authorization or scoped SQL/RLS. [ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) quality clauses carry forward except its superseded local-dispatch topology.
+Tenant comes from the JWT independently verified by the destination service, never from body/path/caller headers or a gateway assertion. The gateway performs the first validation gate and forwards the original bearer credential; the service performs the second gate before method/resource authorization and scoped persistence/RLS. Private ingress and header sanitization remain required defense in depth. [ADR 007](../adr/007-QUALITY-AND-TENANT-DEFENSE.md) quality clauses carry forward except its superseded local-dispatch topology.
 
 Raw attendance evidence is append-only; approved manual interpretation takes precedence over inference. Leave NEEDS_REVIEW retains debit until explicit HR resolution. HR policy/retention approval remains unknown. One computer is not high availability; restore evidence does not claim compliance certification.
 

@@ -17,8 +17,8 @@ spring:
       enabled: true
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/hrflow}
-    username: ${DB_USERNAME:hrflow}
-    password: ${DB_PASSWORD:hrflow}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       pool-name: identity-org-pool
       schema: identity_org
@@ -42,8 +42,8 @@ spring:
     clean-disabled: true
     baseline-on-migrate: false
     validate-on-migrate: true
-    user: ${FLYWAY_USERNAME:hrflow}
-    password: ${FLYWAY_PASSWORD:hrflow}
+    user: ${FLYWAY_USERNAME}
+    password: ${FLYWAY_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -125,3 +125,8 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
+
+hrflow:
+  auth:
+    local-bootstrap: true
+    key-directory: ./.local-keys

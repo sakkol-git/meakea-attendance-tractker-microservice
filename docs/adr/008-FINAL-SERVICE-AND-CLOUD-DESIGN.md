@@ -1,5 +1,7 @@
 # ADR 008 — Final service design and cloud deferral
 
+> **Decision:** ADR 010 replaces this record's gateway-header trust clause with independent JWT validation at the gateway and every Java service. The remaining topology and cloud-deferral decisions stay active.
+
 ## Status and evidence
 
 Accepted by explicit user instruction on 2026-10-23. Supersedes ADR 006 topology/client/hosting choices and the local-dispatch portion of ADR 007. Historical files/commits remain intact. The latest Architecture text was approved as final; a subsequent answer initially required AWS/Kubernetes within twelve weeks, followed by the latest instruction to skip it for now as a future improvement. The final instruction controls: retain cloud design, defer its execution. This is design authorization, not cloud spending approval or an implementation completion claim.

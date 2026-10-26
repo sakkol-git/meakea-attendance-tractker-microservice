@@ -29,7 +29,8 @@ def main():
     if args.base:
         tasks.append((ROOT, [py, 'scripts/contracts.py', 'compat', '--base', args.base]))
     if 'backend' in scopes:
-        tasks += [(ROOT, ['./mvnw', '--batch-mode', 'verify']),
+        tasks += [(ROOT, [py, 'scripts/check-maven-dependencies.py']),
+                  (ROOT, ['./mvnw', '--batch-mode', 'verify']),
                   (ROOT, ['docker', 'compose', '-f', 'infra/docker/docker-compose.yaml', 'config', '--quiet'])]
     if 'web' in scopes:
         tasks += [(ROOT / 'web', [py, 'contracts/check-bundle.py']),

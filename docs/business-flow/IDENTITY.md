@@ -1,76 +1,27 @@
 # Identity and organization workflows
 
-[DESIGN] This is a domain body of the [business-flow reference](../../business-flow.md). Evidence labels distinguish targets from current source; status applies to the whole named workflow. Source absence is bounded by the [inventory](_inventory.md).
+This is a domain body of the [business-flow reference](../../business-flow.md). Evidence labels distinguish designed targets from implemented source; each workflow status applies only to that named workflow. Source absence is bounded by the [inventory](_inventory.md).
 
 ## Workflows
 
-### BF-001  Login — Status: DESIGNED-ONLY
+### BF-001  Login — Status: IMPLEMENTED
 
-- Purpose (business): [DESIGN] Establish a user identity and tenant-scoped session. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-- Trigger / entry point: [DESIGN] Design shorthand POST /auth/login; historical full route API-001 is in the API map. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-- Actors and permissions: [DESIGN] User; future token roles OWNER/HR_ADMIN/MANAGER/EMPLOYEE; no live login exists. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-- Preconditions and inputs: [DESIGN] Credentials; exact active request schema is absent because contracts/openapi.yaml is absent. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-- Main flow:
+- Purpose: Establish a tenant-scoped user session through `POST /auth/login`; the gateway exposes it as `POST /api/v1/auth/login`.
+- Inputs: Tenant slug, email and password follow `contracts/openapi.json`. Browser callers also require the exact allowed Origin and matching double-submit CSRF token.
+- Main behavior: The service performs a tenant-scoped active-user lookup, verifies BCrypt credentials, issues an RS256 access JWT, and persists only the SHA-256 hash of a random opaque refresh token.
+- Token policy: Access tokens last 15 minutes and contain `sub`, `tenantId`, `employeeId`, validated roles, `iss`, `aud`, `iat`, `exp`, `jti` and `kid`. Refresh sessions last 14 days.
+- Failure behavior: Unknown accounts and wrong passwords return the same 401 problem. The gateway replaces the internal client-address header from its connection peer; account and source attempt keys are SHA-256 hashes. The threshold attempt returns 429 with `Retry-After`. Invalid request bodies return the canonical Problem `code` and `detail` fields.
+- Security boundary: Tenant and relationship authorization remain server responsibilities. The login tenant slug selects the credential namespace and does not grant access to another tenant.
+- Evidence: `AuthSessionServiceImplTest`, `AttemptThrottlerServiceImplTest`, `JwkProviderServiceImplTest`, controller/security tests, and `IdentityPersistenceIT`. The integration test applies all Flyway migrations to PostgreSQL and validates JPA startup.
 
-    1. [DESIGN] Resolve credentials and verify the password. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-    1. [DESIGN] Issue RS256 access JWT with tenant/employee/roles and a hashed random refresh token. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-    1. [DESIGN] Gateway later validates signature/expiry/issuer/audience before trusting claims. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
+### BF-002  Refresh token rotation — Status: IMPLEMENTED
 
-- Business rules and decisions:
-
-    | Condition | Outcome | Where enforced or specified |
-    | --- | --- | --- |
-    | [DESIGN] Valid credentials | Access token 15 minutes; refresh lifetime 14 days | §8.1; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4 |
-    | [DESIGN] Wrong password or unknown user | Uniform response and throttling are intended | §8.6; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4 |
-
-- Alternative and failure flows:
-
-    | Cause | Response/code | Resulting state and evidence |
-    | --- | --- | --- |
-    | [DESIGN] Invalid credentials | Design 401/uniform error; no session issued | §8.6; API conventions; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4 |
-    | [DESIGN] Current Java request | 401 anonymous / 403 authenticated; handler absent | Current security scaffold; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4 |
-
-- State transitions: [DESIGN] No session → successful login → tokens; no implemented transition. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4)
-- Data effects: [DESIGN] Proposed identity_org.users/refresh_tokens; no actual persistence or password-verification transaction. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4; docs/business-flow/_inventory.md — Modules/source searches)
-- Events and integrations: [DESIGN] N/A: no login event is implemented or required by the cited authentication sequence. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1–8.4; docs/business-flow/_inventory.md — Modules/source searches)
-- Idempotency and concurrency: [DESIGN] Intended mutation key scope is tenant/actor/method/path/body hash; mutable-version updates use 428/412. [IMPL] No business implementation enforces it for this workflow. (docs/REST-API-DATABASE-DESIGN.md — Wire conventions; docs/business-flow/_inventory.md — Modules/source searches)
-- Security: [DESIGN] Login is pre-authentication: verify credentials and use the audited narrow credential lookup exception, never trust request-selected business tenant identity. [IMPL] Current identity chain denies the operation and has no login handler. (docs/REST-API-DATABASE-DESIGN.md — RLS and role requirements; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.1; services/identity-org/src/main/java/com/hrflow/identityorg/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain)
-- QA scenarios: QA-001, QA-002; additional cross-cutting tests are in Part VIII. [DESIGN] These are specifications to test, not execution claims. (../../business-flow.md — Part VIII)
-- Findings: [IMPL] Business controller/transaction/listener absent; designed sequence is not live behavior. (docs/business-flow/_inventory.md — Modules/source searches)
-
-### BF-002  Refresh token rotation — Status: DESIGNED-ONLY
-
-- Purpose (business): [DESIGN] Renew access without reusing a stolen refresh token. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-- Trigger / entry point: [DESIGN] Refresh command; full historical API-002 remains candidate, not a live route. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-- Actors and permissions: [DESIGN] Token holder; family tied to the original user/tenant. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-- Preconditions and inputs: [DESIGN] Refresh token; rotated tokens are stored as hashes. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-- Main flow:
-
-    1. [DESIGN] Look up and validate refresh state. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-    1. [DESIGN] Rotate on every successful use and issue replacement credentials. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-    1. [DESIGN] Detect reuse and revoke the family rather than issue more tokens. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-
-- Business rules and decisions:
-
-    | Condition | Outcome | Where enforced or specified |
-    | --- | --- | --- |
-    | [DESIGN] Unused valid refresh | Rotate token | §8.2; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2 |
-    | [DESIGN] Reused or revoked refresh | Revoke/reject per Q05 design | docs/roadmap/ENGINEERING-STANDARDS.md — Q05; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2 |
-
-- Alternative and failure flows:
-
-    | Cause | Response/code | Resulting state and evidence |
-    | --- | --- | --- |
-    | [DESIGN] Concurrent reuse | Design revoke family; exact transaction/replay response remains unspecified | Q05; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2 |
-    | [DESIGN] Expired token | Design rejection; exact active handler missing | §8.2; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2 |
-
-- State transitions: [DESIGN] Valid refresh → rotated; reused family → revoked. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2)
-- Data effects: [DESIGN] Proposed identity_org.refresh_tokens; family/revocation columns and race-safe write are not migrated. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/business-flow/_inventory.md — Modules/source searches)
-- Events and integrations: [DESIGN] N/A: no refresh event/consumer is implemented. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/business-flow/_inventory.md — Modules/source searches)
-- Idempotency and concurrency: [DESIGN] Intended mutation key scope is tenant/actor/method/path/body hash; mutable-version updates use 428/412. [IMPL] No business implementation enforces it for this workflow. (docs/REST-API-DATABASE-DESIGN.md — Wire conventions; docs/business-flow/_inventory.md — Modules/source searches)
-- Security: [DESIGN] Authenticate the opaque refresh grant/family, rotate and detect reuse; no access-token prerequisite is invented. [IMPL] Refresh/session lookup is absent and current chain denies the operation. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/ENGINEERING-STANDARDS.md — Q05; services/identity-org/src/main/java/com/hrflow/identityorg/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain)
-- QA scenarios: QA-003, QA-004; additional cross-cutting tests are in Part VIII. [DESIGN] These are specifications to test, not execution claims. (../../business-flow.md — Part VIII)
-- Findings: [IMPL] Business controller/transaction/listener absent; designed sequence is not live behavior. (docs/business-flow/_inventory.md — Modules/source searches)
+- Purpose: Renew access using `POST /auth/refresh` while detecting stolen-token reuse.
+- Transport: Native clients send the opaque refresh token in JSON. Browsers use an HttpOnly, Secure, SameSite=Lax cookie scoped to `/auth` plus Origin and CSRF checks.
+- Main behavior: The service hashes the presented token, locks its row, marks it consumed and creates one successor in the same transaction. Sessions carry tenant, user and family IDs; a composite database foreign key prevents cross-tenant user/session ownership.
+- Reuse behavior: Presenting a consumed predecessor revokes every unrevoked session in that tenant-scoped family and returns the uniform 401 problem. Concurrent presentation permits one rotation, then revokes the resulting family.
+- Lifetime and storage: Refresh sessions expire after 14 days. Raw refresh tokens are returned once and are never stored.
+- Evidence: `AuthSessionServiceImplTest` covers rotation, reuse and tenant-scoped revocation. `IdentityPersistenceIT` verifies clean PostgreSQL migration, invalid cross-tenant ownership rejection and concurrent reuse behavior.
 
 ### BF-003  Tenant onboarding — Status: DESIGNED-ONLY
 
@@ -208,36 +159,36 @@
 - QA scenarios: QA-011, QA-012; additional cross-cutting tests are in Part VIII. [DESIGN] These are specifications to test, not execution claims. (../../business-flow.md — Part VIII)
 - Findings: [IMPL] Business controller/transaction/listener absent; designed sequence is not live behavior. (docs/business-flow/_inventory.md — Modules/source searches)
 
-### BF-040  Logout and token-family revocation — Status: DESIGNED-ONLY
+### BF-040  Logout and token-family revocation — Status: IMPLEMENTED
 
-- Purpose (business): [DESIGN] Revoke future refresh capability when a session is ended. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-- Trigger / entry point: [DESIGN] Logout command; no implemented logout controller. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-- Actors and permissions: [DESIGN] Authenticated session owner; exact active-session selection contract absent. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-- Preconditions and inputs: [DESIGN] Current token/session family as design specifies; do not place tokens in evidence. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
+- Purpose: Revoke future refresh capability when a session is ended.
+- Trigger: `POST /auth/logout`, exposed through the gateway as `POST /api/v1/auth/logout`.
+- Inputs: Native callers send the refresh token in JSON. Browsers send the protected refresh cookie with the exact allowed Origin and matching CSRF token.
 - Main flow:
 
-    1. [DESIGN] Resolve the current refresh session/family. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-    1. [DESIGN] Revoke the intended refresh capability. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-    1. [DESIGN] Reject subsequent refresh without claiming stateless access JWT immediately disappears. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
+    1. Hash and lock the presented refresh session.
+    1. Revoke every active session with the same tenant and family ID.
+    1. Return 204 and clear the browser refresh cookie on the same `/auth` path.
 
-- Business rules and decisions:
+- Invalid, missing, unknown or already-revoked tokens receive the uniform 401 Problem response.
+- Existing access JWTs remain valid until their 15-minute expiry; logout does not claim immediate stateless-token revocation.
+- Family revocation is tenant-scoped and transactional. No logout event is required by the accepted design.
+- Evidence: `AuthSessionsTest.logoutRevokesOnlyThePresentedFamily` and the PostgreSQL integration suite.
 
-    | Condition | Outcome | Where enforced or specified |
-    | --- | --- | --- |
-    | [DESIGN] Logout | Refresh revoked by design | §8.2; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md |
-    | [DESIGN] Already issued access token | Immediate revocation semantics UNKNOWN; short lifetime alone is not instant revocation | No active auth code; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md |
+### BF-041  Read and update own profile — Status: IMPLEMENTED
 
-- Alternative and failure flows:
+- Purpose: Let an authenticated user read their current profile through `GET /auth/me` and update the canonical `name` and `timeZone` fields through `PATCH /auth/profile`; the gateway exposes both below `/api/v1`.
+- Main behavior: The service derives user and tenant IDs from the validated JWT, performs an enabled-user lookup scoped by both IDs, checks the token claims against the stored user, and returns the canonical profile projection. Updates strip surrounding whitespace from names and require a valid IANA time-zone identifier when `timeZone` is supplied.
+- Security boundary: Both the gateway and identity service require JWT authentication. Tenant identity is never accepted from the request body or query, and a mismatched, disabled or missing account cannot be used to read or update a profile.
+- Data effects: The update changes only `identity_org.auth_user.display_name` and `time_zone`. The accepted contract does not authorize phone, email, role, tenant or employee changes through this operation.
+- Failure behavior: Missing or invalid authentication returns 401, an unavailable scoped profile returns 404, and request or time-zone validation failures return the canonical 422 Problem response.
+- Evidence: `UserProfileServiceImplTest`, `UserProfileHttpTest`, gateway `SecurityConfigurationTests`, and the PostgreSQL scenario in `IdentityPersistenceIT`. The focused unit/HTTP and gateway suites pass, and the Docker-backed Maven verification completed all six identity integration tests successfully on 2026-10-26.
 
-    | Cause | Response/code | Resulting state and evidence |
-    | --- | --- | --- |
-    | [UNKNOWN] Repeated logout | Exact response/idempotency behavior UNKNOWN | No controller; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md |
-    | [DESIGN] Stolen token family after logout | Must fail refresh; no implementation | §8.2; docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md |
+### BF-042  Change own password — Status: IMPLEMENTED
 
-- State transitions: [DESIGN] Active refresh session → revoked; actual access-token lifetime policy needs implementation. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md)
-- Data effects: [DESIGN] Proposed refresh_tokens revocation state; no write or audit transaction implemented. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md; docs/business-flow/_inventory.md — Modules/source searches)
-- Events and integrations: [DESIGN] No logout event is required by the cited design; do not invent one. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; docs/roadmap/02-IDENTITY-AND-HOST/README.md; docs/business-flow/_inventory.md — Modules/source searches)
-- Idempotency and concurrency: [DESIGN] Intended mutation key scope is tenant/actor/method/path/body hash; mutable-version updates use 428/412. [IMPL] No business implementation enforces it for this workflow. (docs/REST-API-DATABASE-DESIGN.md — Wire conventions; docs/business-flow/_inventory.md — Modules/source searches)
-- Security: [DESIGN] Revoke only the authenticated owner/session family under the eventual auth contract; exact multi-session policy is unknown. [IMPL] No logout handler exists. (docs/reference/INCOMING-ARCHITECTURE-V2-01.md — §8.2; services/identity-org/src/main/java/com/hrflow/identityorg/config/SecurityConfiguration.java#SecurityConfiguration.securityFilterChain; docs/business-flow/_inventory.md)
-- QA scenarios: QA-079, QA-080; additional cross-cutting tests are in Part VIII. [DESIGN] These are specifications to test, not execution claims. (../../business-flow.md — Part VIII)
-- Findings: [IMPL] Business controller/transaction/listener absent; designed sequence is not live behavior. (docs/business-flow/_inventory.md — Modules/source searches)
+- Purpose: Let an authenticated user change their own password through `POST /auth/change-password`, exposed by the gateway as `POST /api/v1/auth/change-password`.
+- Main behavior: The service derives user and tenant IDs from the service-validated JWT, locks the enabled tenant-scoped account, verifies the submitted current password with BCrypt, stores only the encoded replacement and revokes every active refresh session for that user and tenant.
+- Security boundary: Both gateway and identity service require JWT authentication. The request cannot select a user or tenant, and stored token claims must still match the account before the credential mutation occurs.
+- Failure behavior: Missing or invalid authentication and an incorrect current password return 401; malformed input or a new password shorter than eight characters returns the canonical 422 Problem response. Failed verification does not update the password or revoke sessions.
+- Data and events: The transaction updates `identity_org.auth_user.password_hash` and tenant-scoped `refresh_session.revoked_at`; it publishes no business event. Existing access JWTs remain valid until expiry.
+- Evidence: `PasswordServiceImplTest`, `AuthPasswordHttpTest`, the full identity unit suite and gateway `SecurityConfigurationTests` pass. The Docker-backed Maven verification also completed the PostgreSQL hash/session-revocation scenario and all six identity integration tests successfully on 2026-10-26.

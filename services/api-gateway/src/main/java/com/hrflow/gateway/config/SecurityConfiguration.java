@@ -22,7 +22,8 @@ public class SecurityConfiguration {
                         .pathMatchers("/api/v1/auth/csrf", "/api/v1/auth/login",
                                 "/api/v1/auth/refresh", "/api/v1/auth/logout",
                                 "/api/v1/.well-known/jwks.json").permitAll()
-                        .pathMatchers("/api/v1/auth/me").authenticated()
+                        .pathMatchers("/api/v1/auth/me", "/api/v1/auth/profile",
+                                "/api/v1/auth/change-password").authenticated()
                         .anyExchange().denyAll())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint(SecurityProblems.unauthorized())

@@ -15,6 +15,7 @@ Step range: W03-S01 to W03-S41. Required new stone tags: `w03-s05-green`, `w03-s
 | W03-S08 | Reject a cross-tenant department/position FK and manager hierarchy cycle. | Exact focused test and full owner regression report |
 | W03-S12 | Employee stale If-Match is 412; absent employee is 404; foreign tenant list/count is empty. | Exact focused test and full owner regression report |
 | W03-S15 | Missing employee link/inactive profile renders a safe empty/disabled state. | Exact focused test and full owner regression report |
+| W03-S01–S05 | Attendance, leave, request, notification and reporting independently reject the invalid-token matrix and ignore identity authority headers after gateway acceptance. | Per-service security reports plus routed integration proof |
 | All implemented routes | Shared anonymous/invalid-token/wrong-role/foreign-tenant/list/count/file/export/job cases; explicit reason only for genuinely inapplicable cases | Route registry agrees with sole OpenAPI |
 | Recovery | Duplicate/lost-response/concurrency/rollback and latest backup restore leave no forbidden duplicate or lost state | Actual DB/Kafka/client reports, not mocked success |
 
@@ -22,6 +23,7 @@ Step range: W03-S01 to W03-S41. Required new stone tags: `w03-s05-green`, `w03-s
 
 - [ ] Q03: Invalid edge/domain input writes no row, and direct invalid SQL is rejected by a real PostgreSQL constraint. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
 - [ ] Q04: Every implemented route/count/list/file/job has token-derived tenant, method/resource negatives and scoped SQL; personal data RLS/pool tests apply from Week 3. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
+- [ ] Q05: Attendance, leave, request, notification and reporting each execute local JWT validation for protected routes; missing/malformed/expired/not-yet-valid/wrong-issuer/wrong-audience/disallowed-algorithm/invalid-signature tokens fail closed, and gateway acceptance or forged identity headers cannot bypass the service gate. Evidence: W03-S01 to W03-S05 and routed smoke reports.
 - [ ] Q07: Flyway clean/upgrade history, tenant FK/unique/checks, exact balances and stale/concurrent update assertions pass. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
 - [ ] Q08: Same retry key returns one result; owner outbox and effect/inbox/offset crash/replay preserve state; I/O/shutdown are bounded. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.
 - [ ] Q10: Actual nonempty package and module tests reject forbidden imports/cycles; shared libraries contain no owner business repositories. Evidence: W03-S01 to W03-S41, focused result and this week release/restore report.

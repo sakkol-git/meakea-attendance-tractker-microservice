@@ -18,7 +18,7 @@ Use [source of truth](../SOURCE-OF-TRUTH.md) for authority, [business flows](../
 | Java services | Seven services; gateway forwards /api/v1/auth and JWKS; identity-org auth slice implemented and verified; business domain controllers pending | First vertical slice active; proceed with organization catalogs, attendance and leave domain implementations |
 | Business-flow inventory | Historical 112-route candidate map plus implemented Python confidence endpoints; Java business routes absent | Use workflow IDs for traceability, but re-approve historical candidates instead of copying them blindly |
 
-The clients remain ahead of the business domain providers, but the trusted gateway and authentication baseline are now established. Next provider work implements organization, attendance and leave services with tenancy, transactions and concurrency tests.
+The clients remain ahead of the business domain providers. The existing gateway/authentication evidence predates the complete ADR-010/011 acceptance matrix and does not establish every required service-side JWT gate. Next provider work verifies or configures Spring Security OAuth2 Resource Server independently in each Java service, then implements organization, attendance and leave behavior with tenancy, transactions and concurrency tests. Do not introduce custom JWT authentication filters.
 
 ## Launch assumptions to carry into decisions
 

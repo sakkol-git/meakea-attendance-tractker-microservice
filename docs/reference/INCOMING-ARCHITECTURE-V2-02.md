@@ -258,7 +258,7 @@ next morning  unresolved INFERRED sessions get a confirmation prompt
 Flutter            gateway            attendance (one DB transaction)                Kafka
   │ POST /check-in    │                      │
   │──────────────────►│  validate JWT        │
-  │                   │─────────────────────►│ check Idempotency-Key (cache or unique key)
+  │                   │─ forward bearer JWT ─►│ validate JWT again; check Idempotency-Key
   │                   │                      │ load shift_ref, holiday_ref, leave_ref (local)
   │                   │                      │ insert attendance_session (source=TAP)
   │                   │                      │ upsert daily_status (provisional)

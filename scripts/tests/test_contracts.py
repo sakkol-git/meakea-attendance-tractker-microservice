@@ -87,7 +87,8 @@ class ContractChecks(unittest.TestCase):
     def test_only_verified_auth_slice_is_marked_implemented(self):
         expected = {
             'bootstrapBrowserCsrf', 'login', 'refreshToken',
-            'getCurrentUser', 'logout', 'getJwks'
+            'getCurrentUser', 'patchUserProfile', 'changePassword',
+            'logout', 'getJwks'
         }
         implemented = {
             operation['operationId']

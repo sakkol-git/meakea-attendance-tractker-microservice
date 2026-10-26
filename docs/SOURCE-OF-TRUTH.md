@@ -12,7 +12,7 @@ Authority is scoped to the question. A newer timestamp, file location or longer 
 
 | Document role | Authority | Conflict rule |
 | --- | --- | --- |
-| Approved design | [Architecture](Architecture.md) and its four approved parts define topology and behavior | Apply formal supersession in the [ADR index](adr/README.md); ADR 008 governs the final service design |
+| Approved design | [Architecture](Architecture.md) and its four approved parts define topology and behavior | Apply formal supersession in the [ADR index](adr/README.md); ADR 008 governs the final service design, ADR 009 persistence, ADR 010 dual JWT validation and ADR 011 the Spring Security resource-server mechanism |
 | Decision status | ADR index and [decision register](roadmap/DECISION-REGISTER.md) identify accepted, proposed and superseded scope | Proposed HR policy is not approved by architecture acceptance; do not promote it silently |
 | Interface and persistence specification | [API/database design](REST-API-DATABASE-DESIGN.md) owns cross-service contract and data rules | Keep it consistent with approved architecture; resolve material changes through an ADR |
 | Execution | Current weekly BUILD-GUIDEs own ordered work; [standards](roadmap/ENGINEERING-STANDARDS.md) and gates define acceptance | A step cannot waive a security, tenant or recovery gate to meet the schedule |
@@ -75,8 +75,8 @@ The approved domain chapters describe target behavior; the Must/Stretch boundary
 | Topic | Canonical owner | Verification owner |
 | --- | --- | --- |
 | Contract, error shape and layered validation | Standards Q01–Q03; [API guidelines](roadmap/API-GUIDELINES.md) | Weekly contract, error and invalid-input gates |
-| Tenant provenance, query scope, RLS and pool isolation | [ADR 008](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md), retained [ADR 007 safeguards](adr/007-QUALITY-AND-TENANT-DEFENSE.md), standards Q04 | [Week 03 gate](roadmap/03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) and shared cross-tenant suite for each route |
-| Login, refresh reuse, method roles, cookies/CSRF and throttling | [Security baseline](roadmap/SECURITY-BASELINE.md), standards Q05 | [Week 02 gate](roadmap/02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md); trusted gateway header/direct-ingress tests remain required |
+| Tenant provenance, query scope, RLS and pool isolation | [ADR 010](adr/010-DUAL-JWT-VALIDATION.md), retained [ADR 007 safeguards](adr/007-QUALITY-AND-TENANT-DEFENSE.md), standards Q04 | [Week 03 gate](roadmap/03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) and shared cross-tenant suite for each route |
+| Login, dual access-token validation, refresh reuse, method roles, cookies/CSRF and throttling | [ADR 010](adr/010-DUAL-JWT-VALIDATION.md), [ADR 011](adr/011-SPRING-RESOURCE-SERVER-JWT.md), [security baseline](roadmap/SECURITY-BASELINE.md), standards Q05 | [Week 02 gate](roadmap/02-IDENTITY-AND-HOST/VERIFY-AND-GATE.md) for gateway/identity and [Week 03 gate](roadmap/03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) for the other services |
 | Secrets, environment config, rotation and sensitive logging | Security baseline, standards Q06/Q11 | [Week 02](roadmap/02-IDENTITY-AND-HOST/README.md), [Week 09](roadmap/09-REPORTING-AUDIT-OBSERVABILITY/README.md), rotation and CI evidence |
 | Data integrity, reliability and graceful shutdown | Standards Q07/Q08 | Relevant owner tests plus crash/replay/concurrency gates; never waive for schedule |
 | Test levels, naming, fail-first work and container debugging | [Test strategy](roadmap/TEST-STRATEGY.md), standards Q09 | Real PostgreSQL/Kafka tests, scoped coverage and a few client smoke tests |
@@ -98,7 +98,7 @@ The approved domain chapters describe target behavior; the Must/Stretch boundary
 | Git commits, green tags and return to known good | [Git safety](roadmap/GIT-SAFETY.md) and weekly steps | [Daily commands](roadmap/DAILY-COMMANDS.md); protect dirty/untracked work and never move old tags |
 | Old and intermediate step positions | [Original ID map](roadmap/STEP-ID-MAP.md) | [Draft map](roadmap/DRAFT-ID-MAP.md) and [finalization map](roadmap/FINALIZATION-ID-MAP.md) apply only to their named checkpoints |
 | Preparation, host suitability and migration from scaffold | [Preparation index](roadmap/00-PREPARATION/README.md) and [migration plan](roadmap/00-PREPARATION/MIGRATION-PLAN.md) | Historical [audit](roadmap/00-PREPARATION/REPOSITORY-AUDIT.md)/[hardware assessment](roadmap/00-PREPARATION/HARDWARE-AND-HOSTING-ASSESSMENT.md) require fresh inspection |
-| Private TLS, ingress, trust and access | [Access setup](roadmap/02-IDENTITY-AND-HOST/ACCESS-SETUP.md) and ADR 008 | Week 02 gate; public exposure requires confirmed domain/network/security prerequisites |
+| Private TLS, ingress, trust and access | [Access setup](roadmap/02-IDENTITY-AND-HOST/ACCESS-SETUP.md), ADR 008, ADR 010 and ADR 011 | Week 02/03 gates; public exposure requires confirmed domain/network/security prerequisites and both JWT validation gates |
 | Command names, creation order and safe operation targets | [Script interface](roadmap/runbooks/SCRIPT-INTERFACE.md) | [Daily commands](roadmap/DAILY-COMMANDS.md); proposed ops scripts are not installed tools |
 | Deploy and verify a release | [Deploy runbook](roadmap/runbooks/DEPLOY.md) | Current target guard, artifact manifest and smoke evidence |
 | Roll back an application release | [Rollback runbook](roadmap/runbooks/ROLLBACK.md) | Compatibility check and post-rollback smoke; code rollback is not data recovery |

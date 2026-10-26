@@ -19,8 +19,8 @@ class EnvironmentConfigurationTests {
     @Test
     void readsDotEnvAsPropertiesAndHonorsCommandLineOverrides() throws Exception {
         Path envFile = temporaryDirectory.resolve(".env");
-        Files.writeString(envFile, "SERVER_PORT=18199\nDB_USERNAME=test_runtime\n"
-                + "DB_PASSWORD=synthetic-test-value\n");
+        Files.writeString(envFile, "SERVER_PORT=18199\nDB_USERNAME=hrflow\n"
+                + "DB_PASSWORD=hrflow\n");
         SpringApplication app = new SpringApplication(Probe.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         app.setLogStartupInfo(false);
@@ -34,8 +34,8 @@ class EnvironmentConfigurationTests {
             // Command-line arguments beat the imported file and resolve the server placeholder.
             assertEquals("18200", env.getProperty("server.port"));
             assertEquals("never", env.getProperty("server.error.include-stacktrace"));
-            assertEquals("test_runtime", env.getProperty("spring.datasource.username"));
-            assertEquals("synthetic-test-value", env.getProperty("spring.datasource.password"));
+            assertEquals("hrflow", env.getProperty("spring.datasource.username"));
+            assertEquals("hrflow", env.getProperty("spring.datasource.password"));
             assertEquals("identity_org", env.getProperty("spring.datasource.hikari.schema"));
             assertEquals("true", env.getProperty("spring.flyway.clean-disabled"));
 

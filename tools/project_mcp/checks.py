@@ -6,13 +6,16 @@ import tempfile
 import time
 from typing import Literal
 
-CheckName = Literal['contract_schema', 'contract_drift', 'foundation_tests', 'foundation_docs']
+CheckName = Literal[
+    'contract_schema', 'contract_drift', 'dependency_policy', 'foundation_tests', 'foundation_docs'
+]
 
 
 def check_command(name: CheckName) -> list[str]:
     checks = {
         'contract_schema': ['scripts/contracts.py', 'validate'],
         'contract_drift': ['scripts/contracts.py', 'check'],
+        'dependency_policy': ['scripts/check-maven-dependencies.py'],
         'foundation_tests': ['-m', 'unittest', 'discover', '-s', 'scripts/tests', '-v'],
         'foundation_docs': ['docs/roadmap/tools/docs-lint.py', 'docs/development',
                             'docs/SOURCE-OF-TRUTH.md', 'docs/DOCUMENTATION-CATALOG.md',

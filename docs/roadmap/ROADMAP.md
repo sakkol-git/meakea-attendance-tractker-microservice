@@ -41,7 +41,7 @@ flowchart LR
 Text version:
 
 - Contracts/mock begin Week 1; Flutter never waits until Week 8 to start.
-- Security and real-host blockers surface Week 2; public exposure waits for HTTPS/auth/firewall/secrets/restore.
+- Gateway and identity-service JWT gates plus real-host blockers surface Week 2; the other five service gates complete with their Week 3 contexts. Public exposure waits for dual validation, HTTPS/auth/firewall/secrets/restore.
 - Attendance precedes outbox recovery, leave, requests and integrated clients.
 - Reports and operational recovery precede hardening and final release rehearsal.
 
@@ -60,7 +60,7 @@ Step durations include first reading/tests/commit; these totals also include exp
 | Week | A planned h | B planned h | Limit each h | Steps | Gate |
 | --- | --- | --- | --- | --- | --- |
 | 01 | 14 | 14.25 | 16.8 | 38 | **PASS** |
-| 02 | 14.25 | 11 | 16.8 | 35 | **ACTIVE: S01–S23 PASS; GATE NOT RUN** |
+| 02 | 14.25 | 11 | 16.8 | 35 | **ACTIVE: earlier S01–S23 evidence retained; ADR-010/011 resource-server verification and gate NOT RUN** |
 | 03 | 14.25 | 14.25 | 16.8 | 41 | **NOT RUN** |
 | 04 | 9.5 | 12.25 | 14.28 | 36 | **NOT RUN** |
 | 05 | 10 | 14.25 | 16.8 | 36 | **NOT RUN** |
@@ -72,4 +72,4 @@ Step durations include first reading/tests/commit; these totals also include exp
 | 11 | 9.25 | 14 | 16.8 | 34 | **NOT RUN** |
 | 12 | 9.25 | 14 | 16.8 | 34 | **NOT RUN** |
 
-Total planned A=138.75, B=162.5.5, combined 301.25 contributor-hours against 393.12 planned-capacity hours. Unallocated capacity is recovery headroom, not a hidden scope increase; the separate 30 percent reserve is still unallocated. Weeks 4/8 are lighter and each has the reduced 14.28-hour cap. These are conditional estimates, not measured velocity or a guaranteed delivery date. Review actual times every Friday.
+Total planned A=138.75, B=162.5, combined 301.25 contributor-hours against 393.12 planned-capacity hours before the ADR-010 decision delta. Measure the gateway/identity rework and five owner-service filters during their existing Week 2/3 steps; use unallocated recovery headroom only after recording actual time, and replan if the weekly cap would be exceeded. The separate 30 percent reserve remains unallocated. Weeks 4/8 are lighter and each has the reduced 14.28-hour cap. These are conditional estimates, not measured velocity or a guaranteed delivery date. Review actual times every Friday.

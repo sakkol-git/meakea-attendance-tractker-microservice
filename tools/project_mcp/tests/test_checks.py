@@ -15,6 +15,14 @@ class CheckBehavior(unittest.TestCase):
                 run_check(Path('.'), 'rm -rf /')
             execute.assert_not_called()
 
+    def test_dependency_policy_uses_the_checked_in_script(self):
+        with patch('tools.project_mcp.checks.subprocess.run') as execute:
+            execute.return_value = subprocess.CompletedProcess([], 0)
+            result = run_check(Path('.'), 'dependency_policy')
+        self.addCleanup(Path(result['full_log']).unlink)
+        command = execute.call_args.args[0]
+        self.assertEqual('scripts/check-maven-dependencies.py', command[-1])
+
     def test_nonzero_check_is_failure_and_large_output_is_bounded(self):
         def failure(command, **kwargs):
             kwargs['stdout'].write(b'x' * 10000 + b'\nFAILED: synthetic fixture\n')

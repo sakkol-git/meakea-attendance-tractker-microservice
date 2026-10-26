@@ -93,7 +93,7 @@ HRFlow lets a company record who worked when, who is away, and what staff have a
 1. **Manual always wins.** A human decision overrides any inference.
 1. **Contracts first.** Avro schemas in `contracts/events` are the source of truth; code is generated from them.
 1. **Explainable automation.** Every automatic decision stores the evidence and reasons that produced it.
-1. **Least privilege.** The gateway holds only the JWT public key; services trust only gateway-injected identity headers.
+1. **Least privilege.** The gateway and every Java service hold only JWT verification material and independently validate the bearer token; the signing key remains only with the issuer. ADR 010 supersedes the earlier gateway-injected identity-header choice.
 1. **Boring technology where possible.** One database engine, one broker, one language per tier.
 
 

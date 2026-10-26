@@ -14,10 +14,12 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [AGENTS.md](../AGENTS.md) | Developer procedure | AI entry points, cross-system impact and verification rules |
 | [.github/pull_request_template.md](../.github/pull_request_template.md) | Review procedure | Boundary impact, compatible revisions and verification evidence |
 | [contracts/README.md](../contracts/README.md) | Developer procedure | Shared HTTP slice, bundles and consumer-check limits |
+| [contracts/postman/README.md](../contracts/postman/README.md) | Developer procedure | Complete Postman collection, environments and token extraction guide |
 | [docs/development/PROJECT-CONTEXT.md](development/PROJECT-CONTEXT.md) | Developer procedure | Fresh AI context, contract synchronization and CI |
 | [docs/development/CHANGE-CHECKLIST.md](development/CHANGE-CHECKLIST.md) | Developer procedure | Assess all boundaries and record compatibility evidence |
 | [docs/development/VERIFICATION.md](development/VERIFICATION.md) | Validation evidence | Local foundation checks, existing failures and acceptance limits |
 | [docs/development/ENGINEERING-RULES.md](development/ENGINEERING-RULES.md) | Developer procedure | Business-first SOLID, clean architecture, BDD/TDD and evidence rules |
+| [docs/development/MAVEN-DEPENDENCIES.md](development/MAVEN-DEPENDENCIES.md) | Developer procedure | Shared owner-service dependencies, gateway boundary and adoption rules |
 | [tools/project_mcp/README.md](../tools/project_mcp/README.md) | Developer procedure | Install and operate bounded local MCP tools |
 | [docs/Architecture.md](Architecture.md) | Design specification | Current target; implementation requires evidence |
 | [docs/DOCUMENTATION-CATALOG.md](DOCUMENTATION-CATALOG.md) | Navigation/governance | Route by topic; map controls authority |
@@ -35,6 +37,9 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/adr/006-FINISH-LINE-MODULAR-MONOLITH.md](adr/006-FINISH-LINE-MODULAR-MONOLITH.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
 | [docs/adr/007-QUALITY-AND-TENANT-DEFENSE.md](adr/007-QUALITY-AND-TENANT-DEFENSE.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
 | [docs/adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md](adr/008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
+| [docs/adr/009-JPA-OVER-JDBC.md](adr/009-JPA-OVER-JDBC.md) | Architecture decisions | Accepted JPA persistence choice |
+| [docs/adr/010-DUAL-JWT-VALIDATION.md](adr/010-DUAL-JWT-VALIDATION.md) | Architecture decisions | Accepted two-gate access-token validation boundary |
+| [docs/adr/011-SPRING-RESOURCE-SERVER-JWT.md](adr/011-SPRING-RESOURCE-SERVER-JWT.md) | Architecture decisions | Accepted Spring Security resource-server JWT mechanism |
 | [docs/adr/README.md](adr/README.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
 | [docs/reference/ANALYSIS-REFERENCE-01.md](reference/ANALYSIS-REFERENCE-01.md) | Historical reference | Preserved context; not current instructions |
 | [docs/reference/ARCHITECTURE-REFERENCE-01.md](reference/ARCHITECTURE-REFERENCE-01.md) | Historical reference | Preserved context; not current instructions |

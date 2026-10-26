@@ -143,7 +143,7 @@ Text version:
 
 ## Security boundary requiring proof
 
-Keep final gateway header-trust decision. Gateway removes all incoming identity headers before adding fields derived solely from a verified JWT. Business ports are unpublished/private, role/resource checks are method-level, and database tenant context is transaction-local. Prove forged headers, invalid tokens, wrong roles, foreign tenant IDs, direct business-service access and monitoring-only access. A container network alone is not cryptographic identity; a compromised trusted network peer remains a documented limitation. Q04/Q05 are conditional until tests prove the chosen boundary, and any stronger per-service validation change needs a superseding decision.
+This review originally retained gateway header trust. ADR 010, accepted later on 2026-10-26, supersedes that conclusion: the gateway and every Java service independently validate the bearer JWT, the gateway forwards the original credential, and no identity header supplies authority. ADR 011 selects Spring Security OAuth2 Resource Server for both reactive and servlet gates instead of custom JWT filters. Business ports remain unpublished/private, role/resource checks remain method-level, and database tenant context remains transaction-local. Prove forged headers, invalid tokens at both gates, wrong roles, foreign tenant IDs, direct business-service access, key rotation and monitoring-only access. Q04/Q05 remain conditional until the revised boundary has current evidence.
 
 ## Impact matrix
 

@@ -23,6 +23,7 @@ public final class SecurityProblems {
                               String code, String detail) throws IOException {
         response.setStatus(status.value());
         response.setContentType("application/problem+json");
+        response.setHeader("Cache-Control", "no-store");
         response.getWriter().write("{\"type\":\"about:blank\",\"title\":\""
                 + status.getReasonPhrase() + "\",\"status\":" + status.value()
                 + ",\"code\":\"" + code + "\",\"detail\":\"" + detail + "\"}");

@@ -2,7 +2,7 @@
 
 ## Active authority
 
-[ADR 008](008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) records the user's final service architecture and latest cloud deferral. The final architecture's inline numbered decision table is a topic summary; formal ADR file numbers in this folder are distinct.
+[ADR 008](008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) records the user's final service architecture and latest cloud deferral. [ADR 009](009-JPA-OVER-JDBC.md) selects JPA, [ADR 010](010-DUAL-JWT-VALIDATION.md) replaces the gateway-header trust clause with independent JWT validation at the gateway and every Java service, and [ADR 011](011-SPRING-RESOURCE-SERVER-JWT.md) selects Spring Security OAuth2 Resource Server instead of custom JWT filters. The final architecture's inline numbered decision table is a topic summary; formal ADR file numbers in this folder are distinct.
 
 | ADR | Record | Current status | Review verdict |
 | --- | --- | --- | --- |
@@ -14,6 +14,9 @@
 | 006 | [Modular monolith](006-FINISH-LINE-MODULAR-MONOLITH.md) | Superseded by 008 | **Replace** |
 | 007 | [Tenant/quality defense](007-QUALITY-AND-TENANT-DEFENSE.md) | Retained except local-dispatch/topology clauses | **Adjust** |
 | 008 | [Final services/cloud deferral](008-FINAL-SERVICE-AND-CLOUD-DESIGN.md) | Accepted design, implementation not verified | **Keep** |
+| 009 | [JPA over JDBC](009-JPA-OVER-JDBC.md) | Accepted persistence implementation choice | **Keep** |
+| 010 | [Dual JWT validation](010-DUAL-JWT-VALIDATION.md) | Accepted boundary; custom-filter mechanism superseded by ADR 011 | **Adjust** |
+| 011 | [Spring resource-server JWT](011-SPRING-RESOURCE-SERVER-JWT.md) | Accepted authentication implementation mechanism | **Keep** |
 
 ## Reading rules
 

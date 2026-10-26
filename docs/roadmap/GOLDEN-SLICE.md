@@ -1,5 +1,7 @@
 # Golden slice — create one department
 
+For every protected HTTP slice, ADR 010 adds a mandatory authentication invariant: the gateway validates the bearer JWT and forwards it unchanged, then the owner service independently validates it before deriving tenant, employee or roles. ADR 011 requires both gates to use Spring Security OAuth2 Resource Server instead of custom JWT filters. Golden-slice evidence includes separate gate failures and a routed case where gateway acceptance cannot bypass service rejection. Trusted identity headers are never an authority source.
+
 ## Why this slice and current evidence
 
 Choose POST /api/v1/departments, a planned identity-org write in the preserved catalog, not a claim that a controller exists. A name-only department is smaller than employee lifecycle, check-in or leave. Source reinspection finds only identity-org startup class; class/table names below are proposed examples to be confirmed at inspection. Weeks 1–3 progressively establish the same contract/test/security recipe later features repeat.
@@ -7,8 +9,8 @@ Choose POST /api/v1/departments, a planned identity-org write in the preserved c
 ## Weeks 1–3 ladder
 
 - Week 1: versioned OpenAPI/example, diagnostic DB skeleton, problem shape, red/green test recipe and CI formatting/scanning/coverage baseline.
-- Week 2: real login/JWT/refresh/throttle, trusted tenant/resource role, private confirmed-host deploy and first verified external backup/restore.
-- Week 3: department migration/JPA repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
+- Week 2: real login/JWT/refresh/throttle, gateway plus identity-service OAuth2 resource-server validation, service-derived tenant/resource role, private confirmed-host deploy and first verified external backup/restore.
+- Week 3: OAuth2 resource-server JWT validation in the other five owner services, department migration/JPA repository/typed create, HR authority, shared tenant suite, non-owner RLS, architecture fitness, safe log/counter and redeployed smoke.
 
 The diagnostic route is not a completed secure golden slice. Until Week 3 gate passes, later code cannot claim the full recipe is proven.
 

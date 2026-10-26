@@ -7,8 +7,8 @@ No weekly gate is currently executed. Evidence includes commit, actual tag, comm
 | Week | Demo on Friday | Exact evidence required | Gate |
 | --- | --- | --- | --- |
 | 01 | A protected workspace; One database-backed service | `w01-s38-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
-| 02 | Credentials and tenant context; Isolation before exposure | `w02-s35-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
-| 03 | Employees and hierarchy; Schedules and calendar | `w03-s41-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
+| 02 | Credentials plus gateway and identity-service JWT gates; isolation before exposure | `w02-s35-green`, both validation-gate negatives, week runner zero critical failures, smoke and restore report | **NOT RUN** |
+| 03 | JWT gates in the five remaining owner services; employees, hierarchy, schedules and calendar | `w03-s41-green`, per-service token negatives, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 04 | A safe check-in interval; Checkout and classification | `w04-s36-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 05 | Publication intent is atomic; Replay-safe Kafka consumer | `w05-s36-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
 | 06 | Entitlement and eligible days; Reservation and approval | `w06-s36-green`, week runner zero critical failures, smoke and restore report | **NOT RUN** |
@@ -27,4 +27,4 @@ Auth/isolation, attendance/leave correctness, durable event intent, deployed smo
 
 ## Calendar and mapping
 
-Start 2026-10-26; Week-12 release rehearsal 2027-01-15, twelve-week boundary 2027-01-18. All weeks use eight stones under ADR 008 services/Kafka/Nuxt. [ID mapping](STEP-ID-MAP.md) translates old positions/tags and [coverage](QUALITY-COVERAGE.md) enforces the senior bar. Dates are goals; a critical gate failure remains visible and can affect completion.
+Start 2026-10-26; Week-12 release rehearsal 2027-01-15, twelve-week boundary 2027-01-18. All weeks use eight stones under ADR 008 services/Kafka/Nuxt, ADR 010 dual JWT validation and ADR 011 Spring Security OAuth2 Resource Server. [ID mapping](STEP-ID-MAP.md) translates old positions/tags and [coverage](QUALITY-COVERAGE.md) enforces the senior bar. Dates are goals; a critical gate failure remains visible and can affect completion.

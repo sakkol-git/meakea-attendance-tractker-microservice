@@ -50,12 +50,12 @@
 
 | Reference | Method and historical path | Workflow context | Evidence / status |
 | --- | --- | --- | --- |
-| API-001 | POST `/api/v1/auth/login` | BF-001 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-001; not live |
-| API-002 | POST `/api/v1/auth/refresh` | BF-002 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-002; not live |
-| API-003 | POST `/api/v1/auth/logout` | BF-040 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-003; not live |
-| API-004 | GET `/api/v1/auth/me` | BF-001, BF-002 (supporting account/key design; details remain historical) | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-004; not live |
-| API-005 | POST `/api/v1/auth/change-password` | BF-001, BF-002 (supporting account/key design; details remain historical) | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-005; not live |
-| API-006 | GET `/.well-known/jwks.json` | BF-001, BF-002 (supporting account/key design; details remain historical) | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-006; not live |
+| API-001 | POST `/api/v1/auth/login` | BF-001 | [IMPL] Identity provider, gateway and focused tests |
+| API-002 | POST `/api/v1/auth/refresh` | BF-002 | [IMPL] Identity provider, gateway and focused tests |
+| API-003 | POST `/api/v1/auth/logout` | BF-040 | [IMPL] Identity provider, gateway and focused tests |
+| API-004 | GET `/api/v1/auth/me` | BF-041 | [IMPL] Identity provider, gateway and focused tests |
+| API-005 | POST `/api/v1/auth/change-password` | BF-042 | [IMPL] Identity provider, gateway and focused tests |
+| API-006 | GET `/.well-known/jwks.json` | BF-001, BF-002 | [IMPL] Identity provider, gateway and focused tests |
 | API-007 | POST `/api/v1/tenants` | BF-003 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-007; not live |
 | API-008 | GET `/api/v1/tenants/current` | BF-003 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-008; not live |
 | API-009 | PATCH `/api/v1/tenants/current` | BF-003 | [DESIGN] docs/reference/CONTRACTS-REFERENCE-05.md — API-009; not live |

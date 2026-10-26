@@ -17,7 +17,7 @@ ml/**/datasets/
 *.onnx
 ml/confidence-service/.venv/
 ml/confidence-service/data/*.csv
-web/
+/web/
 /mobile/
 
 # Local verification dependencies

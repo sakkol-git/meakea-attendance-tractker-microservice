@@ -14,7 +14,7 @@ The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step d
 
 ## Preserved objective and starting point
 
-Week 03 — Organization and admin remains the weekly objective, now under the accepted service/JPA/Kafka/Nuxt design. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
+Week 03 — Organization and admin remains the weekly objective, now under the accepted service/JPA/Kafka/Nuxt design. ADR 010 adds the blocking service-local JWT gates, while ADR 011 requires W03-S01 through W03-S05 to configure and verify Spring Security OAuth2 Resource Server in attendance, leave, request, notification and reporting instead of custom JWT filters. The repeated Week 2 security steps own the gateway and identity-org gates; gateway-only evidence cannot satisfy a service gate. Inspect first before using proposed class/table/endpoint names; the existing source is scaffolding. Repeat the golden slice and add only the named domain/client/recovery delta. No application progress is claimed by authored documents.
 
 ## Day plan
 

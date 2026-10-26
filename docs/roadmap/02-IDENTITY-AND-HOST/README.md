@@ -12,7 +12,7 @@ Dates: 2026-11-02 through 2026-11-06; weekend rest follows.
 
 The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically.
 
-Execution status on 25 October 2026: W02-S01 through W02-S23 have automated evidence. The six-operation authentication slice, gateway smoke, web sign-in/sign-out and mobile login/restore/logout pass locally. W02-S24 through W02-S35, physical-device credential acceptance, intended-host deployment, external backup and the weekly gate remain **NOT RUN**.
+Execution status on 26 October 2026: W02-S01 through W02-S23 retain automated evidence for the boundary tested at that time. ADR 010 requires the gateway and identity-org to validate the same bearer JWT independently, and ADR 011 requires Spring Security OAuth2 Resource Server rather than custom JWT filters. Both security chains already use the resource-server DSL, but W02-S07, W02-S14, W02-S15 and W02-S22 must be repeated with the complete validator and routed two-gate assertions before their security result is current. This verification delta, W02-S24 through W02-S35, physical-device credential acceptance, intended-host deployment, external backup and the weekly gate remain **NOT RUN**. Existing authentication, Postman, gateway, web and mobile evidence is preserved and is not evidence for the complete second-gate matrix.
 
 ## Preserved objective and starting point
 
@@ -47,6 +47,7 @@ A stone may span working days; stop at the day cap and save its next exact step.
 ## Minimum Viable Gate
 
 - [ ] All required feature, tenant, role, validation, race/replay and recovery outcomes in VERIFY-AND-GATE have actual report evidence.
+- [ ] The gateway and identity-org independently validate the forwarded bearer JWT; no trusted identity header supplies tenant, employee or role authority.
 - [ ] Every stone has reviewed tests/startup and its unused new green tag; red work is not deployed.
 - [ ] Friday intended-host redeploy, authenticated/denied smoke and external-backup scratch restore pass. Week 1 is explicitly disposable/local only.
 - [ ] No critical failure is downgraded for schedule pressure; record exact next repair before the next week.
