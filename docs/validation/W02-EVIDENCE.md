@@ -58,7 +58,13 @@
 - Power policy: Continuous AC mains adapter; systemd configured with `HandleLidSwitch=ignore` to prevent laptop sleep upon lid closure.
 - Ingress: Private LAN with static DHCP reservation (e.g., 192.168.1.x) and wired Ethernet (RJ45). Remote ingress via outbound Cloudflare Tunnel (`cloudflared`); no public router port forwarding.
 - Backup: Dedicated external USB 3.0 encrypted disk (`ext4`); separate from host drive.
-- Status: **RECORDED & ASSESSED**; physical Acer live command execution and readiness verification remains **PENDING/BLOCKED** until direct console access is performed. **PASS** for inventory specification recording.
+- Status: **BLOCKED**; target machine inventory, resource budget, disk IOPS risk and Cloudflare Tunnel access recorded in evidence; direct on-device command execution on the Acer Nitro 5 (`df -h .`, CPU/RAM/Docker verification) remains **NOT RUN** and is an explicit blocker for production host deployment.
+
+## W02-S25
+
+- Files: `infra/selfhost/compose.yaml`, `infra/selfhost/Caddyfile`
+- Command: `docker compose -f infra/selfhost/compose.yaml config --quiet`
+- Result: Exit 0. Validates production self-host manifest syntax and dual network isolation. Caddy binds edge ports 80/443; internal network has ZERO published database or broker ports (PostgreSQL 5432 and Kafka 29092 isolated). Caddyfile blocks `/actuator*` with HTTP 404, reverse proxies `/api/*` to `api-gateway:8080`, and serves static web assets with internal TLS (`tls internal`). Log rotation bounded to 10m/3 files per container. **PASS**
 
 ## Authentication slice ledger
 
@@ -69,4 +75,4 @@
 - Gateway smoke: health, JWKS schema, native and browser login, tenant validation, exact Origin/CSRF enforcement, JWT tamper denial, forged-tenant denial, persisted throttling, refresh rotation/reuse-family revocation and logout pass.
 - Client proof: live Nuxt sign-in/sign-out and live Flutter login/restore/logout pass through the gateway.
 - Host decision: the user designated a separate Acer Nitro 5—not the development Mac—as the intended self-host, with reported Intel Core i5, 16 GB RAM and 2 TB hard-disk capacity. Sizing budget and IOPS analysis recorded in W02-S24; exact on-device command verification remains pending physical bootstrap.
-- Remaining Week 2 blockers: W02-S25 through W02-S35, physical devices, direct Acer host-readiness evidence and external backup media.
+- Remaining Week 2 blockers: W02-S26 through W02-S35, physical devices, direct Acer host-readiness evidence and external backup media.

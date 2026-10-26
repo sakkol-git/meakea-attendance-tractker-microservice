@@ -8,22 +8,22 @@ User confirmed no change on this second pass. These inputs are authoritative; we
 
 ## Current position
 
-Current week: 02. Current step: W02-S25 (W02-S24 host inventory and hardware fact analysis completed). Step state: **Ready**. Gate: **NOT RUN**.
+Current week: 02. Current step: W02-S26 (W02-S25 private service manifest validation completed; W02-S24 host inventory recorded). Step state: **Ready**. Gate: **NOT RUN**.
 
-Next action: validate the private service manifest in `infra/selfhost/compose.yaml` (W02-S25), check unpublished internal service ports and networks, and continue through W02-S35.
+Next action: review secret separation and rotation (W02-S26), verify secret references and key rollover policy, and continue through W02-S35.
 
 Last green application tag: bd53438 (feat(w01): w01-s07). Documentation commits are not green application tags. Blockers: the Acer's direct physical boot/runtime, free disk/health, uptime policy and network facts are unverified; external backup disk and physical-device credentials remain open. Local Java 21, Spring Data JPA, reactive gateway (17/17 tests passing), identity-org (53/53 tests passing) and multi-module auth ladder (70/70 tests passing) remain verified evidence for their tested scope. Energy: steady.
 
 ## Evidence and shutdown
 
-Evidence path: `docs/validation/W01-EVIDENCE.md` and `docs/validation/W02-EVIDENCE.md`. All 53 current identity unit/HTTP tests, 17 gateway authorization/sanitization/decoder tests, 70/70 joint reactor tests and six Docker-backed identity integration tests pass, including the profile/password PostgreSQL scenarios and corrected browser/native refresh/logout token selection. W02-S07 gateway resource-server and caller identity sanitization verified green; W02-S14 Gate 2 method security, role mapping and forged header resistance verified green; W02-S15 tenant boundary isolation verified green across all auth routes; W02-S22 complete auth test ladder verified green; W02-S24 intended production computer inventory and hardware sizing analysis recorded. The OpenAPI ledger records 8 implemented operations and 150 pending; forgot/reset password remain blocked on tenant resolution, token lifetime and delivery. The complete Postman API collection covers all 158 operations across 14 categories with dynamic extraction scripts. Web live authentication and mobile login, restore and logout pass through the gateway; physical-device secure-storage acceptance remains open.
+Evidence path: `docs/validation/W01-EVIDENCE.md` and `docs/validation/W02-EVIDENCE.md`. All 53 current identity unit/HTTP tests, 17 gateway authorization/sanitization/decoder tests, 70/70 joint reactor tests and six Docker-backed identity integration tests pass, including the profile/password PostgreSQL scenarios and corrected browser/native refresh/logout token selection. W02-S07 gateway resource-server and caller identity sanitization verified green; W02-S14 Gate 2 method security, role mapping and forged header resistance verified green; W02-S15 tenant boundary isolation verified green across all auth routes; W02-S22 complete auth test ladder verified green; W02-S24 intended production computer inventory and hardware sizing analysis recorded (BLOCKED on physical host command verification); W02-S25 private service manifest and Caddy TLS edge proxy syntax verified green. The OpenAPI ledger records 8 implemented operations and 150 pending; forgot/reset password remain blocked on tenant resolution, token lifetime and delivery. The complete Postman API collection covers all 158 operations across 14 categories with dynamic extraction scripts. Web live authentication and mobile login, restore and logout pass through the gateway; physical-device secure-storage acceptance remains open.
 
-Tomorrow's first action: W02-S25 (private service manifest validation) and W02-S26 (local reverse proxy and TLS configuration). A failed critical gate replaces next week's first action; it never disappears from this dashboard.
+Tomorrow's first action: W02-S26 (secret separation and rotation review) and W02-S27 (repeatable deploy procedure). A failed critical gate replaces next week's first action; it never disappears from this dashboard.
 
 ## Progress percentage
 
 - **Overall 12-Week Roadmap Progress:** **14.7%** (66 of 448 planned steps verified; 1 of 12 weekly quality gates passed).
-- **Week 02 Execution Progress:** **74.3%** (26 of 35 steps completed; W02-S24 completed; W02-S25 active).
+- **Week 02 Execution Progress:** **74.3%** (26 of 35 steps verified; W02-S25 completed; W02-S26 active).
 - **OpenAPI Contract Coverage:** **5.1%** (8 of 158 contract operations implemented and verified in the authentication/profile slice).
 
 ## Twelve-week progress
@@ -31,7 +31,7 @@ Tomorrow's first action: W02-S25 (private service manifest validation) and W02-S
 | Week | Current step                            | Progress | Last green tag | Gate        | Blocker                                                                                    |
 | ---- | --------------------------------------- | -------- | -------------- | ----------- | ------------------------------------------------------------------------------------------ |
 | 01   | W01-S38                                 | 100%     | bd53438        | **PASS**    | Completed local baseline                                                                   |
-| 02   | W02-S25                                 | 74%      | bd53438        | **NOT RUN** | Verify designated Acer host, physical devices and external backup                           |
+| 02   | W02-S26                                 | 74%      | bd53438        | **NOT RUN** | Verify designated Acer host (W02-S24 blocker), physical devices and external backup        |
 | 03   | Not started                             | 0%       | None           | **NOT RUN** | Week 2                                                                                     |
 | 04   | Not started                             | 0%       | None           | **NOT RUN** | Week 3                                                                                     |
 | 05   | Not started                             | 0%       | None           | **NOT RUN** | Week 4                                                                                     |

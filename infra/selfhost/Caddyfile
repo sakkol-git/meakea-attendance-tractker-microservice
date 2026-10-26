@@ -1,0 +1,17 @@
+https://hrflow.test {
+    tls internal
+
+    handle /actuator* {
+        respond 404
+    }
+
+    handle /api/* {
+        reverse_proxy api-gateway:8080
+    }
+
+    handle {
+        root * /srv/web
+        try_files {path} /index.html
+        file_server
+    }
+}
