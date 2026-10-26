@@ -8,9 +8,9 @@ User confirmed no change on this second pass. These inputs are authoritative; we
 
 ## Current position
 
-Current week: 02. Current step: W02-S26 (W02-S25 manifest validation completed; W02-S24 host inventory recorded). Step state: **Blocked on key-rotation/CI-scan evidence and Acer access**. Gate: **NOT RUN**.
+Current week: 02. Current step: W02-S26 (W02-S25 manifest validation completed; W02-S24 host inventory recorded). Step state: **Blocked on key rotation, dependency audit and Acer access**. Gate: **NOT RUN**.
 
-Next action: complete W02-S26 key rollover and review the new remote CI scanner results, then execute the guarded W02-S27–S29 drafts on the designated Acer and encrypted external disk. The user requested local work now and explicitly left the host gate blocked.
+Next action: complete W02-S26 key rollover and resolve the web dependency audit; execute guarded W02-S27–S29 drafts on the designated Acer and encrypted external disk when accessible. The user requested local work now and explicitly left the host gate blocked.
 
 Last green application tag: bd53438 (feat(w01): w01-s07). Documentation commits are not green application tags. Blockers: the Acer's direct physical boot/runtime, free disk/health, uptime policy and network facts are unverified; external backup disk and physical-device credentials remain open. A web dependency audit reports seven high-severity findings pending triage. Local Java 21, Spring Data JPA, reactive gateway and identity-org tests remain verified for their tested scope. Energy: steady.
 
@@ -18,7 +18,7 @@ Last green application tag: bd53438 (feat(w01): w01-s07). Documentation commits 
 
 Evidence path: `docs/validation/W01-EVIDENCE.md` and `docs/validation/W02-EVIDENCE.md`. The current identity suite has 54 unit/HTTP cases, including configured-issuer regression; 17 gateway tests and six Docker-backed identity integration tests passed in the local Maven verifier. W02-S07 gateway resource-server and caller identity sanitization verified green; W02-S14 Gate 2 method security, role mapping and forged header resistance verified green; W02-S15 tenant boundary isolation verified green across all auth routes; W02-S22 complete auth test ladder verified green; W02-S24 intended production computer inventory and hardware sizing analysis recorded (BLOCKED on physical host command verification); W02-S25 private service manifest and Caddy TLS edge proxy syntax verified green. The OpenAPI ledger records 8 implemented operations and 150 pending; forgot/reset password remain blocked on tenant resolution, token lifetime and delivery. Web checks pass 89 unit and 12 browser scenarios, including the role-gated synthetic audit view; mobile analysis and 152 tests pass with one live test skipped by default. Both clients use the implemented profile/password routes. Audit remains provider-pending, and physical-device secure-storage acceptance remains open.
 
-Tomorrow's first action: finish W02-S26 key-rotation and CI-scan evidence and obtain direct Acer/external-disk evidence for W02-S24 and W02-S27–S35. Local deploy/backup/restore scripts are drafts with syntax/config checks, not completed drills. A failed critical gate replaces next week's first action.
+Tomorrow's first action: finish W02-S26 key rotation and the failed web dependency audit, then obtain direct Acer/external-disk evidence for W02-S24 and W02-S27–S35. Local deploy/backup/restore scripts are drafts with syntax/config checks, not completed drills. A failed critical gate replaces next week's first action.
 
 ## Progress percentage
 
@@ -31,7 +31,7 @@ Tomorrow's first action: finish W02-S26 key-rotation and CI-scan evidence and ob
 | Week | Current step                            | Progress | Last green tag | Gate        | Blocker                                                                                    |
 | ---- | --------------------------------------- | -------- | -------------- | ----------- | ------------------------------------------------------------------------------------------ |
 | 01   | W01-S38                                 | 100%     | bd53438        | **PASS**    | Completed local baseline                                                                   |
-| 02   | W02-S26                                 | 74%      | bd53438        | **NOT RUN** | Key rollover/CI scan, Acer, physical devices and external backup/restore                   |
+| 02   | W02-S26                                 | 74%      | bd53438        | **NOT RUN** | Key rollover, web audit, Acer, physical devices and external backup/restore                |
 | 03   | Not started                             | 0%       | None           | **NOT RUN** | Week 2                                                                                     |
 | 04   | Not started                             | 0%       | None           | **NOT RUN** | Week 3                                                                                     |
 | 05   | Not started                             | 0%       | None           | **NOT RUN** | Week 4                                                                                     |

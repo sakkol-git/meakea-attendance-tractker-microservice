@@ -25,7 +25,8 @@ def main():
                   (ROOT, ['git', 'diff', '--check'])]
         if args.scope == 'all':
             tasks += [(ROOT, [py, 'scripts/contracts.py', 'check']),
-                      (ROOT, [py, 'scripts/sync-client-demo-data.py', '--check'])]
+                      (ROOT, [py, 'scripts/sync-client-demo-data.py', '--check']),
+                      (ROOT, [py, 'scripts/check-workflow-coverage.py'])]
     if args.base:
         tasks.append((ROOT, [py, 'scripts/contracts.py', 'compat', '--base', args.base]))
     if 'backend' in scopes:

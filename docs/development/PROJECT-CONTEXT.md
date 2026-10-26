@@ -58,6 +58,8 @@ Replace `origin/main` with the actual target branch or merge-base revision. Comp
 
 The full verifier runs contracts, drift checks, negative checker tests, documentation lint, Maven verification, Compose validation, web checks/browser journeys, Flutter analysis/tests and local MCP tool tests. Install Java 21, Maven-wrapper prerequisites, Node matching the client manifest, Docker CLI/Compose, the pinned Flutter SDK, client dependencies and Playwright Chromium first. The tooling scope uses `.venv-mcp` when available; otherwise install `tools/project_mcp/requirements.txt` in the selected Python environment. For an intentional subset use `--scope foundation`, `backend`, `web`, `mobile` or `tooling`; the report explicitly lists omitted scopes. It continues independent checks after failures and exits nonzero if any fail.
 
+The full scope also checks `mobile/docs/validation/workflow-routes.json` against the 40 distinct IDs in the owning `business-flow.md`. Standalone mobile tests validate their bundled ID inventory without reading a parent checkout; cross-repository parity is established only when both repositories are present.
+
 ## CI and coordinated integration
 
 Root CI runs foundation checks, contract compatibility for pull requests, Maven verification and Compose validation. Client CI validates the bundled receipt and runs its own build/test checks. The web browser tests use demo and mock-server environments, not a deployed HR backend.
