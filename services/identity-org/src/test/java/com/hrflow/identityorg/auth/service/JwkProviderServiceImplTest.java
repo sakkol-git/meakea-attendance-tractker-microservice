@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.hrflow.identityorg.auth.config.SigningKeys;
+import com.hrflow.identityorg.auth.config.SigningKeyRing;
 import com.hrflow.identityorg.profile.entity.Tenant;
 import com.hrflow.identityorg.profile.entity.User;
 import com.hrflow.identityorg.auth.service.impl.JwkProviderServiceImpl;
@@ -23,11 +24,13 @@ class JwkProviderServiceImplTest {
         SigningKeys keys = new SigningKeys();
         RSAKey key = keys.rsaKey(directory.toString(), true);
         Instant now = Instant.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS);
+        Clock clock = Clock.fixed(now, ZoneOffset.UTC);
+        SigningKeyRing ring = new SigningKeyRing(key, null, null, clock);
         JwkProviderServiceImpl tokens = new JwkProviderServiceImpl(keys.jwtEncoder(key), key,
-                Clock.fixed(now, ZoneOffset.UTC), "hrflow-local");
+                ring, clock, "hrflow-local");
         User user = new User(new Tenant("demo"), "owner@example.test", "hash", "Owner");
 
-        var jwt = keys.jwtDecoder(key, "hrflow-local").decode(tokens.issue(user));
+        var jwt = keys.jwtDecoder(ring, "hrflow-local").decode(tokens.issue(user));
 
         assertEquals(user.getTenantId().toString(), jwt.getClaimAsString("tenantId"));
         assertEquals(user.getEmployeeId().toString(), jwt.getClaimAsString("employeeId"));
@@ -40,11 +43,13 @@ class JwkProviderServiceImplTest {
     void issuesTheConfiguredIssuer(@TempDir Path directory) throws Exception {
         SigningKeys keys = new SigningKeys();
         RSAKey key = keys.rsaKey(directory.toString(), true);
+        Clock clock = Clock.systemUTC();
+        SigningKeyRing ring = new SigningKeyRing(key, null, null, clock);
         JwkProviderServiceImpl tokens = new JwkProviderServiceImpl(keys.jwtEncoder(key), key,
-                Clock.systemUTC(), "https://identity.example.test");
+                ring, clock, "https://identity.example.test");
         User user = new User(new Tenant("demo"), "owner@example.test", "hash", "Owner");
 
-        var jwt = keys.jwtDecoder(key, "https://identity.example.test").decode(tokens.issue(user));
+        var jwt = keys.jwtDecoder(ring, "https://identity.example.test").decode(tokens.issue(user));
 
         assertEquals("https://identity.example.test", jwt.getIssuer().toString());
     }

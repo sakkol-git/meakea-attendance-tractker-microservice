@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.nimbusds.jose.jwk.RSAKey;
 import java.nio.file.Path;
+import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,8 @@ class SigningKeysAudienceTest {
         SigningKeys configuration = new SigningKeys();
         RSAKey key = configuration.rsaKey(directory.toString(), true);
         JwtEncoder encoder = configuration.jwtEncoder(key);
-        JwtDecoder decoder = configuration.jwtDecoder(key, "hrflow-local");
+        JwtDecoder decoder = configuration.jwtDecoder(
+                new SigningKeyRing(key, null, null, Clock.systemUTC()), "hrflow-local");
         Instant now = Instant.now();
         String token = encoder.encode(JwtEncoderParameters.from(JwtClaimsSet.builder()
                 .issuer("hrflow-local")

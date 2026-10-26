@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016 # Quoted scripts expand inside the PostgreSQL container.
 set -euo pipefail
+# shellcheck source=ops/common.sh
 source "$(dirname "$0")/common.sh"
 ops_load
 ops_external_mount

@@ -1,16 +1,15 @@
 package com.hrflow.identityorg.auth.service.impl;
 
-import com.hrflow.identityorg.profile.entity.User;
+import com.hrflow.identityorg.auth.config.SigningKeyRing;
 import com.hrflow.identityorg.auth.service.JwkProviderService;
 import com.hrflow.identityorg.auth.service.record.AuthRoles;
 import com.hrflow.identityorg.auth.service.record.AuthTokenPolicy;
-import com.nimbusds.jose.jwk.JWKSet;
+import com.hrflow.identityorg.profile.entity.User;
 import com.nimbusds.jose.jwk.RSAKey;
-import java.time.Instant;
 import java.time.Clock;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -24,13 +23,15 @@ import org.springframework.stereotype.Service;
 public class JwkProviderServiceImpl implements JwkProviderService {
     private final JwtEncoder encoder;
     private final RSAKey key;
+    private final SigningKeyRing keys;
     private final Clock clock;
     private final String issuer;
 
-    public JwkProviderServiceImpl(JwtEncoder encoder, RSAKey key, Clock clock,
+    public JwkProviderServiceImpl(JwtEncoder encoder, RSAKey key, SigningKeyRing keys, Clock clock,
                                   @Value("${hrflow.auth.issuer:hrflow-local}") String issuer) {
         this.encoder = encoder;
         this.key = key;
+        this.keys = keys;
         this.clock = clock;
         this.issuer = issuer;
     }
@@ -54,7 +55,7 @@ public class JwkProviderServiceImpl implements JwkProviderService {
 
     @Override
     public Map<String, Object> jwks() {
-        return new JWKSet(key.toPublicJWK()).toJSONObject();
+        return keys.jwks().toJSONObject();
     }
 
     @Override

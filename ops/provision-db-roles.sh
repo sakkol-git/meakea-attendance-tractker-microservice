@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016 # Quoted script expands inside the PostgreSQL container.
 set -euo pipefail
+# shellcheck source=ops/common.sh
 source "$(dirname "$0")/common.sh"
 ops_load
 [[ "${HRFLOW_ROLE_CONFIRM:-}" == "$HRFLOW_TARGET_ID" ]] || ops_die 'set HRFLOW_ROLE_CONFIRM to the target alias'

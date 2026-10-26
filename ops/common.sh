@@ -14,6 +14,7 @@ ops_load() {
   [[ "$owner" == "$(id -u)" ]] || ops_die 'config must be owned by the operator'
   # This file is trusted operator shell configuration, never a downloaded artifact.
   set -a
+  # shellcheck disable=SC1090 # Operator-owned path is validated above.
   source "$HRFLOW_OPS_CONFIG"
   set +a
   : "${HRFLOW_ROOT:?}" "${HRFLOW_TARGET_ID:?}" "${HRFLOW_MODE:?}" "${COMPOSE_PROJECT_NAME:?}"

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# shellcheck source=ops/common.sh
 source "$(dirname "$0")/common.sh"
 ops_load
 ops_external_mount
@@ -22,7 +23,7 @@ previous="$HRFLOW_BACKUP_MOUNT/hrflow/deployments/previous-$(date -u +%Y%m%dT%H%
 chmod 600 "$previous"
 ops_compose build api-gateway identity-org web
 ops_compose up -d --no-build postgres kafka schema-registry identity-org api-gateway web caddy
-for attempt in $(seq 1 24); do
+for ((attempt = 0; attempt < 24; attempt++)); do
   if [[ "$(ops_compose ps --status running --services | sort | tr '\n' ' ')" == *'api-gateway'* ]] &&
      ops_compose exec -T api-gateway wget -q -T 5 -O - http://127.0.0.1:9080/actuator/health/readiness | grep -q '"status":"UP"' &&
      ops_compose exec -T identity-org wget -q -T 5 -O - http://127.0.0.1:8101/actuator/health/readiness | grep -q '"status":"UP"' &&

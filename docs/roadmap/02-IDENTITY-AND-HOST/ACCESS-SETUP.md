@@ -48,6 +48,14 @@ Use the official [Tunnel setup](https://developers.cloudflare.com/tunnel/get-sta
 
 Run the deployment manifest/smoke script on the real host with the exact checked image. Preserve previous digest/config and test a known authenticated request from Nuxt and Flutter. Backup/restore still run when remote access is blocked; label private versus public result separately. Complete final operational drills with the Week 10 host runbook.
 
+## Signing-key rollover on the private host
+
+The identity service reads `private.pem` and `public.pem` from its protected key mount. For a routine rollover, generate a fresh matching RSA pair outside Git. Preserve the previous **public** key as `retiring-public.pem` and put an ISO-8601 UTC instant in `retiring-valid-until.txt`. The retiring private key must not remain mounted as the active signer. The service refuses an incomplete retiring-key/deadline pair or a retiring key with the active key ID.
+
+Choose a retirement deadline after the last token signed by the old key has expired (the issuer's current access lifetime is 15 minutes), with allowance for clock skew and JWKS caches. Replace the mounted active pair as one protected operational change and restart identity-org. Check that JWKS exposes two distinct public key IDs during the overlap and that a newly issued token passes both gateway and service authentication. An old, still-valid test token should pass during overlap. At the deadline identity-org stops publishing and accepting the retiring key; downstream JWKS caches may retain it briefly. Repeat the old-token denial check after cache expiry or a controlled gateway restart, and remove the retiring files after the recorded result. Do not record private keys or token values in logs, tickets or this guide.
+
+The local key-ring and gateway decoder tests demonstrate overlap and fresh-decoder retirement. They do not establish the downstream cache expiry time on the Acer or satisfy the six future owner-service gates. An emergency rollover after suspected private-key compromise needs a separate incident decision: routine overlap intentionally accepts the retiring key until its deadline.
+
 ## Private browser TLS before public DNS
 
 Week 1 HTTP is disposable diagnostic mode only. Week 2 browser refresh cookies remain Secure; do not remove that flag to make a private HTTP demonstration work. The local-only finish line uses Caddy internal TLS on a private test hostname mapped to the intended host on each test device. Install only the Caddy public root certificate into the controlled test-device trust store through its documented operator procedure; never ignore a certificate warning or publish the root private key.
