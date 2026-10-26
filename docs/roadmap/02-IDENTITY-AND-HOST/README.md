@@ -12,7 +12,7 @@ Dates: 2026-11-02 through 2026-11-06; weekend rest follows.
 
 The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 1 h; B review/recovery is 1 h. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically.
 
-Execution status on 26 October 2026: W02-S01 through W02-S23 retain automated evidence, and the repeated W02-S07/S14/S15/S22 ADR-010/011 dual-gate checks are current. W02-S24 is active. The user designated a separate Acer Nitro 5 with reported Core i5, 16 GB RAM and 2 TB hard-disk capacity as the intended self-host instead of the development Mac, but direct Acer readiness evidence is **NOT RUN**. W02-S24 through W02-S35, physical-device credential acceptance, intended-host deployment, external backup and the weekly gate remain open.
+Execution status on 26 October 2026: W02-S01 through W02-S23 retain automated evidence, and W02-S25 has Compose syntax evidence. W02-S24 remains blocked on direct Acer evidence. W02-S26 through W02-S29 now have local guarded configuration/script drafts and local Gitleaks scans; key rotation, remote CI scan results, intended-host deployment, encrypted external backup, full scratch restore, physical-device credentials and the weekly gate remain open. The user chose to leave the host gate blocked until access to the separate Acer Nitro 5 and external backup disk is available.
 
 ## Preserved objective and starting point
 

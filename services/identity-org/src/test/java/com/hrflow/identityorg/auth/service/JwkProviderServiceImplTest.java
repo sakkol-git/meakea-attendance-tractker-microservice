@@ -24,7 +24,7 @@ class JwkProviderServiceImplTest {
         RSAKey key = keys.rsaKey(directory.toString(), true);
         Instant now = Instant.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS);
         JwkProviderServiceImpl tokens = new JwkProviderServiceImpl(keys.jwtEncoder(key), key,
-                Clock.fixed(now, ZoneOffset.UTC));
+                Clock.fixed(now, ZoneOffset.UTC), "hrflow-local");
         User user = new User(new Tenant("demo"), "owner@example.test", "hash", "Owner");
 
         var jwt = keys.jwtDecoder(key, "hrflow-local").decode(tokens.issue(user));
@@ -34,5 +34,18 @@ class JwkProviderServiceImplTest {
         assertEquals(List.of("EMPLOYEE", "OWNER"), jwt.getClaimAsStringList("roles"));
         assertNotNull(jwt.getId());
         assertEquals(now.plus(AuthTokenPolicy.ACCESS_LIFETIME), jwt.getExpiresAt());
+    }
+
+    @Test
+    void issuesTheConfiguredIssuer(@TempDir Path directory) throws Exception {
+        SigningKeys keys = new SigningKeys();
+        RSAKey key = keys.rsaKey(directory.toString(), true);
+        JwkProviderServiceImpl tokens = new JwkProviderServiceImpl(keys.jwtEncoder(key), key,
+                Clock.systemUTC(), "https://identity.example.test");
+        User user = new User(new Tenant("demo"), "owner@example.test", "hash", "Owner");
+
+        var jwt = keys.jwtDecoder(key, "https://identity.example.test").decode(tokens.issue(user));
+
+        assertEquals("https://identity.example.test", jwt.getIssuer().toString());
     }
 }

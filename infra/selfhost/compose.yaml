@@ -5,8 +5,8 @@ services:
     container_name: hrflow-caddy
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HRFLOW_EDGE_BIND_IP:-127.0.0.1}:80:80"
+      - "${HRFLOW_EDGE_BIND_IP:-127.0.0.1}:443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
@@ -16,6 +16,31 @@ services:
     depends_on:
       api-gateway:
         condition: service_healthy
+      web:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Remote-mode Nuxt static bundle; no host port is published.
+  web:
+    build:
+      context: ../../web
+      dockerfile: Dockerfile
+      args:
+        NUXT_PUBLIC_DATA_SOURCE: remote
+        NUXT_PUBLIC_API_BASE_URL: ${HRFLOW_BROWSER_ORIGIN:-https://hrflow.test}/api/v1
+    restart: unless-stopped
+    networks:
+      - edge
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/login"]
+      interval: 10s
+      timeout: 5s
+      start_period: 45s
+      retries: 6
     logging:
       driver: "json-file"
       options:
@@ -33,10 +58,11 @@ services:
     restart: unless-stopped
     environment:
       SERVER_ADDRESS: 0.0.0.0
-      MANAGEMENT_PORT: 8080
+      MANAGEMENT_PORT: 9080
       IDENTITY_URI: http://identity-org:8101
       HRFLOW_AUTH_JWKS_URI: http://identity-org:8101/.well-known/jwks.json
-      HRFLOW_AUTH_BROWSER_ORIGIN: https://hrflow.test
+      HRFLOW_AUTH_ISSUER: ${HRFLOW_AUTH_ISSUER:?Set HRFLOW_AUTH_ISSUER}
+      HRFLOW_AUTH_BROWSER_ORIGIN: ${HRFLOW_BROWSER_ORIGIN:-https://hrflow.test}
     networks:
       - edge
       - internal
@@ -44,7 +70,7 @@ services:
       identity-org:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:9080/actuator/health/readiness | grep -q '\"status\":\"UP\"'"]
       interval: 10s
       timeout: 5s
       start_period: 45s
@@ -68,18 +94,19 @@ services:
       SERVER_ADDRESS: 0.0.0.0
       MANAGEMENT_PORT: 8101
       DB_URL: jdbc:postgresql://postgres:5432/hrflow
-      DB_USERNAME: hrflow
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-hrflow}
-      FLYWAY_USERNAME: hrflow
-      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD:-hrflow}
+      DB_USERNAME: ${HRFLOW_DB_RUNTIME_USER:?Set HRFLOW_DB_RUNTIME_USER}
+      DB_PASSWORD: ${HRFLOW_DB_RUNTIME_PASSWORD:?Set HRFLOW_DB_RUNTIME_PASSWORD}
+      FLYWAY_USERNAME: ${HRFLOW_DB_MIGRATION_USER:?Set HRFLOW_DB_MIGRATION_USER}
+      FLYWAY_PASSWORD: ${HRFLOW_DB_MIGRATION_PASSWORD:?Set HRFLOW_DB_MIGRATION_PASSWORD}
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      HRFLOW_AUTH_LOCAL_BOOTSTRAP: "true"
-      HRFLOW_AUTH_DEV_PASSWORD: ${HRFLOW_DEV_PASSWORD:-}
+      HRFLOW_AUTH_LOCAL_BOOTSTRAP: "false"
+      HRFLOW_AUTH_KEY_DIRECTORY: /keys
+      HRFLOW_AUTH_ISSUER: ${HRFLOW_AUTH_ISSUER:?Set HRFLOW_AUTH_ISSUER}
       HRFLOW_AUTH_SECURE_COOKIES: "true"
-      HRFLOW_AUTH_BROWSER_ORIGIN: https://hrflow.test
+      HRFLOW_AUTH_BROWSER_ORIGIN: ${HRFLOW_BROWSER_ORIGIN:-https://hrflow.test}
     volumes:
-      - jwtkeys:/keys
+      - ${HRFLOW_SIGNING_KEYS_DIR:?Set HRFLOW_SIGNING_KEYS_DIR}:/keys:ro
     networks:
       - internal
     depends_on:
@@ -106,7 +133,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: hrflow
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hrflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
       POSTGRES_DB: hrflow
     volumes:
       - pgdata18:/var/lib/postgresql
@@ -185,6 +212,5 @@ networks:
 volumes:
   pgdata18:
   kafkadata_v2:
-  jwtkeys:
   caddy_data:
   caddy_config:

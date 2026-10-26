@@ -2,7 +2,7 @@
 
 ## Status and prerequisites
 
-Procedure defined; execution **NOT RUN**. Referenced ops scripts are proposed, not installed today. Inspect/create them in named weekly steps first. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
+Procedure defined; execution **NOT RUN**. A guarded Week 2 local draft exists at `ops/restore-scratch.sh`; it verifies archive checksums and restores to a uniquely named scratch database but does not yet prove login, private files, grants or replay. The Acer and encrypted external disk are unavailable for the drill. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
 
 ## Numbered procedure
 

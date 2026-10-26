@@ -12,8 +12,8 @@ Use [source of truth](../SOURCE-OF-TRUTH.md) for authority, [business flows](../
 
 | Surface | Observed state | Planning consequence |
 | --- | --- | --- |
-| Mobile | Broad employee, manager, HR and owner workflows; 73 feature-inventory routes; remote adapters remain provisional | Treat behavior and validation as consumer requirements, then verify each rule against business ownership |
-| Web | Forty workflow screens, aligned approval/delegation/material/coverage flows, explicit demo and remote modes | Preserve desktop interaction differences while requiring the same server outcomes |
+| Mobile | Broad employee, manager, HR and owner workflows; canonical `/auth/profile` name/time-zone update and password-change UI; 73 feature-inventory routes; remote business adapters remain provisional | Treat behavior and validation as consumer requirements, then verify each rule against business ownership |
+| Web | Forty workflow screens, aligned approval/delegation/material/coverage flows, canonical profile/password UI, admin audit screen, explicit demo and remote modes | Preserve desktop interaction differences while requiring the same server outcomes; audit remains synthetic until its pending provider contract is accepted |
 | Shared OpenAPI | Broad synchronized client inventory; business operations remain marked `x-hrflow-implementation: pending` | Classify every operation before calling the provider accepted or complete |
 | Java services | Seven services; gateway forwards /api/v1/auth and JWKS; identity-org auth slice implemented and verified; business domain controllers pending | First vertical slice active; proceed with organization catalogs, attendance and leave domain implementations |
 | Business-flow inventory | Historical 112-route candidate map plus implemented Python confidence endpoints; Java business routes absent | Use workflow IDs for traceability, but re-approve historical candidates instead of copying them blindly |
@@ -71,14 +71,14 @@ This keeps the existing roadmap order. It adds the frontend result that each bac
 | Existing week | Provider result | Client synchronization evidence |
 | --- | --- | --- |
 | 01 Foundation | Contract classification, common errors, ETag/idempotency rules and one protected gateway-to-service slice | Gateway baseline starts, verified problem details match client format |
-| 02 Identity and host | Implemented platform-aware authentication and tenant context | Web cookie/CSRF and mobile secure-token journeys pass; wrong tenant, reuse, throttling and logout negatives pass in test suite |
+| 02 Identity and host | Implemented platform-aware authentication and tenant context | Web cookie/CSRF and mobile secure-token journeys pass; both clients use the implemented profile/password routes; wrong tenant, reuse, throttling and logout negatives pass in test suite |
 | 03 Organization/admin | Tenant, employees, roles, sites, shifts, holidays and onboarding foundation | Both clients use provider catalogs; invitation and employee-impact gaps remain visibly blocked until accepted |
 | 04 Attendance | Check-in/out, history, correction and review with company-time rules | Employee and manager journeys pass against the same provider records and stale ETags |
 | 05 Events/notifications | Transactional outbox, replay-safe consumer and notification inbox | A committed domain action produces one notification; replay does not duplicate the effect |
 | 06 Leave | Preview, request, balances, approval, cancellation and coverage reads | Mobile and web show the same charge, balance, status and decision after refresh |
 | 07 Requests/approvals | Drafts, approval chain, material stock transaction, delegation and private files | Shared outcomes pass for requester, reviewer and fulfiller; unauthorized and over-issue cases fail safely |
 | 08 Client integration | Accepted adapters replace provisional routes feature by feature | Remote mode has no demo fallback; loading, empty, error, conflict, timeout and success states are exercised |
-| 09 Reporting/audit | Rebuildable dashboards, filtered audit and export lifecycle | Values reconcile to source records; jobs and downloads remain tenant/requester scoped |
+| 09 Reporting/audit | Rebuildable dashboards, filtered audit and export lifecycle | Web and mobile expose role-gated filtered audit views, currently synthetic; provider values must reconcile to source records and jobs/downloads remain tenant/requester scoped |
 | 10 Operations | Deploy, rollback, backup and clean restore | Restored environment serves the same accepted client smoke flows |
 | 11 Hardening/pilot | Authorization matrix, accessibility, device and measured-load evidence | Two-tenant adversarial suite, API 24/iOS 15 checks and approved load profile pass |
 | 12 Release/demo | Frozen compatible contract and repeatable release | Signed clients complete the demonstration with a live gateway; independent audit findings are resolved or accepted |

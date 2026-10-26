@@ -10,8 +10,6 @@ https://hrflow.test {
     }
 
     handle {
-        root * /srv/web
-        try_files {path} /index.html
-        file_server
+        reverse_proxy web:3000
     }
 }

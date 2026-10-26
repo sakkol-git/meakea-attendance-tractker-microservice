@@ -2,11 +2,11 @@
 
 ## Status and creation order
 
-This is the required interface for proposed scripts, not installed application code. Week 1 creates private manifest, deploy/smoke and disposable backup/restore before Friday invocation. Week 2 adds confirmed host, external mount, private files/schema/replay inventory and production refusal tests. Week 10 creates/completes rollback, clean restore, reboot, rotation and failure drills. Execution is **NOT RUN** until each script has real isolated reports.
+This is the required interface. The Week 2 checkout now contains local drafts of `ops/deploy.sh`, `ops/backup.sh`, `ops/restore-scratch.sh`, `ops/provision-db-roles.sh` and their shared guard. Syntax and configuration validation are local checks only; intended-host execution is **NOT RUN**. Week 10 still owns rollback, clean restore, reboot, rotation and failure drills.
 
 ## Common target and safety contract
 
-Each script reads an operator-controlled ignored configuration file selected through HRFLOW_OPS_CONFIG, then validates HRFLOW_ROOT, HRFLOW_TARGET_ID, HRFLOW_MODE and COMPOSE_PROJECT_NAME before touching a host. Mode is explicitly disposable in Week 1 and production from Week 2; missing mode/target always refuses. Do not source an untrusted downloaded file. Credentials use protected mounts/config and never command-line echo, Git or reports.
+Each script reads an operator-controlled ignored configuration file selected through HRFLOW_OPS_CONFIG, then validates HRFLOW_ROOT, HRFLOW_TARGET_ID, HRFLOW_MODE and COMPOSE_PROJECT_NAME before touching a host. The example is `infra/selfhost/ops.env.example`; copy it outside Git as an operator-owned mode 600 file. The current drafts require production mode and the named `hrflow-selfhost` Compose project. Do not source an untrusted downloaded file. Credentials use protected mounts/config and never command-line echo, Git or reports.
 
 The reviewed config records actual manifest, service names, DB/roles, image digests, external mount/backup path, private files, Registry schema inventory and scratch target. Backup uses a separate all-tenant read role; business runtime roles remain non-owner/non-BYPASSRLS. Confirm actual names before running; no fictitious app container is assumed.
 
@@ -17,6 +17,7 @@ Scratch restore requires a unique explicit HRFLOW_SCRATCH_DB matching the allowe
 | Script | Created/completed | Success must prove | Failure behavior |
 | --- | --- | --- | --- |
 | ops/deploy.sh | W1/W2/W10 | Pinned candidate, prior manifest, additive migration/readiness/smoke | Nonzero, preserve prior compatible release |
+| ops/provision-db-roles.sh | W2 local draft | Separate runtime, migration and backup roles; verify grants on Acer before deploy | Refuse absent target confirmation; no claim of live role separation from syntax alone |
 | ops/selfhost-smoke.sh | W1 then feature weeks | Readiness and current authenticated/denied route assertions | Nonzero on missing assertion, timeout or wrong status |
 | ops/backup.sh | W1 disposable/W2 external/W10 schedule | Custom dump, private-file consistency, checksum/schema/replay manifest and mounted external copy | Refuse missing mount, retain last valid backup, prune only after new copy verifies |
 | ops/restore-scratch.sh | W1/W2 then every Friday | Isolated rows/ledger/files/grants/auth and original DB unchanged | Refuse wrong/corrupt target or archive; no green result from listing only |
@@ -44,7 +45,7 @@ bash ops/broker-recovery-check.sh
 
 ## Evidence and undo
 
-Use set -euo pipefail, quoted variables, bounded waits, explicit exit propagation and refusal tests. A script syntax check uses bash -n but does not execute a drill. Record operator, target alias, exact command/exit, artifact IDs, safe result and timing. A backup is valid only after its restore passes. git revert HEAD reverses code/config only; applied SQL/data follows forward repair or the separately reviewed restore runbook. All six runbooks share this contract.
+Use set -euo pipefail, quoted variables, bounded waits, explicit exit propagation and refusal tests. A script syntax check uses bash -n but does not execute a drill. The current `backup.sh` writes `latest-unverified`; a human-reviewed full restore/auth/files/grants/replay report is required before an operator writes `latest-verified` for deployment. The current `restore-scratch.sh` proves only archive integrity and a database scratch restore; it reports the remaining manual checks. Record operator, target alias, exact command/exit, artifact IDs, safe result and timing. A backup is valid only after its restore passes. git revert HEAD reverses code/config only; applied SQL/data follows forward repair or the separately reviewed restore runbook. All six runbooks share this contract.
 
 ## Offline release artifacts
 

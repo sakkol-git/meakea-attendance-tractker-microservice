@@ -11,7 +11,6 @@ import java.time.Clock;
 import java.util.List;
 import java.util.Map;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -22,20 +21,25 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class JwkProviderServiceImpl implements JwkProviderService {
     private final JwtEncoder encoder;
     private final RSAKey key;
-    @Value("${hrflow.auth.issuer:hrflow-local}")
-    private final static String ISSUER = "hrflow-local";
     private final Clock clock;
+    private final String issuer;
 
+    public JwkProviderServiceImpl(JwtEncoder encoder, RSAKey key, Clock clock,
+                                  @Value("${hrflow.auth.issuer:hrflow-local}") String issuer) {
+        this.encoder = encoder;
+        this.key = key;
+        this.clock = clock;
+        this.issuer = issuer;
+    }
 
     @Override
     public String issue(User user) {
         Instant now = clock.instant();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer(ISSUER).audience(List.of(AuthTokenPolicy.AUDIENCE))
+                .issuer(issuer).audience(List.of(AuthTokenPolicy.AUDIENCE))
                 .issuedAt(now).expiresAt(now.plus(AuthTokenPolicy.ACCESS_LIFETIME))
                 .id(java.util.UUID.randomUUID().toString())
                 .subject(user.getId().toString())

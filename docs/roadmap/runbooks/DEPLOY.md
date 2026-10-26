@@ -2,11 +2,11 @@
 
 ## Status and prerequisites
 
-Procedure defined; execution **NOT RUN**. Referenced ops scripts are proposed, not installed today. Inspect/create them in named weekly steps first. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
+Procedure defined; execution **NOT RUN**. A guarded Week 2 local draft exists at `ops/deploy.sh`. It requires a verified external backup receipt, explicit target confirmation, clean release checkout and private readiness. The Acer and rollback/auth smoke prerequisites remain open. Complete operational drills in Weeks 10–12; preserve the original detailed host runbook.
 
 ## Numbered procedure
 
-1. Inspect confirmed host, private manifest, current image/config/migration IDs and newest verified backup. Refuse public enablement if TLS/auth/firewall/secrets/restore gate is incomplete.
+1. Inspect confirmed host, private manifest, current image/config/migration IDs and newest verified backup. Provision and inspect separate database roles with `ops/provision-db-roles.sh` before starting identity-org. Refuse public enablement if TLS/auth/firewall/secrets/restore gate is incomplete.
 1. Run Compose config validation and clean/upgrade migration tests locally. Record candidate immutable digest and previous compatible digest.
 1. Run reviewed ops/deploy.sh: apply additive migration once, update exact image/config, wait readiness. Never edit applied SQL or clear volume.
 1. Run authenticated business smoke from Nuxt/Flutter path and inspect safe correlation log, outbox state and version.
