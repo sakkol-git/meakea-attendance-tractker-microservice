@@ -32,8 +32,10 @@ public class SecurityConfiguration {
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
-                .logout(ServerHttpSecurity.LogoutSpec::disable)
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {}))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .authenticationEntryPoint(SecurityProblems.unauthorized())
+                        .accessDeniedHandler(SecurityProblems.forbidden())
+                        .jwt(jwt -> {}))
                 .build();
     }
 }

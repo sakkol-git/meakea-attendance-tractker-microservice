@@ -95,9 +95,9 @@ Likelihood, impact and severity use High/Med/Low. High-impact correctness/data-l
 ## Limited hardware
 
 - Likelihood: High; impact: High; severity: High.
-- Early warning: Less than 30 GiB free or swapping.
-- Prevention: Disk gate and narrow topology.
-- Contingency: No pulls; get owner-approved storage headroom.
+- Early warning: Designated Acer Nitro 5 has less than 30 GiB free, unhealthy or slow disk, sustained swapping, or cannot run the measured seven-service/Kafka profile.
+- Prevention: Verify its exact Core i5 model, usable 16 GB RAM, free/healthy portion of the reported 2 TB disk and measured private-stack resource use; keep bounded JVM, log and retention settings.
+- Contingency: No production pull/deploy until the Acer passes; reduce optional observability first, never remove security, backup or data-integrity controls to fit.
 - Owner: A; milestone: W1/W2.
 
 ## ISP CGNAT dynamic IP

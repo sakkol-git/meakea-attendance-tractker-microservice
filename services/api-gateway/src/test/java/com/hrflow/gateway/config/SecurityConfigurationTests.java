@@ -72,4 +72,31 @@ class SecurityConfigurationTests {
             return "probe";
         }
     }
+    @Test
+    void rejectsMissingTokenWithProblemJson() {
+        client.get().uri("/api/v1/auth/me")
+                .exchange()
+                .expectStatus().isUnauthorized()
+                .expectHeader().contentType("application/problem+json")
+                .expectBody()
+                .jsonPath("$.code").isEqualTo("GATEWAY-UNAUTHENTICATED")
+                .jsonPath("$.status").isEqualTo(401);
+    }
+
+    @Test
+    void rejectsInvalidTokenWithProblemJson() {
+        org.mockito.Mockito.when(decoder.decode("malformed-token"))
+                .thenReturn(reactor.core.publisher.Mono.error(
+                        new org.springframework.security.oauth2.jwt.BadJwtException("Invalid token")));
+
+        client.get().uri("/api/v1/auth/me")
+                .header("Authorization", "Bearer malformed-token")
+                .exchange()
+                .expectStatus().isUnauthorized()
+                .expectHeader().contentType("application/problem+json")
+                .expectBody()
+                .jsonPath("$.code").isEqualTo("GATEWAY-UNAUTHENTICATED")
+                .jsonPath("$.status").isEqualTo(401);
+    }
+
 }

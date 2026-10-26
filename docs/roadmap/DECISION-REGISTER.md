@@ -22,7 +22,7 @@
 | Persistence | Spring Data JPA, Flyway owns schema, `ddl-auto: validate`, `open-in-view: false` | ADR-009; `spring-boot-starter-data-jpa`; outbox via native `@Query` | W1 context test, W3 constraints/RLS |
 | Events | Kafka/Avro/Registry plus owner outbox and consumer inbox | libs/hrflow-contracts/events actual root | W2 spike, W5 crash/replay |
 | Auth | Spring Security OAuth2 Resource Server validates bearer JWT independently at gateway and each Java service; hashed rotating refresh family; method/resource roles | ADR 010 boundary and ADR 011 mechanism; no trusted caller identity headers or custom JWT filter | W2 gateway/identity negatives; W3 remaining service gates |
-| Host | Local Compose, private until safe | Host not ready; exact resources measured before pull | W2 private host, W10 restore |
+| Host | Local Compose on the separate Acer Nitro 5, private until safe | User reports Core i5, 16 GB RAM and 2 TB hard-disk capacity; exact model/CPU, OS, free space, disk health/performance, power policy and runtime must be measured on that Acer before acceptance. The current Mac is development-only. | W2 private host, W10 restore |
 | External access | Cloudflare Tunnel to private edge/gateway origin | Domain/DNS unknown; no automatic public exposure | HTTPS/auth/firewall/backup |
 | Backups | Nightly custom pg_dump, 14 days and external encrypted copy | Include private files, Registry schemas/config and replay position | W2 first, W10/12 clean restore |
 | Observability | Structured logs, Actuator/Micrometer, Prometheus/Grafana and uptime alert | Private endpoints; bounded labels, no personal data | Incremental W2–9 |

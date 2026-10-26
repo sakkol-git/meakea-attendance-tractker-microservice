@@ -134,6 +134,8 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 ### W02-S24 — Record the intended production computer (30–30 min)
 
+**Current decision evidence (2026-10-26):** The user selected a separate Acer Nitro 5 as the target instead of the development Mac and reports an Intel Core i5, 16 GB RAM and 2 TB hard-disk capacity. Treat these as reported inventory only. This step remains open until the Acer itself supplies the required command evidence and operational facts below.
+
 **Why:** B owns one observable result in the preserved weekly objective.
 
 **Read first (up to 10 min, included):** [One concept](../primers/DOCKER-COMPOSE.md). Reuse prior learning; no new concept on Thursday/Friday.
@@ -145,7 +147,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 **Do:**
 
 1. Inspect first: review current equivalents for `docs/validation/W02-EVIDENCE.md`. Use those actual names; if absent these paths are explicitly proposed. Inspect and choose the next unused Flyway version before any schema change, never edit an applied migration.
-1. Record OS/architecture, available RAM/disk, continuous uptime/power policy, operator access, backup destination and public/private ingress intent. Missing hardware is a blocker, not permission to substitute the development Mac without agreement.
+1. On the designated Acer Nitro 5, record exact model/CPU, OS/architecture, usable RAM, total/free disk, disk type and health, continuous uptime/power policy, operator access, Java/Docker versions, backup destination and public/private ingress intent. Missing evidence is a blocker; do not substitute development-Mac measurements.
 1. Run the exact check below after target creation. Record the semantic assertion, command/exit and report path in this step commit; do not treat syntax/config validation as proof of deployment, recovery or broker delivery.
 
 ```bash
@@ -172,7 +174,7 @@ Missing target/prerequisite: BLOCKED; never a fabricated successful result.
 
 **If it fails:** Save the exact failed assertion or prerequisite; use [week troubleshooting](TROUBLESHOOTING.md) and the [stuck protocol](../STUCK-PROTOCOL.md). Stop at the stated cap, keep the next smallest repair visible and spend only reserved recovery time. Security/data/restore failures cannot be waived.
 
-**Status:** **Not run**; proposed implementation has not been executed by this documentation upgrade.
+**Status:** **Not run**; Acer target inventory, memory budget, disk IOPS risk and Cloudflare Tunnel access recorded in evidence; direct Acer inspection and readiness evidence pending physical machine bootstrap.
 
 ### W02-S25 — Validate the private service manifest (30–30 min)
 

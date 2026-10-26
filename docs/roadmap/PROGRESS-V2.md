@@ -25,8 +25,8 @@ Final design retains seven Java services, reactive gateway, Spring Data JPA, Kaf
 ## Decisions and constraints carried forward
 
 - No extra architecture approval is required for the accepted local guide. HR policy/consent is not inferred from design approval.
-- Java 21, Docker and the pinned Flutter SDK now run locally. Host disk headroom and the intended production machine must still be recorded in W02-S24 before deployment work.
-- Actual production host, external encrypted backup/recovery keys, public domain/network reachability and unattended reboot behavior remain unknown. Private Caddy internal TLS avoids removing Secure-cookie protection or assuming a purchased domain.
+- Java 21, Docker and the pinned Flutter SDK run on the development Mac. The user designated a separate Acer Nitro 5 with a reported Core i5, 16 GB RAM and 2 TB hard-disk capacity as the intended self-host; W02-S24 must still verify its exact hardware, OS, free/healthy disk and runtime before deployment work.
+- The production target is selected, but its external encrypted backup/recovery keys, public domain/network reachability, power policy and unattended reboot behavior remain unknown. Private Caddy internal TLS avoids removing Secure-cookie protection or assuming a purchased domain.
 - Source now contains the local foundation, synchronized OpenAPI bundles and the eight-operation authentication/profile/password slice. Most business endpoints remain scaffolding or pending; the contract ledger is the implementation authority.
 - All critical security/tenant/DB/event/restore checks remain required. If actual learning or work exceeds the itemized estimate, cut Stretch first and record the residual scope/date conflict; no weekends or hidden use of the 30-percent reserve.
 
