@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-29T14:48:35.927043+00:00",
+  "recorded_at": "2026-10-29T14:50:40.995587+00:00",
   "scope": "Focused forms, honest first-use access/help, and coordinated MVP code handoff. No deployment or stakeholder/device acceptance.",
   "authorization": "Owner explicitly requested completion, merge to main and push for a later manual weekend release.",
   "verification_status": "All required individual checks passed across the initial full run and explicit reporting/web reruns; the initial full verifier itself exited nonzero and is retained unchanged.",
@@ -11,7 +11,7 @@
   "contract_sha256": "6cab60688e58a119cc711e0b9dd43840f034ee7566f2357d0e324154818c7e1b",
   "repositories": {
     "backend": {
-      "revision_at_recording": "2ad32602d686c8134492aa4d40146562c52a879e",
+      "revision_at_recording": "79931dba92133f0c515d2bab1c33d17b6eb179a8",
       "dirty_at_recording": true,
       "scope": "Repository source/config/tests, excluding documentation, generated/ignored files and native failure images. Source includes the preserved earlier MVP work. Backend revision is the pre-commit parent; client revisions identify the final committed content.",
       "file_count": 890,

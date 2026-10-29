@@ -312,6 +312,8 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/validation/README.md](validation/README.md) | Validation evidence index | Dated records; distinguish V2 from earlier checks |
 | [ml/confidence-service/README.md](../ml/confidence-service/README.md) | Prototype | Existing Python setup; not integration acceptance |
 
+| Document | Role | Scope and authority |
+| --- | --- | --- |
 | [business-flow.md](../business-flow.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
 | [client-design/COMPONENTS-AND-STATES.md](../client-design/COMPONENTS-AND-STATES.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
 | [client-design/DATA-SOURCES.md](../client-design/DATA-SOURCES.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
