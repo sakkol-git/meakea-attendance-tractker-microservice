@@ -1,0 +1,89 @@
+{
+  "type": "record",
+  "name": "ShiftCutoffFact",
+  "namespace": "com.hrflow.contracts.attendance",
+  "doc": "Accepted time.shift-cutoff.v1 owner trigger keyed tenantId:employeeId. One stable intent per employee/day/captured schedule basis at its shift end plus the approved UAT 30-minute buffer. A durable date cursor starts when the worker observes a verified employee; no historical absence before enrollment is fabricated. If the effective no-session schedule moves later after an earlier trigger, retain a durable future recheck and emit the corrected basis without finalizing early. Existing version-1 facts remain valid and duplicate calculations add no daily revision.",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    },
+    {
+      "name": "schemaVersion",
+      "type": "int",
+      "default": 1
+    },
+    {
+      "name": "tenantId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateVersion",
+      "type": "long"
+    },
+    {
+      "name": "occurredAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "correlationId",
+      "type": "string"
+    },
+    {
+      "name": "causationId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "employeeId",
+      "type": "string"
+    },
+    {
+      "name": "workDate",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      }
+    },
+    {
+      "name": "timezone",
+      "type": "string"
+    },
+    {
+      "name": "shiftId",
+      "type": "string"
+    },
+    {
+      "name": "shiftRevision",
+      "type": "long"
+    },
+    {
+      "name": "scheduledEnd",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "cutoffAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

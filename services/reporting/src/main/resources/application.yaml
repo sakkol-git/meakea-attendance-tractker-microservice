@@ -73,8 +73,9 @@ spring:
         specific.avro.reader: true
         allow.auto.create.topics: false
     listener:
+      auto-startup: ${KAFKA_LISTENER_AUTO_STARTUP:true}
       ack-mode: manual_immediate
-      missing-topics-fatal: true
+      missing-topics-fatal: ${KAFKA_LISTENER_MISSING_TOPICS_FATAL:true}
   servlet:
     multipart:
       max-file-size: 10MB
@@ -125,3 +126,31 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
+
+hrflow:
+  reporting:
+    request-consumer:
+      enabled: ${REPORTING_REQUEST_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${REPORTING_REQUEST_BOOTSTRAP_TIMEOUT_MS:60000}
+    daily-consumer:
+      enabled: ${REPORTING_DAILY_CONSUMER_ENABLED:false}
+    leave-consumer:
+      enabled: ${REPORTING_LEAVE_CONSUMER_ENABLED:false}
+    employee-consumer:
+      enabled: ${REPORTING_EMPLOYEE_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${REPORTING_EMPLOYEE_BOOTSTRAP_TIMEOUT_MS:60000}
+    session-consumer:
+      enabled: ${REPORTING_SESSION_CONSUMER_ENABLED:false}
+    kafka-consumer:
+      enabled: ${REPORTING_KAFKA_CONSUMER_ENABLED:false}
+    topics:
+      attendance-facts: ${REPORTING_TOPIC_ATTENDANCE_FACTS:hrflow.attendance.facts}
+      leave-facts: ${REPORTING_TOPIC_LEAVE_FACTS:hrflow.leave.facts}
+      request-facts: ${REPORTING_TOPIC_REQUEST_FACTS:hrflow.request.facts}
+    export:
+      storage-dir: ${REPORTING_EXPORT_STORAGE_DIR:${java.io.tmpdir}/hrflow-exports}
+      row-cap: ${REPORTING_EXPORT_ROW_CAP:10000}
+      worker:
+        enabled: ${REPORTING_EXPORT_WORKER_ENABLED:false}
+        job-user: ${REPORTING_JOB_USER:}
+        job-password: ${REPORTING_JOB_PASSWORD:}

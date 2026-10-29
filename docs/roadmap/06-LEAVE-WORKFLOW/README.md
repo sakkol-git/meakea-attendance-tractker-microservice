@@ -52,7 +52,7 @@ A stone may span working days; stop at the day cap and save its next exact step.
 ## Stretch and exact cuts
 
 - [ ] Visual polish, additional filters/reports and provider push/SSE only after the required gate.
-- [ ] Builder/Adapter/Specification refactors only if the preserved pattern admission test passes; they are not prerequisites.
+- [ ] LeaveTypePolicy Strategy only after approved leave types have two real policy variations and the [ADR 013 pattern admission test](../../adr/013-DOMAIN-PATTERN-PLAN.md) passes; it does not replace the ledger or balance guard.
 - [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
 At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.
@@ -65,3 +65,9 @@ At the time cap cut optional styling, extra variants/reports and unadmitted patt
 - [Standards](../ENGINEERING-STANDARDS.md), [golden slice](../GOLDEN-SLICE.md), [self-review](../CODE-REVIEW-CHECKLIST.md).
 
 Five-minute close: reviewed commit, actual evidence, next exact ID/command, blocker/energy and stop. Failed critical work is tomorrow's first action. No weekend rescue work and no guarantee of delivery from estimates alone.
+
+UAT code follow-up (2026-10-29): explicit per-portion attendance overlap now changes a matching approved leave to NEEDS_REVIEW in the leave owner and republishes its snapshot, retaining all debit and reservations. HR's pending list includes review records. Legacy overlap unknown, stale approval revisions and terminal requests cannot trigger this transition. Automatic resolution/refund remains outside the approved rule. See W06 evidence for the restricted and actual Kafka scope; enable the leave attendance consumer alongside the verified attendance daily publisher during manual setup.
+
+Evidence-required leave is explicitly unavailable in the current UAT code slice: preview reports the requirement, and submission returns 422 LEAVE_EVIDENCE_WORKFLOW_UNAVAILABLE without creating a request, reserving dates or changing entitlement. The private supporting-file workflow remains required implementation work; this guard neither waives the requirement nor certifies that feature as complete. W06 records the provider regression and negative side-effect assertions.
+
+The owning BUILD-GUIDE-PART-3 explicitly permits attachments to remain disabled until their secure path is complete. That conditional boundary allows ordinary supported leave in UAT with the evidence-required types clearly disabled; it does not imply completed supporting-file functionality.

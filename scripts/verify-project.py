@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run explicit verification scopes; full mode requires both client checkouts."""
 import argparse
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -50,11 +51,17 @@ def main():
         tool_python = str(local_tools) if local_tools.is_file() else py
         tasks += [(ROOT, [tool_python, '-m', 'unittest', 'discover',
                           '-s', 'tools/project_mcp/tests', '-v'])]
+    environment = os.environ.copy()
+    if args.scope == 'all':
+        # Full scope owns both installed client runtimes and must execute real consumer/provider cases.
+        environment['HRFLOW_VERIFY_CLIENT_PROVIDERS'] = 'true'
+    elif 'backend' in scopes and environment.get('HRFLOW_VERIFY_CLIENT_PROVIDERS') != 'true':
+        print('Direct client-provider journeys omitted in backend-only mode; full scope enables them.')
     failures = []
     for directory, command in tasks:
         print(f'\n[{directory.name}] {" ".join(command)}', flush=True)
         try:
-            subprocess.run(command, cwd=directory, check=True)
+            subprocess.run(command, cwd=directory, check=True, env=environment)
         except (OSError, subprocess.CalledProcessError) as error:
             failures.append(f'{directory.name}: {" ".join(command)}: {error}')
     print('\nExecuted scopes:', ', '.join(scopes))

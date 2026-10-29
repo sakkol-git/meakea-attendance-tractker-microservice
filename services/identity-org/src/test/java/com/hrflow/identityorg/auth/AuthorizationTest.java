@@ -33,7 +33,7 @@ class AuthorizationTest {
     void unauthenticatedCallerIsRejectedWith401ProblemJson() throws Exception {
         mvc.perform(get("/auth/test/hr-action"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.code").value("UNAUTHENTICATED"))
+                .andExpect(jsonPath("$.code").value("IDENTITY-UNAUTHENTICATED"))
                 .andExpect(jsonPath("$.status").value(401));
     }
 
@@ -42,7 +42,7 @@ class AuthorizationTest {
     void visibleForbiddenActionReturns403ProblemJsonForEmployee() throws Exception {
         mvc.perform(get("/auth/test/hr-action"))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.code").value("FORBIDDEN"))
+                .andExpect(jsonPath("$.code").value("IDENTITY-FORBIDDEN"))
                 .andExpect(jsonPath("$.status").value(403));
     }
 
@@ -62,7 +62,7 @@ class AuthorizationTest {
         mvc.perform(get("/auth/me")
                         .header("Authorization", "Bearer rejected-by-service"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.code").value("UNAUTHENTICATED"))
+                .andExpect(jsonPath("$.code").value("IDENTITY-UNAUTHENTICATED"))
                 .andExpect(jsonPath("$.status").value(401));
     }
 
@@ -74,7 +74,7 @@ class AuthorizationTest {
                         .header("X-Roles", "ROLE_HR_ADMIN")
                         .header("X-Tenant-Id", "forged-tenant"))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.code").value("FORBIDDEN"));
+                .andExpect(jsonPath("$.code").value("IDENTITY-FORBIDDEN"));
     }
 
     @RestController

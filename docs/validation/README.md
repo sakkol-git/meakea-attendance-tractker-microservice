@@ -4,6 +4,12 @@ Date: 2026-10-23. Scope: documentation suite, not application release certificat
 
 ## Current validation
 
+The newer focused-forms and first-use checkpoint in [Week 08 evidence](W08-EVIDENCE.md) records 139 web unit cases, 25 browser scenarios and 196 mobile cases on macOS and Linux, with three explicit mobile live-environment skips. The coordinated integration run executed foundation, backend, both clients and tooling. Its first attempt failed a reporting broker setup timeout and a web CSS format check; CSS formatting was repaired, the complete reporting reactor slice passed on rerun, and the complete web check passed. Current fresh Maven XML reports total 486 cases with zero failures, errors or skips. The original failed run remains evidence rather than being relabelled successful. CLIENT-FORMS-FIRST-USE.json binds the final source and logs; earlier receipts below are historical. The owner now authorizes committing, merging to main and pushing all three repositories, while deployment and stakeholder/device acceptance remain separate.
+
+The newer [29 October usability polish checkpoint](W08-EVIDENCE.md) records 139 web unit cases, 23 browser scenarios and 194 mobile cases on macOS and local Linux, with 3 explicit mobile skips. Its current source/log receipt is CLIENT-UX-POLISH.json. The earlier CLIENT-UX-CHECKPOINT.json remains a dated checkpoint. Full Khmer localization, actual-device profiling and human accessibility/UAT observations remain open; no backend/provider or deployment acceptance is inferred from this UI pass.
+
+The [29 October client UX checkpoint](W08-EVIDENCE.md) records the later navigation, mobile layout, form action and feedback pass. Its source/log receipt is CLIENT-UX-CHECKPOINT.json. Earlier client manifests and the client section of CURRENT-UAT-CODE.json remain historical checkpoints; do not treat their hashes as the current UI after this pass. Backend/provider evidence retains its original revision and scope.
+
 Use [V2 validation log](../roadmap/V2-VALIDATION-LOG.md) for the final roadmap checkpoint commands and limits, [linter proofs](../roadmap/LINTER-PROOFS.md) for semantic-check verification, and [source of truth](../SOURCE-OF-TRUTH.md) for authority. The sections below retain historical results; they are not current product acceptance. Old 112-route/schema export tooling was superseded when long documents were split.
 
 ## Service configuration baseline
@@ -78,3 +84,7 @@ The original 182-step inventory is preserved in ROADMAP-V1-BASELINE.json; the st
 Final parsed instructions/capacity are in ROADMAP-V2-FINAL-LEDGER.json; V2-SAMPLED-STEPS.json records the 36 static samples, V2-COMMAND-RESULTS.json the actual safe commands, and DOCS-LINT-V2-PROOFS.json the isolated negative fixtures. These are audit data; Markdown guides remain the execution reference.
 
 INCOMING-DOCS-V2-SNAPSHOT.json preserves the complete pre-pass Markdown input, including incoming uncommitted documentation. It is a non-executable historical audit archive; the current Markdown/ADR 008 guide remains authoritative.
+
+## Current supported UAT code receipt
+
+[W09 UAT code handoff](W09-EVIDENCE.md) records the complete cross-project run, its preserved failures, narrow repairs and final provider reruns. CURRENT-UAT-CODE.json binds source hashes, exact repository revisions, current client manifests and test evidence for the supported code slice. It is implementation evidence, not stakeholder UAT acceptance or completed deployment/restore. Historical roadmap gates remain unchanged.

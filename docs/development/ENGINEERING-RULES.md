@@ -6,6 +6,10 @@ Business requirements and accepted acceptance criteria are the primary measure o
 
 Choose the simplest design that meets correctness, security, reliability, readability and realistic operating constraints. For a material decision, explain which requirement it serves, the simplest viable alternative, adoption effort, ongoing cost, maintenance burden and evidence supporting the choice. Existing dependencies and patterns are preferred when they meet the requirement. No universal best architecture or zero-error guarantee is implied.
 
+HRFlow's non-overengineering rule is [ADR 013](../adr/013-DOMAIN-PATTERN-PLAN.md): use the accepted, familiar enterprise stack and an explicit feature service/repository/transaction by default. Add a named pattern, interface, layer or infrastructure component only for demonstrated variation, external I/O isolation or a required correctness boundary. Never add a second mechanism beside an existing one solely to increase pattern count or appear more "enterprise." Security, tenant isolation, event reliability and restore are necessary requirements, not optional complexity cuts.
+
+For Java object conversion, follow [ADR 014](../adr/014-MAPSTRUCT-MAPPING-POLICY.md): use MapStruct for straightforward deterministic mappings and fail compilation on unmapped target properties. Keep business rules, authorization, tenant derivation, repository access, guarded PATCH/version behavior and contextual event construction in explicit Java. Do not hide application orchestration in mapping annotations or map an untrusted request directly into persistence around the owning service checks.
+
 ## SOLID in practical terms
 
 | Principle | Apply it this way | Avoid |

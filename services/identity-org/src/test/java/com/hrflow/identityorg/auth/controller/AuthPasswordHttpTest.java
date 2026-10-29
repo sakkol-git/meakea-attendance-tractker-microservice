@@ -13,7 +13,7 @@ import com.hrflow.identityorg.auth.service.AuthSessionService;
 import com.hrflow.identityorg.auth.service.CookieHandlerService;
 import com.hrflow.identityorg.auth.service.PasswordService;
 import com.hrflow.identityorg.config.SecurityConfiguration;
-import com.hrflow.identityorg.exception.AuthExceptionHandler;
+import com.hrflow.identityorg.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -25,7 +25,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(AuthController.class)
-@Import({SecurityConfiguration.class, AuthExceptionHandler.class})
+@Import({SecurityConfiguration.class, GlobalExceptionHandler.class})
 class AuthPasswordHttpTest {
     @Autowired
     MockMvc mvc;

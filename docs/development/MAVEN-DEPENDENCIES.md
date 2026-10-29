@@ -27,6 +27,8 @@ The six owner services inherit:
 
 The owner parent also applies the executable-jar plugin. Failsafe runs integration tests named by Maven's standard conventions during `verify`. Enforcer requires Java 21 or newer and Maven 3.9.x, while the compiler target and CI runtime remain Java 21; it also rejects duplicate dependency declarations.
 
+Owner-service Surefire runs use Testcontainers' `httpclient5` transport, matching the existing integration-test transport. This keeps renamed `*Test` PostgreSQL/Kafka suites executable through the ordinary verifier and local test tools without a manually supplied shell variable.
+
 ## Service-specific dependencies
 
 | Service | Extra dependency | Accepted need |
@@ -51,3 +53,5 @@ Redis, service discovery, a configuration server, a workflow engine, Elasticsear
 ## Change rules
 
 Use the Boot and Cloud BOMs for managed versions. Put an unmanaged version in the root property and dependency-management sections, then declare the dependency only in the owner that uses it. Prefer an additive upgrade and run `./mvnw --batch-mode verify`; dependency presence does not replace behavior, security, migration or provider tests.
+
+UAT recovery implementation (2026-10-29): owner services also inherit the existing hrflow-event-starter module. Its implemented recovery adapter uses the already selected Spring Kafka and Confluent libraries, plus Boot health and Micrometer APIs already present in owners. No additional broker, runtime service or paid platform is introduced. HRFLOW_EVENTS_RECOVERY_ENABLED explicitly enables bounded retry/dead-letter handling and broker-backed lag measurement; disabled configurations retain the prior non-skipping handlers. The library no longer supplies a competing application.yaml with localhost defaults. W05 evidence records the regression and real broker scope.

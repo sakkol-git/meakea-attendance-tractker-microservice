@@ -125,3 +125,18 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
+
+hrflow:
+  leave:
+    attendance-consumer:
+      enabled: ${HRFLOW_LEAVE_ATTENDANCE_CONSUMER_ENABLED:false}
+    calendar-consumer:
+      enabled: ${HRFLOW_LEAVE_CALENDAR_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${HRFLOW_LEAVE_CALENDAR_BOOTSTRAP_TIMEOUT_MS:60000}
+    employee-consumer:
+      enabled: ${HRFLOW_LEAVE_EMPLOYEE_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${HRFLOW_LEAVE_EMPLOYEE_BOOTSTRAP_TIMEOUT_MS:60000}
+    relay:
+      enabled: ${HRFLOW_LEAVE_RELAY_ENABLED:false}
+      job-user: ${HRFLOW_LEAVE_JOB_USER:}
+      job-password: ${HRFLOW_LEAVE_JOB_PASSWORD:}

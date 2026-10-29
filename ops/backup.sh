@@ -34,7 +34,7 @@ for ref in "${release_images[@]}"; do
   docker image inspect "$ref" >/dev/null || ops_die "release image unavailable: $ref"
 done
 docker save -o "$stage/release-images.tar" "${release_images[@]}"
-(cd "$stage" && sha256sum database.dump globals.sql database.inventory private-files.tar signing-keys.tar source.bundle release-images.tar image-inventory.json kafka-topics.txt schema-subjects.json manifest.txt > SHA256SUMS)
+(cd "$stage" && sha256sum database.dump globals.sql database.inventory signing-public.pem private-files.tar signing-keys.tar source.bundle release-images.tar image-inventory.json kafka-topics.txt schema-subjects.json manifest.txt > SHA256SUMS)
 (cd "$stage" && sha256sum -c SHA256SUMS >/dev/null)
 final="$root/$stamp"
 mv "$stage" "$final"

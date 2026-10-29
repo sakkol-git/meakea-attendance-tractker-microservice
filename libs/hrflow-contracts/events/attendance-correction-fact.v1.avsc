@@ -1,0 +1,58 @@
+{
+  "type": "record",
+  "name": "AttendanceCorrectionFact",
+  "namespace": "com.hrflow.contracts.attendance",
+  "doc": "Private minimal correction snapshot on attendance.correction.v1, key tenantId:employeeId. Positive aggregate revision. No proposal, raw tap evidence, reason or reviewed identity is included. Owner HTTP detail retains authorization and review evidence.",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    },
+    {
+      "name": "schemaVersion",
+      "type": "int"
+    },
+    {
+      "name": "tenantId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateVersion",
+      "type": "long"
+    },
+    {
+      "name": "occurredAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "correlationId",
+      "type": "string"
+    },
+    {
+      "name": "employeeId",
+      "type": "string"
+    },
+    {
+      "name": "workDate",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      }
+    },
+    {
+      "name": "state",
+      "type": "string"
+    }
+  ]
+}

@@ -31,7 +31,43 @@ spring:
             - id: identity-session
               uri: ${IDENTITY_URI:http://localhost:8101}
               predicates:
-                - Path=/api/v1/auth/**,/api/v1/.well-known/jwks.json
+                - Path=/api/v1/auth/**,/api/v1/.well-known/jwks.json,/api/v1/audit-logs
+              filters:
+                - StripPrefix=2
+            - id: identity-organization
+              uri: ${IDENTITY_URI:http://localhost:8101}
+              predicates:
+                - Path=/api/v1/departments,/api/v1/positions,/api/v2/employees,/api/v2/employees/*,/api/v2/employees/*/shifts,/api/v2/work-sites,/api/v2/work-sites/*,/api/v2/shifts,/api/v2/shifts/*,/api/v2/shift-assignments,/api/v2/shift-assignments/*/close,/api/v2/holidays,/api/v2/holidays/*
+              filters:
+                - StripPrefix=2
+            - id: attendance-service
+              uri: ${ATTENDANCE_URI:http://localhost:8102}
+              predicates:
+                - Path=/api/v1/attendance/**
+              filters:
+                - StripPrefix=2
+            - id: notification-service
+              uri: ${NOTIFICATION_URI:http://localhost:8105}
+              predicates:
+                - Path=/api/v1/notifications/**
+              filters:
+                - StripPrefix=2
+            - id: leave-service
+              uri: ${LEAVE_URI:http://localhost:8103}
+              predicates:
+                - Path=/api/v1/leave/**
+              filters:
+                - StripPrefix=2
+            - id: request-service
+              uri: ${REQUEST_URI:http://localhost:8104}
+              predicates:
+                - Path=/api/v1/requests/**,/api/v1/materials/**
+              filters:
+                - StripPrefix=2
+            - id: reporting-service
+              uri: ${REPORTING_URI:http://localhost:8106}
+              predicates:
+                - Path=/api/v1/reports/**
               filters:
                 - StripPrefix=2
 

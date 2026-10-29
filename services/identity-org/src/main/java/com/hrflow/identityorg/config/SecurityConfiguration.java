@@ -28,6 +28,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/.well-known/jwks.json", "/auth/csrf", "/auth/login",
                                 "/auth/refresh", "/auth/logout").permitAll()
                         .requestMatchers("/auth/**").authenticated()
+                        .requestMatchers("/audit-logs").hasRole("OWNER")
+                        .requestMatchers("/departments", "/positions", "/employees", "/employees/*",
+                                "/work-sites", "/work-sites/*", "/shifts", "/shifts/*",
+                                "/employees/*/shifts", "/shift-assignments", "/shift-assignments/*/close",
+                                "/holidays", "/holidays/*")
+                        .authenticated()
                         .anyRequest().denyAll())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint(SecurityProblems.unauthorized())

@@ -12,6 +12,9 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByTenantSlugAndEmailAndEnabledTrue(String tenantSlug, String email);
     Optional<User> findByIdAndTenantIdAndEnabledTrue(UUID id, UUID tenantId);
+    Optional<User> findByTenantIdAndEmployeeIdAndEnabledTrue(UUID tenantId, UUID employeeId);
+    boolean existsByTenantIdAndEmployeeIdAndEnabledTrue(UUID tenantId, UUID employeeId);
+    boolean existsByTenantIdAndEmail(UUID tenantId, String email);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select u from User u where u.id = :id and u.tenantId = :tenantId and u.enabled = true")

@@ -125,3 +125,9 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
+
+hrflow:
+  notification:
+    domain-consumer:
+      enabled: ${NOTIFICATION_DOMAIN_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${NOTIFICATION_REFERENCE_BOOTSTRAP_TIMEOUT_MS:60000}

@@ -1,5 +1,7 @@
 # Twelve-week roadmap
 
+The [finalized domain pattern plan](../adr/013-DOMAIN-PATTERN-PLAN.md) keeps required security, transaction, event and ledger designs in the critical path. Strategy for approved leave-type rules, distinct request-type behavior and maintained rules/model scorers is conditional on demonstrated variation; it adds no automatic week or gate claim.
+
 ## Capacity and clock
 
 The user replied 24; this guide interprets that as 24 hours per contributor per week. Only 16.8 hours each is planned; Weeks 4 and 8 use 14.28 each. Start is Monday 2026-10-26; Week-12 release rehearsal is Friday 2027-01-15. Deadline is exactly start plus 84 days; never schedule weekend rescue work. Actual hours and velocity must be reviewed after Week 1.

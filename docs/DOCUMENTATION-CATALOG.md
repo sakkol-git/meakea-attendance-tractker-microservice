@@ -12,6 +12,7 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | --- | --- | --- |
 | [README.md](../README.md) | Navigation/governance | Route by topic; map controls authority |
 | [AGENTS.md](../AGENTS.md) | Developer procedure | AI entry points, cross-system impact and verification rules |
+| [GEMINI.md](../GEMINI.md) | Developer procedure | Mandatory Gemini one-stone gates, dependency use and evidence checkpoints |
 | [.github/pull_request_template.md](../.github/pull_request_template.md) | Review procedure | Boundary impact, compatible revisions and verification evidence |
 | [contracts/README.md](../contracts/README.md) | Developer procedure | Shared HTTP slice, bundles and consumer-check limits |
 | [contracts/postman/README.md](../contracts/postman/README.md) | Developer procedure | Complete Postman collection, environments and token extraction guide |
@@ -40,6 +41,9 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/adr/009-JPA-OVER-JDBC.md](adr/009-JPA-OVER-JDBC.md) | Architecture decisions | Accepted JPA persistence choice |
 | [docs/adr/010-DUAL-JWT-VALIDATION.md](adr/010-DUAL-JWT-VALIDATION.md) | Architecture decisions | Accepted two-gate access-token validation boundary |
 | [docs/adr/011-SPRING-RESOURCE-SERVER-JWT.md](adr/011-SPRING-RESOURCE-SERVER-JWT.md) | Architecture decisions | Accepted Spring Security resource-server JWT mechanism |
+| [docs/adr/012-ORGANIZATION-EVENT-V1.md](adr/012-ORGANIZATION-EVENT-V1.md) | Architecture decisions | Provisional typed organization event snapshots |
+| [docs/adr/013-DOMAIN-PATTERN-PLAN.md](adr/013-DOMAIN-PATTERN-PLAN.md) | Architecture decisions | Final domain pattern selection and conditional Strategy admission |
+| [docs/adr/014-MAPSTRUCT-MAPPING-POLICY.md](adr/014-MAPSTRUCT-MAPPING-POLICY.md) | Architecture decisions | Accepted MapStruct-first Java mapping policy and custom-mapper boundary |
 | [docs/adr/README.md](adr/README.md) | Architecture decisions | Read index status and supersession; policy may be proposed |
 | [docs/reference/ANALYSIS-REFERENCE-01.md](reference/ANALYSIS-REFERENCE-01.md) | Historical reference | Preserved context; not current instructions |
 | [docs/reference/ARCHITECTURE-REFERENCE-01.md](reference/ARCHITECTURE-REFERENCE-01.md) | Historical reference | Preserved context; not current instructions |
@@ -107,6 +111,8 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/roadmap/03-ORGANIZATION-AND-ADMIN/README.md](roadmap/03-ORGANIZATION-AND-ADMIN/README.md) | Weekly navigation/budget | Stone order, hours and prerequisites |
 | [docs/roadmap/03-ORGANIZATION-AND-ADMIN/TROUBLESHOOTING.md](roadmap/03-ORGANIZATION-AND-ADMIN/TROUBLESHOOTING.md) | Weekly diagnosis | Use after matching failed check; preserve data/work |
 | [docs/roadmap/03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md](roadmap/03-ORGANIZATION-AND-ADMIN/VERIFY-AND-GATE.md) | Weekly acceptance | Required checks/scorecards; evidence determines result |
+| [docs/validation/W03-EVIDENCE.md](validation/W03-EVIDENCE.md) | Validation evidence | Early local Week 03 candidate checks, limits and remaining gate work |
+| [docs/validation/W03-OPERATIONS-HANDOFF.md](validation/W03-OPERATIONS-HANDOFF.md) | Validation evidence | Local operations audit and intended-host blockers for Chat 1 |
 | [docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-2.md](roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-2.md) | Weekly execution | Ordered current steps; use dashboard position and maps |
 | [docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-3.md](roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-3.md) | Weekly execution | Ordered current steps; use dashboard position and maps |
 | [docs/roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-4.md](roadmap/04-ATTENDANCE-CORE/BUILD-GUIDE-PART-4.md) | Weekly execution | Ordered current steps; use dashboard position and maps |
@@ -293,6 +299,7 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/roadmap/primers/TESTCONTAINERS.md](roadmap/primers/TESTCONTAINERS.md) | Learning | Explanation only; accepted decisions govern examples |
 | [docs/roadmap/primers/TRANSACTIONAL-OUTBOX.md](roadmap/primers/TRANSACTIONAL-OUTBOX.md) | Learning | Explanation only; accepted decisions govern examples |
 | [docs/roadmap/primers/TUNNELS.md](roadmap/primers/TUNNELS.md) | Learning | Explanation only; accepted decisions govern examples |
+| [docs/roadmap/runbooks/ACER-NITRO-5.md](roadmap/runbooks/ACER-NITRO-5.md) | Operations procedure | Intended-host checklist; Acer and encrypted-disk evidence remains external |
 | [docs/roadmap/runbooks/DEPLOY.md](roadmap/runbooks/DEPLOY.md) | Operations procedure | Verify target/prerequisites; drills remain evidence gates |
 | [docs/roadmap/runbooks/DISK-FULL.md](roadmap/runbooks/DISK-FULL.md) | Operations procedure | Verify target/prerequisites; drills remain evidence gates |
 | [docs/roadmap/runbooks/HOST-REBOOT.md](roadmap/runbooks/HOST-REBOOT.md) | Operations procedure | Verify target/prerequisites; drills remain evidence gates |
@@ -304,6 +311,39 @@ The catalog includes root onboarding, prototype instructions and the full docs t
 | [docs/roadmap/tools/README.md](roadmap/tools/README.md) | Documentation tooling | Validation instructions; no product acceptance implied |
 | [docs/validation/README.md](validation/README.md) | Validation evidence index | Dated records; distinguish V2 from earlier checks |
 | [ml/confidence-service/README.md](../ml/confidence-service/README.md) | Prototype | Existing Python setup; not integration acceptance |
+
+| [business-flow.md](../business-flow.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [client-design/COMPONENTS-AND-STATES.md](../client-design/COMPONENTS-AND-STATES.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
+| [client-design/DATA-SOURCES.md](../client-design/DATA-SOURCES.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
+| [client-design/DESIGN-SYSTEM.md](../client-design/DESIGN-SYSTEM.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
+| [client-design/README.md](../client-design/README.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
+| [client-design/TYPOGRAPHY.md](../client-design/TYPOGRAPHY.md) | Client design reference | Shared visual and interaction guidance; client source and executed checks establish implementation |
+| [docs/business-flow/API-MAP.md](business-flow/API-MAP.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/ATTENDANCE.md](business-flow/ATTENDANCE.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/EVENTS-DATA.md](business-flow/EVENTS-DATA.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/IDENTITY.md](business-flow/IDENTITY.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/INFRASTRUCTURE.md](business-flow/INFRASTRUCTURE.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/LEAVE.md](business-flow/LEAVE.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/ML.md](business-flow/ML.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/NOTIFICATION.md](business-flow/NOTIFICATION.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/QA.md](business-flow/QA.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/REPORTING.md](business-flow/REPORTING.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/REQUEST.md](business-flow/REQUEST.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/VERIFICATION.md](business-flow/VERIFICATION.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/business-flow/_inventory.md](business-flow/_inventory.md) | Business-flow reference | Workflow intent and traceability; accepted contracts and provider checks govern supported behavior |
+| [docs/development/BACKEND-SLICES.md](development/BACKEND-SLICES.md) | Developer navigation | Backend slice entry points and implementation boundaries; not acceptance evidence |
+| [docs/roadmap/primers/SPRING-JPA.md](roadmap/primers/SPRING-JPA.md) | Learning | Spring Data JPA explanation; accepted persistence decisions govern implementation |
+| [docs/validation/W01-EVIDENCE.md](validation/W01-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W02-EVIDENCE.md](validation/W02-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W04-EVIDENCE.md](validation/W04-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W05-EVIDENCE.md](validation/W05-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W06-EVIDENCE.md](validation/W06-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W07-EVIDENCE.md](validation/W07-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W08-EVIDENCE.md](validation/W08-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W09-EVIDENCE.md](validation/W09-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W10-EVIDENCE.md](validation/W10-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W11-EVIDENCE.md](validation/W11-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
+| [docs/validation/W12-EVIDENCE.md](validation/W12-EVIDENCE.md) | Validation evidence | Dated candidate checks and limitations; not an automatic weekly gate or release approval |
 
 ## Maintenance
 

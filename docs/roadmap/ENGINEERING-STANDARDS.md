@@ -162,6 +162,8 @@ Tests live under each existing service src/test/java with mirrored package names
 
 ## Pattern admission and self-review
 
+The [final domain pattern plan](../adr/013-DOMAIN-PATTERN-PLAN.md) makes non-overengineering a hard design rule: prefer the existing enterprise stack and plain feature code; reject duplicate frameworks, pass-through layers and pattern-count targets. It maps required reliability designs and conditional named patterns to their owning domains. Strategy is a candidate for leave, request types and scoring only after approved variations exist.
+
 All four answers must be yes: current requirement, plain tested version hurts, two real variations or isolation/composition need, and a junior explains it in two sentences. A clear method or switch wins otherwise. Optional pattern refactors move to Stretch before mandatory quality work.
 
 [Self-review](CODE-REVIEW-CHECKLIST.md), [tests](TEST-STRATEGY.md), [security](SECURITY-BASELINE.md), [API guide](API-GUIDELINES.md), [commands](DAILY-COMMANDS.md), [golden slice](GOLDEN-SLICE.md), and [runbooks](runbooks/README.md) define the reusable recipe.

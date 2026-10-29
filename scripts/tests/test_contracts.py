@@ -93,7 +93,7 @@ class ContractChecks(unittest.TestCase):
         implemented = {
             operation['operationId']
             for path in self.current['paths'].values()
-            for operation in path.values()
+            for method, operation in path.items() if method.lower() in {'get', 'post', 'put', 'patch', 'delete'}
             if operation.get('x-hrflow-implementation') == 'implemented'
         }
         self.assertEqual(expected, implemented)

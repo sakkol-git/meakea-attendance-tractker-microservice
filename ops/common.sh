@@ -28,6 +28,10 @@ ops_load() {
   [[ -n "${POSTGRES_PASSWORD:-}" && -n "${HRFLOW_DB_RUNTIME_PASSWORD:-}" && -n "${HRFLOW_DB_MIGRATION_PASSWORD:-}" && -n "${HRFLOW_DB_BACKUP_PASSWORD:-}" ]] || ops_die 'database credentials missing'
   [[ "${HRFLOW_DB_RUNTIME_USER:-}" =~ ^[a-z_][a-z0-9_]*$ && "${HRFLOW_DB_MIGRATION_USER:-}" =~ ^[a-z_][a-z0-9_]*$ && "${HRFLOW_DB_BACKUP_USER:-}" =~ ^[a-z_][a-z0-9_]*$ ]] || ops_die 'database role names invalid'
   [[ "$HRFLOW_DB_RUNTIME_USER" != "$HRFLOW_DB_MIGRATION_USER" && "$HRFLOW_DB_RUNTIME_USER" != "$HRFLOW_DB_BACKUP_USER" && "$HRFLOW_DB_MIGRATION_USER" != "$HRFLOW_DB_BACKUP_USER" && "$HRFLOW_DB_RUNTIME_USER" != hrflow && "$HRFLOW_DB_MIGRATION_USER" != hrflow && "$HRFLOW_DB_BACKUP_USER" != hrflow ]] || ops_die 'runtime, migration, backup and owner roles must differ'
+  if [[ -n "${HRFLOW_DB_JOB_USER:-}" || -n "${HRFLOW_DB_JOB_PASSWORD:-}" ]]; then
+    [[ "${HRFLOW_DB_JOB_USER:-}" =~ ^[a-z_][a-z0-9_]*$ && -n "${HRFLOW_DB_JOB_PASSWORD:-}" ]] || ops_die 'job role name/password must be supplied together'
+    [[ "$HRFLOW_DB_JOB_USER" != "$HRFLOW_DB_RUNTIME_USER" && "$HRFLOW_DB_JOB_USER" != "$HRFLOW_DB_MIGRATION_USER" && "$HRFLOW_DB_JOB_USER" != "$HRFLOW_DB_BACKUP_USER" && "$HRFLOW_DB_JOB_USER" != hrflow ]] || ops_die 'job role must differ from runtime, migration, backup and owner roles'
+  fi
   [[ -d "${HRFLOW_SIGNING_KEYS_DIR:-}" && -f "$HRFLOW_SIGNING_KEYS_DIR/private.pem" && -f "$HRFLOW_SIGNING_KEYS_DIR/public.pem" ]] || ops_die 'mounted signing key pair missing'
   ops_need docker
   docker compose version >/dev/null || ops_die 'Docker Compose unavailable'

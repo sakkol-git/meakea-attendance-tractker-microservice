@@ -8,6 +8,7 @@ Postman CLI is installed on this device, and can be used for API Engineering wor
 
 ## Read before changing code
 
+- Gemini agents must read and obey `GEMINI.md` before planning or editing. Its one-stone gate, dependency policy and evidence checkpoint are mandatory execution controls, not optional guidance.
 - Read `docs/SOURCE-OF-TRUTH.md` for authority, then the relevant accepted ADR/domain specification.
 - Read `docs/development/PROJECT-CONTEXT.md` and `docs/development/CHANGE-CHECKLIST.md`.
 - Run `python3 scripts/project-context.py` for fresh repository revisions, dirty state and entry points.
@@ -43,6 +44,7 @@ Postman CLI is installed on this device, and can be used for API Engineering wor
 - Use BDD-style Given/When/Then acceptance examples for workflows and ambiguous business behavior; use TDD red-green-refactor for meaningful business logic, regression fixes and contracts. Confirm a test fails for the expected reason, implement the smallest correct change, then refactor. Use proportional verification for documentation, formatting and mechanical changes; do not create tests that merely mirror code.
 - Ground factual claims in inspected files, accepted decisions, official primary documentation or executed commands. Separate observation, proposal, assumption and unknown. Do not claim zero hallucinations, complete context, passing checks or production readiness without evidence; disclose uncertainty and verification limits.
 - Use narrow searches and bounded source excerpts. Prefer available HRFlow MCP tools for repeated context/read/search/check work; use existing CLI checks when the tools are unavailable. Reuse evidence only while its source revision, working changes and inputs remain valid; never sacrifice required verification to save tokens.
+- For Java dependencies and generated boilerplate, follow `docs/development/MAVEN-DEPENDENCIES.md` and ADR 014. Owner services inherit Lombok, MapStruct and their annotation processors from `services/owner-service-parent`; do not duplicate them in a service POM. Use Lombok only for mechanical boilerplate, never `@Data`, broad setters, relationship-based `toString`, or relationship-based equality on JPA entities. Use MapStruct for straightforward structural mapping and explicit Java for policy, authorization, tenant derivation, I/O, guarded updates and contextual event construction.
 
 ## Local tools and detailed standards
 

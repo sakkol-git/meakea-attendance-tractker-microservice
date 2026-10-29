@@ -4,7 +4,7 @@ Comprehensive Postman Collection v2.1.0 schema and environments generated direct
 
 ## Scope and features
 
-- Total routes and operations: covers all 133 API paths and 158 HTTP operations across 14 microservice functional domains.
+- Total routes and operations: generated from the current OpenAPI inventory (currently 144 paths and 177 HTTP operations across 14 categories). Pending routes are not provider acceptance.
 - Microservices gateway routing: designed to target the unified Spring Cloud Gateway at baseUrl api v1 defaulting to port 8080.
 - Full realistic mock payloads: every POST, PUT, and PATCH endpoint is pre-populated with realistic, schema-valid JSON bodies including domain-specific models for employee invitations, role assignments, department structures, leave requests, approval chains, material receipts, and GPS attendance coordinates.
 - Dynamic token and secret extraction:
@@ -31,8 +31,8 @@ contracts/postman/
 | --- | --- | --- |
 | 01. Authentication and Security | 10 | CSRF bootstrap, login, profile inspection, public JWKS keys, profile update, token rotation, password change/reset, session logout |
 | 02. Tenant Management | 3 | Workspace tenant retrieval, tenant configuration patch, current tenant status |
-| 03. Employees and Roles | 13 | Employee listing, creation, single profile, profile patch, termination, shift assignment, role assignment, impact analysis, invitations |
-| 04. Organization Master Data | 19 | Departments, Positions, Work-sites, Shifts, Shift-assignments, and Holidays CRUD workflows |
+| 03. Employees and Roles | 17 | Employee listing, creation (v1 and v2), single profile, profile patch, termination, shift assignments, role assignment, impact analysis, invitations |
+| 04. Organization Master Data | 32 | Departments, Positions, Work-sites (v1 and v2), Shifts (v1 and v2), Shift-assignments (v1 and v2), and Holidays (v1 and v2) CRUD workflows |
 | 05. Attendance Tracking | 21 | Mobile check-in with GPS coordinates, check-out, manual correction requests, evidence uploads, daily status finalization, approval/rejection |
 | 06. Leave Management | 29 | Leave types, leave policies, balance adjustments, vacation requests, request conflict resolution, presigned attachment uploads, approvals/rejections |
 | 07. Requests and Procurement | 22 | General requests, procurement request types, approval chains, comments, presigned upload URLs, fulfillment and sign-offs |
@@ -64,6 +64,7 @@ contracts/postman/
 | workSiteId | UUID | Active Work Site ID |
 | shiftId | UUID | Active Shift Schedule ID |
 | holidayId | UUID | Active Holiday Record ID |
+| shiftAssignmentId | UUID | Active Shift Assignment ID |
 | leaveTypeId | UUID | Active Leave Type ID |
 | leaveRequestId | UUID | Active Leave Request ID |
 | generalRequestId | UUID | Active General Request ID |

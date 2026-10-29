@@ -65,3 +65,18 @@ At the time cap cut optional styling, extra variants/reports and unadmitted patt
 - [Standards](../ENGINEERING-STANDARDS.md), [golden slice](../GOLDEN-SLICE.md), [self-review](../CODE-REVIEW-CHECKLIST.md).
 
 Five-minute close: reviewed commit, actual evidence, next exact ID/command, blocker/energy and stop. Failed critical work is tomorrow's first action. No weekend rescue work and no guarantee of delivery from estimates alone.
+
+### UAT event recovery and operator redrive
+
+The implemented canonical owner topics use the existing hrflow-event-starter when HRFLOW_EVENTS_RECOVERY_ENABLED=true. Provision source topics, their three .retry-0/.retry-1/.retry-2 topics (same partition count as source) and .dlq (one partition) with infra/scripts/create-topic.sh before starting enabled consumers. Register canonical Avro, including correction, with the existing schema scripts. Producer auto-registration stays off. Transient database failures get three in-process exponential retries; remaining failures use three delayed retry topics, then private DLQ. Invalid Avro/validation goes directly to DLQ. Source offsets advance only after committed business handling or acknowledged recovery publication. Retry adapters retain original source coordinates for domain validation/checkpoints. Snapshots remain monotonic and duplicate-safe; delayed delivery does not guarantee arrival order.
+
+Dead-letter records retain original wire bytes, safe source/group coordinates and exception class only. They exclude credentials, private exception messages/stacks and arbitrary producer headers. Raw bytes can contain private owner facts, so broker access remains private; do not paste payloads into support/evidence. A warning requests operator review on DLQ publication. Broker-backed hrflow.events.consumer.lag includes source and retry backlogs; -1 means unknown/stale, never a healthy zero. More than 100 pending records for five minutes emits an alert and subsequent recovery emits a recovery log. The private eventRecovery health contributor also exposes unknown/down status without payload details. These are local operated signals, not proof of an external paging service.
+
+After fixing the owning issue and reviewing the exact source consumer, use the packaged notification jar and a private broker environment. The command defaults to a dry run, reads only one explicitly selected DLQ partition/offset and checks its expected consumer group. It never resets offsets or deletes the retained DLQ record:
+
+```bash
+scripts/replay-event.sh request.workflow.v1 0 17 hrflow-notification-request-v1
+scripts/replay-event.sh request.workflow.v1 0 17 hrflow-notification-request-v1 --execute
+```
+
+The coordinates above are examples; select actual incident coordinates. KAFKA_BOOTSTRAP_SERVERS must already name the private broker. Execute only after the underlying error is repaired; poison bytes will remain poison if the parser/contract has not changed. Replaying to the original topic reaches its consumers, whose durable inboxes protect duplicate effects. Verify committed business convergence and recipient scope before closing the incident. W05 owns actual test evidence; no deployment is implied.

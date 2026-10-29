@@ -1,0 +1,5 @@
+CREATE SCHEMA notification;
+CREATE ROLE notification_app WITH LOGIN PASSWORD 'test-pass' NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS;
+GRANT USAGE ON SCHEMA notification TO notification_app;
+GRANT ALL ON ALL TABLES IN SCHEMA notification TO notification_app;
+ALTER DEFAULT PRIVILEGES IN SCHEMA notification GRANT ALL ON TABLES TO notification_app;

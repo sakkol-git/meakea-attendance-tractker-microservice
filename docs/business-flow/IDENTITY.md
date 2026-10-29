@@ -17,7 +17,7 @@ This is a domain body of the [business-flow reference](../../business-flow.md). 
 ### BF-002  Refresh token rotation — Status: IMPLEMENTED
 
 - Purpose: Renew access using `POST /auth/refresh` while detecting stolen-token reuse.
-- Transport: Native clients send the opaque refresh token in JSON. Browsers use an HttpOnly, Secure, SameSite=Lax cookie scoped to `/auth` plus Origin and CSRF checks.
+- Transport: Native clients send the opaque refresh token in JSON. Browsers use an HttpOnly, Secure, SameSite=Lax cookie scoped to the configured browser-visible auth prefix plus Origin and CSRF checks. The direct service default is `/auth`; gateway deployments use `/api/v1/auth`.
 - Main behavior: The service hashes the presented token, locks its row, marks it consumed and creates one successor in the same transaction. Sessions carry tenant, user and family IDs; a composite database foreign key prevents cross-tenant user/session ownership.
 - Reuse behavior: Presenting a consumed predecessor revokes every unrevoked session in that tenant-scoped family and returns the uniform 401 problem. Concurrent presentation permits one rotation, then revokes the resulting family.
 - Lifetime and storage: Refresh sessions expire after 14 days. Raw refresh tokens are returned once and are never stored.
@@ -168,7 +168,7 @@ This is a domain body of the [business-flow reference](../../business-flow.md). 
 
     1. Hash and lock the presented refresh session.
     1. Revoke every active session with the same tenant and family ID.
-    1. Return 204 and clear the browser refresh cookie on the same `/auth` path.
+    1. Return 204 and clear the browser refresh cookie on the same configured browser-visible auth path used when it was created.
 
 - Invalid, missing, unknown or already-revoked tokens receive the uniform 401 Problem response.
 - Existing access JWTs remain valid until their 15-minute expiry; logout does not claim immediate stateless-token revocation.

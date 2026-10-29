@@ -12,8 +12,23 @@
     <artifactId>identity-org</artifactId>
     <name>identity-org</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hrflow</groupId>
+            <artifactId>hrflow-contracts</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.hrflow.identityorg.IdentityOrgApplication</mainClass>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

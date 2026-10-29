@@ -69,7 +69,8 @@ public class AttemptThrottlerServiceImpl implements AttemptThrottlerService {
     public void succeeded(AttemptTicket ticket) {
         Instant now = clock.instant();
         ticket.account().reset(now);
-        ticket.source().reset(now);
+        // A valid account clears its own failures, but must not erase failures from other
+        // accounts sharing the same source address.
         repository.saveAll(List.of(ticket.account(), ticket.source()));
     }
 

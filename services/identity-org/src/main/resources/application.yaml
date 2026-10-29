@@ -127,6 +127,12 @@ logging:
     org.springframework.web: INFO
 
 hrflow:
+  organization:
+    relay:
+      enabled: ${HRFLOW_ORG_RELAY_ENABLED:false}
+      poll-ms: ${HRFLOW_ORG_RELAY_POLL_MS:250}
+      job-user: ${HRFLOW_DB_JOB_USER:}
+      job-password: ${HRFLOW_DB_JOB_PASSWORD:}
   auth:
-    local-bootstrap: true
-    key-directory: ./.local-keys
+    local-bootstrap: ${HRFLOW_AUTH_LOCAL_BOOTSTRAP:false}
+    key-directory: ${HRFLOW_AUTH_KEY_DIRECTORY:./.local-keys}

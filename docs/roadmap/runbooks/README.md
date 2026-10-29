@@ -8,6 +8,7 @@
 - [Reboot the single host safely](HOST-REBOOT.md).
 - [Detect and recover low disk without destructive cleanup](DISK-FULL.md).
 - [Operate during internet loss](INTERNET-DOWN.md).
+- [Prepare and verify the Acer Nitro 5 target](ACER-NITRO-5.md).
 
 ## Use and evidence
 

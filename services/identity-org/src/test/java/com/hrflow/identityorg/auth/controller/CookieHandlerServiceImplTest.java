@@ -29,4 +29,17 @@ class CookieHandlerServiceImplTest {
         assertFalse(cookies.csrfCookie().contains("HttpOnly"));
         assertTrue(cookies.csrfCookie().contains("Path=/"));
     }
+
+    @Test
+    void refreshCookiePathMatchesTheConfiguredPublicAuthPrefix() {
+        var prefixed = new CookieHandlerServiceImpl(false, "http://localhost:3000", "/api/v1/auth");
+        assertTrue(prefixed.refreshCookie("secret").contains("Path=/api/v1/auth"));
+        assertTrue(prefixed.clearRefreshCookie().contains("Path=/api/v1/auth"));
+    }
+
+    @Test
+    void rejectsARefreshCookiePathThatIsNotAbsolute() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new CookieHandlerServiceImpl(false, "http://localhost:3000", "api/v1/auth"));
+    }
 }

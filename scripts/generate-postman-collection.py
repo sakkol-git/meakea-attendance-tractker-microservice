@@ -46,18 +46,88 @@ ENDPOINT_SPECIFIC_BODIES = {
         "name": "Lead Staff Architect",
         "level": "L6"
     },
+    ("POST", "/v2/employees"): {
+        "name": "Jane Doe",
+        "email": "jane.doe@example.test",
+        "employeeNo": "EMP-20001",
+        "departmentId": "{{departmentId}}",
+        "positionId": "{{positionId}}",
+        "managerId": "{{employeeId}}",
+        "hireDate": "2026-11-01"
+    },
+    ("PATCH", "/v2/employees/{id}"): {
+        "name": "Jane Smith",
+        "email": "jane.smith@example.test",
+        "employeeNo": "EMP-20001",
+        "departmentId": "{{departmentId}}",
+        "positionId": "{{positionId}}",
+        "managerId": "{{employeeId}}",
+        "hireDate": "2026-11-01"
+    },
+    ("POST", "/v2/employees/{id}/shifts"): {
+        "shiftId": "{{shiftId}}",
+        "validFrom": "2026-11-01",
+        "validTo": "2026-12-31"
+    },
     ("POST", "/shift-assignments/{id}/close"): {
         "endDate": "2026-10-31",
         "reason": "Rotation to standard day shift"
+    },
+    ("POST", "/v2/shift-assignments/{id}/close"): {
+        "validTo": "2026-11-15"
+    },
+    ("POST", "/v2/shifts"): {
+        "name": "Standard Morning Shift",
+        "startTime": "08:30",
+        "endTime": "17:30",
+        "graceMinutes": 15,
+        "workingDays": 31,
+        "siteId": "{{workSiteId}}",
+        "timezone": "Asia/Phnom_Penh",
+        "reason": "Standard engineering schedule"
     },
     ("PATCH", "/shifts/{id}"): {
         "name": "Updated Morning Shift A",
         "startTime": "08:30:00",
         "endTime": "17:30:00"
     },
+    ("PATCH", "/v2/shifts/{id}"): {
+        "name": "Updated Morning Shift",
+        "startTime": "09:00",
+        "endTime": "18:00",
+        "graceMinutes": 15,
+        "workingDays": 31,
+        "siteId": "{{workSiteId}}",
+        "timezone": "Asia/Phnom_Penh",
+        "reason": "Adjusted core hours"
+    },
+    ("POST", "/v2/work-sites"): {
+        "name": "Phnom Penh Headquarters",
+        "latitude": 11.5564,
+        "longitude": 104.9282,
+        "radiusM": 150,
+        "timezone": "Asia/Phnom_Penh"
+    },
     ("PATCH", "/work-sites/{id}"): {
         "name": "Headquarters Tech Campus",
         "radiusMeters": 150
+    },
+    ("PATCH", "/v2/work-sites/{id}"): {
+        "name": "Phnom Penh Main Campus",
+        "latitude": 11.5564,
+        "longitude": 104.9282,
+        "radiusM": 200,
+        "timezone": "Asia/Phnom_Penh"
+    },
+    ("POST", "/v2/holidays"): {
+        "name": "Water Festival",
+        "date": "2026-11-20",
+        "kind": "PUBLIC"
+    },
+    ("PATCH", "/v2/holidays/{id}"): {
+        "name": "Water Festival Observed",
+        "date": "2026-11-21",
+        "kind": "PUBLIC"
     },
     ("POST", "/attendance/daily-status/{id}/finalize"): {
         "decision": "APPROVED",
@@ -158,8 +228,15 @@ def load_spec():
         return json.load(f)
 
 def determine_folder(path):
-    p = path.strip("/").split("/")
+    p = [seg for seg in path.strip("/").split("/") if seg]
+    if not p:
+        return "15. Miscellaneous"
     first = p[0]
+    if first in ("api", "v1", "v2") and len(p) > 1:
+        first = p[1]
+    if first in ("v1", "v2") and len(p) > 2:
+        first = p[2]
+
     if first in ("auth", ".well-known"):
         return "01. Authentication & Security"
     elif first == "tenants":
@@ -229,10 +306,32 @@ def generate_mock_value(prop_name, prop_schema, spec_schemas, depth=0):
         return "{{departmentId}}"
     if p_lower in ("positionid", "position"):
         return "{{positionId}}"
-    if p_lower == "worksiteid":
+    if p_lower in ("worksiteid", "siteid"):
         return "{{workSiteId}}"
     if p_lower == "shiftid":
         return "{{shiftId}}"
+    if p_lower == "holidayid":
+        return "{{holidayId}}"
+    if p_lower == "shiftassignmentid":
+        return "{{shiftAssignmentId}}"
+    if p_lower == "starttime":
+        return "08:30"
+    if p_lower == "endtime":
+        return "17:30"
+    if p_lower == "timezone":
+        return "Asia/Phnom_Penh"
+    if p_lower == "employeeno":
+        return "EMP-10001"
+    if p_lower == "workingdays":
+        return 31
+    if p_lower == "graceminutes":
+        return 15
+    if p_lower in ("radiusm", "radiusmeters"):
+        return 100
+    if p_lower == "validfrom":
+        return "2026-11-01"
+    if p_lower == "validto":
+        return "2026-12-31"
     if p_lower in ("typeid", "leavetypeid"):
         return "{{leaveTypeId}}"
     if p_lower in ("latitude", "lat"):
@@ -320,27 +419,28 @@ def generate_mock_body(method, path, op, spec_schemas):
 def get_path_var_default(var_name, path):
     v = var_name.lower()
     if v == "id":
-        if "/employees/" in path: return "{{employeeId}}"
-        if "/departments/" in path: return "{{departmentId}}"
-        if "/positions/" in path: return "{{positionId}}"
-        if "/work-sites/" in path: return "{{workSiteId}}"
-        if "/shifts/" in path: return "{{shiftId}}"
-        if "/holidays/" in path: return "{{holidayId}}"
-        if "/leave/requests/" in path: return "{{leaveRequestId}}"
-        if "/leave/admin/types/" in path: return "{{leaveTypeId}}"
-        if "/leave/admin/policies/" in path: return "{{leaveTypeId}}"
-        if "/leave/admin/balances/" in path: return "{{employeeId}}"
-        if "/leave/admin/year-end/" in path: return "{{yearEndId}}"
-        if "/requests/admin/types/" in path: return "{{requestTypeId}}"
-        if "/requests/admin/approval-chains/" in path: return "{{approvalChainId}}"
-        if "/requests/" in path: return "{{generalRequestId}}"
-        if "/materials/admin/" in path: return "{{materialId}}"
-        if "/notifications/devices/" in path: return "{{deviceId}}"
-        if "/notifications/" in path: return "{{notificationId}}"
-        if "/reports/attendance/employees/" in path: return "{{employeeId}}"
-        if "/reports/exports/" in path: return "{{exportJobId}}"
-        if "/workflows/" in path: return "{{workflowId}}"
-        if "/approvals/delegations/" in path: return "{{delegationId}}"
+        if "/employees" in path: return "{{employeeId}}"
+        if "/departments" in path: return "{{departmentId}}"
+        if "/positions" in path: return "{{positionId}}"
+        if "/work-sites" in path: return "{{workSiteId}}"
+        if "/shifts" in path: return "{{shiftId}}"
+        if "/shift-assignments" in path: return "{{shiftAssignmentId}}"
+        if "/holidays" in path: return "{{holidayId}}"
+        if "/leave/requests" in path: return "{{leaveRequestId}}"
+        if "/leave/admin/types" in path: return "{{leaveTypeId}}"
+        if "/leave/admin/policies" in path: return "{{leaveTypeId}}"
+        if "/leave/admin/balances" in path: return "{{employeeId}}"
+        if "/leave/admin/year-end" in path: return "{{yearEndId}}"
+        if "/requests/admin/types" in path: return "{{requestTypeId}}"
+        if "/requests/admin/approval-chains" in path: return "{{approvalChainId}}"
+        if "/requests" in path: return "{{generalRequestId}}"
+        if "/materials/admin" in path: return "{{materialId}}"
+        if "/notifications/devices" in path: return "{{deviceId}}"
+        if "/notifications" in path: return "{{notificationId}}"
+        if "/reports/attendance/employees" in path: return "{{employeeId}}"
+        if "/reports/exports" in path: return "{{exportJobId}}"
+        if "/workflows" in path: return "{{workflowId}}"
+        if "/approvals/delegations" in path: return "{{delegationId}}"
         return "{{targetId}}"
     if v == "employeeid": return "{{employeeId}}"
     if v == "typeid": return "{{leaveTypeId}}"
@@ -354,7 +454,10 @@ def get_path_var_default(var_name, path):
 def generate_test_script(method, path, op):
     # Determine expected success codes
     expected_codes = "[200, 201, 202, 204]"
-    if method == "POST" and path in ("/employees", "/departments", "/positions", "/work-sites", "/shifts", "/holidays", "/leave/requests", "/requests", "/materials/admin"):
+    if method == "POST" and path in ("/employees", "/v2/employees", "/departments", "/positions",
+                                     "/work-sites", "/v2/work-sites", "/shifts", "/v2/shifts",
+                                     "/holidays", "/v2/holidays", "/leave/requests", "/requests",
+                                     "/materials/admin", "/v2/employees/{id}/shifts"):
         expected_codes = "[201, 200]"
     elif method == "DELETE":
         expected_codes = "[204, 200]"
@@ -452,7 +555,7 @@ def generate_test_script(method, path, op):
             "if (user.tenantId) pm.environment.set(\"tenantId\", user.tenantId);",
             "if (user.roles) pm.environment.set(\"userRoles\", JSON.stringify(user.roles));"
         ])
-    elif method == "POST" and path == "/employees":
+    elif method == "POST" and path in ("/employees", "/v2/employees"):
         lines.extend([
             "var res = pm.response.json();",
             "if (res && res.id) pm.environment.set(\"employeeId\", res.id);"
@@ -467,20 +570,25 @@ def generate_test_script(method, path, op):
             "var res = pm.response.json();",
             "if (res && res.id) pm.environment.set(\"positionId\", res.id);"
         ])
-    elif method == "POST" and path == "/work-sites":
+    elif method == "POST" and path in ("/work-sites", "/v2/work-sites"):
         lines.extend([
             "var res = pm.response.json();",
             "if (res && res.id) pm.environment.set(\"workSiteId\", res.id);"
         ])
-    elif method == "POST" and path == "/shifts":
+    elif method == "POST" and path in ("/shifts", "/v2/shifts"):
         lines.extend([
             "var res = pm.response.json();",
             "if (res && res.id) pm.environment.set(\"shiftId\", res.id);"
         ])
-    elif method == "POST" and path == "/holidays":
+    elif method == "POST" and path in ("/holidays", "/v2/holidays"):
         lines.extend([
             "var res = pm.response.json();",
             "if (res && res.id) pm.environment.set(\"holidayId\", res.id);"
+        ])
+    elif method == "POST" and path == "/v2/employees/{id}/shifts":
+        lines.extend([
+            "var res = pm.response.json();",
+            "if (res && res.id) pm.environment.set(\"shiftAssignmentId\", res.id);"
         ])
     elif method == "POST" and path == "/attendance/check-in":
         lines.extend([
@@ -536,13 +644,16 @@ def generate_prerequest_script(method, path):
         lines.append("}")
     return lines
 
-def build_postman_request(method, path, op, spec_schemas):
+def build_postman_request(method, path, op, spec_schemas, path_servers=None):
     summary = op.get("summary", f"{method} {path}")
     description = op.get("description", summary)
 
     # Path segments & variables
     segments = ["api", "v1"]
     raw_path_parts = [p for p in path.strip("/").split("/") if p]
+    if path_servers == [{"url": "/api"}] and raw_path_parts[:1] == ["v2"]:
+        segments = ["api", "v2"]
+        raw_path_parts = raw_path_parts[1:]
     path_variables = []
 
     for seg in raw_path_parts:
@@ -685,7 +796,20 @@ def sort_folder_items(folder_name, items):
             x["request"]["method"]
         ))
 
-def generate_collection(spec):
+def get_existing_id(path, default_uuid_str):
+    if path.exists():
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if "id" in data:
+                    return data["id"]
+                if "info" in data and "_postman_id" in data["info"]:
+                    return data["info"]["_postman_id"]
+        except Exception:
+            pass
+    return default_uuid_str
+
+def generate_collection(spec, collection_id=None):
     spec_schemas = spec.get("components", {}).get("schemas", {})
     folders_dict = {}
 
@@ -697,7 +821,8 @@ def generate_collection(spec):
             if folder_name not in folders_dict:
                 folders_dict[folder_name] = []
 
-            postman_req = build_postman_request(method.upper(), path, op, spec_schemas)
+            postman_req = build_postman_request(method.upper(), path, op, spec_schemas,
+                                                methods.get("servers"))
             folders_dict[folder_name].append(postman_req)
 
     collection_items = []
@@ -737,9 +862,11 @@ def generate_collection(spec):
 
     collection = {
         "info": {
-            "_postman_id": str(uuid.uuid4()),
+            "_postman_id": collection_id or "58a1e84a-a441-4c06-9786-21cff2da59ac",
             "name": "HRFlow Complete API Collection",
-            "description": "Authoritative, end-to-end Postman Collection covering all 133 routes and 158 HTTP operations of HRFlow microservices via the Spring Cloud Gateway. Includes realistic mock payloads, response schema assertions, CSRF extraction, dynamic token rotation, and entity ID propagation.",
+            "description": (f"Provisional HRFlow collection covering {len(spec.get('paths', {}))} paths and "
+                            f"{sum(key.lower() in ('get', 'post', 'put', 'patch', 'delete') for item in spec.get('paths', {}).values() for key in item)} HTTP operations via the gateway. "
+                            "Pending routes are contract inventory, not implemented provider behavior."),
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
         },
         "item": collection_items,
@@ -779,9 +906,9 @@ def generate_collection(spec):
     }
     return collection
 
-def generate_environments():
+def generate_environments(local_id=None, staging_id=None):
     local_env = {
-        "id": str(uuid.uuid4()),
+        "id": local_id or "448a4093-5972-482e-84e5-92bc47ce3a71",
         "name": "HRFlow Local Development",
         "values": [
             {"key": "baseUrl", "value": "http://localhost:8080", "type": "default", "enabled": True},
@@ -800,6 +927,7 @@ def generate_environments():
             {"key": "workSiteId", "value": "00000000-0000-0000-0000-000000000030", "type": "default", "enabled": True},
             {"key": "shiftId", "value": "00000000-0000-0000-0000-000000000040", "type": "default", "enabled": True},
             {"key": "holidayId", "value": "00000000-0000-0000-0000-000000000050", "type": "default", "enabled": True},
+            {"key": "shiftAssignmentId", "value": "00000000-0000-0000-0000-000000000055", "type": "default", "enabled": True},
             {"key": "leaveTypeId", "value": "00000000-0000-0000-0000-000000000060", "type": "default", "enabled": True},
             {"key": "leaveRequestId", "value": "00000000-0000-0000-0000-000000000070", "type": "default", "enabled": True},
             {"key": "generalRequestId", "value": "00000000-0000-0000-0000-000000000080", "type": "default", "enabled": True},
@@ -819,7 +947,7 @@ def generate_environments():
     }
 
     staging_env = {
-        "id": str(uuid.uuid4()),
+        "id": staging_id or "8a7e3d22-19e4-4d89-9a0e-2e4a8b7c9d01",
         "name": "HRFlow Staging Cluster",
         "values": [
             {"key": "baseUrl", "value": "https://api-staging.hrflow.internal", "type": "default", "enabled": True},
@@ -833,6 +961,7 @@ def generate_environments():
             {"key": "userId", "value": "", "type": "default", "enabled": True},
             {"key": "employeeId", "value": "", "type": "default", "enabled": True},
             {"key": "tenantId", "value": "", "type": "default", "enabled": True},
+            {"key": "shiftAssignmentId", "value": "", "type": "default", "enabled": True},
             {"key": "currentEtag", "value": "", "type": "default", "enabled": True}
         ],
         "_postman_variable_scope": "environment"
@@ -841,12 +970,16 @@ def generate_environments():
 
 def main():
     spec = load_spec()
-    collection = generate_collection(spec)
-    local_env, staging_env = generate_environments()
-
     coll_path = OUTPUT_DIR / "HRFlow_Complete_API.postman_collection.json"
     local_path = OUTPUT_DIR / "HRFlow_Local.postman_environment.json"
     staging_path = OUTPUT_DIR / "HRFlow_Staging.postman_environment.json"
+
+    coll_id = get_existing_id(coll_path, "58a1e84a-a441-4c06-9786-21cff2da59ac")
+    local_id = get_existing_id(local_path, "448a4093-5972-482e-84e5-92bc47ce3a71")
+    staging_id = get_existing_id(staging_path, "8a7e3d22-19e4-4d89-9a0e-2e4a8b7c9d01")
+
+    collection = generate_collection(spec, coll_id)
+    local_env, staging_env = generate_environments(local_id, staging_id)
 
     with open(coll_path, "w", encoding="utf-8") as f:
         json.dump(collection, f, indent=2)

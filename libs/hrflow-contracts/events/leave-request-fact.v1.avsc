@@ -1,0 +1,23 @@
+{
+  "type": "record", "name": "LeaveRequestFact", "namespace": "com.hrflow.contracts.leave",
+  "doc": "Full owner lifecycle snapshot on leave.request.v1; key tenantId:employeeId. Exact charged days and expanded working dates are owner facts, not inferred HR policy.",
+  "fields": [
+    {"name":"eventId","type":"string"},
+    {"name":"type","type":"string"},
+    {"name":"schemaVersion","type":"int","default":1},
+    {"name":"tenantId","type":"string"},
+    {"name":"aggregateId","type":"string"},
+    {"name":"aggregateVersion","type":"long"},
+    {"name":"occurredAt","type":{"type":"long","logicalType":"timestamp-millis"}},
+    {"name":"correlationId","type":"string"},
+    {"name":"causationId","type":["null","string"],"default":null},
+    {"name":"employeeId","type":"string"},
+    {"name":"leaveType","type":"string"},
+    {"name":"startDate","type":{"type":"int","logicalType":"date"}},
+    {"name":"endDate","type":{"type":"int","logicalType":"date"}},
+    {"name":"portion","type":"string"},
+    {"name":"chargedDays","type":"string"},
+    {"name":"workingDates","type":{"type":"array","items":{"type":"int","logicalType":"date"}}},
+    {"name":"state","type":"string"}
+  ]
+}

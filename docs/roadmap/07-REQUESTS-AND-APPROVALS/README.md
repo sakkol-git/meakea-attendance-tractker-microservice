@@ -52,7 +52,7 @@ A stone may span working days; stop at the day cap and save its next exact step.
 ## Stretch and exact cuts
 
 - [ ] Visual polish, additional filters/reports and provider push/SSE only after the required gate.
-- [ ] Builder/Adapter/Specification refactors only if the preserved pattern admission test passes; they are not prerequisites.
+- [ ] RequestTypeHandler Strategy or attachment Storage Adapter only after the [ADR 013 pattern admission test](../../adr/013-DOMAIN-PATTERN-PLAN.md) passes; neither replaces shared approval authorization or first-wins decisions.
 - [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
 At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.

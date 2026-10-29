@@ -1,0 +1,133 @@
+# Test configuration for reporting service
+spring:
+  application:
+    name: reporting
+  config:
+    import:
+      - "optional:file:./.env[.properties]"
+      - "optional:file:./services/reporting/.env[.properties]"
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration
+      - org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration
+  mvc:
+    problemdetails:
+      enabled: true
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hrflow}
+    username: ${DB_USERNAME:test_runtime}
+    password: ${DB_PASSWORD:synthetic-test-value}
+    hikari:
+      pool-name: reporting-pool
+      schema: reporting
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:5}
+      minimum-idle: 0
+      connection-timeout: 5000
+      validation-timeout: 2000
+      idle-timeout: 300000
+      max-lifetime: 1500000
+      connection-init-sql: SET TIME ZONE 'UTC'
+      data-source-properties:
+        connectTimeout: 5
+        socketTimeout: 30
+        tcpKeepAlive: true
+  flyway:
+    enabled: true
+    schemas: reporting
+    default-schema: reporting
+    create-schemas: false
+    clean-disabled: true
+    baseline-on-migrate: false
+    validate-on-migrate: true
+    user: ${FLYWAY_USERNAME:test_runtime}
+    password: ${FLYWAY_PASSWORD:synthetic-test-value}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    properties:
+      schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
+      auto.register.schemas: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        delivery.timeout.ms: 120000
+        request.timeout.ms: 30000
+    consumer:
+      group-id: hrflow-reporting-v1
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+      max-poll-records: 100
+      isolation-level: read_committed
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        specific.avro.reader: true
+        allow.auto.create.topics: false
+    listener:
+      auto-startup: ${KAFKA_LISTENER_AUTO_STARTUP:false}
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${SERVER_PORT:8106}
+  shutdown: graceful
+  forward-headers-strategy: none
+  max-http-request-header-size: 16KB
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: false
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+        same-site: lax
+
+management:
+  server:
+    address: ${MANAGEMENT_ADDRESS:127.0.0.1}
+    port: ${MANAGEMENT_PORT:9106}
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState,db
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    org.springframework.web: INFO
+
+hrflow:
+  reporting:
+    kafka-consumer:
+      enabled: ${REPORTING_KAFKA_CONSUMER_ENABLED:false}

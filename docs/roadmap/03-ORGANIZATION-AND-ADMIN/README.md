@@ -10,7 +10,7 @@ Dates: 2026-11-09 through 2026-11-13; weekend rest follows.
 
 **Extra hours:** A=2; B=0.
 
-The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 2 h; B receives review during its already counted fixture/operations steps. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. All application outcomes are **NOT RUN**.
+The single input is in YOU-ARE-HERE.md; this week's limit is 16.8 h each. Step durations include first reading/test/commit. Scheduled additional A review/mentoring is 2 h; B receives review during its already counted fixture/operations steps. This allocation is real time, not assumed backend expertise. Unused capacity is recovery reserve; no extra feature is funded automatically. An early uncommitted local candidate and its bounded checks are recorded in [W03 evidence](../../validation/W03-EVIDENCE.md); the weekly gate remains **NOT RUN**.
 
 ## Preserved objective and starting point
 
@@ -52,7 +52,7 @@ A stone may span working days; stop at the day cap and save its next exact step.
 ## Stretch and exact cuts
 
 - [ ] Visual polish, additional filters/reports and provider push/SSE only after the required gate.
-- [ ] Builder/Adapter/Specification refactors only if the preserved pattern admission test passes; they are not prerequisites.
+- [ ] Test-only employee/shift Builder only if the [ADR 013 pattern admission test](../../adr/013-DOMAIN-PATTERN-PLAN.md) passes; it is not a prerequisite.
 - [ ] Cloud AWS/Terraform/Kubernetes deployment is future improvement by latest user decision, not a local deployment accomplishment.
 
 At the time cap cut optional styling, extra variants/reports and unadmitted patterns first. Keep security, tenant tests, data/event correctness and backup restore. The minimum feature remains a narrow tested end-to-end behavior, not every catalog variant. The full final architecture is preserved; richer inference training, extra channels and managed cloud operations are not secretly prerequisite work.

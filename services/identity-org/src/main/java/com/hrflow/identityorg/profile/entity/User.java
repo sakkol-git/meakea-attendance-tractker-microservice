@@ -63,6 +63,22 @@ public class User {
         if (newTimeZone != null) this.timeZone = newTimeZone;
     }
 
+    public static User linked(Tenant tenant, UUID employeeId, String email, String hash, String name,
+            java.util.List<String> roles, String timeZone) {
+        User account = new User();
+        account.id = UUID.randomUUID();
+        account.tenantId = tenant.getId();
+        account.tenantSlug = tenant.getSlug();
+        account.employeeId = employeeId;
+        account.email = email;
+        account.passwordHash = hash;
+        account.displayName = name;
+        account.roles = String.join(",", roles);
+        account.timeZone = timeZone;
+        account.enabled = true;
+        return account;
+    }
+
     public void changePassword(String newPasswordHash) {
         this.passwordHash = newPasswordHash;
     }

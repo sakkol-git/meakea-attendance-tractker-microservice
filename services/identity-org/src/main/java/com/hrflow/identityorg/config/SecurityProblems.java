@@ -11,12 +11,12 @@ public final class SecurityProblems {
 
     static AuthenticationEntryPoint unauthorized() {
         return (request, response, error) -> write(response, HttpStatus.UNAUTHORIZED,
-                "UNAUTHENTICATED", "Sign in required.");
+                "IDENTITY-UNAUTHENTICATED", "Sign in required.");
     }
 
     static AccessDeniedHandler forbidden() {
         return (request, response, error) -> write(response, HttpStatus.FORBIDDEN,
-                "FORBIDDEN", "This action is not permitted.");
+                "IDENTITY-FORBIDDEN", "This action is not permitted.");
     }
 
     private static void write(HttpServletResponse response, HttpStatus status,

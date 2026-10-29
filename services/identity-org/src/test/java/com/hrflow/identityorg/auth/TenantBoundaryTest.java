@@ -17,7 +17,7 @@ import com.hrflow.identityorg.auth.service.AuthSessionService;
 import com.hrflow.identityorg.auth.service.CookieHandlerService;
 import com.hrflow.identityorg.auth.service.PasswordService;
 import com.hrflow.identityorg.config.SecurityConfiguration;
-import com.hrflow.identityorg.exception.AuthExceptionHandler;
+import com.hrflow.identityorg.exception.GlobalExceptionHandler;
 import com.hrflow.identityorg.exception.AuthFailedException;
 import com.hrflow.identityorg.exception.ProfileNotFoundException;
 import com.hrflow.identityorg.profile.controller.UserProfileController;
@@ -38,7 +38,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest({UserProfileController.class, AuthController.class})
-@Import({SecurityConfiguration.class, AuthExceptionHandler.class})
+@Import({SecurityConfiguration.class, GlobalExceptionHandler.class})
 class TenantBoundaryTest {
 
     @Autowired
@@ -151,7 +151,7 @@ class TenantBoundaryTest {
         mvc.perform(get("/auth/me")
                         .header("Authorization", "Bearer wrong-aud-token"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.code").value("UNAUTHENTICATED"))
+                .andExpect(jsonPath("$.code").value("IDENTITY-UNAUTHENTICATED"))
                 .andExpect(jsonPath("$.status").value(401));
     }
 
@@ -163,7 +163,7 @@ class TenantBoundaryTest {
         mvc.perform(get("/auth/me")
                         .header("Authorization", "Bearer retired-key-token"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.code").value("UNAUTHENTICATED"))
+                .andExpect(jsonPath("$.code").value("IDENTITY-UNAUTHENTICATED"))
                 .andExpect(jsonPath("$.status").value(401));
     }
 

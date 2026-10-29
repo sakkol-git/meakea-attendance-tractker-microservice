@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.hrflow.identityorg.config.SecurityConfiguration;
-import com.hrflow.identityorg.exception.AuthExceptionHandler;
+import com.hrflow.identityorg.exception.GlobalExceptionHandler;
 import com.hrflow.identityorg.profile.dto.UserProfileResponse;
 import com.hrflow.identityorg.profile.service.UserProfileService;
 import java.util.List;
@@ -24,7 +24,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(UserProfileController.class)
-@Import({SecurityConfiguration.class, AuthExceptionHandler.class})
+@Import({SecurityConfiguration.class, GlobalExceptionHandler.class})
 class UserProfileHttpTest {
     @Autowired
     MockMvc mvc;

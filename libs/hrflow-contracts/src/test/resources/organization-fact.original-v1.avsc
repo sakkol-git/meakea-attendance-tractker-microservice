@@ -1,0 +1,80 @@
+{
+  "type": "record",
+  "name": "OrganizationFact",
+  "namespace": "com.hrflow.contracts.organization",
+  "doc": "Owner snapshot on org.employee.v1, org.shift.v1 or org.holiday.v1; key is tenantId:aggregateId.",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "type", "type": "string"},
+    {"name": "schemaVersion", "type": "int"},
+    {"name": "tenantId", "type": "string"},
+    {"name": "aggregateId", "type": "string"},
+    {"name": "aggregateVersion", "type": "long"},
+    {"name": "occurredAt", "type": "string"},
+    {"name": "correlationId", "type": "string"},
+    {"name": "causationId", "type": ["null", "string"], "default": null},
+    {"name": "payload", "type": [
+      {
+        "type": "record", "name": "EmployeeSnapshot", "fields": [
+          {"name": "employeeId", "type": "string"},
+          {"name": "userId", "type": ["null", "string"], "default": null},
+          {"name": "employeeNo", "type": "string"},
+          {"name": "fullName", "type": "string"},
+          {"name": "email", "type": ["null", "string"], "default": null},
+          {"name": "departmentId", "type": ["null", "string"], "default": null},
+          {"name": "departmentName", "type": ["null", "string"], "default": null},
+          {"name": "positionId", "type": ["null", "string"], "default": null},
+          {"name": "position", "type": ["null", "string"], "default": null},
+          {"name": "managerId", "type": ["null", "string"], "default": null},
+          {"name": "hireDate", "type": ["null", "string"], "default": null},
+          {"name": "terminatedOn", "type": ["null", "string"], "default": null},
+          {"name": "status", "type": "string"},
+          {"name": "deviceId", "type": ["null", "string"], "default": null},
+          {"name": "locale", "type": ["null", "string"], "default": null},
+          {"name": "assignments", "type": {"type": "array", "items": {
+            "type": "record", "name": "AssignmentSnapshot", "fields": [
+              {"name": "assignmentId", "type": "string"},
+              {"name": "shiftId", "type": "string"},
+              {"name": "validFrom", "type": "string"},
+              {"name": "validTo", "type": ["null", "string"], "default": null}
+            ]
+          }}},
+          {"name": "deletedAt", "type": ["null", "string"], "default": null}
+        ]
+      },
+      {
+        "type": "record", "name": "ShiftSnapshot", "fields": [
+          {"name": "shiftId", "type": "string"},
+          {"name": "name", "type": "string"},
+          {"name": "startTime", "type": "string"},
+          {"name": "endTime", "type": "string"},
+          {"name": "timezone", "type": "string"},
+          {"name": "graceMinutes", "type": "int"},
+          {"name": "workingDays", "type": "int"},
+          {"name": "site", "type": {
+            "type": "record", "name": "SiteSnapshot", "fields": [
+              {"name": "siteId", "type": "string"},
+              {"name": "name", "type": "string"},
+              {"name": "latitude", "type": "double"},
+              {"name": "longitude", "type": "double"},
+              {"name": "radiusM", "type": "double"},
+              {"name": "timezone", "type": "string"},
+              {"name": "wifiSsid", "type": ["null", "string"], "default": null},
+              {"name": "wifiBssid", "type": ["null", "string"], "default": null}
+            ]
+          }},
+          {"name": "deletedAt", "type": ["null", "string"], "default": null}
+        ]
+      },
+      {
+        "type": "record", "name": "HolidaySnapshot", "fields": [
+          {"name": "holidayId", "type": "string"},
+          {"name": "date", "type": "string"},
+          {"name": "name", "type": "string"},
+          {"name": "kind", "type": "string"},
+          {"name": "deletedAt", "type": ["null", "string"], "default": null}
+        ]
+      }
+    ]}
+  ]
+}

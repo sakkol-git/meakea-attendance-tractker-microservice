@@ -38,6 +38,7 @@ class EnvironmentConfigurationTests {
             assertEquals("hrflow", env.getProperty("spring.datasource.password"));
             assertEquals("identity_org", env.getProperty("spring.datasource.hikari.schema"));
             assertEquals("true", env.getProperty("spring.flyway.clean-disabled"));
+            assertEquals("false", env.getProperty("hrflow.auth.local-bootstrap"));
 
         }
     }

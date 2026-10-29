@@ -1,0 +1,103 @@
+{
+  "type": "record",
+  "name": "RequestWorkflowFact",
+  "namespace": "com.hrflow.contracts.request",
+  "doc": "Full owner workflow snapshot on accepted request.workflow.v1; key tenantId:requestId, positive committed aggregate revision. Captures the actual immutable createdAt and submitted approval steps for reporting/notification. No requester name, title, reason, form text, attachment paths or handover notes. UAT server chain is MANAGER then HR_ADMIN; known absent manager is SKIPPED.",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    },
+    {
+      "name": "schemaVersion",
+      "type": "int",
+      "default": 1
+    },
+    {
+      "name": "tenantId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateId",
+      "type": "string"
+    },
+    {
+      "name": "aggregateVersion",
+      "type": "long"
+    },
+    {
+      "name": "occurredAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "correlationId",
+      "type": "string"
+    },
+    {
+      "name": "causationId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "employeeId",
+      "type": "string"
+    },
+    {
+      "name": "requestType",
+      "type": "string"
+    },
+    {
+      "name": "state",
+      "type": "string"
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "steps",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "RequestApprovalStepFact",
+          "fields": [
+            {
+              "name": "order",
+              "type": "int"
+            },
+            {
+              "name": "role",
+              "type": "string"
+            },
+            {
+              "name": "approverId",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "state",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

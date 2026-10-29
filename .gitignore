@@ -26,3 +26,9 @@ ml/confidence-service/data/*.csv
 # Machine-specific local MCP environment and registration
 .venv-mcp/
 /.codex/config.toml
+
+# Generated local JWT signing material must never be staged.
+**/.local-keys/
+
+# Personal documentation editor state
+docs/.obsidian/

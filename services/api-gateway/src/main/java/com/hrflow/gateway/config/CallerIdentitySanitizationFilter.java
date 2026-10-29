@@ -3,13 +3,14 @@ package com.hrflow.gateway.config;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public class CallerIdentitySanitizationFilter implements GlobalFilter, Ordered
-{
+@Component
+public class CallerIdentitySanitizationFilter implements GlobalFilter, Ordered {
 
     private static final List<String> FORBIDDEN_IDENTITY_HEADERS = List.of(
             "X-Tenant-Id",

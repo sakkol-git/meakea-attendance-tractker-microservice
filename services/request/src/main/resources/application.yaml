@@ -125,3 +125,14 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
+
+hrflow:
+  request:
+    employee-consumer:
+      enabled: ${REQUEST_EMPLOYEE_CONSUMER_ENABLED:false}
+      bootstrap-timeout-ms: ${REQUEST_EMPLOYEE_BOOTSTRAP_TIMEOUT_MS:60000}
+    relay:
+      enabled: ${REQUEST_RELAY_ENABLED:false}
+      job-user: ${REQUEST_JOB_DB_USER:}
+      job-password: ${REQUEST_JOB_DB_PASSWORD:}
+      poll-ms: ${REQUEST_RELAY_POLL_MS:250}
